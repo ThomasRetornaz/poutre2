@@ -25,7 +25,6 @@ project(
 include(cmake/PreventInSourceBuilds.cmake)
 include(ProjectOptions.cmake)
 
-
 poutre2_setup_options()
 
 poutre2_global_options()
