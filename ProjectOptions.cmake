@@ -90,7 +90,14 @@ macro(poutre2_setup_options)
 endmacro()
 
 macro(poutre2_global_options)
-  if(poutre2_ENABLE_IPO)
+  #openMP for all
+  FIND_PACKAGE(OpenMP REQUIRED)
+  IF(OPENMP_FOUND)
+    SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${OpenMP_C_FLAGS}")
+    SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${OpenMP_CXX_FLAGS}")
+  ENDIF()
+
+  if(poutre_ENABLE_IPO)
     include(cmake/InterproceduralOptimization.cmake)
     poutre2_enable_ipo()
   endif()
