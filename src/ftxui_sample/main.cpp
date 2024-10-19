@@ -1,6 +1,5 @@
 #include <array>
 #include <functional>
-#include <iostream>
 #include <optional>
 
 #include <random>
