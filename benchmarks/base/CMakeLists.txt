@@ -19,8 +19,8 @@ IF(WIN32)
     PUBLIC benchmark
     PUBLIC benchmark_main
     PUBLIC shlwapi.lib
-    PRIVATE poutre::poutre_warnings
-    poutre::poutre_options
+    PRIVATE poutre2::poutre2_warnings
+    poutre2::poutre2_options
     jsoncpp_lib
     spdlog::spdlog
     Catch2::Catch2WithMain
@@ -31,8 +31,8 @@ ELSE()
   target_link_libraries(poutre_base_bench
     PUBLIC benchmark
     PUBLIC benchmark_main
-    PRIVATE poutre::poutre_warnings
-    poutre::poutre_options
+    PRIVATE poutre2::poutre2_warnings
+    poutre2::poutre2_options
     jsoncpp_lib
     spdlog::spdlog
     Catch2::Catch2WithMain

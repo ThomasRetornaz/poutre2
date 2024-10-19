@@ -37,8 +37,8 @@ set(PoutreBaseSRC ${PoutreBaseSRC_DETAILS}
 add_library(poutre_base ${PoutreBaseSRC})
 add_library(poutre_base::poutre_base ALIAS poutre_base)
 
-target_link_libraries(poutre_base PRIVATE poutre_options
-  PRIVATE poutre_warnings
+target_link_libraries(poutre_base PRIVATE poutre2_options
+  PRIVATE poutre2_warnings
   PRIVATE jsoncpp_lib
   PRIVATE spdlog::spdlog
   INTERFACE xsimd

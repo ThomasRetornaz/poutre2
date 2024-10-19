@@ -16,8 +16,8 @@ set(PoutreBaseTestSRC
 add_executable(poutre_base_tests ${PoutreBaseTestSRC})
 target_link_libraries(
   poutre_base_tests
-  PRIVATE poutre::poutre_warnings
-  poutre::poutre_options
+  PRIVATE poutre2::poutre2_warnings
+  poutre2::poutre2_options
   jsoncpp_lib
   spdlog::spdlog
   Catch2::Catch2WithMain

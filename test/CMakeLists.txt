@@ -29,13 +29,13 @@ add_test(NAME cli.has_help COMMAND poutre_base_tests --help)
 # add_test(NAME cli.version_matches COMMAND poutre_base_tests --version)
 # set_tests_properties(cli.version_matches PROPERTIES PASS_REGULAR_EXPRESSION "${PROJECT_VERSION}")
 
-add_executable(tests tests.cpp)
-target_link_libraries(
-  tests
-  PRIVATE poutre2::poutre2_warnings
-          poutre2::poutre2_options
-          poutre2::sample_library
-          Catch2::Catch2WithMain)
+# add_executable(tests tests.cpp)
+# target_link_libraries(
+#   tests
+#   PRIVATE poutre2::poutre2_warnings
+#           poutre2::poutre2_options
+#           poutre2::sample_library
+#           Catch2::Catch2WithMain)
 
 # if(WIN32 AND BUILD_SHARED_LIBS)
 # add_custom_command(
@@ -61,13 +61,13 @@ target_link_libraries(
 # .xml)
 
 # Add a file containing a set of constexpr tests
-add_executable(constexpr_tests constexpr_tests.cpp)
-target_link_libraries(
-  constexpr_tests
-  PRIVATE poutre2::poutre2_warnings
-          poutre2::poutre2_options
-          poutre2::sample_library
-          Catch2::Catch2WithMain)
+# add_executable(constexpr_tests constexpr_tests.cpp)
+# target_link_libraries(
+#   constexpr_tests
+#   PRIVATE poutre2::poutre2_warnings
+#           poutre2::poutre2_options
+#           poutre2::sample_library
+#           Catch2::Catch2WithMain)
 
 # catch_discover_tests(
 # constexpr_tests
@@ -84,14 +84,14 @@ target_link_libraries(
 
 # Disable the constexpr portion of the test, and build again this allows us to have an executable that we can debug when
 # things go wrong with the constexpr testing
-add_executable(relaxed_constexpr_tests constexpr_tests.cpp)
-target_link_libraries(
-  relaxed_constexpr_tests
-  PRIVATE poutre2::poutre2_warnings
-          poutre2::poutre2_options
-          poutre2::sample_library
-          Catch2::Catch2WithMain)
-target_compile_definitions(relaxed_constexpr_tests PRIVATE -DCATCH_CONFIG_RUNTIME_STATIC_REQUIRE)
+# add_executable(relaxed_constexpr_tests constexpr_tests.cpp)
+# target_link_libraries(
+#   relaxed_constexpr_tests
+#   PRIVATE poutre2::poutre2_warnings
+#           poutre2::poutre2_options
+#           poutre2::sample_library
+#           Catch2::Catch2WithMain)
+# target_compile_definitions(relaxed_constexpr_tests PRIVATE -DCATCH_CONFIG_RUNTIME_STATIC_REQUIRE)
 
 # catch_discover_tests(
 # relaxed_constexpr_tests
