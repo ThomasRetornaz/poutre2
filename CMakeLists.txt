@@ -20,12 +20,12 @@ project(
   VERSION 0.0.1
   DESCRIPTION ""
   HOMEPAGE_URL "https://github.com/ThomasRetornaz/poutre2"
-  LANGUAGES CXX C)
+  LANGUAGES CXX C ASM ASM_MASM)
 
 option(BUILD_SHARED_LIBS "Build Shared Libraries" NO)
 OPTION(POUTRE_BUILD_TEST "Build Tests Suites" YES)
 OPTION(POUTRE_BUILD_BENCH "Build Benchmark Suites" YES)
-OPTION(POUTRE_BUILD_DOC "Build doxygen documentation" YES)
+OPTION(POUTRE_BUILD_DOC "Build doxygen documentation" NO)
 
 if(BUILD_SHARED_LIBS)
   message(STATUS "Building shared libraries")
@@ -62,8 +62,8 @@ target_compile_features(poutre2_options INTERFACE cxx_std_${CMAKE_CXX_STANDARD})
 add_library(poutre2::poutre2_options ALIAS poutre2_options)
 add_library(poutre2::poutre2_warnings ALIAS poutre2_warnings)
 
-#add_library(poutre2::poutre2_options INTERFACE IMPORTED)
-#add_library(poutre2::poutre2_warnings INTERFACE IMPORTED)
+# add_library(poutre2::poutre2_options INTERFACE IMPORTED)
+# add_library(poutre2::poutre2_warnings INTERFACE IMPORTED)
 
 # configure files based on CMake configuration options
 add_subdirectory(configured_files)
@@ -83,7 +83,6 @@ if(POUTRE_BUILD_DOC)
   poutre2_enable_doxygen("")
 endif()
 
-
 # Adding the benchmarks:
 if(POUTRE_BUILD_BENCH)
   message(STATUS "Building Benchmarks")
@@ -98,10 +97,10 @@ if(BUILD_TESTING)
   add_subdirectory(test)
 endif()
 
-
 if(poutre2_BUILD_FUZZ_TESTS)
   message(AUTHOR_WARNING "Building Fuzz Tests, using fuzzing sanitizer https://www.llvm.org/docs/LibFuzzer.html")
-  if (NOT poutre2_ENABLE_ADDRESS_SANITIZER AND NOT poutre2_ENABLE_THREAD_SANITIZER)
+
+  if(NOT poutre2_ENABLE_ADDRESS_SANITIZER AND NOT poutre2_ENABLE_THREAD_SANITIZER)
     message(WARNING "You need asan or tsan enabled for meaningful fuzz testing")
   endif()
 
@@ -128,12 +127,12 @@ include(cmake/PackageProject.cmake)
 # Add other targets that you want installed here, by default we just package the one executable
 # we know we want to ship
 # poutre_package_project(
-#   TARGETS
-#   intro
-#   poutre_options
-#   poutre_warnings
-#   # FIXME: this does not work! CK
-#   # PRIVATE_DEPENDENCIES_CONFIGURED project_options project_warnings
+# TARGETS
+# intro
+# poutre_options
+# poutre_warnings
+# # FIXME: this does not work! CK
+# # PRIVATE_DEPENDENCIES_CONFIGURED project_options project_warnings
 # )
 
 # Experience shows that explicit package naming can help make it easier to sort

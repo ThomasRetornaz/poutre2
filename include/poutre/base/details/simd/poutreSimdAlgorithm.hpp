@@ -12,7 +12,7 @@
 /**
  * @file   poutreSimdAlgorithm.hpp
  * @author Thomas Retornaz
- * @brief  Add STL like algorithm on top of nsimd
+ * @brief  Add STL like algorithm on top of xsimd
  *
  *
  */
@@ -20,7 +20,6 @@
 #include <poutre/base/details/simd/poutreSimd.hpp>
 #include <poutre/base/poutreConfig.hpp>
 #include <poutre/base/poutreTypes.hpp>
-#include <poutreImageProcessingCore/poutreImageProcessingType.hpp>
 
 #include <cstdio>
 

@@ -10,6 +10,8 @@ set(PoutreBaseTestSRC
   ${subdirsource}/containerview.cpp
   ${subdirsource}/threading.cpp
 
+  ${subdirsource}/pq.cpp
+
   # ${PoutreBaseTestSubdirectory}/tree.cpp
 )
 
@@ -23,7 +25,7 @@ target_link_libraries(
   Catch2::Catch2WithMain
   PUBLIC poutre_base::poutre_base
   PUBLIC OpenMP::OpenMP_CXX
-  )
+)
 
 # add_definitions(-D_GLIBCXX_USE_CXX11_ABI)
 IF(BUILD_SHARED_LIBS)

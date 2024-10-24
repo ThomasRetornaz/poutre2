@@ -7,7 +7,8 @@ set(PoutreBaseSRC_DETAILS
   ${subdirheader}/details/simd/poutreSimdAlgorithm.hpp
   ${subdirheader}/details/threading/poutreThreading.hpp
   ${subdirheader}/details/data_structures/array_view.hpp
-  )
+  ${subdirheader}/details/data_structures/pq.hpp
+)
 
 set(PoutreBaseSRC_PUBLICHEADERS
   ${subdirheader}/poutreBase.hpp
