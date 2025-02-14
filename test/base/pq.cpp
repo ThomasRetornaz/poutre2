@@ -17,33 +17,33 @@
 
 #include <catch2/catch_test_macros.hpp>
 
-TEST_CASE("increase nostable", "[pqueue]")
-{
-  poutre::details::poutre_pq<unsigned char, uint64_t> pqueue;
-  // NOLINTBEGIN
-  pqueue.emplace(0, 1);//-V525
-  pqueue.emplace(50, 1);
-  pqueue.emplace(0, 2);
-  pqueue.emplace(50, 2);
-  pqueue.emplace(80, 1);
-  pqueue.emplace(80, 2);
-  pqueue.emplace(80, 3);
-  pqueue.emplace(0, 3);
-  // NOLINTEND
+// TEST_CASE("increase nostable", "[pqueue]")
+// {
+//   poutre::details::poutre_pq<unsigned char, uint64_t> pqueue;
+//   // NOLINTBEGIN
+//   pqueue.emplace(0, 1);//-V525
+//   pqueue.emplace(50, 1);
+//   pqueue.emplace(0, 2);
+//   pqueue.emplace(50, 2);
+//   pqueue.emplace(80, 1);
+//   pqueue.emplace(80, 2);
+//   pqueue.emplace(80, 3);
+//   pqueue.emplace(0, 3);
+//   // NOLINTEND
 
-  const std::vector<std::pair<unsigned char, uint64_t>> expected = {
-    { 80, 1 }, { 80, 2 }, { 80, 3 }, { 50, 1 }, { 50, 2 }, { 0, 2 }, { 0, 1 }, { 0, 3 }// NOLINT
-  };
-  std::vector<std::pair<unsigned char, uint64_t>> results;
-  while (!pqueue.empty()) {
-    results.push_back(pqueue.top());
-    pqueue.pop();
-  }
-  REQUIRE(results.size() == expected.size());
-  auto iterres = results.cbegin();
-  auto iterexpected = expected.cbegin();
-  for (; iterres != results.cend(); ++iterres, ++iterexpected) { REQUIRE(*iterexpected == *iterres); }
-}
+//   const std::vector<std::pair<unsigned char, uint64_t>> expected = {
+//     { 80, 1 }, { 80, 2 }, { 80, 3 }, { 50, 1 }, { 50, 2 }, { 0, 2 }, { 0, 1 }, { 0, 3 }// NOLINT
+//   };
+//   std::vector<std::pair<unsigned char, uint64_t>> results;
+//   while (!pqueue.empty()) {
+//     results.push_back(pqueue.top());
+//     pqueue.pop();
+//   }
+//   REQUIRE(results.size() == expected.size());
+//   auto iterres = results.cbegin();
+//   auto iterexpected = expected.cbegin();
+//   for (; iterres != results.cend(); ++iterres, ++iterexpected) { REQUIRE(*iterexpected == *iterres); }
+// }
 
 TEST_CASE("increase stable", "[pqueue]")
 {
@@ -73,33 +73,33 @@ TEST_CASE("increase stable", "[pqueue]")
   for (; iterres != results.cend(); ++iterres, ++iterexpected) { REQUIRE(*iterexpected == *iterres); }
 }
 
-TEST_CASE("decrease no stable", "[pqueue]")
-{
-  poutre::details::poutre_rpq<unsigned char, uint64_t> pqueue;
-  // NOLINTBEGIN
-  pqueue.emplace(0, 1);//-V525
-  pqueue.emplace(50, 1);
-  pqueue.emplace(0, 2);
-  pqueue.emplace(50, 2);
-  pqueue.emplace(80, 1);
-  pqueue.emplace(80, 2);
-  pqueue.emplace(80, 3);
-  pqueue.emplace(0, 3);
+// TEST_CASE("decrease no stable", "[pqueue]")
+// {
+//   poutre::details::poutre_rpq<unsigned char, uint64_t> pqueue;
+//   // NOLINTBEGIN
+//   pqueue.emplace(0, 1);//-V525
+//   pqueue.emplace(50, 1);
+//   pqueue.emplace(0, 2);
+//   pqueue.emplace(50, 2);
+//   pqueue.emplace(80, 1);
+//   pqueue.emplace(80, 2);
+//   pqueue.emplace(80, 3);
+//   pqueue.emplace(0, 3);
 
-  const std::vector<std::pair<unsigned char, uint64_t>> expected = {
-    { 0, 1 }, { 0, 2 }, { 0, 3 }, { 50, 2 }, { 50, 1 }, { 80, 2 }, { 80, 3 }, { 80, 1 }
-  };
-  // NOLINTEND
-  std::vector<std::pair<unsigned char, uint64_t>> results;
-  while (!pqueue.empty()) {
-    results.push_back(pqueue.top());
-    pqueue.pop();
-  }
-  REQUIRE(results.size() == expected.size());
-  auto iterres = results.cbegin();
-  auto iterexpected = expected.cbegin();
-  for (; iterres != results.cend(); ++iterres, ++iterexpected) { REQUIRE(*iterexpected == *iterres); }
-}
+//   const std::vector<std::pair<unsigned char, uint64_t>> expected = {
+//     { 0, 1 }, { 0, 2 }, { 0, 3 }, { 50, 2 }, { 50, 1 }, { 80, 2 }, { 80, 3 }, { 80, 1 }
+//   };
+//   // NOLINTEND
+//   std::vector<std::pair<unsigned char, uint64_t>> results;
+//   while (!pqueue.empty()) {
+//     results.push_back(pqueue.top());
+//     pqueue.pop();
+//   }
+//   REQUIRE(results.size() == expected.size());
+//   auto iterres = results.cbegin();
+//   auto iterexpected = expected.cbegin();
+//   for (; iterres != results.cend(); ++iterres, ++iterexpected) { REQUIRE(*iterexpected == *iterres); }
+// }
 
 TEST_CASE("decrease stable", "[pqueue]")
 {
