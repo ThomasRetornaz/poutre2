@@ -22,7 +22,7 @@ project(
   HOMEPAGE_URL "https://github.com/ThomasRetornaz/poutre2"
   LANGUAGES CXX C ASM ASM_MASM)
 
-option(BUILD_SHARED_LIBS "Build Shared Libraries" NO)
+option(BUILD_SHARED_LIBS "Build Shared Libraries" ON)
 OPTION(POUTRE_BUILD_TEST "Build Tests Suites" YES)
 OPTION(POUTRE_BUILD_BENCH "Build Benchmark Suites" YES)
 OPTION(POUTRE_BUILD_DOC "Build doxygen documentation" NO)
@@ -45,7 +45,7 @@ poutre2_setup_dependencies()
 
 poutre2_local_options()
 
-# don't know if this should be set globally from here or not...
+# dont know if this should be set globally from here or not...
 set(CMAKE_CXX_VISIBILITY_PRESET hidden)
 
 set(GIT_SHA
@@ -69,6 +69,7 @@ add_library(poutre2::poutre2_warnings ALIAS poutre2_warnings)
 add_subdirectory(configured_files)
 
 # Adding the src:
+include_directories(BEFORE ${CMAKE_SOURCE_DIR}/include)
 add_subdirectory(src)
 
 # Don't even look at tests/benchmark/documentation if we're not top level
@@ -108,7 +109,7 @@ if(poutre2_BUILD_FUZZ_TESTS)
 endif()
 
 # If MSVC is being used, and ASAN is enabled, we need to set the debugger environment
-# so that it behaves well with MSVC's debugger, and we can run the target from visual studio
+# so that it behaves well with MSVC s debugger, and we can run the target from visual studio
 if(MSVC)
   get_all_installable_targets(all_targets)
   message("all_targets=${all_targets}")
