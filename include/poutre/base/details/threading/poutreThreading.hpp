@@ -9,6 +9,9 @@
 
 #pragma once
 
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
+
 /**
  * @file   poutreThreading.hpp
  * @author Thomas Retornaz
@@ -355,3 +358,4 @@ namespace DefaultThreadPool {
 }// namespace DefaultThreadPool
 }// namespace poutre::thread
  //! @} doxygroup: threading_group
+ #pragma GCC diagnostic pop

@@ -12,7 +12,6 @@
 
 #include <mutex>
 #include <set>
-#include <stdexcept>
 #include <thread>
 
 #include <poutre/base/details/threading/poutreThreading.hpp>
