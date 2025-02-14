@@ -17,7 +17,7 @@
  *
  */
 
-#include <poutre/base/poutreConfig.hpp>
+#include <poutre/base/config.hpp>
 
 #ifdef POUTRE_DYNAMIC// defined if POUTRE is compiled as a DLL
 #ifdef poutre_base_EXPORTS// defined if we are building the POUTRE DLL (instead of using it)

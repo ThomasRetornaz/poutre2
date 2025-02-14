@@ -15,7 +15,7 @@
 #include <cctype>
 #include <cstring>
 #include <json/value.h>
-#include <poutre/base/poutreJsonSerialization.hpp>
+#include <poutre/base/json.hpp>
 #include <string>
 #include <vector>
 

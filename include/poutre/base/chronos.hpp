@@ -18,7 +18,7 @@
  */
 
 
-#include <poutre/base/poutreBase.hpp>
+#include <poutre/base/base.hpp>
 
 #include <chrono>
 #include <ctime>

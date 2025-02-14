@@ -20,7 +20,7 @@
  *
  */
 
-#include <poutre/base/poutreBase.hpp>
+#include <poutre/base/base.hpp>
 
 #include <condition_variable>
 #include <functional>

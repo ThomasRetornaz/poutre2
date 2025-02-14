@@ -20,7 +20,7 @@
  *
  */
 
-#include <poutre/base/poutreConfig.hpp>
+#include <poutre/base/config.hpp>
 
 #include <queue>
 #include <utility>

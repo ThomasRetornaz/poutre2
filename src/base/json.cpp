@@ -10,7 +10,7 @@
 //                     http://www.boost.org/LICENSE_1_0.txt                   //
 //==============================================================================
 
-#include <poutre/base/poutreJsonSerialization.hpp>
+#include <poutre/base/json.hpp>
 
 #include <json/reader.h>
 #include <json/value.h>

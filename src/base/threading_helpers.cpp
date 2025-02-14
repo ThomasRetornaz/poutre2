@@ -1,5 +1,5 @@
-#include <poutre/base/details/threading/poutreThreading.hpp>
-#include <poutre/base/poutreConfig.hpp>
+#include <poutre/base/details/threading/threading_helpers.hpp>
+#include <poutre/base/config.hpp>
 
 // #include <cstdlib> // getenv
 #include <mutex>

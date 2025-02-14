@@ -14,7 +14,7 @@
 #include <set>
 #include <thread>
 
-#include <poutre/base/details/threading/poutreThreading.hpp>
+#include <poutre/base/details/threading/threading_helpers.hpp>
 
 #include <catch2/catch_test_macros.hpp>
 

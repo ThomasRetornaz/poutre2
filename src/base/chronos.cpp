@@ -14,8 +14,8 @@
 #include <ctime>
 #include <memory>
 #include <ostream>
-#include <poutre/base/poutreChronos.hpp>
-#include <poutre/base/poutreConfig.hpp>
+#include <poutre/base/chronos.hpp>
+#include <poutre/base/config.hpp>
 #include <sstream>
 #include <string>
 

@@ -17,8 +17,8 @@
  *
  */
 
-#include <poutre/base/poutreBase.hpp>
-#include <poutre/base/poutreConfig.hpp>
+#include <poutre/base/base.hpp>
+#include <poutre/base/config.hpp>
 
 #include <fstream>
 #include <ostream>

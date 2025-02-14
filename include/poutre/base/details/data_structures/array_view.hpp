@@ -32,7 +32,7 @@
 #include <cassert>
 #include <cstddef>
 #include <initializer_list>
-#include <poutre/base/poutreConfig.hpp>
+#include <poutre/base/config.hpp>
 #include <type_traits>
 
 /*

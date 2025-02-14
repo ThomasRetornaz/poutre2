@@ -12,7 +12,7 @@
 
 #include <chrono>
 #include <memory>
-#include <poutre/base/poutreChronos.hpp>
+#include <poutre/base/chronos.hpp>
 #include <thread>
 
 #include <catch2/catch_test_macros.hpp>

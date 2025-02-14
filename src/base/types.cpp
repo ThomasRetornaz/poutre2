@@ -12,8 +12,8 @@
 
 #include <istream>
 #include <ostream>
-#include <poutre/base/poutreConfig.hpp>
-#include <poutre/base/poutreTypes.hpp>
+#include <poutre/base/config.hpp>
+#include <poutre/base/types.hpp>
 #include <string>
 
 namespace poutre {

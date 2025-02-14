@@ -11,7 +11,7 @@
 //==============================================================================
 
 #include <catch2/catch_test_macros.hpp>
-#include <poutre/base/poutreRegistrar.hpp>
+#include <poutre/base/registrar.hpp>
 #include <string>
 
 class Base

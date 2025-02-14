@@ -17,7 +17,7 @@
  *
  */
 
-#include <poutre/base/details/simd/poutreSimd.hpp>
+#include <poutre/base/details/simd/simd_helpers.hpp>
 #include <poutre/base/poutreConfig.hpp>
 #include <poutre/base/poutreTypes.hpp>
 

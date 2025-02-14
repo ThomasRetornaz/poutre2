@@ -1,31 +1,30 @@
-
 set(subdirheader ${PROJECT_SOURCE_DIR}/include/poutre/base)
 set(subdirsource ${PROJECT_SOURCE_DIR}/src/base)
 
 set(PoutreBaseSRC_DETAILS
-  ${subdirheader}/details/simd/poutreSimd.hpp
-  ${subdirheader}/details/simd/poutreSimdAlgorithm.hpp
-  ${subdirheader}/details/threading/poutreThreading.hpp
+  ${subdirheader}/details/simd/simd_helpers.hpp
+  ${subdirheader}/details/simd/simd_algorithm.hpp
+  ${subdirheader}/details/threading/threading_helpers.hpp
   ${subdirheader}/details/data_structures/array_view.hpp
   ${subdirheader}/details/data_structures/pq.hpp
 )
 
 set(PoutreBaseSRC_PUBLICHEADERS
-  ${subdirheader}/poutreBase.hpp
-  ${subdirheader}/poutreConfig.hpp
-  ${subdirheader}/poutreTypes.hpp
-  ${subdirheader}/poutreJsonSerialization.hpp
-  ${subdirheader}/poutreTrace.hpp
-  ${subdirheader}/poutreRegistrar.hpp
-  ${subdirheader}/poutreChronos.hpp
-  ${subdirheader}/poutreDenseIterator.hpp)
+  ${subdirheader}/base.hpp
+  ${subdirheader}/config.hpp
+  ${subdirheader}/types.hpp
+  ${subdirheader}/json.hpp
+  ${subdirheader}/trace.hpp
+  ${subdirheader}/registrar.hpp
+  ${subdirheader}/chronos.hpp
+  ${subdirheader}/iterator.hpp)
 
 set(PoutreBaseSRC_CPP
-  ${subdirsource}/poutreJsonSerialization.cpp
-  ${subdirsource}/poutreTrace.cpp
-  ${subdirsource}/poutreType.cpp
-  ${subdirsource}/poutreChronos.cpp
-  ${subdirsource}/poutreThreading.cpp)
+  ${subdirsource}/json.cpp
+  ${subdirsource}/trace.cpp
+  ${subdirsource}/types.cpp
+  ${subdirsource}/chronos.cpp
+  ${subdirsource}/threading_helpers.cpp)
 
 source_group(details FILES ${PoutreBaseSRC_DETAILS})
 source_group(src FILES ${PoutreBaseSRC_CPP})

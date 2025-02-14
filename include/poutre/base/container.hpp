@@ -16,10 +16,10 @@
  * constexpr, inlining and optimisations  for small array size.
  */
 
-#include <poutre/base/poutreConfig.hpp>
+#include <poutre/base/config.hpp>
 #include <poutre/base/poutreContainerHelper.hpp>
-#include <poutre/base/poutreDenseIterator.hpp>
-#include <poutre/base/poutreTypes.hpp>
+#include <poutre/base/iterator.hpp>
+#include <poutre/base/types.hpp>
 
 #include <array>
 #include <iterator>

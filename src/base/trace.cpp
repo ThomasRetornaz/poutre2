@@ -10,7 +10,7 @@
 //                     http://www.boost.org/LICENSE_1_0.txt                   //
 //==============================================================================
 
-#include <poutre/base/poutreTrace.hpp>
+#include <poutre/base/trace.hpp>
 
 #include <ostream>
 

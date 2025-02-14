@@ -17,7 +17,7 @@
  *
  */
 
-#include <poutre/base/poutreBase.hpp>
+#include <poutre/base/base.hpp>
 
 #include <format>
 #include <iosfwd>
