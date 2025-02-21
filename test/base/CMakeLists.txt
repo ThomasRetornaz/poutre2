@@ -9,7 +9,7 @@ set(PoutreBaseTestSRC
   ${subdirsource}/coordinate.cpp
   ${subdirsource}/containerview.cpp
   ${subdirsource}/threading.cpp
-
+  ${subdirsource}/types.cpp
   ${subdirsource}/pq.cpp
 
   # ${PoutreBaseTestSubdirectory}/tree.cpp
