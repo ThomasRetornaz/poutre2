@@ -350,7 +350,8 @@ public:
   constexpr index(std::initializer_list<value_type> il);
 
   // element access
-  constexpr reference operator[](std::size_t n) { return index_[n]; }
+  // cppcheck-suppress functionConst
+  reference operator[](std::size_t n) { return index_[n]; }
   constexpr const_reference operator[](std::size_t n) const { return index_[n]; }
 
   // arithmetic
@@ -502,7 +503,8 @@ public:
   }
 
   // element access
-  constexpr reference operator[](std::size_t n) { return bounds_[n]; }
+  // cppcheck-suppress functionConst
+  reference operator[](std::size_t n) { return bounds_[n]; }
   constexpr const_reference operator[](std::size_t n) const { return bounds_[n]; }
 
   // arithmetic
