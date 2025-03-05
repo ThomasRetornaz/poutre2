@@ -17,11 +17,20 @@
  *
  */
 
+#include <memory>
 #include <poutre/base/config.hpp>
 #include <poutre/base/types.hpp>
 #include <vector>
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wold-style-cast"
+#pragma clang diagnostic ignored "-Wsign-conversion"
+#pragma clang diagnostic ignored "-Wfloat-conversion"
+#pragma clang diagnostic ignored "-Wshorten-64-to-32"
+#pragma clang diagnostic ignored "-Wcast-align"
+#pragma clang diagnostic ignored "-Wdouble-promotion"
 #include <xsimd/xsimd.hpp>
+#pragma clang diagnostic pop
 
 namespace xs = xsimd;
 
@@ -78,7 +87,7 @@ POUTRE_ALWAYS_INLINE bool IsAligned(const void *ptr,
 {
   // NOLINTBEGIN
   POUTRE_ASSERTCHECK(((alignment & (alignment - 1)) == 0), "bad alignment value");
-  return ((std::size_t)ptr & (alignment - 1)) == 0;// from boost\align\detail\is_aligned.hpp //NOLINT
+  return (reinterpret_cast<std::size_t>(ptr) & (alignment - 1)) == 0;// from boost\align\detail\is_aligned.hpp //NOLINT
   // NOLINTEND
 }
 
@@ -96,7 +105,7 @@ POUTRE_ALWAYS_INLINE T *t_ReachNextAligned(T *ptr,
   POUTRE_ASSERTCHECK(((alignment & (alignment - 1)) == 0), "bad alignment value");
   // NOLINTBEGIN
   return reinterpret_cast<T *>(
-    ((std::size_t)ptr + alignment - 1) & ~(alignment - 1));// from boost\align\detail\align_up.hpp
+    (reinterpret_cast<std::size_t>(ptr) + alignment - 1) & ~(alignment - 1));// from boost\align\detail\align_up.hpp
   // NOLINTEND
 }
 
