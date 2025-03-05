@@ -159,7 +159,7 @@ function(poutre2_setup_dependencies)
   # clone approach
   ExternalProject_Add(XsimdDep
     GIT_REPOSITORY https://github.com/QuantStack/xsimd.git
-    GIT_TAG master
+    GIT_TAG 13.2.0
     PREFIX ${CMAKE_CURRENT_BINARY_DIR}
 
     # --Update/Patch step----------
@@ -180,31 +180,33 @@ function(poutre2_setup_dependencies)
     $<BUILD_INTERFACE:${SOURCE_DIR}/include> # we can do better
     $<INSTALL_INTERFACE:include/xsimd>
   )
+  SET(XSIMD_INCLUDE_DIRECTORY "${SOURCE_DIR}/include" PARENT_SCOPE)
 
   # ### MDSPAN
-  ExternalProject_Add(mdspanDep
-    GIT_REPOSITORY https://github.com/kokkos/mdspan.git
-    GIT_TAG stable
-    PREFIX ${CMAKE_CURRENT_BINARY_DIR}
+  # ExternalProject_Add(mdspanDep
+  #   GIT_REPOSITORY https://github.com/kokkos/mdspan.git
+  #   GIT_TAG stable
+  #   PREFIX ${CMAKE_CURRENT_BINARY_DIR}
 
-    # --Update/Patch step----------
-    UPDATE_COMMAND ""
-    PATCH_COMMAND ""
-    INSTALL_COMMAND ""
+  #   # --Update/Patch step----------
+  #   UPDATE_COMMAND ""
+  #   PATCH_COMMAND ""
+  #   INSTALL_COMMAND ""
 
-    # --Configure step-------------
-    #
-    BUILD_COMMAND ""
-  )
+  #   # --Configure step-------------
+  #   #
+  #   BUILD_COMMAND ""
+  # )
 
-  ExternalProject_Get_Property(mdspanDep TMP_DIR STAMP_DIR DOWNLOAD_DIR SOURCE_DIR BINARY_DIR INSTALL_DIR)
+  # ExternalProject_Get_Property(mdspanDep TMP_DIR STAMP_DIR DOWNLOAD_DIR SOURCE_DIR BINARY_DIR INSTALL_DIR)
 
-  # message("Build mdspan src ${SOURCE_DIR} in ${BINARY_DIR}")
-  add_library(mdspan INTERFACE)
-  target_include_directories(mdspan INTERFACE
-    $<BUILD_INTERFACE:${SOURCE_DIR}/include> # we can do better
-    $<INSTALL_INTERFACE:include/mdspan>
-  )
+  # # message("Build mdspan src ${SOURCE_DIR} in ${BINARY_DIR}")
+  # add_library(mdspan INTERFACE)
+  # target_include_directories(mdspan INTERFACE
+  #   $<BUILD_INTERFACE:${SOURCE_DIR}/include> # we can do better
+  #   $<INSTALL_INTERFACE:include/mdspan>
+  # )
+  # SET(MDSPAN_INCLUDE_DIRECTORY "${SOURCE_DIR}/include" PARENT_SCOPE)
 
   # ### JSONCPP
   if(NOT TARGET jsoncpp::jsoncpp)
