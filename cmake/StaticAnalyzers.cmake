@@ -11,8 +11,13 @@ macro(poutre2_enable_cppcheck WARNINGS_AS_ERRORS CPPCHECK_OPTIONS)
     if("${CPPCHECK_OPTIONS}" STREQUAL "")
       # Enable all warnings that are actionable by the user of this toolset
       # style should enable the other 3, but we'll be explicit just in case
-      set(SUPPRESS_DIR "*:${CMAKE_CURRENT_BINARY_DIR}/_deps/*.h")
-      message(STATUS "CPPCHECK_OPTIONS suppress: ${SUPPRESS_DIR}")
+      set(SUPPRESS_DIR_DEPS
+        "*:${CMAKE_CURRENT_BINARY_DIR}/_deps/*" 
+        )
+      set(SUPPRESS_DIR_SRC
+        "*:${CMAKE_CURRENT_BINARY_DIR}/src/*"
+      )
+      message(STATUS "CPPCHECK_OPTIONS suppress: ${SUPPRESS_DIR_DEPS} ${SUPPRESS_DIR_SRC}")
       set(CMAKE_CXX_CPPCHECK
           ${CPPCHECK}
           --template=${CPPCHECK_TEMPLATE}
@@ -29,7 +34,8 @@ macro(poutre2_enable_cppcheck WARNINGS_AS_ERRORS CPPCHECK_OPTIONS)
           --suppress=syntaxError
           --suppress=preprocessorErrorDirective
           --inconclusive
-          --suppress=${SUPPRESS_DIR})
+          --suppress=${SUPPRESS_DIR_DEPS}
+          --suppress=${SUPPRESS_DIR_SRC})
     else()
       # if the user provides a CPPCHECK_OPTIONS with a template specified, it will override this template
       set(CMAKE_CXX_CPPCHECK ${CPPCHECK} --template=${CPPCHECK_TEMPLATE} ${CPPCHECK_OPTIONS})
