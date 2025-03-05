@@ -7,24 +7,30 @@ set(PoutreBaseSRC_DETAILS
   ${subdirheader}/details/threading/threading_helpers.hpp
   ${subdirheader}/details/data_structures/array_view.hpp
   ${subdirheader}/details/data_structures/pq.hpp
+  ${subdirheader}/details/data_structures/image_t.hpp
 )
 
 set(PoutreBaseSRC_PUBLICHEADERS
   ${subdirheader}/base.hpp
   ${subdirheader}/config.hpp
   ${subdirheader}/types.hpp
+  ${subdirheader}/types_traits.hpp
   ${subdirheader}/json.hpp
   ${subdirheader}/trace.hpp
   ${subdirheader}/registrar.hpp
   ${subdirheader}/chronos.hpp
-  ${subdirheader}/iterator.hpp)
+  ${subdirheader}/iterator.hpp
+  ${subdirheader}/image_interface.hpp)
 
 set(PoutreBaseSRC_CPP
   ${subdirsource}/json.cpp
   ${subdirsource}/trace.cpp
   ${subdirsource}/types.cpp
   ${subdirsource}/chronos.cpp
-  ${subdirsource}/threading_helpers.cpp)
+  ${subdirsource}/threading_helpers.cpp
+  ${subdirsource}/image_interface.cpp
+  ${subdirsource}/image_t.cpp
+  )
 
 source_group(details FILES ${PoutreBaseSRC_DETAILS})
 source_group(src FILES ${PoutreBaseSRC_CPP})
@@ -34,8 +40,12 @@ set(PoutreBaseSRC ${PoutreBaseSRC_DETAILS}
   ${PoutreBaseSRC_CPP}
   ${PoutreBaseSRC_PUBLICHEADERS})
 
+
+# add_definitions(-DMDSPAN_IMPL_STANDARD_NAMESPACE=Kokos)
+
 add_library(poutre_base ${PoutreBaseSRC})
 add_library(poutre_base::poutre_base ALIAS poutre_base)
+
 
 target_link_libraries(poutre_base PRIVATE poutre2_options
   PRIVATE poutre2_warnings
@@ -44,6 +54,12 @@ target_link_libraries(poutre_base PRIVATE poutre2_options
   INTERFACE xsimd
   PUBLIC OpenMP::OpenMP_CXX
 )
+
+# set_source_files_properties(
+#   ${subdirsource}/image_t.cpp
+#   PROPERTIES
+#   COMPILE_FLAGS "-w"
+# )
 
 # force custom target before start
 add_dependencies(poutre_base xsimd)
