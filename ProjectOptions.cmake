@@ -124,6 +124,8 @@ macro(poutre2_local_options)
   if(PROJECT_IS_TOP_LEVEL)
     include(cmake/StandardProjectSettings.cmake)
   endif()
+  
+  include(cmake/SimdDefaultFlags.cmake)
 
   add_library(poutre2_warnings INTERFACE)
   add_library(poutre2_options INTERFACE)
