@@ -20,6 +20,7 @@
 #include <cstddef>
 #include <initializer_list>
 #include <memory>
+#include <poutre/base/base.hpp>
 #include <poutre/base/config.hpp>
 #include <poutre/base/details/data_structures/array_view.hpp>
 #include <poutre/base/details/simd/simd_helpers.hpp>
@@ -39,7 +40,7 @@ namespace poutre::details {
  *@{
  */
 
-template<class valuetype, std::ptrdiff_t Rank = 2> class image_t : public IInterface
+template<class valuetype, std::ptrdiff_t Rank = 2>  class BASE_API image_t : public IInterface
 {
   static_assert(Rank > 0, "Rank must be >0");
 
@@ -63,8 +64,12 @@ public:
 
   using coordinate_type = av::bounds<Rank>;
   using index_type = av::index<Rank>;
-
-
+  using storage_type = std::vector<value_type, aligned_allocator>;
+  using iterator = typename storage_type::iterator;
+  using const_iterator = typename storage_type::const_iterator;
+  using reverse_iterator = typename storage_type::reverse_iterator;
+  using const_reverse_iterator = typename storage_type::const_reverse_iterator;
+  
   // static const std::ptrdiff_t m_numdims = NumDims;
   static const PType m_ptype = TypeTraits<value_type>::pixel_type;
   static const CompoundType m_ctype = TypeTraits<value_type>::compound_type;
@@ -83,6 +88,34 @@ public:
   }
   //! Get num of dimensions
   [[nodiscard]] std::size_t GetRank() const override { return m_numdims; }
+
+  //! Get total number of elements
+  [[nodiscard]] constexpr size_type size() const noexcept { return m_numelement; }
+
+  //! no const direct access to underlying storage @Warning
+  // cppcheck-suppress functionConst
+  [[nodiscard]] pointer data() noexcept { return m_storage.data(); }
+
+  //! const direct access to underlying storage
+  [[nodiscard]] const_pointer data() const noexcept { return m_storage.data(); }
+
+  iterator begin() noexcept {return m_storage.begin(); }
+
+  const_iterator cbegin() const noexcept { return m_storage.cbegin(); }
+
+  iterator end() noexcept { return m_storage.end(); }
+
+  const_iterator cend() const noexcept { return m_storage.cend();; }
+
+  reverse_iterator rbegin() noexcept { return m_storage.rbegin(); }
+
+  const_reverse_iterator crbegin() const noexcept
+  {
+    return m_storage.crbegin();
+  }
+
+  //! assign value to all elements
+  void fill(const value_type &val) { std::fill(m_storage.begin(), m_storage.end(), val); }
 
   std::string str() const noexcept override
   {
@@ -140,12 +173,25 @@ public:
 
   constexpr const coordinate_type shape() const noexcept { return m_coordinnates; }
 
+
+  template<size_t R = Rank, typename = std::enable_if_t<R == 2>>
+  constexpr scoord GetXSize() const noexcept
+  {
+    return this->m_coordinnates[1];
+  }
+
+  template<size_t R = Rank, typename = std::enable_if_t<R == 2>>
+  constexpr scoord GetYSize() const noexcept
+  {
+    return this->m_coordinnates[0];
+  }
+
   template<size_t R = Rank, typename = std::enable_if_t<R == 2>>
   POUTRE_CONSTEXPR const_pointer GetLineBuffer(scoord y) const POUTRE_NOEXCEPTONLYNDEBUG
   {
     POUTRE_ASSERTCHECK(y < this->m_coordinnates[0], "Access out of bound");
     POUTRE_ASSERTCHECK(y >= 0, "Access out of bound");
-    return &m_storage[y * m_coordinnates[0]];
+    return &m_storage[static_cast<std::size_t>(y) * static_cast<std::size_t>(m_coordinnates[0])];
   }
 
 
@@ -155,21 +201,21 @@ public:
   {
     POUTRE_ASSERTCHECK(y < this->m_coordinnates[0], "Access out of bound");
     POUTRE_ASSERTCHECK(y >= 0, "Access out of bound");
-    return &m_storage[y * m_coordinnates[0]];
+    return &m_storage[static_cast<std::size_t>(y) * static_cast<std::size_t>(m_coordinnates[0])];
   }
 
   template<size_t R = Rank, typename = std::enable_if_t<R == 2>>
-  POUTRE_CONSTEXPR void SetPixel(scoord x, scoord y, value_type value) POUTRE_NOEXCEPTONLYNDEBUG
+  void SetPixel(scoord x, scoord y, value_type value) POUTRE_NOEXCEPTONLYNDEBUG
   {
     POUTRE_ASSERTCHECK(x < this->m_coordinnates[1], "Access out of bound");
     POUTRE_ASSERTCHECK(x >= 0, "Access out of bound");
     POUTRE_ASSERTCHECK(y < this->m_coordinnates[0], "Access out of bound");
     POUTRE_ASSERTCHECK(y >= 0, "Access out of bound");
-    m_storage[y * m_coordinnates[0] + x] = value;
+    m_storage[static_cast<std::size_t>(y) * static_cast<std::size_t>(m_coordinnates[0]) + static_cast<std::size_t>(x)] = value;
   }
 
   template<size_t R = Rank, typename = std::enable_if_t<R == 2>>
-  POUTRE_CONSTEXPR void SetPixel(av::idx2d index, value_type value) POUTRE_NOEXCEPTONLYNDEBUG
+  void SetPixel(av::idx2d index, value_type value) POUTRE_NOEXCEPTONLYNDEBUG
   {
     this->SetPixel(index[1], index[0], value);
   }
@@ -181,7 +227,7 @@ public:
     POUTRE_ASSERTCHECK(x >= 0, "Access out of bound");
     POUTRE_ASSERTCHECK(y < this->m_coordinnates[0], "Access out of bound");
     POUTRE_ASSERTCHECK(y >= 0, "Access out of bound");
-    return m_storage[y * m_coordinnates[0] + x];
+    return m_storage[static_cast<std::size_t>(y) * static_cast<std::size_t>(m_coordinnates[0]) + static_cast<std::size_t>(x)];
   }
 
   template<size_t R = Rank, typename = std::enable_if_t<R == 2>>
@@ -190,7 +236,7 @@ public:
     return this->GetPixel(index[1], index[0]);
   }
 
-  constexpr void swap(self_type &rhs) noexcept
+  void swap(self_type &rhs) noexcept
   {
     if (this != &rhs) {
       using std::swap;
@@ -202,47 +248,58 @@ public:
   }
 
 private:
-  std::vector<value_type, aligned_allocator> m_storage;
+  storage_type m_storage;
   coordinate_type m_coordinnates;
   size_type m_numelement;
 };
 
+template<class valuetype, std::ptrdiff_t Rank>
+  constexpr poutre::details::av::array_view<valuetype, Rank> view(image_t<valuetype, Rank> &i_img)
+  {
+    return poutre::details::av::array_view<valuetype, Rank>(i_img.data(), i_img.shape());
+  }
+
+  template<class valuetype, std::ptrdiff_t Rank>
+  constexpr const poutre::details::av::array_view<valuetype, Rank> view(const image_t<valuetype, Rank> &i_img)
+  {
+    return poutre::details::av::array_view<valuetype, Rank>(i_img.data(), i_img.shape());
+  }
 // todo define macros
-extern template class image_t<pUINT8, 1>;
-extern template class image_t<pINT32, 1>;
-extern template class image_t<pFLOAT, 1>;
-extern template class image_t<pINT64, 1>;
-extern template class image_t<pDOUBLE, 1>;
+extern template class BASE_API image_t<pUINT8, 1>;
+extern template class BASE_API image_t<pINT32, 1>;
+extern template class BASE_API image_t<pFLOAT, 1>;
+extern template class BASE_API image_t<pINT64, 1>;
+extern template class BASE_API image_t<pDOUBLE, 1>;
 
-extern template class image_t<pUINT8, 2>;
-extern template class image_t<pINT32, 2>;
-extern template class image_t<pFLOAT, 2>;
-extern template class image_t<pINT64, 2>;
-extern template class image_t<pDOUBLE, 2>;
+extern template class BASE_API image_t<pUINT8, 2>;
+extern template class BASE_API image_t<pINT32, 2>;
+extern template class BASE_API image_t<pFLOAT, 2>;
+extern template class BASE_API image_t<pINT64, 2>;
+extern template class BASE_API image_t<pDOUBLE, 2>;
 
-extern template class image_t<compound_type<pUINT8, 3>, 2>;
-extern template class image_t<compound_type<pINT32, 3>, 2>;
-extern template class image_t<compound_type<pFLOAT, 3>, 2>;
-extern template class image_t<compound_type<pINT64, 3>, 2>;
-extern template class image_t<compound_type<pDOUBLE, 3>, 2>;
+extern template class BASE_API image_t<compound_type<pUINT8, 3>, 2>;
+extern template class BASE_API image_t<compound_type<pINT32, 3>, 2>;
+extern template class BASE_API image_t<compound_type<pFLOAT, 3>, 2>;
+extern template class BASE_API image_t<compound_type<pINT64, 3>, 2>;
+extern template class BASE_API image_t<compound_type<pDOUBLE, 3>, 2>;
 
-extern template class image_t<compound_type<pUINT8, 4>, 2>;
-extern template class image_t<compound_type<pINT32, 4>, 2>;
-extern template class image_t<compound_type<pFLOAT, 4>, 2>;
-extern template class image_t<compound_type<pINT64, 4>, 2>;
-extern template class image_t<compound_type<pDOUBLE, 4>, 2>;
+extern template class BASE_API image_t<compound_type<pUINT8, 4>, 2>;
+extern template class BASE_API image_t<compound_type<pINT32, 4>, 2>;
+extern template class BASE_API image_t<compound_type<pFLOAT, 4>, 2>;
+extern template class BASE_API image_t<compound_type<pINT64, 4>, 2>;
+extern template class BASE_API image_t<compound_type<pDOUBLE, 4>, 2>;
 
-extern template class image_t<pUINT8, 3>;
-extern template class image_t<pINT32, 3>;
-extern template class image_t<pFLOAT, 3>;
-extern template class image_t<pINT64, 3>;
-extern template class image_t<pDOUBLE, 3>;
+extern template class BASE_API image_t<pUINT8, 3>;
+extern template class BASE_API image_t<pINT32, 3>;
+extern template class BASE_API image_t<pFLOAT, 3>;
+extern template class BASE_API image_t<pINT64, 3>;
+extern template class BASE_API image_t<pDOUBLE, 3>;
 
-extern template class image_t<pUINT8, 4>;
-extern template class image_t<pINT32, 4>;
-extern template class image_t<pFLOAT, 4>;
-extern template class image_t<pINT64, 4>;
-extern template class image_t<pDOUBLE, 4>;
+extern template class BASE_API image_t<pUINT8, 4>;
+extern template class BASE_API image_t<pINT32, 4>;
+extern template class BASE_API image_t<pFLOAT, 4>;
+extern template class BASE_API image_t<pINT64, 4>;
+extern template class BASE_API image_t<pDOUBLE, 4>;
 
 //! @} doxygroup: image_processing_container_group
 }// namespace poutre::details

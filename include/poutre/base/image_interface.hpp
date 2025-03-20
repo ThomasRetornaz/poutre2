@@ -105,6 +105,22 @@ BASE_API void AssertImagesAreDifferent(const IInterface &i_img1, const IInterfac
 //! Factory to build contiguous dense image
 BASE_API std::unique_ptr<IInterface> Create(const std::vector<std::size_t> &dims, CompoundType ctype, PType ptype);
 
+/**
+* @brief Convert IInterface to human readable string
+*
+* @param i_image
+* @return std::string
+*/
+BASE_API std::string ImageToString(const IInterface &i_image);
+
+/**
+* @brief From human readable string create an IInterface see @c ImageToString
+*
+* @param i_str
+* @return Image
+*/
+BASE_API std::unique_ptr<IInterface> ImageFromString(const std::string &i_str);
+
 //! @} doxygroup: image_processing_interface_group
 
 }// namespace poutre

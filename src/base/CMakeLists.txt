@@ -19,7 +19,6 @@ set(PoutreBaseSRC_PUBLICHEADERS
   ${subdirheader}/trace.hpp
   ${subdirheader}/registrar.hpp
   ${subdirheader}/chronos.hpp
-  ${subdirheader}/iterator.hpp
   ${subdirheader}/image_interface.hpp)
 
 set(PoutreBaseSRC_CPP
