@@ -10,7 +10,7 @@
 #pragma once
 
 /**
- * @file   poutreSimdAlgorithm.hpp
+ * @file   simd_algorithm.hpp
  * @author Thomas Retornaz
  * @brief  Add STL like algorithm on top of xsimd
  *

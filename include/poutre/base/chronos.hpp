@@ -10,7 +10,7 @@
 #pragma once
 
 /**
- * @file   poutreChronos.hpp
+ * @file   chronos.hpp
  * @author Thomas Retornaz
  * @brief  Define helper objects around std::chrono facilities
  *

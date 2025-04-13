@@ -10,7 +10,7 @@
 #pragma once
 
 /**
- * @file   poutreJsonSerialization.hpp
+ * @file   json.hpp
  * @author Thomas Retornaz
  * @brief  Define json serialization interface
  *

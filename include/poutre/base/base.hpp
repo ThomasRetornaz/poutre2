@@ -10,7 +10,7 @@
 #pragma once
 
 /**
- * @file   poutreBase.hpp
+ * @file   base.hpp
  * @author Thomas Retornaz
  * @brief  Define import/export for shared libraries
  *

@@ -9,7 +9,7 @@
 #pragma once
 
 /**
- * @file   poutreTypes.hpp
+ * @file   types.hpp
  * @author Thomas Retornaz
  * @brief  Common type alias and helpers
  *

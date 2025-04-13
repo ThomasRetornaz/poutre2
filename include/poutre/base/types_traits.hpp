@@ -6,8 +6,7 @@
 //                     http://www.boost.org/LICENSE_1_0.txt                   //
 //==============================================================================
 
-#ifndef TYPE_TRAITS_HPP__
-#define TYPE_TRAITS_HPP__
+#pragma once
 
 /**
  * @file   types_traits.hpp
@@ -315,4 +314,3 @@ template<class valuetype, std::ptrdiff_t Rank> struct TypeTraits<compound_type<v
       }
   };
 } // namespace poutre
-#endif // TYPE_TRAITS_HPP__

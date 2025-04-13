@@ -13,7 +13,7 @@
 #pragma GCC diagnostic ignored "-Wdeprecated-declarations"
 
 /**
- * @file   poutreThreading.hpp
+ * @file   threading_helpers.hpp
  * @author Thomas Retornaz
  * @brief  Add threading capabilities
  *

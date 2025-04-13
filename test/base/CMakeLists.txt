@@ -12,8 +12,6 @@ set(PoutreBaseTestSRC
   ${subdirsource}/threading.cpp
   ${subdirsource}/types.cpp
   ${subdirsource}/pq.cpp
-
-  # ${PoutreBaseTestSubdirectory}/tree.cpp
 )
 
 add_executable(poutre_base_tests ${PoutreBaseTestSRC})
@@ -40,6 +38,7 @@ ENDIF()
 # set_target_properties(poutre_base_tests PROPERTIES VERSION "0.0.1"
 # CXX_VISIBILITY_PRESET hidden
 # VISIBILITY_INLINES_HIDDEN YES)
+
 if(WIN32 AND BUILD_SHARED_LIBS)
   add_custom_command(
     TARGET poutre_base_tests
