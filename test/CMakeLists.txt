@@ -18,6 +18,7 @@ endif()
 include(${Catch2_SOURCE_DIR}/extras/Catch.cmake)
 
 add_subdirectory(base)
+add_subdirectory(pixel_processing)
 
 # Provide a simple smoke test to make sure that the CLI works and can display a --help message
 add_test(NAME cli.has_help COMMAND poutre_base_tests --help)
