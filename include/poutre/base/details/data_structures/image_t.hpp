@@ -259,11 +259,12 @@ template<class valuetype, std::ptrdiff_t Rank>
     return poutre::details::av::array_view<valuetype, Rank>(i_img.data(), i_img.shape());
   }
 
-  template<class valuetype, std::ptrdiff_t Rank>
-  constexpr const poutre::details::av::array_view<valuetype, Rank> view(const image_t<valuetype, Rank> &i_img)
+template<class valuetype, std::ptrdiff_t Rank>
+  constexpr poutre::details::av::array_view<const valuetype, Rank> view(const image_t<valuetype, Rank> &i_img)
   {
-    return poutre::details::av::array_view<valuetype, Rank>(i_img.data(), i_img.shape());
+    return poutre::details::av::array_view<const valuetype, Rank>(i_img.data(), i_img.shape());
   }
+
 // todo define macros
 extern template class BASE_API image_t<pUINT8, 1>;
 extern template class BASE_API image_t<pINT32, 1>;
