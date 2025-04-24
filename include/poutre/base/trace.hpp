@@ -24,6 +24,8 @@
 #include <ostream>
 #include <spdlog/sinks/stdout_color_sinks.h>
 #include <spdlog/spdlog.h>
+#include <spdlog/logger.h>
+#include <spdlog/common.h>
 
 /**
  * @addtogroup trace_group Trace facilities
@@ -32,7 +34,7 @@
  */
 namespace poutre {
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
-class GlobalLogger
+class BASE_API GlobalLogger
 {
 public:
   enum class LoggerLevel {
@@ -112,10 +114,7 @@ public:
 private:
   std::shared_ptr<spdlog::logger> m_innerlogger;
   //! Private ctor
-  GlobalLogger() : m_innerlogger(spdlog::stdout_color_st("global_console_logger"))// NOLINT
-  {
-    (*m_innerlogger).set_level(spdlog::level::debug);
-  }
+  GlobalLogger();
 };
 
 //! operator<< for GlobalLogger::LoggerLevel

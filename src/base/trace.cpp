@@ -11,10 +11,18 @@
 //==============================================================================
 
 #include <poutre/base/trace.hpp>
-
+#include <spdlog/sinks/stdout_color_sinks.h>
+#include <spdlog/common.h>
 #include <ostream>
 
 namespace poutre {
+
+//! Private ctor
+GlobalLogger::GlobalLogger() : m_innerlogger(spdlog::stdout_color_st("global_console_logger"))
+{
+  (*m_innerlogger).set_level(::spdlog::level::off);
+}
+
 std::ostream &operator<<(std::ostream &ost, GlobalLogger::LoggerLevel level)// NOLINT(misc-unused-parameters)
 {
   switch (level) {
