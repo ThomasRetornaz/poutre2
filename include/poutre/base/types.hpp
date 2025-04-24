@@ -26,10 +26,10 @@
 #endif
 
 #include <format>
+#include <initializer_list>
+#include <poutre/base/base.hpp>
 #include <sstream>
 #include <string>
-#include <initializer_list> 
-#include <poutre/base/base.hpp>
 
 namespace poutre {
 /*!
@@ -324,6 +324,105 @@ public:
   }
 };
 
+
+// specialization compound 3
+
+template<class valuetype> class compound_type<valuetype, 4>
+{
+public:
+  static constexpr std::ptrdiff_t rank = 4;
+  using self_type = compound_type<valuetype, 4>;
+  using value_type = valuetype;
+
+public:
+  value_type m_pix1, m_pix2, m_pix3, m_pix4;
+
+public:
+  //! Default constructor
+  compound_type() {}
+  //! Constant assignment constructor
+  compound_type(const value_type &pix1, const value_type &pix2, const value_type &pix3, const value_type &pix4)
+    : m_pix1(pix1), m_pix2(pix2), m_pix3(pix3), m_pix4(pix4)
+  {}
+  //! Constant assignment constructor
+  constexpr explicit compound_type(const value_type &value) : m_pix1(value), m_pix2(value), m_pix3(value), m_pix4(value)
+  {}
+
+  template<class U, typename = std::enable_if_t<std::is_convertible_v<valuetype, U>>>
+  // cppcheck-suppress missingMemberCopy
+  constexpr compound_type(const compound_type<U, 4> &other)
+    : m_pix1(static_cast<valuetype>(other.m_pix1)), m_pix2(static_cast<valuetype>(other.m_pix2)), m_pix3(static_cast<valuetype>(other.m_pix3)), m_pix4(static_cast<valuetype>(other.m_pix4))
+  {}
+
+  constexpr compound_type(const compound_type<valuetype, 4> &rhs) = default;
+
+  constexpr compound_type<valuetype, 4>  &operator=(const compound_type<valuetype, 4> &rhs) = default;
+
+  constexpr compound_type(compound_type<valuetype, 4> &&rhs) = default;
+
+  constexpr compound_type<valuetype, 4>  &operator=(compound_type<valuetype, 4> &&rhs) = default;
+
+  valuetype &operator[](ptrdiff_t idx) POUTRE_NOEXCEPTONLYNDEBUG
+  {
+    if (idx == 0)
+      return m_pix1;
+    else if (idx == 1)
+      return m_pix2;
+    else if (idx == 2)
+      return m_pix3;
+    POUTRE_ASSERTCHECK(
+      idx == 3, "Unsupported dimension : " + std::to_string(i) + " > #dimension=" + std::to_string(dimension::value));
+    return m_pix4;
+  }
+
+  const valuetype &operator[](ptrdiff_t idx) const POUTRE_NOEXCEPTONLYNDEBUG
+  {
+    if (idx == 0)
+      return m_pix1;
+    else if (idx == 1)
+      return m_pix2;
+    else if (idx == 2)
+      return m_pix3;
+    POUTRE_ASSERTCHECK(
+      idx == 3, "Unsupported dimension : " + std::to_string(i) + " > #dimension=" + std::to_string(dimension::value));
+    return m_pix4;
+  }
+
+  //! Strict equality operator
+  bool operator==(const self_type &other) const noexcept
+  {
+    return (m_pix1 == other.m_pix1) && (m_pix2 == other.m_pix2) && (m_pix3 == other.m_pix3) && (m_pix4 == other.m_pix4);
+  }
+  //! Inequality operator
+  bool operator!=(const self_type &other) const noexcept
+  {
+    return (m_pix1 != other.m_pix1) || (m_pix2 != other.m_pix2) || (m_pix3 != other.m_pix3) || (m_pix4 != other.m_pix4);
+  }
+
+  std::string to_string() const
+  {
+    std::ostringstream out;
+    out << "[";
+    out << m_pix1;
+    out << ",";
+    out << m_pix2;
+    out << ",";
+    out << m_pix3;
+    out << ",";
+    out << m_pix4;
+    out << "]";
+    return out.str();
+  }
+
+  //! Fill all elements with provided value
+  void fill(const valuetype &value) POUTRE_NOEXCEPT
+  {
+    m_pix1 = value;
+    m_pix2 = value;
+    m_pix3 = value;
+    m_pix4 = value;
+  }
+};
 
 using c3pUINT8 = compound_type<pUINT8, 3>;
 using c3pINT32 = compound_type<pINT32, 3>;
