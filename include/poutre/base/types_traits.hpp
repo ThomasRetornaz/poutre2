@@ -16,16 +16,97 @@
  *
  */
 
-#include <poutre/base/details/simd/simd_helpers.hpp>
+#include "types.hpp"
 #include <poutre/base/config.hpp>
+#include <poutre/base/details/simd/simd_helpers.hpp>
 #include <poutre/base/types.hpp>
 
 #include <limits>
 #include <stdexcept>
 #include <type_traits>
 
- namespace poutre
- {
+namespace poutre {
+
+
+//! Define converter from enum to type
+template<CompoundType compound, PType ptype> struct enum_to_type
+{
+};
+
+template<> struct enum_to_type<CompoundType::CompoundType_Scalar, PType::PType_GrayUINT8>
+{
+  using type = pUINT8;
+};
+
+template<> struct enum_to_type<CompoundType::CompoundType_Scalar, PType::PType_GrayINT32>
+{
+  using type = pINT32;
+};
+
+template<> struct enum_to_type<CompoundType::CompoundType_Scalar, PType::PType_GrayINT64>
+{
+  using type = pINT64;
+};
+
+template<> struct enum_to_type<CompoundType::CompoundType_Scalar, PType::PType_F32>
+{
+  using type = pFLOAT;
+};
+
+template<> struct enum_to_type<CompoundType::CompoundType_Scalar, PType::PType_D64>
+{
+  using type = pDOUBLE;
+};
+
+template<> struct enum_to_type<CompoundType::CompoundType_3Planes, PType::PType_GrayUINT8>
+{
+  using type = compound_type<pUINT8, 3>;
+};
+
+template<> struct enum_to_type<CompoundType::CompoundType_3Planes, PType::PType_GrayINT32>
+{
+  using type = compound_type<pINT32, 3>;
+};
+
+template<> struct enum_to_type<CompoundType::CompoundType_3Planes, PType::PType_GrayINT64>
+{
+  using type = compound_type<pINT64, 3>;
+};
+
+template<> struct enum_to_type<CompoundType::CompoundType_3Planes, PType::PType_F32>
+{
+  using type = compound_type<pFLOAT, 3>;
+};
+
+template<> struct enum_to_type<CompoundType::CompoundType_3Planes, PType::PType_D64>
+{
+  using type = compound_type<pDOUBLE, 3>;
+};
+
+template<> struct enum_to_type<CompoundType::CompoundType_4Planes, PType::PType_GrayUINT8>
+{
+  using type = compound_type<pUINT8, 4>;
+};
+
+template<> struct enum_to_type<CompoundType::CompoundType_4Planes, PType::PType_GrayINT32>
+{
+  using type = compound_type<pINT32, 4>;
+};
+
+template<> struct enum_to_type<CompoundType::CompoundType_4Planes, PType::PType_GrayINT64>
+{
+  using type = compound_type<pINT64, 4>;
+};
+
+template<> struct enum_to_type<CompoundType::CompoundType_4Planes, PType::PType_F32>
+{
+  using type = compound_type<pFLOAT, 4>;
+};
+
+template<> struct enum_to_type<CompoundType::CompoundType_4Planes, PType::PType_D64>
+{
+  using type = compound_type<pDOUBLE, 4>;
+};
 //! Define TypeTraits
 template<class valuetype> struct TypeTraits
 {
@@ -34,18 +115,18 @@ template<class valuetype> struct TypeTraits
 //! TypeTraits pUINT8
 template<> struct TypeTraits<pUINT8>
 {
-  using storage_type                      = pUINT8;
-  using safe_signed_type                  = pINT32;
-  using str_type                          = pUINT32;
-  using accu_type                         = pINT64;
-  static const PType        pixel_type    = PType::PType_GrayUINT8;
+  using storage_type = pUINT8;
+  using safe_signed_type = pINT32;
+  using str_type = pUINT32;
+  using accu_type = pINT64;
+  static const PType pixel_type = PType::PType_GrayUINT8;
   static const CompoundType compound_type = CompoundType::CompoundType_Scalar;
 
-  POUTRE_STATIC_CONSTEXPR size_t alignment      = SIMD_IDEAL_MAX_ALIGN_BYTES;
+  POUTRE_STATIC_CONSTEXPR size_t alignment = SIMD_IDEAL_MAX_ALIGN_BYTES;
   POUTRE_STATIC_CONSTEXPR size_t simd_loop_step = SIMD_BATCH_INT8_SIZE;
-  using simd_type                               = typename xs::batch<storage_type>;
-  using simd_mask_type                          = typename xs::batch_bool<storage_type>;
-  POUTRE_STATIC_CONSTEXPR size_t quant          = sizeof(storage_type) * 8;
+  using simd_type = typename xs::batch<storage_type>;
+  using simd_mask_type = typename xs::batch_bool<storage_type>;
+  POUTRE_STATIC_CONSTEXPR size_t quant = sizeof(storage_type) * 8;
 
   POUTRE_ALWAYS_INLINE POUTRE_STATIC_CONSTEXPR storage_type lowest() POUTRE_NOEXCEPT
   {
@@ -70,19 +151,19 @@ template<> struct TypeTraits<const pUINT8> : public TypeTraits<pUINT8>
 //! TypeTraits pINT32
 template<> struct TypeTraits<pINT32>
 {
-  using storage_type     = pINT32;
+  using storage_type = pINT32;
   using safe_signed_type = pINT64;
-  using str_type         = pINT32;
-  using accu_type        = pINT64;
+  using str_type = pINT32;
+  using accu_type = pINT64;
 
-  static const PType        pixel_type    = PType::PType_GrayINT32;
+  static const PType pixel_type = PType::PType_GrayINT32;
   static const CompoundType compound_type = CompoundType::CompoundType_Scalar;
 
-  POUTRE_STATIC_CONSTEXPR size_t alignment      = SIMD_IDEAL_MAX_ALIGN_BYTES;
+  POUTRE_STATIC_CONSTEXPR size_t alignment = SIMD_IDEAL_MAX_ALIGN_BYTES;
   POUTRE_STATIC_CONSTEXPR size_t simd_loop_step = SIMD_BATCH_INT32_SIZE;
-  using simd_type                               = typename xs::batch<storage_type>;
-  using simd_mask_type                          = typename xs::batch_bool<storage_type>;
-  POUTRE_STATIC_CONSTEXPR size_t quant          = sizeof(storage_type) * 8;
+  using simd_type = typename xs::batch<storage_type>;
+  using simd_mask_type = typename xs::batch_bool<storage_type>;
+  POUTRE_STATIC_CONSTEXPR size_t quant = sizeof(storage_type) * 8;
 
   POUTRE_ALWAYS_INLINE POUTRE_STATIC_CONSTEXPR storage_type lowest() POUTRE_NOEXCEPT
   {
@@ -107,18 +188,18 @@ template<> struct TypeTraits<const pINT32> : public TypeTraits<pINT32>
 //! TypeTraits pFLOAT
 template<> struct TypeTraits<pFLOAT>
 {
-  using storage_type     = pFLOAT;
+  using storage_type = pFLOAT;
   using safe_signed_type = pFLOAT;
-  using str_type         = pFLOAT;
-  using accu_type        = pDOUBLE;
+  using str_type = pFLOAT;
+  using accu_type = pDOUBLE;
 
-  static const PType        pixel_type    = PType::PType_F32;
+  static const PType pixel_type = PType::PType_F32;
   static const CompoundType compound_type = CompoundType::CompoundType_Scalar;
 
-  POUTRE_STATIC_CONSTEXPR size_t alignment      = SIMD_IDEAL_MAX_ALIGN_BYTES;
+  POUTRE_STATIC_CONSTEXPR size_t alignment = SIMD_IDEAL_MAX_ALIGN_BYTES;
   POUTRE_STATIC_CONSTEXPR size_t simd_loop_step = SIMD_BATCH_FLOAT_SIZE;
-  using simd_type                               = typename xs::batch<storage_type>;
-  using simd_mask_type                          = typename xs::batch_bool<storage_type>;
+  using simd_type = typename xs::batch<storage_type>;
+  using simd_mask_type = typename xs::batch_bool<storage_type>;
 
   POUTRE_STATIC_CONSTEXPR size_t quant = sizeof(pFLOAT) * 8;
 
@@ -145,18 +226,18 @@ template<> struct TypeTraits<const pFLOAT> : public TypeTraits<pFLOAT>
 //! TypeTraits pDOUBLE
 template<> struct TypeTraits<pDOUBLE>
 {
-  using storage_type     = pDOUBLE;
+  using storage_type = pDOUBLE;
   using safe_signed_type = pDOUBLE;
-  using str_type         = pDOUBLE;
-  using accu_type        = pDOUBLE;
+  using str_type = pDOUBLE;
+  using accu_type = pDOUBLE;
 
-  static const PType        pixel_type    = PType::PType_D64;
+  static const PType pixel_type = PType::PType_D64;
   static const CompoundType compound_type = CompoundType::CompoundType_Scalar;
 
-  POUTRE_STATIC_CONSTEXPR size_t alignment      = SIMD_IDEAL_MAX_ALIGN_BYTES;
+  POUTRE_STATIC_CONSTEXPR size_t alignment = SIMD_IDEAL_MAX_ALIGN_BYTES;
   POUTRE_STATIC_CONSTEXPR size_t simd_loop_step = SIMD_BATCH_DOUBLE_SIZE;
-  using simd_type                               = typename xs::batch<storage_type>;
-  using simd_mask_type                          = typename xs::batch_bool<storage_type>;
+  using simd_type = typename xs::batch<storage_type>;
+  using simd_mask_type = typename xs::batch_bool<storage_type>;
 
   POUTRE_STATIC_CONSTEXPR size_t quant = sizeof(pDOUBLE) * 8;
 
@@ -183,19 +264,19 @@ template<> struct TypeTraits<const pDOUBLE> : public TypeTraits<pDOUBLE>
 //! TypeTraits pINT64
 template<> struct TypeTraits<pINT64>
 {
-  using storage_type     = pINT64;
+  using storage_type = pINT64;
   using safe_signed_type = pINT64;
-  using str_type         = pINT64;
-  using accu_type        = pINT64;
+  using str_type = pINT64;
+  using accu_type = pINT64;
 
-  static const PType        pixel_type    = PType::PType_GrayINT64;
+  static const PType pixel_type = PType::PType_GrayINT64;
   static const CompoundType compound_type = CompoundType::CompoundType_Scalar;
 
-  POUTRE_STATIC_CONSTEXPR size_t alignment      = SIMD_IDEAL_MAX_ALIGN_BYTES;
+  POUTRE_STATIC_CONSTEXPR size_t alignment = SIMD_IDEAL_MAX_ALIGN_BYTES;
   POUTRE_STATIC_CONSTEXPR size_t simd_loop_step = SIMD_BATCH_INT64_SIZE;
-  POUTRE_STATIC_CONSTEXPR size_t quant          = sizeof(pINT64) * 8;
-  using simd_type                               = typename xs::batch<storage_type>;
-  using simd_mask_type                          = typename xs::batch_bool<storage_type>;
+  POUTRE_STATIC_CONSTEXPR size_t quant = sizeof(pINT64) * 8;
+  using simd_type = typename xs::batch<storage_type>;
+  using simd_mask_type = typename xs::batch_bool<storage_type>;
 
   POUTRE_ALWAYS_INLINE POUTRE_STATIC_CONSTEXPR storage_type lowest() POUTRE_NOEXCEPT
   {
@@ -222,95 +303,83 @@ template<class valuetype, std::ptrdiff_t Rank> struct TypeTraits<compound_type<v
 {
 };
 
-  template <class valuetype> struct TypeTraits<compound_type<valuetype, 3>>
+template<class valuetype> struct TypeTraits<compound_type<valuetype, 3>>
+{
+  using storage_type = compound_type<valuetype, 3>;
+  using safe_signed_type = compound_type<typename TypeTraits<valuetype>::safe_signed_type, 3>;
+  using str_type = compound_type<typename TypeTraits<valuetype>::str_type, 3>;
+  using accu_type = compound_type<typename TypeTraits<valuetype>::accu_type, 3>;
+
+  static const PType pixel_type = TypeTraits<valuetype>::pixel_type;
+  static const CompoundType compound_type = CompoundType::CompoundType_3Planes;
+
+  POUTRE_STATIC_CONSTEXPR size_t alignment = 1;
+  POUTRE_STATIC_CONSTEXPR size_t simd_loop_step = 1;
+
+  // todo decltype
+  POUTRE_ALWAYS_INLINE POUTRE_STATIC_CONSTEXPR storage_type lowest() POUTRE_NOEXCEPT
   {
-      using storage_type = compound_type<valuetype, 3>;
-      using safe_signed_type = compound_type<typename TypeTraits<valuetype>::safe_signed_type, 3>;
-      using str_type = compound_type<typename TypeTraits<valuetype>::str_type, 3>;
-      using accu_type = compound_type<typename TypeTraits<valuetype>::accu_type, 3>;
+    return poutre::compound_type<valuetype, 3>(std::numeric_limits<valuetype>::lowest(),
+      std::numeric_limits<valuetype>::lowest(),
+      std::numeric_limits<valuetype>::lowest());
+  }
 
-      static const PType pixel_type = TypeTraits<valuetype>::pixel_type;
-      static const CompoundType compound_type = CompoundType::CompoundType_3Planes;
-
-      POUTRE_STATIC_CONSTEXPR size_t alignment = 1;
-      POUTRE_STATIC_CONSTEXPR size_t simd_loop_step = 1;
-
-      // todo decltype
-      POUTRE_ALWAYS_INLINE POUTRE_STATIC_CONSTEXPR storage_type lowest() POUTRE_NOEXCEPT
-      {
-          return poutre::compound_type<valuetype, 3>(std::numeric_limits<valuetype>::lowest(),
-                                              std::numeric_limits<valuetype>::lowest(),
-                                              std::numeric_limits<valuetype>::lowest());
-      }
-
-      // todo decltype
-      POUTRE_ALWAYS_INLINE POUTRE_STATIC_CONSTEXPR storage_type min() POUTRE_NOEXCEPT
-      {
-          return poutre::compound_type<valuetype, 3>(std::numeric_limits<valuetype>::min(),
-                                              std::numeric_limits<valuetype>::min(),
-                                              std::numeric_limits<valuetype>::min());
-      }
-
-      // todo decltype
-      POUTRE_ALWAYS_INLINE POUTRE_STATIC_CONSTEXPR storage_type max() POUTRE_NOEXCEPT
-      {
-          return poutre::compound_type<valuetype, 3>(std::numeric_limits<valuetype>::max(),
-                                              std::numeric_limits<valuetype>::max(),
-                                              std::numeric_limits<valuetype>::max());
-      }
-      POUTRE_ALWAYS_INLINE POUTRE_STATIC_CONSTEXPR storage_type inf()
-      {
-          return min();
-      }
-      POUTRE_ALWAYS_INLINE POUTRE_STATIC_CONSTEXPR storage_type sup()
-      {
-          return max();
-      }
-  };
-
-  template <class valuetype> struct TypeTraits<compound_type<valuetype, 4>>
+  // todo decltype
+  POUTRE_ALWAYS_INLINE POUTRE_STATIC_CONSTEXPR storage_type min() POUTRE_NOEXCEPT
   {
-      using storage_type = compound_type<valuetype, 4>;
-      using safe_signed_type = compound_type<typename TypeTraits<valuetype>::safe_signed_type, 4>;
-      using str_type = compound_type<typename TypeTraits<valuetype>::str_type, 4>;
-      using accu_type = compound_type<typename TypeTraits<valuetype>::accu_type, 4>;
+    return poutre::compound_type<valuetype, 3>(std::numeric_limits<valuetype>::min(),
+      std::numeric_limits<valuetype>::min(),
+      std::numeric_limits<valuetype>::min());
+  }
 
-      static const PType pixel_type = TypeTraits<valuetype>::pixel_type;
-      static const CompoundType compound_type = CompoundType::CompoundType_4Planes;
+  // todo decltype
+  POUTRE_ALWAYS_INLINE POUTRE_STATIC_CONSTEXPR storage_type max() POUTRE_NOEXCEPT
+  {
+    return poutre::compound_type<valuetype, 3>(std::numeric_limits<valuetype>::max(),
+      std::numeric_limits<valuetype>::max(),
+      std::numeric_limits<valuetype>::max());
+  }
+  POUTRE_ALWAYS_INLINE POUTRE_STATIC_CONSTEXPR storage_type inf() { return min(); }
+  POUTRE_ALWAYS_INLINE POUTRE_STATIC_CONSTEXPR storage_type sup() { return max(); }
+};
 
-      POUTRE_STATIC_CONSTEXPR size_t alignment = 1;
-      POUTRE_STATIC_CONSTEXPR size_t simd_loop_step = 1;
+template<class valuetype> struct TypeTraits<compound_type<valuetype, 4>>
+{
+  using storage_type = compound_type<valuetype, 4>;
+  using safe_signed_type = compound_type<typename TypeTraits<valuetype>::safe_signed_type, 4>;
+  using str_type = compound_type<typename TypeTraits<valuetype>::str_type, 4>;
+  using accu_type = compound_type<typename TypeTraits<valuetype>::accu_type, 4>;
 
-      // todo decltype
-      POUTRE_ALWAYS_INLINE POUTRE_STATIC_CONSTEXPR storage_type lowest() POUTRE_NOEXCEPT
-      {
-          return poutre::compound_type<valuetype, 3>(std::numeric_limits<valuetype>::lowest(),
-                                              std::numeric_limits<valuetype>::lowest(),
-                                              std::numeric_limits<valuetype>::lowest());
-      }
+  static const PType pixel_type = TypeTraits<valuetype>::pixel_type;
+  static const CompoundType compound_type = CompoundType::CompoundType_4Planes;
 
-      // todo decltype
-      POUTRE_ALWAYS_INLINE POUTRE_STATIC_CONSTEXPR storage_type min() POUTRE_NOEXCEPT
-      {
-          return poutre::compound_type<valuetype, 3>(std::numeric_limits<valuetype>::min(),
-                                              std::numeric_limits<valuetype>::min(),
-                                              std::numeric_limits<valuetype>::min());
-      }
+  POUTRE_STATIC_CONSTEXPR size_t alignment = 1;
+  POUTRE_STATIC_CONSTEXPR size_t simd_loop_step = 1;
 
-      // todo decltype
-      POUTRE_ALWAYS_INLINE POUTRE_STATIC_CONSTEXPR storage_type max() POUTRE_NOEXCEPT
-      {
-          return poutre::compound_type<valuetype, 3>(std::numeric_limits<valuetype>::max(),
-                                              std::numeric_limits<valuetype>::max(),
-                                              std::numeric_limits<valuetype>::max());
-      }
-      POUTRE_ALWAYS_INLINE POUTRE_STATIC_CONSTEXPR storage_type inf()
-      {
-          return min();
-      }
-      POUTRE_ALWAYS_INLINE POUTRE_STATIC_CONSTEXPR storage_type sup()
-      {
-          return max();
-      }
-  };
-} // namespace poutre
+  // todo decltype
+  POUTRE_ALWAYS_INLINE POUTRE_STATIC_CONSTEXPR storage_type lowest() POUTRE_NOEXCEPT
+  {
+    return poutre::compound_type<valuetype, 3>(std::numeric_limits<valuetype>::lowest(),
+      std::numeric_limits<valuetype>::lowest(),
+      std::numeric_limits<valuetype>::lowest());
+  }
+
+  // todo decltype
+  POUTRE_ALWAYS_INLINE POUTRE_STATIC_CONSTEXPR storage_type min() POUTRE_NOEXCEPT
+  {
+    return poutre::compound_type<valuetype, 3>(std::numeric_limits<valuetype>::min(),
+      std::numeric_limits<valuetype>::min(),
+      std::numeric_limits<valuetype>::min());
+  }
+
+  // todo decltype
+  POUTRE_ALWAYS_INLINE POUTRE_STATIC_CONSTEXPR storage_type max() POUTRE_NOEXCEPT
+  {
+    return poutre::compound_type<valuetype, 3>(std::numeric_limits<valuetype>::max(),
+      std::numeric_limits<valuetype>::max(),
+      std::numeric_limits<valuetype>::max());
+  }
+  POUTRE_ALWAYS_INLINE POUTRE_STATIC_CONSTEXPR storage_type inf() { return min(); }
+  POUTRE_ALWAYS_INLINE POUTRE_STATIC_CONSTEXPR storage_type sup() { return max(); }
+};
+}// namespace poutre
