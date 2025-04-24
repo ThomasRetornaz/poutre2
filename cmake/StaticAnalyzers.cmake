@@ -33,6 +33,8 @@ macro(poutre2_enable_cppcheck WARNINGS_AS_ERRORS CPPCHECK_OPTIONS)
           # ignores code that cppcheck thinks is invalid C++
           --suppress=syntaxError
           --suppress=preprocessorErrorDirective
+          # ignores static_assert type failures
+          --suppress=knownConditionTrueFalse
           --inconclusive
           --suppress=${SUPPRESS_DIR_DEPS}
           --suppress=${SUPPRESS_DIR_SRC})

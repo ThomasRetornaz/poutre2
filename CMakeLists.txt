@@ -5,7 +5,7 @@ cmake_minimum_required(VERSION 3.21)
 # manual dependency management
 
 # Only set the cxx_standard if it is not set by someone else
-if(NOT DEFINED CMAKE_CXX_STANDARD)
+if (NOT DEFINED CMAKE_CXX_STANDARD)
   set(CMAKE_CXX_STANDARD 23)
 endif()
 
@@ -45,7 +45,7 @@ poutre2_setup_dependencies()
 
 poutre2_local_options()
 
-# dont know if this should be set globally from here or not...
+# don't know if this should be set globally from here or not...
 set(CMAKE_CXX_VISIBILITY_PRESET hidden)
 
 set(GIT_SHA
@@ -102,8 +102,7 @@ endif()
 
 if(poutre2_BUILD_FUZZ_TESTS)
   message(AUTHOR_WARNING "Building Fuzz Tests, using fuzzing sanitizer https://www.llvm.org/docs/LibFuzzer.html")
-
-  if(NOT poutre2_ENABLE_ADDRESS_SANITIZER AND NOT poutre2_ENABLE_THREAD_SANITIZER)
+  if (NOT poutre2_ENABLE_ADDRESS_SANITIZER AND NOT poutre2_ENABLE_THREAD_SANITIZER)
     message(WARNING "You need asan or tsan enabled for meaningful fuzz testing")
   endif()
 
@@ -111,7 +110,7 @@ if(poutre2_BUILD_FUZZ_TESTS)
 endif()
 
 # If MSVC is being used, and ASAN is enabled, we need to set the debugger environment
-# so that it behaves well with MSVC s debugger, and we can run the target from visual studio
+# so that it behaves well with MSVC's debugger, and we can run the target from visual studio
 if(MSVC)
   get_all_installable_targets(all_targets)
   message("all_targets=${all_targets}")
@@ -142,7 +141,7 @@ include(cmake/PackageProject.cmake)
 # out potential ABI related issues before they start, while helping you
 # track a build to a specific GIT SHA
 set(CPACK_PACKAGE_FILE_NAME
-  "${CMAKE_PROJECT_NAME}-${CMAKE_PROJECT_VERSION}-${GIT_SHORT_SHA}-${CMAKE_SYSTEM_NAME}-${CMAKE_BUILD_TYPE}-${CMAKE_CXX_COMPILER_ID}-${CMAKE_CXX_COMPILER_VERSION}"
+    "${CMAKE_PROJECT_NAME}-${CMAKE_PROJECT_VERSION}-${GIT_SHORT_SHA}-${CMAKE_SYSTEM_NAME}-${CMAKE_BUILD_TYPE}-${CMAKE_CXX_COMPILER_ID}-${CMAKE_CXX_COMPILER_VERSION}"
 )
 
 include(CPack)

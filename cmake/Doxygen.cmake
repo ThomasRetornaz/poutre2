@@ -5,34 +5,6 @@ function(poutre2_enable_doxygen DOXYGEN_THEME)
     set(DOXYGEN_USE_MDFILE_AS_MAINPAGE "${PROJECT_SOURCE_DIR}/README.md")
   endif()
 
-  # FIXME
-
-  # get_filename_component(POUTRE_root_dir_abs ${PROJECT_SOURCE_DIR} ABSOLUTE)
-  # set(POUTRE_DOCUMENTATION_ROOT ${POUTRE_root_dir_abs}/doc)
-  # set(POUTRE_DOXYGEN_PATH ${POUTRE_DOCUMENTATION_ROOT}/Doxygen)
-
-  # find_file(DOXYGEN_CONFIG_FILE Doxyfile.in ${POUTRE_DOXYGEN_PATH})
-  # mark_as_advanced(DOXYGEN_CONFIG_FILE)
-
-  # set(DOXY_OUTPUT_DIR           ${CMAKE_BINARY_DIR}/documentation/doxygen)
-  # set(DOXY_CONFIG_FILE          ${DOXY_OUTPUT_DIR}/Doxyfile.generated)
-
-  # set(DOXY_STRIP_FROM_PATH      ${POUTRE_root_dir_abs})
-  # set(DOXY_STRIP_FROM_INC_PATH  ${POUTRE_root_dir_abs})
-    
-  # option(DOXYGEN_GENERATE_XML   "Generates xml documentation"   NO)
-  # option(DOXYGEN_GENERATE_LATEX "Generates LateX documentation" NO)
-  # option(DOXYGEN_GENERATE_HTML  "Generates HTML documentation"  YES)
-  
-  # mark_as_advanced(DOXYGEN_GENERATE_HTML)
-  # mark_as_advanced(DOXYGEN_GENERATE_XML)
-  # mark_as_advanced(DOXYGEN_GENERATE_HTML)
-
-  # mark_as_advanced(DOXYGEN_HTML_HEADER)
-  # mark_as_advanced(DOXYGEN_HTML_FOOTER)
-  # mark_as_advanced(DOXYGEN_HTML_STYLESHEET)
- 
-
   # set better defaults for doxygen
   is_verbose(_is_verbose)
   if(NOT ${_is_verbose})
@@ -48,7 +20,7 @@ function(poutre2_enable_doxygen DOXYGEN_THEME)
 
   # If not specified, exclude the vcpkg files and the files CMake downloads under _deps (like project_options)
   if(NOT DOXYGEN_EXCLUDE_PATTERNS)
-    set(DOXYGEN_EXCLUDE_PATTERNS "${CMAKE_CURRENT_BINARY_DIR}/*" "${CMAKE_CURRENT_BINARY_DIR}/vcpkg_installed/*" "${CMAKE_CURRENT_BINARY_DIR}/_deps/*")
+    set(DOXYGEN_EXCLUDE_PATTERNS "${CMAKE_CURRENT_BINARY_DIR}/vcpkg_installed/*" "${CMAKE_CURRENT_BINARY_DIR}/_deps/*")
   endif()
 
   if("${DOXYGEN_THEME}" STREQUAL "")
@@ -77,8 +49,6 @@ function(poutre2_enable_doxygen DOXYGEN_THEME)
 
   # add doxygen-docs target
   message(STATUS "Adding `doxygen-docs` target that builds the documentation.")
-  doxygen_add_docs(doxygen-docs ALL ${PROJECT_SOURCE_DIR}/include
-                   COMMENT "Generating documentation - entry file: ${CMAKE_CURRENT_BINARY_DIR}/html/index.html"
-                   #CONFIG_FILE ${DOXYGEN_CONFIG_FILE}
-                   )
+  doxygen_add_docs(doxygen-docs ALL ${PROJECT_SOURCE_DIR}
+                   COMMENT "Generating documentation - entry file: ${CMAKE_CURRENT_BINARY_DIR}/html/index.html")
 endfunction()

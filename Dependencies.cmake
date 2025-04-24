@@ -27,7 +27,7 @@ function(poutre2_setup_dependencies)
 
   # ### FMTLIB
   if(NOT TARGET fmtlib::fmtlib)
-    cpmaddpackage("gh:fmtlib/fmt#11.0.2")
+    cpmaddpackage("gh:fmtlib/fmt#11.1.4")
   endif()
 
   # ### BOOST PREPROCESSOR 
@@ -43,7 +43,7 @@ function(poutre2_setup_dependencies)
       NAME
       spdlog
       VERSION
-      1.14.1
+      1.15.2
       GITHUB_REPOSITORY
       "gabime/spdlog"
       OPTIONS
@@ -52,17 +52,17 @@ function(poutre2_setup_dependencies)
 
   # ### Catch2
   if(NOT TARGET Catch2::Catch2WithMain)
-    cpmaddpackage("gh:catchorg/Catch2@3.7.1")
+    cpmaddpackage("gh:catchorg/Catch2@3.8.1")
   endif()
 
   # ### CLI
   if(NOT TARGET CLI11::CLI11)
-    cpmaddpackage("gh:CLIUtils/CLI11@2.4.2")
+    cpmaddpackage("gh:CLIUtils/CLI11@2.5.0")
   endif()
 
   # ### ftxui
   if(NOT TARGET ftxui::screen)
-    cpmaddpackage("gh:ArthurSonzogni/FTXUI@5.0.0")
+    cpmaddpackage("gh:ArthurSonzogni/FTXUI@6.0.2")
   endif()
 
   # ### tools
@@ -84,6 +84,13 @@ function(poutre2_setup_dependencies)
       "CMAKE_POSITION_INDEPENDENT_CODE True"
     )
 
+    add_library(zlib::zlib ALIAS zlib)
+    # add_library(zlib ALIAS zlibstatic)
+
+    set(ZLIB_ROOT "${zlib_SOURCE_DIR}" CACHE INTERNAL "Root for the zlib library, used by libpng")
+    set(ZLIB_LIBRARY zlib CACHE INTERNAL "" FORCE)
+    set(ZLIB_INCLUDE_DIR "${zlib_SOURCE_DIR};${zlib_BINARY_DIR}" CACHE INTERNAL "" FORCE)
+    
     if(zlib_ADDED)
       target_include_directories(zlib
         PUBLIC $<BUILD_INTERFACE:${zlib_BINARY_DIR}>
@@ -146,20 +153,21 @@ function(poutre2_setup_dependencies)
 
   # ### PNG
   if(NOT TARGET png::png)
-    cpmaddpackage(
-      NAME
-      png
-      VERSION
-      1.6.44
-      GITHUB_REPOSITORY
-      "pnggroup/libpng"
-      OPTIONS
-      "ZLIB_INCLUDE_DIR=${ZLIB_INCLUDE_DIRS}"
-      "ZLIB_LIBRARY=${ZLIB_LIBRARIES}"
-      "BUILD_SHARED_LIBS=${BUILD_SHARED_LIBS}"
-      "CMAKE_POSITION_INDEPENDENT_CODE YES"
-      "PNG_TESTS NO"
-      "PNG_TOOLS NO")
+    # FIXME local zlib not found
+    # cpmaddpackage(
+    #   NAME
+    #   png
+    #   VERSION
+    #   1.6.44
+    #   GITHUB_REPOSITORY
+    #   "pnggroup/libpng"
+    #   OPTIONS
+    #   "ZLIB_INCLUDE_DIR=${ZLIB_INCLUDE_DIR}"
+    #   "ZLIB_LIBRARY=${ZLIB_LIBRARY}"
+    #   "BUILD_SHARED_LIBS=${BUILD_SHARED_LIBS}"
+    #   "CMAKE_POSITION_INDEPENDENT_CODE YES"
+    #   "PNG_TESTS NO"
+    #   "PNG_TOOLS NO")
   endif()
 
   # ### XSIMD

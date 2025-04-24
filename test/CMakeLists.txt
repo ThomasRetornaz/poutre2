@@ -15,6 +15,7 @@ if(PROJECT_IS_TOP_LEVEL OR TEST_INSTALLED_VERSION)
 endif()
 
 # ---- Dependencies ----
+
 include(${Catch2_SOURCE_DIR}/extras/Catch.cmake)
 
 add_subdirectory(base)
