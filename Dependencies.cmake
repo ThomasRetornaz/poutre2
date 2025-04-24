@@ -30,6 +30,14 @@ function(poutre2_setup_dependencies)
     cpmaddpackage("gh:fmtlib/fmt#11.0.2")
   endif()
 
+  # ### BOOST PREPROCESSOR 
+  if(NOT TARGET boost_preprocessor)
+    cpmaddpackage(
+      NAME boost_preprocessor
+      GIT_TAG boost-1.88.0
+      GITHUB_REPOSITORY "boostorg/preprocessor")
+  endif()
+
   if(NOT TARGET spdlog::spdlog)
     cpmaddpackage(
       NAME
