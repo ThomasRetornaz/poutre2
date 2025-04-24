@@ -874,7 +874,7 @@ public:
   template<typename U, size_t R = Rank, typename = std::enable_if_t<R == 1 && is_viewable_value<U, value_type>::value>>
   // cppcheck-suppress noExplicitConstructor
   constexpr array_view(const array_view<U, static_cast<ptrdiff_t>(R)> &rhs) noexcept
-    : data_(rhs.data()), bounds_(rhs.bounds())
+    : data_(rhs.data()), bounds_(rhs.bound())
   {}
 
 
@@ -886,7 +886,7 @@ public:
 
   template<typename U, typename = std::enable_if_t<is_viewable_value<U, value_type>::value>>
   // cppcheck-suppress noExplicitConstructor
-  constexpr array_view(const array_view<U, Rank> &rhs) noexcept : data_(rhs.data()), bounds_(rhs.bounds())
+  constexpr array_view(const array_view<U, Rank> &rhs) noexcept : data_(rhs.data()), bounds_(rhs.bound())
   {}
 
   template<typename Viewable, typename = std::enable_if_t<is_viewable_on_u<Viewable, value_type>::value>>
