@@ -24,6 +24,7 @@
 #include <limits>
 #include <stdexcept>
 #include <type_traits>
+#include <xsimd/config/xsimd_arch.hpp>
 
 namespace poutre {
 
@@ -123,7 +124,7 @@ template<> struct TypeTraits<pUINT8>
   static const CompoundType compound_type = CompoundType::CompoundType_Scalar;
 
   POUTRE_STATIC_CONSTEXPR size_t alignment = SIMD_IDEAL_MAX_ALIGN_BYTES;
-  POUTRE_STATIC_CONSTEXPR size_t simd_loop_step = SIMD_BATCH_INT8_SIZE;
+  POUTRE_STATIC_CONSTEXPR size_t simd_loop_step = xsimd::batch<storage_type, xsimd::default_arch>::size;
   using simd_type = typename xs::batch<storage_type>;
   using simd_mask_type = typename xs::batch_bool<storage_type>;
   POUTRE_STATIC_CONSTEXPR size_t quant = sizeof(storage_type) * 8;
@@ -160,7 +161,7 @@ template<> struct TypeTraits<pINT32>
   static const CompoundType compound_type = CompoundType::CompoundType_Scalar;
 
   POUTRE_STATIC_CONSTEXPR size_t alignment = SIMD_IDEAL_MAX_ALIGN_BYTES;
-  POUTRE_STATIC_CONSTEXPR size_t simd_loop_step = SIMD_BATCH_INT32_SIZE;
+  POUTRE_STATIC_CONSTEXPR size_t simd_loop_step =  xsimd::batch<storage_type, xsimd::default_arch>::size;
   using simd_type = typename xs::batch<storage_type>;
   using simd_mask_type = typename xs::batch_bool<storage_type>;
   POUTRE_STATIC_CONSTEXPR size_t quant = sizeof(storage_type) * 8;
@@ -197,7 +198,7 @@ template<> struct TypeTraits<pFLOAT>
   static const CompoundType compound_type = CompoundType::CompoundType_Scalar;
 
   POUTRE_STATIC_CONSTEXPR size_t alignment = SIMD_IDEAL_MAX_ALIGN_BYTES;
-  POUTRE_STATIC_CONSTEXPR size_t simd_loop_step = SIMD_BATCH_FLOAT_SIZE;
+  POUTRE_STATIC_CONSTEXPR size_t simd_loop_step = xsimd::batch<storage_type, xsimd::default_arch>::size;
   using simd_type = typename xs::batch<storage_type>;
   using simd_mask_type = typename xs::batch_bool<storage_type>;
 
@@ -235,7 +236,7 @@ template<> struct TypeTraits<pDOUBLE>
   static const CompoundType compound_type = CompoundType::CompoundType_Scalar;
 
   POUTRE_STATIC_CONSTEXPR size_t alignment = SIMD_IDEAL_MAX_ALIGN_BYTES;
-  POUTRE_STATIC_CONSTEXPR size_t simd_loop_step = SIMD_BATCH_DOUBLE_SIZE;
+  POUTRE_STATIC_CONSTEXPR size_t simd_loop_step = xsimd::batch<storage_type, xsimd::default_arch>::size;
   using simd_type = typename xs::batch<storage_type>;
   using simd_mask_type = typename xs::batch_bool<storage_type>;
 
@@ -273,7 +274,7 @@ template<> struct TypeTraits<pINT64>
   static const CompoundType compound_type = CompoundType::CompoundType_Scalar;
 
   POUTRE_STATIC_CONSTEXPR size_t alignment = SIMD_IDEAL_MAX_ALIGN_BYTES;
-  POUTRE_STATIC_CONSTEXPR size_t simd_loop_step = SIMD_BATCH_INT64_SIZE;
+  POUTRE_STATIC_CONSTEXPR size_t simd_loop_step = xsimd::batch<storage_type, xsimd::default_arch>::size;
   POUTRE_STATIC_CONSTEXPR size_t quant = sizeof(pINT64) * 8;
   using simd_type = typename xs::batch<storage_type>;
   using simd_mask_type = typename xs::batch_bool<storage_type>;
