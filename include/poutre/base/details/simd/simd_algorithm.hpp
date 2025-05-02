@@ -18,9 +18,9 @@
  */
 
 #include <poutre/base/details/simd/simd_helpers.hpp>
-#include <poutre/base/poutreConfig.hpp>
-#include <poutre/base/poutreTypes.hpp>
-
+#include <poutre/base/config.hpp>
+#include <poutre/base/types.hpp>
+//#include <iostream>
 #include <cstdio>
 
 /**
@@ -55,6 +55,8 @@ U *transform(const T *__restrict first, const T *__restrict last, U *__restrict 
   const auto size_prologue_loop = range.first;
   const auto size_simd_loop = range.second;
 
+  //std::cout<<std::endl<<"SIMD TRANSFORM UNARY"<<std::endl<<"size_prologue_loop: "<<size_prologue_loop<< " " <<"size_simd_loop: "<<size_simd_loop<< " "<< "simd_step_size "<<simd_size<<std::endl;
+  
   auto i = 0;
 
   //---prologue
@@ -113,6 +115,8 @@ U *transform(T1 const *__restrict first1,
   const auto size_simd_loop = range.second;
 
   auto i = 0;
+
+  // std::cout<<std::endl<<"SIMD TRANSFORM BINARY"<<std::endl<<"size_prologue_loop: "<<size_prologue_loop<< " " <<"size_simd_loop: "<<size_simd_loop<< " "<<std::endl;
 
   //---prologue
   for (; i < size_prologue_loop; ++i) { *out++ = f(*first1++, *first2++); }

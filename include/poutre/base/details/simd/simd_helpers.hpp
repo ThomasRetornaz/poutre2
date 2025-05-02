@@ -17,6 +17,7 @@
  *
  */
 
+#include <cstddef>
 #include <memory>
 #include <poutre/base/config.hpp>
 #include <poutre/base/types.hpp>
@@ -36,45 +37,6 @@ namespace xs = xsimd;
 
 const POUTRE_CONSTEXPR size_t SIMD_IDEAL_MAX_ALIGN_BYTES = xsimd::default_arch::alignment();
 
-#if XSIMD_X86_INSTR_SET >= XSIMD_X86_AVX512_VERSION
-const POUTRE_CONSTEXPR int SIMD_BATCH_INT8_SIZE = 64;
-const POUTRE_CONSTEXPR int SIMD_BATCH_INT16_SIZE = 32;
-const POUTRE_CONSTEXPR int SIMD_BATCH_INT32_SIZE = 16;
-const POUTRE_CONSTEXPR int SIMD_BATCH_INT64_SIZE = 8;
-const POUTRE_CONSTEXPR int SIMD_BATCH_FLOAT_SIZE = 16;
-const POUTRE_CONSTEXPR int SIMD_BATCH_DOUBLE_SIZE = 8;
-#elif XSIMD_X86_INSTR_SET >= XSIMD_X86_AVX_VERSION
-const POUTRE_CONSTEXPR int SIMD_BATCH_INT8_SIZE = 32;
-const POUTRE_CONSTEXPR int SIMD_BATCH_INT16_SIZE = 16;
-const POUTRE_CONSTEXPR int SIMD_BATCH_INT32_SIZE = 8;
-const POUTRE_CONSTEXPR int SIMD_BATCH_INT64_SIZE = 4;
-const POUTRE_CONSTEXPR int SIMD_BATCH_FLOAT_SIZE = 8;
-const POUTRE_CONSTEXPR int SIMD_BATCH_DOUBLE_SIZE = 4;
-#elif XSIMD_X86_INSTR_SET >= XSIMD_X86_SSE2_VERSION
-const POUTRE_CONSTEXPR int SIMD_BATCH_INT8_SIZE = 16;
-const POUTRE_CONSTEXPR int SIMD_BATCH_INT16_SIZE = 8;
-const POUTRE_CONSTEXPR int SIMD_BATCH_INT32_SIZE = 4;
-const POUTRE_CONSTEXPR int SIMD_BATCH_INT64_SIZE = 2;
-const POUTRE_CONSTEXPR int SIMD_BATCH_FLOAT_SIZE = 4;
-const POUTRE_CONSTEXPR int SIMD_BATCH_DOUBLE_SIZE = 2;
-#elif XSIMD_ARM_INSTR_SET >= XSIMD_ARM8_64_NEON_VERSION
-const POUTRE_CONSTEXPR int SIMD_BATCH_INT16_SIZE = 16;
-const POUTRE_CONSTEXPR int SIMD_BATCH_INT32_SIZE = 8;
-const POUTRE_CONSTEXPR int SIMD_BATCH_INT64_SIZE = 4;
-const POUTRE_CONSTEXPR int SIMD_BATCH_FLOAT_SIZE = 8;
-const POUTRE_CONSTEXPR int SIMD_BATCH_DOUBLE_SIZE = 4;
-#elif XSIMD_ARM_INSTR_SET >= XSIMD_ARM7_NEON_VERSION
-const POUTRE_CONSTEXPR int SIMD_BATCH_INT8_SIZE = 16;
-const POUTRE_CONSTEXPR int SIMD_BATCH_INT16_SIZE = 8;
-const POUTRE_CONSTEXPR int SIMD_BATCH_INT32_SIZE = 4;
-const POUTRE_CONSTEXPR int SIMD_BATCH_INT64_SIZE = 2;
-const POUTRE_CONSTEXPR int SIMD_BATCH_FLOAT_SIZE = 4;
-const POUTRE_CONSTEXPR int SIMD_BATCH_DOUBLE_SIZE = 2;
-#else
-#error "Unknow ideal alignment for current architecture"
-#endif
-
-
 namespace poutre::simd {
 /**
  * @addtogroup simd_group SIMD facilities
@@ -87,7 +49,7 @@ POUTRE_ALWAYS_INLINE bool IsAligned(const void *ptr,
 {
   // NOLINTBEGIN
   POUTRE_ASSERTCHECK(((alignment & (alignment - 1)) == 0), "bad alignment value");
-  return (reinterpret_cast<std::size_t>(ptr) & (alignment - 1)) == 0;// from boost\align\detail\is_aligned.hpp //NOLINT
+  return (reinterpret_cast<std::size_t>(ptr) & (alignment - 1)) == 0;// from boost\align\detail\is_aligned.hpp
   // NOLINTEND
 }
 
@@ -131,19 +93,19 @@ where we could apply simd operators
 */
 template<typename T>
 const std::pair<ptrdiff_t, ptrdiff_t> POUTRE_ALWAYS_INLINE t_SIMDInputRange(const T *first,
-  const T *last) POUTRE_NOEXCEPTONLYNDEBUG
+  const T *last) POUTRE_NOEXCEPTONLYNDEBUG // TODO bench this tricks with erode/dilate
 {
   POUTRE_ASSERTCHECK(first, "null ptr");
   POUTRE_ASSERTCHECK(last, "null ptr");
-  const auto simd_size = xs::simd_type<T>::size;
-  const auto size = last - first;
+  const ptrdiff_t simd_size = xs::simd_type<T>::size;
+  const ptrdiff_t size = last - first;
   // get aligned adress from first
   const T *ptr_aligned_first = t_ReachNextAligned(first, SIMD_IDEAL_MAX_ALIGN_BYTES);
   // Next aligned address may be out of range, so make sure size_prologue_loop
   // is not bigger than size
-  const auto size_prologue_loop = std::min(size, std::distance(first, ptr_aligned_first));
-  const auto size_simd_loop =
-    (size >= size_prologue_loop) ? (simd_size * ((size - size_prologue_loop) / simd_size)) : (0u);
+  const ptrdiff_t size_prologue_loop = std::min(size, std::distance(first, ptr_aligned_first));
+  const ptrdiff_t size_simd_loop =
+  (size >= size_prologue_loop) ? (simd_size * ((size - size_prologue_loop) / simd_size)) : (0u);
 
   return std::make_pair(size_prologue_loop, size_simd_loop);
 }
