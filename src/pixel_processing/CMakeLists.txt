@@ -3,15 +3,21 @@ set(subdirsource ${PROJECT_SOURCE_DIR}/src/pixel_processing)
 
 set(PoutrePPSRC_DETAILS
   ${subdirheader}/details/copy_convert_t.hpp
+  ${subdirheader}/details/unary_op_t.hpp
+  ${subdirheader}/details/binary_op_t.hpp
+  ${subdirheader}/details/ternary_op_t.hpp
+  ${subdirheader}/details/quaternary_op_t.hpp
 )
 
 set(PoutrePPSRC_PUBLICHEADERS
   ${subdirheader}/pixel_processing.hpp
   ${subdirheader}/copy_convert.hpp
+  ${subdirheader}/arith.hpp
   )
 
 set(PoutrePPSRC_CPP
   ${subdirsource}/copy_convert.cpp
+  ${subdirsource}/arith.cpp
   )
 
 source_group(details FILES ${PoutrePPSRC_DETAILS})

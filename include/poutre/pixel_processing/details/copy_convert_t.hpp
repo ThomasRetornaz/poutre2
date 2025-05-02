@@ -21,7 +21,7 @@
  */
 #include <poutre/base/config.hpp>
 #include <poutre/base/details/data_structures/image_t.hpp>
-#include <poutre/base/image_interface.hpp>
+//#include <poutre/base/image_interface.hpp>
 
 namespace poutre::details {
 /**

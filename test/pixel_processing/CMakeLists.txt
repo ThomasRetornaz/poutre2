@@ -3,6 +3,7 @@ set(subdirsource ${PROJECT_SOURCE_DIR}/pixel_processing)
 # Test project
 set(PoutrePixelProcessingTestSRC
   ${subdirsource}/copy_convert.cpp
+  ${subdirsource}/arith.cpp
 )
 
 add_executable(poutre_pixel_processing_tests ${PoutrePixelProcessingTestSRC})
