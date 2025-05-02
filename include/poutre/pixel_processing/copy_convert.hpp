@@ -45,11 +45,11 @@ PP_API std::unique_ptr<IInterface> ConvertGeometry(const IInterface &i_img1, Com
 //! is copied
 PP_API std::unique_ptr<IInterface> ConvertGeometry(const IInterface &i_img1, PType ptype);
 
-//! Copy i_img1 in i_img2, images must have the same type
-PP_API void CopyInto(const IInterface &i_img1, IInterface &o_img2);
+//! Copy i_img1 in o_img, images must have the same type
+PP_API void CopyInto(const IInterface &i_img, IInterface &o_img);
 
-//! Copy i_img1 in i_img2 @warning with hard casting 
-PP_API void ConvertInto(const IInterface &i_img1, IInterface &o_img2);
+//! Copy i_img1 in o_img, @warning with hard casting 
+PP_API void ConvertInto(const IInterface &i_img, IInterface &o_img);
 
 // TODO add crop
 

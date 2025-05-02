@@ -56,13 +56,13 @@ std::unique_ptr<IInterface> ConvertGeometry(const IInterface &i_img1, PType ptyp
   return ConvertGeometry(i_img1, i_img1.GetCType(), ptype);
 }
 
-void CopyInto(const IInterface &i_img1, IInterface &o_img2)
+void CopyInto(const IInterface &i_img, IInterface &o_img)
 {
   POUTRE_ENTERING("CopyInto");
-  AssertSizesCompatible(i_img1, o_img2, "Copy images have not compatible sizes");
+  AssertSizesCompatible(i_img, o_img, "Copy images have not compatible sizes");
   AssertAsTypesCompatible(
-    i_img1, o_img2, "Copy images have not compatible types may you have to use ConvertInto instead");
-  ConvertInto(i_img1, o_img2);
+    i_img, o_img, "Copy images have not compatible types may you have to use ConvertInto instead");
+  ConvertInto(i_img, o_img);
 }
 
 template<size_t NumDims, PType Pin> void ConvertIntoDispatchScalarP(const IInterface &i_img1, IInterface &o_img2)
@@ -291,41 +291,41 @@ template<size_t numDims> void ConvertIntoDispatch(const IInterface &i_img1, IInt
 }
 
 
-void ConvertInto(const IInterface &i_img1, IInterface &o_img2)
+void ConvertInto(const IInterface &i_img, IInterface &o_img)
 {
   POUTRE_ENTERING("ConvertInto");
-  AssertSizesCompatible(i_img1, o_img2, "ConvertInto images have not compatible sizes");
-  AssertImagesAreDifferent(i_img1, o_img2, "ConvertInto images must be differents");
+  AssertSizesCompatible(i_img, o_img, "ConvertInto images have not compatible sizes");
+  AssertImagesAreDifferent(i_img, o_img, "ConvertInto images must be differents");
 
-  const auto &numDims = i_img1.GetRank();
+  const auto &numDims = i_img.GetRank();
   switch (numDims) {
   case 0: {
     POUTRE_RUNTIME_ERROR("Unsupported number of dims:0");
   } break;
   // case 1: {
-  //   ConvertInto1DDispatch<1>(i_img1, o_img2);
+  //   ConvertInto1DDispatch<1>(i_img, o_img);
   // } break;
   case 2: {
-    ConvertIntoDispatch<2>(i_img1, o_img2);
+    ConvertIntoDispatch<2>(i_img, o_img);
   } break;
   case 3: {
-    POUTRE_CHECK(i_img1.GetCType() == o_img2.GetCType(), "ConvertInto must have same CType");
-    POUTRE_CHECK(i_img1.GetCType() == CompoundType::CompoundType_Scalar, "ConvertInto must be scalar");
-    switch (i_img1.GetPType()) {
+    POUTRE_CHECK(i_img.GetCType() == o_img.GetCType(), "ConvertInto must have same CType");
+    POUTRE_CHECK(i_img.GetCType() == CompoundType::CompoundType_Scalar, "ConvertInto must be scalar");
+    switch (i_img.GetPType()) {
       case PType::PType_GrayUINT8: {
-        ConvertIntoDispatchScalarP<3,PType::PType_GrayUINT8>(i_img1,o_img2);
+        ConvertIntoDispatchScalarP<3,PType::PType_GrayUINT8>(i_img,o_img);
       } break;
       case PType::PType_GrayINT32: {
-        ConvertIntoDispatchScalarP<3,PType::PType_GrayINT32>(i_img1,o_img2);
+        ConvertIntoDispatchScalarP<3,PType::PType_GrayINT32>(i_img,o_img);
       } break;
       case PType::PType_GrayINT64: {
-        ConvertIntoDispatchScalarP<3,PType::PType_GrayINT64>(i_img1,o_img2);
+        ConvertIntoDispatchScalarP<3,PType::PType_GrayINT64>(i_img,o_img);
       } break;
       case PType::PType_F32: {
-        ConvertIntoDispatchScalarP<3,PType::PType_F32>(i_img1,o_img2);
+        ConvertIntoDispatchScalarP<3,PType::PType_F32>(i_img,o_img);
       } break;
       case PType::PType_D64: {
-        ConvertIntoDispatchScalarP<3,PType::PType_D64>(i_img1,o_img2);
+        ConvertIntoDispatchScalarP<3,PType::PType_D64>(i_img,o_img);
       } break;
       default: {
         POUTRE_RUNTIME_ERROR("ConvertIntoDispatch unsupported PTYPE");
