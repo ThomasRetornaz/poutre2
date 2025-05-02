@@ -30,6 +30,7 @@
 #include <poutre/base/base.hpp>
 #include <sstream>
 #include <string>
+#include <variant>
 
 namespace poutre {
 /*!
@@ -524,6 +525,8 @@ enum class PType {
   PType_D64 = 1 << 6,//!< Floating-point pixel, double precision (long double)
   _PixelType_Max = 1 << 6// keep sync with the max value
 };
+
+using ScalarTypeVariant = std::variant<pUINT8, pINT32, pINT64, pFLOAT, pDOUBLE>;
 
 //! operator<< for PType
 BASE_API std::ostream &operator<<(std::ostream &, PType);
