@@ -481,5 +481,5 @@ void t_ArithInf(const image_t<T1, Rank> &i_img1, const image_t<T2, Rank> &i_img2
   return t_ArithInf(viewIn1, viewIn2, viewOut);
 }
 
-//! @} doxygroup: image_processing_linear_group
+//! @} doxygroup: image_processing_arith_group
 }// namespace poutre::details
