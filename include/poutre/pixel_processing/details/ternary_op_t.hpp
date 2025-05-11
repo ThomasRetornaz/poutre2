@@ -22,7 +22,7 @@
 #include <poutre/base/config.hpp>
 #include <poutre/base/details//simd/simd_algorithm.hpp> //simd transform
 #include <poutre/base/details/data_structures/array_view.hpp>
-#include <poutre/base/details/data_structures/image_t>
+#include <poutre/base/details/data_structures/image_t.hpp>
 
 namespace poutre::details {
 /**
@@ -61,10 +61,10 @@ struct PixelWiseTernaryOpDispatcher
                   || std::is_same_v<ViewOut<Tout, Rank>, av::strided_array_view<Tout, Rank>>),
     "strided view only specilization fail for arrayview");
 
-  void operator()(const View1<const T1, Rank> &i_vin1,
+  void operator()(const View1<T1, Rank> &i_vin1,
     const TerOp &op,
-    const View2<const T2, Rank> &i_vin2,
-    const View3<const T3, Rank> &i_vin3,
+    const View2<T2, Rank> &i_vin2,
+    const View3<T3, Rank> &i_vin3,
     const ViewOut<Tout, Rank> &o_vout) const
   {
     POUTRE_ENTERING("PixelWiseTernaryOpDispatcher generic case");
@@ -120,11 +120,11 @@ struct PixelWiseTernaryOpDispatcher<T1,
                    || !std::is_same_v<std::remove_const_t<T2>, std::remove_const_t<Tout>>
                    || !std::is_same_v<std::remove_const_t<T3>, std::remove_const_t<Tout>>>>
 {
-  void operator()(const av::array_view<const T1, Rank> &i_vin1,
+  void operator()(const av::array_view<T1, Rank> &i_vin1,
     const TerOp &op,
-    const av::array_view<const T2, Rank> &i_vin2,
-    const av::array_view<const T3, Rank> &i_vin3,
-    av::array_view<Tout, Rank> &o_vout) const
+    const av::array_view<T2, Rank> &i_vin2,
+    const av::array_view<T3, Rank> &i_vin3,
+    const av::array_view<Tout, Rank> &o_vout) const
   {
     POUTRE_ENTERING("PixelWiseTernaryOpDispatcher both array view");
     auto i_vinbeg1 = i_vin1.data();
@@ -154,11 +154,11 @@ struct PixelWiseTernaryOpDispatcher<T1,
                    && std::is_same_v<std::remove_const_t<T2>, std::remove_const_t<Tout>>
                    && std::is_same_v<std::remove_const_t<T3>, std::remove_const_t<Tout>> && std::is_arithmetic_v<T1>>>
 {
-  void operator()(const av::array_view<const T1, Rank> &i_vin1,
+  void operator()(const av::array_view<T1, Rank> &i_vin1,
     const TerOp &op,
-    const av::array_view<const T2, Rank> &i_vin2,
-    const av::array_view<const T3, Rank> &i_vin3,
-    const array_view<Tout, Rank> &o_vout) const
+    const av::array_view<T2, Rank> &i_vin2,
+    const av::array_view<T3, Rank> &i_vin3,
+    const av::array_view<Tout, Rank> &o_vout) const
   {
     POUTRE_ENTERING("PixelWiseTernaryOpDispatcher both array view arithemic same type");
     auto i_vinbeg1 = i_vin1.data();
@@ -184,10 +184,10 @@ template<typename T1,
   template<typename, ptrdiff_t>
   class ViewOut,
   class TerOp>
-void t_ternary_op(const View1<const T1, Rank> &i_vin1,
+void t_ternary_op(const View1<T1, Rank> &i_vin1,
   const TerOp &op,
-  const View2<const T2, Rank> &i_vin2,
-  const View3<const T3, Rank> &i_vin3,
+  const View2<T2, Rank> &i_vin2,
+  const View3<T3, Rank> &i_vin3,
   const ViewOut<Tout, Rank> &o_vout) POUTRE_NOEXCEPTONLYNDEBUG
 {
   POUTRE_ASSERTCHECK(i_vin1.size() == i_vin2.size(), "Incompatible views size");

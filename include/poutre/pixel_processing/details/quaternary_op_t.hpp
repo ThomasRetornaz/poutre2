@@ -22,7 +22,7 @@
 #include <poutre/base/config.hpp>
 #include <poutre/base/details//simd/simd_algorithm.hpp> //simd transform
 #include <poutre/base/details/data_structures/array_view.hpp>
-#include <poutre/base/details/data_structures/image_t>
+#include <poutre/base/details/data_structures/image_t.hpp>
 
 namespace poutre::details {
 /**
@@ -66,11 +66,11 @@ struct PixelWiseQuaternaryOpDispatcher
                   || std::is_same_v<ViewOut<Tout, Rank>, av::strided_array_view<Tout, Rank>>),
     "strided view only specilization fail for arrayview");
 
-  void operator()(const View1<const T1, Rank> &i_vin1,
+  void operator()(const View1<T1, Rank> &i_vin1,
     const QuaterOp &op,
-    const View2<const T2, Rank> &i_vin2,
-    const View3<const T3, Rank> &i_vin3,
-    const View4<const T4, Rank> &i_vin4,
+    const View2<T2, Rank> &i_vin2,
+    const View3<T3, Rank> &i_vin3,
+    const View4<T4, Rank> &i_vin4,
     const ViewOut<Tout, Rank> &o_vout) const
   {
     POUTRE_ENTERING("PixelWiseQuaternaryOpDispatcher generic case");
@@ -133,11 +133,11 @@ struct PixelWiseQuaternaryOpDispatcher<T1,
                    || !std::is_same_v<std::remove_const_t<T3>, std::remove_const_t<Tout>>
                    || !std::is_same_v<std::remove_const_t<T4>, std::remove_const_t<Tout>>>>
 {
-  void operator()(const av::array_view<const T1, Rank> &i_vin1,
+  void operator()(const av::array_view<T1, Rank> &i_vin1,
     const QuaterOp &op,
-    const av::array_view<const T2, Rank> &i_vin2,
-    const av::array_view<const T3, Rank> &i_vin3,
-    const av::array_view<const T4, Rank> &i_vin4,
+    const av::array_view<T2, Rank> &i_vin2,
+    const av::array_view<T3, Rank> &i_vin3,
+    const av::array_view<T4, Rank> &i_vin4,
     const av::array_view<Tout, Rank> &o_vout) const
   {
     POUTRE_ENTERING("PixelWiseQuaternaryOpDispatcher both arrayview");
@@ -171,11 +171,11 @@ struct PixelWiseQuaternaryOpDispatcher<T1,
                    && std::is_same_v<std::remove_const_t<T3>, std::remove_const_t<Tout>>
                    && std::is_same_v<std::remove_const_t<T4>, std::remove_const_t<Tout>> && std::is_arithmetic_v<T1>>>
 {
-  void operator()(const av::array_view<const T1, Rank> &i_vin1,
+  void operator()(const av::array_view<T1, Rank> &i_vin1,
     const QuaterOp &op,
-    const av::array_view<const T2, Rank> &i_vin2,
-    const av::array_view<const T3, Rank> &i_vin3,
-    const av::array_view<const T4, Rank> &i_vin4,
+    const av::array_view<T2, Rank> &i_vin2,
+    const av::array_view<T3, Rank> &i_vin3,
+    const av::array_view<T4, Rank> &i_vin4,
     const av::array_view<Tout, Rank> &o_vout) const
   {
     POUTRE_ENTERING("PixelWiseQuaternaryOpDispatcher both arrayview");
@@ -206,11 +206,11 @@ template<typename T1,
   template<typename, ptrdiff_t>
   class ViewOut,
   class QuaterOp>
-void t_quaternary_op(const View1<const T1, Rank> &i_vin1,
+void t_quaternary_op(const View1<T1, Rank> &i_vin1,
   const QuaterOp &op,
-  const View2<const T2, Rank> &i_vin2,
-  const View3<const T3, Rank> &i_vin3,
-  const View4<const T4, Rank> &i_vin4,
+  const View2<T2, Rank> &i_vin2,
+  const View3<T3, Rank> &i_vin3,
+  const View4<T4, Rank> &i_vin4,
   const ViewOut<Tout, Rank> &o_vout) POUTRE_NOEXCEPTONLYNDEBUG
 {
   POUTRE_ASSERTCHECK(i_vin1.size() == i_vin2.size(), "Incompatible views size");
