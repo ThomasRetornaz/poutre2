@@ -13,11 +13,13 @@ set(PoutrePPSRC_PUBLICHEADERS
   ${subdirheader}/pixel_processing.hpp
   ${subdirheader}/copy_convert.hpp
   ${subdirheader}/arith.hpp
+  ${subdirheader}/compare.hpp
   )
 
 set(PoutrePPSRC_CPP
   ${subdirsource}/copy_convert.cpp
   ${subdirsource}/arith.cpp
+  ${subdirsource}/compare.cpp
   )
 
 source_group(details FILES ${PoutrePPSRC_DETAILS})
