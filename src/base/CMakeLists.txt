@@ -51,9 +51,12 @@ target_link_libraries(poutre_base PRIVATE poutre2_options
   PRIVATE jsoncpp_lib
   PRIVATE spdlog::spdlog
   INTERFACE xsimd
-  PUBLIC OpenMP::OpenMP_CXX
 )
 
+find_package(OpenMP)
+if(OpenMP_CXX_FOUND)
+  target_link_libraries(poutre_base PUBLIC OpenMP::OpenMP_CXX)
+endif()
 # set_source_files_properties(
 #   ${subdirsource}/image_t.cpp
 #   PROPERTIES

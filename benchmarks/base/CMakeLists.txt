@@ -25,7 +25,6 @@ IF(WIN32)
     spdlog::spdlog
     Catch2::Catch2WithMain
     PUBLIC poutre_base::poutre_base
-    PUBLIC OpenMP::OpenMP_CXX
   )
 ELSE()
   target_link_libraries(poutre_base_bench
@@ -37,6 +36,10 @@ ELSE()
     spdlog::spdlog
     Catch2::Catch2WithMain
     PUBLIC poutre_base::poutre_base
-    PUBLIC OpenMP::OpenMP_CXX
   )
 ENDIF()
+
+find_package(OpenMP)
+if(OpenMP_CXX_FOUND)
+  target_link_libraries(poutre_base_bench PUBLIC OpenMP::OpenMP_CXX)
+endif()

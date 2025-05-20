@@ -41,8 +41,12 @@ target_link_libraries(poutre_pixel_processing PRIVATE poutre2_options
   PRIVATE spdlog::spdlog
   INTERFACE xsimd
   PUBLIC poutre_base::poutre_base
-  PUBLIC OpenMP::OpenMP_CXX
 )
+
+find_package(OpenMP)
+if(OpenMP_CXX_FOUND)
+  target_link_libraries(poutre_pixel_processing PUBLIC OpenMP::OpenMP_CXX)
+endif()
 
 # force custom target before start
 add_dependencies(poutre_pixel_processing xsimd)

@@ -12,7 +12,9 @@ ScopedForceNbThreads::ScopedForceNbThreads(int nbThread) : nbThreadToRestore(POU
   POUTRE_NUM_THREADS = nbThread;
   // if( std::getenv("OMP_NUM_THREADS") == nullptr )
   // {
+#ifdef _OPENMP
   omp_set_num_threads(POUTRE_NUM_THREADS);
+#endif
   // }
 }
 ScopedForceNbThreads::~ScopedForceNbThreads()
@@ -21,7 +23,9 @@ ScopedForceNbThreads::~ScopedForceNbThreads()
   POUTRE_NUM_THREADS = nbThreadToRestore;
   // if( std::getenv("OMP_NUM_THREADS") == nullptr )
   // {
+#ifdef _OPENMP
   omp_set_num_threads(POUTRE_NUM_THREADS);
+#endif
   // }
 }
 }// namespace poutre::thread

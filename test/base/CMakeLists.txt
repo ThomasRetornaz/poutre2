@@ -23,8 +23,12 @@ target_link_libraries(
   spdlog::spdlog
   Catch2::Catch2WithMain
   PUBLIC poutre_base::poutre_base
-  PUBLIC OpenMP::OpenMP_CXX
 )
+
+find_package(OpenMP)
+if(OpenMP_CXX_FOUND)
+  target_link_libraries(poutre_base_tests PUBLIC OpenMP::OpenMP_CXX)
+endif()
 
 # add_definitions(-D_GLIBCXX_USE_CXX11_ABI)
 IF(BUILD_SHARED_LIBS)
