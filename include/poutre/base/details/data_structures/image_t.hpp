@@ -265,6 +265,7 @@ template<class valuetype, std::ptrdiff_t Rank>
     return poutre::details::av::array_view<const valuetype, Rank>(i_img.data(), i_img.shape());
   }
 
+#if defined(POUTRE_IS_GCC) || defined(POUTRE_IS_CLANG)
 extern template class BASE_API image_t<pUINT8, 1>;
 extern template class BASE_API image_t<pINT32, 1>;
 extern template class BASE_API image_t<pFLOAT, 1>;
@@ -300,6 +301,7 @@ extern template class BASE_API image_t<pINT32, 4>;
 extern template class BASE_API image_t<pFLOAT, 4>;
 extern template class BASE_API image_t<pINT64, 4>;
 extern template class BASE_API image_t<pDOUBLE, 4>;
+#endif
 
 //! @} doxygroup: image_processing_container_group
 }// namespace poutre::details

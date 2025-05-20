@@ -17,7 +17,7 @@
 
 namespace poutre::details
 {
-
+#if defined(POUTRE_IS_GCC) || defined(POUTRE_IS_CLANG)
 template class image_t<poutre::pUINT8, 1>;
 template class image_t<poutre::pINT32, 1>;
 template class image_t<poutre::pFLOAT, 1>;
@@ -53,5 +53,6 @@ template class image_t<pINT32, 4>;
 template class image_t<pFLOAT, 4>;
 template class image_t<pINT64, 4>;
 template class image_t<pDOUBLE, 4>;
+#endif
 
 }

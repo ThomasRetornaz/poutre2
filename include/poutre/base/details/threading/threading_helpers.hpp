@@ -9,10 +9,6 @@
 
 #pragma once
 
-#if defined(POUTRE_IS_GCC) || defined(POUTRE_IS_CLANG)
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-#endif
 
 /**
  * @file   threading_helpers.hpp
@@ -23,6 +19,12 @@
  */
 
 #include <poutre/base/base.hpp>
+#include <poutre/base/config.hpp>
+
+#if defined(POUTRE_IS_GCC) || defined(POUTRE_IS_CLANG)
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
+#endif
 
 #include <condition_variable>
 #include <functional>

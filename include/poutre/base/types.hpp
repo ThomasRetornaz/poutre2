@@ -537,6 +537,7 @@ BASE_API std::ostream &operator<<(std::ostream &, PType);
 //! operator>> for PType
 BASE_API std::istream &operator>>(std::istream &, PType &);
 
+#if defined(POUTRE_IS_GCC) || defined(POUTRE_IS_CLANG)
 extern template class BASE_API compound_type<pUINT8, 3>;
 extern template class BASE_API compound_type<pINT32, 3>;
 extern template class BASE_API compound_type<pFLOAT, 3>;
@@ -548,7 +549,7 @@ extern template class BASE_API compound_type<pINT32, 4>;
 extern template class BASE_API compound_type<pFLOAT, 4>;
 extern template class BASE_API compound_type<pINT64, 4>;
 extern template class BASE_API compound_type<pDOUBLE, 4>;
-
+#endif
 
 }// namespace poutre
 

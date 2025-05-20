@@ -19,6 +19,7 @@
 
 namespace poutre {
 
+#if defined(POUTRE_IS_GCC) || defined(POUTRE_IS_CLANG)
 template class compound_type<pUINT8, 3>;
 template class compound_type<pINT32, 3>;
 template class compound_type<pFLOAT, 3>;
@@ -30,6 +31,7 @@ template class compound_type<pINT32, 4>;
 template class compound_type<pFLOAT, 4>;
 template class compound_type<pINT64, 4>;
 template class compound_type<pDOUBLE, 4>;
+#endif
 
 // NOTE JUST FOR CONVENIENCE AT INTERFACE LAYER TO USE STRING INSTEAD OF VERBOSE ENUM
 
