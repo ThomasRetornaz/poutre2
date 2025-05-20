@@ -9,8 +9,10 @@
 
 #pragma once
 
+#if defined(POUTRE_IS_GCC) || defined(POUTRE_IS_CLANG)
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wdeprecated-declarations"
+#endif
 
 /**
  * @file   threading_helpers.hpp
@@ -358,4 +360,6 @@ namespace DefaultThreadPool {
 }// namespace DefaultThreadPool
 }// namespace poutre::thread
  //! @} doxygroup: threading_group
+ #if defined(POUTRE_IS_GCC) || defined(POUTRE_IS_CLANG)
  #pragma GCC diagnostic pop
+ #endif

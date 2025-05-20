@@ -23,15 +23,23 @@
 #include <poutre/base/types.hpp>
 #include <vector>
 
+#if defined(POUTRE_IS_GCC) || defined(POUTRE_IS_CLANG)
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wold-style-cast"
 #pragma GCC diagnostic ignored "-Wsign-conversion"
 #pragma GCC diagnostic ignored "-Wfloat-conversion"
+#if defined(POUTRE_IS_CLANG)
+#pragma clang diagnostic ignored "-Wshorten-64-to-32"
+#elif defined(POUTRE_IS_GCC) 
 #pragma GCC diagnostic ignored "-Wuseless-cast"
+#endif
 #pragma GCC diagnostic ignored "-Wcast-align"
 #pragma GCC diagnostic ignored "-Wdouble-promotion"
+#endif
 #include <xsimd/xsimd.hpp>
+#if defined(POUTRE_IS_GCC) || defined(POUTRE_IS_CLANG)
 #pragma GCC diagnostic pop
+#endif
 
 namespace xs = xsimd;
 
