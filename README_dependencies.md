@@ -74,6 +74,7 @@ The following compilers should work:
 	- MacOS:
 
 			brew install llvm
+			brew install libomp
 	</details>
 
   * [Visual Studio 2019 or higher](https://visualstudio.microsoft.com/)
