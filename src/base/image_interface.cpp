@@ -80,7 +80,7 @@ void AssertImagesAreDifferent(const IInterface &i_img1, const IInterface &i_img2
 // TODO FACTORIZE DISPATCH
 
 // NDIMS
-template<std::size_t numDims>
+template<std::ptrdiff_t numDims>
 std::unique_ptr<IInterface> CreateDenseDispatchPTypeScalar(const std::vector<std::size_t> &dims, PType ptype)
 {
   switch (ptype) {
@@ -101,7 +101,7 @@ std::unique_ptr<IInterface> CreateDenseDispatchPTypeScalar(const std::vector<std
   }
 }
 
-template<size_t numDims>
+template<std::ptrdiff_t numDims>
 std::unique_ptr<IInterface> CreateDenseDispatchPType3PLanes(const std::vector<std::size_t> &dims, PType ptype)
 {
   switch (ptype) {
@@ -122,7 +122,7 @@ std::unique_ptr<IInterface> CreateDenseDispatchPType3PLanes(const std::vector<st
   }
 }
 
-template<size_t numDims>
+template<std::ptrdiff_t numDims>
 std::unique_ptr<IInterface> CreateDenseDispatchPType4PLanes(const std::vector<std::size_t> &dims, PType ptype)
 {
   switch (ptype) {
@@ -143,7 +143,7 @@ std::unique_ptr<IInterface> CreateDenseDispatchPType4PLanes(const std::vector<st
   }
 }
 
-template<size_t numDims>
+template<std::ptrdiff_t numDims>
 std::unique_ptr<IInterface>
   CreateDenseDispatchDims(const std::vector<std::size_t> &dims, CompoundType ctype, PType ptype)
 {
@@ -164,7 +164,7 @@ std::unique_ptr<IInterface>
 }
 
 // 1D
-template<size_t numDims>
+template<std::ptrdiff_t numDims>
 std::unique_ptr<IInterface> CreateImage1DDispatchPTypeScalar(const std::vector<std::size_t> &dims, PType ptype)
 {
   switch (ptype) {
@@ -185,7 +185,7 @@ std::unique_ptr<IInterface> CreateImage1DDispatchPTypeScalar(const std::vector<s
   }
 }
 
-template<size_t numDims>
+template<ptrdiff_t numDims>
 std::unique_ptr<IInterface> CreateImage1DDispatch(const std::vector<std::size_t> &dims, CompoundType ctype, PType ptype)
 {
   switch (ctype) {
@@ -207,7 +207,7 @@ std::unique_ptr<IInterface> CreateImage1DDispatch(const std::vector<std::size_t>
 }
 
 // 2D
-template<size_t numDims>
+template<ptrdiff_t numDims>
 std::unique_ptr<IInterface> CreateImage2DDispatchPTypeScalar(const std::vector<std::size_t> &dims, PType ptype)
 {
   switch (ptype) {
@@ -228,7 +228,7 @@ std::unique_ptr<IInterface> CreateImage2DDispatchPTypeScalar(const std::vector<s
   }
 }
 
-template<size_t numDims>
+template<ptrdiff_t numDims>
 std::unique_ptr<IInterface> CreateImage2DDispatchPType3PLanes(const std::vector<std::size_t> &dims, PType ptype)
 {
   switch (ptype) {
@@ -249,7 +249,7 @@ std::unique_ptr<IInterface> CreateImage2DDispatchPType3PLanes(const std::vector<
   }
 }
 
-template<size_t numDims>
+template<ptrdiff_t numDims>
 std::unique_ptr<IInterface> CreateImage2DDispatchPType4PLanes(const std::vector<std::size_t> &dims, PType ptype)
 {
   switch (ptype) {
@@ -270,7 +270,7 @@ std::unique_ptr<IInterface> CreateImage2DDispatchPType4PLanes(const std::vector<
   }
 }
 
-template<size_t numDims>
+template<ptrdiff_t numDims>
 std::unique_ptr<IInterface> CreateImage2DDispatch(const std::vector<std::size_t> &dims, CompoundType ctype, PType ptype)
 {
   switch (ctype) {
@@ -290,7 +290,7 @@ std::unique_ptr<IInterface> CreateImage2DDispatch(const std::vector<std::size_t>
 }
 
 // 3D
-template<size_t numDims>
+template<ptrdiff_t numDims>
 std::unique_ptr<IInterface> CreateImage3DDispatchPTypeScalar(const std::vector<std::size_t> &dims, PType ptype)
 {
   switch (ptype) {
@@ -311,7 +311,7 @@ std::unique_ptr<IInterface> CreateImage3DDispatchPTypeScalar(const std::vector<s
   }
 }
 
-template<size_t numDims>
+template<ptrdiff_t numDims>
 std::unique_ptr<IInterface> CreateImage3DDispatchPType3PLanes(const std::vector<std::size_t> &dims, PType ptype)
 {
   switch (ptype) {
@@ -403,7 +403,7 @@ std::unique_ptr<IInterface> Create(const std::vector<std::size_t> &dims, Compoun
 /*                                       IMAGE FROM STRING */
 /***********************************************************************************************************************/
 
-template<size_t dims, typename ptype>
+template<ptrdiff_t dims, typename ptype>
 void ImageFromStringDenseScalarDispatchPTypeHelper(poutre::IInterface &img, std::istringstream &istrm)
 {
   using ImgType = details::image_t<typename TypeTraits<ptype>::storage_type, dims>;
@@ -424,7 +424,7 @@ void ImageFromStringDenseScalarDispatchPTypeHelper(poutre::IInterface &img, std:
   }
 }// namespace poutre
 
-template<size_t dims, typename ptype>
+template<ptrdiff_t dims, typename ptype>
 void ImageFromStringDense3PlanesDispatchPTypeHelper(poutre::IInterface &img, std::istringstream &istrm)
 {
   using ImgType = details::image_t<typename TypeTraits<compound_type<ptype, 3>>::storage_type, dims>;
@@ -466,7 +466,7 @@ void ImageFromStringDense3PlanesDispatchPTypeHelper(poutre::IInterface &img, std
   }
 }
 
-template<size_t dims, typename ptype>
+template<ptrdiff_t dims, typename ptype>
 void ImageFromStringDense4PlanesDispatchPTypeHelper(poutre::IInterface &img, std::istringstream &istrm)
 {
   using ImgType = details::image_t<typename TypeTraits<compound_type<ptype, 4>>::storage_type, dims>;
@@ -692,7 +692,7 @@ std::unique_ptr<IInterface> ImageFromString(const std::string &i_str)
 /***********************************************************************************************************************/
 
 // IMAGE TO STRING DISPATCH PTYPE
-template<size_t dims, typename ptype>
+template<ptrdiff_t dims, typename ptype>
 void ImageToStringDenseCompoundType_4PlanesDispatchPTypeHelper(const poutre::IInterface &img, std::ostringstream &ostrm)
 {
   using ImgType = details::image_t<typename TypeTraits<compound_type<ptype, 4>>::storage_type, dims>;
@@ -714,7 +714,7 @@ void ImageToStringDenseCompoundType_4PlanesDispatchPTypeHelper(const poutre::IIn
   ostrm.seekp(0, ostrm.end);
 }
 
-template<size_t dims, typename ptype>
+template<ptrdiff_t dims, typename ptype>
 void ImageToStringDenseCompoundType_3PlanesDispatchPTypeHelper(const poutre::IInterface &img, std::ostringstream &ostrm)
 {
   using ImgType = details::image_t<typename TypeTraits<compound_type<ptype, 3>>::storage_type, dims>;
@@ -736,7 +736,7 @@ void ImageToStringDenseCompoundType_3PlanesDispatchPTypeHelper(const poutre::IIn
   ostrm.seekp(0, ostrm.end);
 }
 
-template<size_t dims, typename ptype>
+template<ptrdiff_t dims, typename ptype>
 void ImageToStringDenseScalarDispatchPTypeHelper(const poutre::IInterface &img, std::ostringstream &ostrm)
 {
   using ImgType = details::image_t<typename TypeTraits<ptype>::storage_type, dims>;

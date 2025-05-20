@@ -12,7 +12,7 @@
 /**
  * @file   registrar.hpp
  * @author Thomas Retornaz
- * @brief Define static objetc which store map to factories
+ * @brief Define static object which store map to factories
  *
  *
  */

@@ -20,7 +20,7 @@
  */
 #include <algorithm>//transform
 #include <poutre/base/config.hpp>
-#include <poutre/base/details//simd/simd_algorithm.hpp> //simd transform
+#include <poutre/base/details/simd/simd_algorithm.hpp> //simd transform
 #include <poutre/base/details/data_structures/array_view.hpp>
 #include <poutre/base/details/data_structures/image_t.hpp>
 
@@ -64,7 +64,7 @@ struct PixelWiseQuaternaryOpDispatcher
                   || std::is_same_v<View2<T4, Rank>, av::strided_array_view<T4, Rank>>
                   || std::is_same_v<View2<T4, Rank>, av::strided_array_view<const T4, Rank>>
                   || std::is_same_v<ViewOut<Tout, Rank>, av::strided_array_view<Tout, Rank>>),
-    "strided view only specilization fail for arrayview");
+    "strided view only specialization fail for array view");
 
   void operator()(const View1<T1, Rank> &i_vin1,
     const QuaterOp &op,
@@ -140,7 +140,7 @@ struct PixelWiseQuaternaryOpDispatcher<T1,
     const av::array_view<T4, Rank> &i_vin4,
     const av::array_view<Tout, Rank> &o_vout) const
   {
-    POUTRE_ENTERING("PixelWiseQuaternaryOpDispatcher both arrayview");
+    POUTRE_ENTERING("PixelWiseQuaternaryOpDispatcher both array view");
     auto i_vinbeg1 = i_vin1.data();
     auto i_vinend1 = i_vin1.data() + i_vin1.size();
     auto i_vinbeg2 = i_vin2.data();
@@ -178,7 +178,7 @@ struct PixelWiseQuaternaryOpDispatcher<T1,
     const av::array_view<T4, Rank> &i_vin4,
     const av::array_view<Tout, Rank> &o_vout) const
   {
-    POUTRE_ENTERING("PixelWiseQuaternaryOpDispatcher both arrayview");
+    POUTRE_ENTERING("PixelWiseQuaternaryOpDispatcher both array view");
     auto i_vinbeg1 = i_vin1.data();
     auto i_vinend1 = i_vin1.data() + i_vin1.size();
     auto i_vinbeg2 = i_vin2.data();

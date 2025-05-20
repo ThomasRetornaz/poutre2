@@ -15,7 +15,8 @@
 
 #include <cstdlib>
 #include <vector>
-
+// #include <iostream>
+#include <cmath>
 
 // NOLINTBEGIN
 
@@ -41,7 +42,7 @@ public:
   std::vector<unsigned int> m_vect;
 };
 
-// 15 times slower than common iterator
+// 2 to 3 times slower than common iterator
 // cppcheck-suppress unknownMacro
 BENCHMARK_DEFINE_F(ViewOnVect1DFixture, BoundIterator)(benchmark::State &state)
 {
@@ -54,6 +55,26 @@ BENCHMARK_DEFINE_F(ViewOnVect1DFixture, BoundIterator)(benchmark::State &state)
     auto itend = bnd.end();
     for (; it != itend; ++it) {
       benchmark::DoNotOptimize(view[*it]);
+      // auto val= view[*it];
+    }
+  }
+  state.SetItemsProcessed(state.iterations() * size);
+}
+
+// 12 to 15 times slower
+// cppcheck-suppress unknownMacro
+BENCHMARK_DEFINE_F(ViewOnVect1DFixture, BoundIterator2d)(benchmark::State &state)
+{
+  const auto size = state.range(0);
+  const ptrdiff_t sqrtsize = static_cast<ptrdiff_t>(std::sqrt(size));
+  for (auto sta : state) {
+    // benchmark::DoNotOptimize(m_vect[i]);
+    auto view2d = poutre::details::av::array_view<unsigned int, 2>(m_vect, { sqrtsize, sqrtsize });
+    auto bnd = view2d.bound();
+    auto it = bnd.begin();
+    auto itend = bnd.end();
+    for (; it != itend; ++it) {
+      benchmark::DoNotOptimize(view2d[*it]);
       // auto val= view[*it];
     }
   }
@@ -92,4 +113,11 @@ BENCHMARK_REGISTER_F(ViewOnVect1DFixture, BoundIterator)
   ->Arg(128 * 128)
   ->Arg(256 * 256);//->Unit(benchmark::kMillisecond); //-V112
 
+// cppcheck-suppress unknownMacro
+BENCHMARK_REGISTER_F(ViewOnVect1DFixture, BoundIterator2d)
+  ->Arg(16 * 16)
+  ->Arg(32 * 32)//-V112
+  ->Arg(64 * 64)
+  ->Arg(128 * 128)
+  ->Arg(256 * 256);//->Unit(benchmark::kMillisecond); //-V112
 // NOLINTEND

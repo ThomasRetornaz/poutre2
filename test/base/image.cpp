@@ -204,13 +204,6 @@ TEST_CASE("2D set/get pixel", "[image]")
   const poutre::pINT32 pix_value3 = 9;
   (*img).SetPixel(pix2, pix_value3);
 
-  //  std::string expected = "Scalar GINT32 2 5 6\
-  // 1 1 10 1 1 1\
-  // 1 1 1 1 1 1\
-  // 1 1 1 1 1 1\
-  // 8 1 1 5 5 9\
-  // 1 1 1 5 5 5\
-  //";
   auto val = (*img).GetPixel(2, 0);// x then y
   REQUIRE(val == pix_value1);
   auto val2 = (*img).GetPixel(pix);

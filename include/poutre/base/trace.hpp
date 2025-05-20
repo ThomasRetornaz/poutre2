@@ -10,7 +10,7 @@
 #pragma once
 
 /**
- * @file   poutreTrace.hpp
+ * @file   trace.hpp
  * @author Thomas Retornaz
  * @brief  Trace capabilities
  *

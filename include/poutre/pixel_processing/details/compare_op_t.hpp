@@ -11,7 +11,7 @@
 /**
  * @file compare_op_t.hpp
  * @author thomas.retornaz@mines-paris.org
- * @brief comparaisons operator over views and images
+ * @brief comparisons operator over views and images
  * @version 0.1
  * @date 2020-05-08
  *
@@ -32,7 +32,7 @@
 
 namespace poutre::details {
 /**
- * @addtogroup image_processing_comp_group Image Processing Template comparaisons facilities
+ * @addtogroup image_processing_comp_group Image Processing Template comparisons facilities
  * @ingroup image_processing_group
  *@{
  */
@@ -41,7 +41,7 @@ namespace poutre::details {
 template<typename T1, typename T2, typename = void> struct OpCompEqual
 {
 public:
-  OpCompEqual() {}
+  OpCompEqual() = default;
   POUTRE_ALWAYS_INLINE bool operator()(T1 const &a0, T2 const &a1) const POUTRE_NOEXCEPT
   {
     return static_cast<bool>(a0 == a1);
@@ -51,7 +51,7 @@ template<typename T> struct OpCompEqual<T, T, std::enable_if_t<std::is_arithmeti
 {
   using simd_t = typename TypeTraits<T>::simd_type;
   using simd_mask_t = typename TypeTraits<T>::simd_mask_type;
-  OpCompEqual() {}
+  OpCompEqual() = default;
   POUTRE_ALWAYS_INLINE bool operator()(T a0, T a1) const POUTRE_NOEXCEPT { return static_cast<bool>(a0 == a1); }
   template<typename U> POUTRE_ALWAYS_INLINE simd_mask_t operator()(const U &lhs, const U &rhs) const POUTRE_NOEXCEPT
   {
@@ -62,7 +62,7 @@ template<typename T> struct OpCompEqual<T, T, std::enable_if_t<std::is_arithmeti
 template<typename T1, typename T2, typename = void> struct OpCompDiff
 {
 public:
-  OpCompDiff() {}
+  OpCompDiff() = default;
   POUTRE_ALWAYS_INLINE bool operator()(T1 const &a0, T2 const &a1) const POUTRE_NOEXCEPT
   {
     return static_cast<bool>(a0 != a1);
@@ -72,7 +72,7 @@ template<typename T> struct OpCompDiff<T, T, std::enable_if_t<std::is_arithmetic
 {
   using simd_t = typename TypeTraits<T>::simd_type;
   using simd_mask_t = typename TypeTraits<T>::simd_mask_type;
-  OpCompDiff() {}
+  OpCompDiff() = default;
   POUTRE_ALWAYS_INLINE bool operator()(T a0, T a1) const POUTRE_NOEXCEPT { return static_cast<bool>(a0 != a1); }
   template<typename U> POUTRE_ALWAYS_INLINE simd_mask_t operator()(const U &lhs, const U &rhs) const POUTRE_NOEXCEPT
   {
@@ -83,7 +83,7 @@ template<typename T> struct OpCompDiff<T, T, std::enable_if_t<std::is_arithmetic
 template<typename T1, typename T2, typename = void> struct OpCompSup
 {
 public:
-  OpCompSup() {}
+  OpCompSup() = default;
   POUTRE_ALWAYS_INLINE bool operator()(T1 const &a0, T2 const &a1) const POUTRE_NOEXCEPT
   {
     return static_cast<bool>(a0 > a1);
@@ -93,7 +93,7 @@ template<typename T> struct OpCompSup<T, T, std::enable_if_t<std::is_arithmetic_
 {
   using simd_t = typename TypeTraits<T>::simd_type;
   using simd_mask_t = typename TypeTraits<T>::simd_mask_type;
-  OpCompSup() {}
+  OpCompSup() = default;
   POUTRE_ALWAYS_INLINE bool operator()(T a0, T a1) const POUTRE_NOEXCEPT { return static_cast<bool>(a0 > a1); }
   template<typename U> POUTRE_ALWAYS_INLINE simd_mask_t operator()(const U &lhs, const U &rhs) const POUTRE_NOEXCEPT
   {
@@ -104,7 +104,7 @@ template<typename T> struct OpCompSup<T, T, std::enable_if_t<std::is_arithmetic_
 template<typename T1, typename T2, typename = void> struct OpCompInf
 {
 public:
-  OpCompInf() {}
+  OpCompInf() = default;
   POUTRE_ALWAYS_INLINE bool operator()(T1 const &a0, T2 const &a1) const POUTRE_NOEXCEPT
   {
     return static_cast<bool>(a0 < a1);
@@ -115,7 +115,7 @@ template<typename T> struct OpCompInf<T, T, std::enable_if_t<std::is_arithmetic_
 {
   using simd_t = typename TypeTraits<T>::simd_type;
   using simd_mask_t = typename TypeTraits<T>::simd_mask_type;
-  OpCompInf() {}
+  OpCompInf() = default;
   POUTRE_ALWAYS_INLINE bool operator()(T a0, T a1) const POUTRE_NOEXCEPT { return static_cast<bool>(a0 < a1); }
   template<typename U> POUTRE_ALWAYS_INLINE simd_mask_t operator()(const U &lhs, const U &rhs) const POUTRE_NOEXCEPT
   {
@@ -126,7 +126,7 @@ template<typename T> struct OpCompInf<T, T, std::enable_if_t<std::is_arithmetic_
 template<typename T1, typename T2, typename = void> struct OpCompSupEqual
 {
 public:
-  OpCompSupEqual() {}
+  OpCompSupEqual() = default;
   POUTRE_ALWAYS_INLINE bool operator()(T1 const &a0, T2 const &a1) const POUTRE_NOEXCEPT
   {
     return static_cast<bool>(a0 >= a1);
@@ -136,7 +136,7 @@ template<typename T> struct OpCompSupEqual<T, T, std::enable_if_t<std::is_arithm
 {
   using simd_t = typename TypeTraits<T>::simd_type;
   using simd_mask_t = typename TypeTraits<T>::simd_mask_type;
-  OpCompSupEqual() {}
+  OpCompSupEqual() = default;
   POUTRE_ALWAYS_INLINE bool operator()(T a0, T a1) const POUTRE_NOEXCEPT { return static_cast<bool>(a0 >= a1); }
   template<typename U> POUTRE_ALWAYS_INLINE simd_mask_t operator()(const U &lhs, const U &rhs) const POUTRE_NOEXCEPT
   {
@@ -147,7 +147,7 @@ template<typename T> struct OpCompSupEqual<T, T, std::enable_if_t<std::is_arithm
 template<typename T1, typename T2, typename = void> struct OpCompInfEqual
 {
 public:
-  OpCompInfEqual() {}
+  OpCompInfEqual() = default;
   POUTRE_ALWAYS_INLINE bool operator()(T1 const &a0, T2 const &a1) const POUTRE_NOEXCEPT
   {
     return static_cast<bool>(a0 <= a1);
@@ -157,7 +157,7 @@ template<typename T> struct OpCompInfEqual<T, T, std::enable_if_t<std::is_arithm
 {
   using simd_t = typename TypeTraits<T>::simd_type;
   using simd_mask_t = typename TypeTraits<T>::simd_mask_type;
-  OpCompInfEqual() {}
+  OpCompInfEqual() = default;
   POUTRE_ALWAYS_INLINE bool operator()(T a0, T a1) const POUTRE_NOEXCEPT { return static_cast<bool>(a0 <= a1); }
   template<typename U> POUTRE_ALWAYS_INLINE simd_mask_t operator()(const U &lhs, const U &rhs) const POUTRE_NOEXCEPT
   {
@@ -449,7 +449,7 @@ struct compare_iii
   POUTRE_ALWAYS_INLINE Tout operator()(param_typein i_val,
     param_typecomp i_comp,
     param_typetrue i_true,
-    param_typetrue i_false) const POUTRE_NOEXCEPT// TODO inline ?
+    param_typetrue i_false) const POUTRE_NOEXCEPT
   {
     return (cop(i_val, i_comp) ? i_true : i_false);
   }
@@ -479,7 +479,7 @@ struct compare_iii<Tin,
   POUTRE_ALWAYS_INLINE Tout operator()(param_typein i_val,
     param_typecomp i_comp,
     param_typetrue i_true,
-    param_typetrue i_false) const POUTRE_NOEXCEPT// TODO inline ?
+    param_typetrue i_false) const POUTRE_NOEXCEPT
   {
     return (cop(i_val, i_comp) ? i_true : i_false);
   }

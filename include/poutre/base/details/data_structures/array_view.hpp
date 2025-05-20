@@ -286,7 +286,7 @@ public:
         section(const index_type& origin) const;
 };
 */
-// FIXME tmp disable check anyway i will remove array_view
+
 // NOLINTBEGIN
 namespace poutre::details::av {
 

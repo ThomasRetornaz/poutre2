@@ -20,6 +20,7 @@
 #include <poutre/base/details/simd/simd_helpers.hpp>
 #include <poutre/base/config.hpp>
 #include <poutre/base/types.hpp>
+#include <poutre/base/types_traits.hpp>
 //#include <iostream>
 #include <cstdio>
 
@@ -57,21 +58,21 @@ U *transform(const T *__restrict first, const T *__restrict last, U *__restrict 
 
   //std::cout<<std::endl<<"SIMD TRANSFORM UNARY"<<std::endl<<"size_prologue_loop: "<<size_prologue_loop<< " " <<"size_simd_loop: "<<size_simd_loop<< " "<< "simd_step_size "<<simd_size<<std::endl;
   
-  auto i = 0;
+  size_t i = 0;
 
   //---prologue
-  for (; i < size_prologue_loop; ++i) { *out++ = f(*first++); }
+  for (; i < static_cast<size_t>(size_prologue_loop); ++i) { *out++ = f(*first++); }
 
   //---main simd loop
   if (simd::IsAligned(out, alignment)) {
-    for (; i < size_simd_loop; i += simd_size) {
+    for (; i < static_cast<size_t>(size_simd_loop); i += simd_size) {
       auto element = xs::load_aligned(first);
       xs::store_aligned(out, f(element));
       first += simd_size;
       out += simd_size;
     }
   } else {
-    for (; i < size_simd_loop; i += simd_size) {
+    for (; i < static_cast<size_t>(size_simd_loop); i += simd_size) {
       auto element = xs::load_aligned(first);
       xs::store_unaligned(out, f(element));
       first += simd_size;
@@ -79,7 +80,7 @@ U *transform(const T *__restrict first, const T *__restrict last, U *__restrict 
     }
   }
   //---epilogue
-  for (; i < size; ++i) { *out++ = f(*first++); }
+  for (; i < static_cast<size_t>(size); ++i) { *out++ = f(*first++); }
   return out;
 }
 
@@ -114,16 +115,16 @@ U *transform(T1 const *__restrict first1,
   const auto size_prologue_loop = range.first;
   const auto size_simd_loop = range.second;
 
-  auto i = 0;
+  size_t i = 0;
 
   // std::cout<<std::endl<<"SIMD TRANSFORM BINARY"<<std::endl<<"size_prologue_loop: "<<size_prologue_loop<< " " <<"size_simd_loop: "<<size_simd_loop<< " "<<std::endl;
 
   //---prologue
-  for (; i < size_prologue_loop; ++i) { *out++ = f(*first1++, *first2++); }
+  for (; i < static_cast<size_t>(size_prologue_loop); ++i) { *out++ = f(*first1++, *first2++); }
 
   //---main simd loop
   if (simd::IsAligned(first2, alignment) && simd::IsAligned(out, alignment)) {
-    for (; i < size_simd_loop; i += simd_size) {
+    for (; i < static_cast<size_t>(size_simd_loop); i += simd_size) {
       simd_type_T1 element1 = xs::load_aligned(first1);
       simd_type_T2 element2 = xs::load_aligned(first2);
       xs::store_aligned(out, f(element1, element2));
@@ -132,7 +133,7 @@ U *transform(T1 const *__restrict first1,
       out += simd_size;
     }
   } else {
-    for (; i < size_simd_loop; i += simd_size) {
+    for (; i < static_cast<size_t>(size_simd_loop); i += simd_size) {
       simd_type_T1 element1 = xs::load_aligned(first1);
       simd_type_T2 element2 = xs::load_unaligned(first2);
       xs::store_unaligned(out, f(element1, element2));
@@ -142,7 +143,7 @@ U *transform(T1 const *__restrict first1,
     }
   }
   //---epilogue
-  for (; i < size; ++i) { *out++ = f(*first1++, *first2++); }
+  for (; i < static_cast<size_t>(size); ++i) { *out++ = f(*first1++, *first2++); }
   return out;
 }
 
@@ -183,14 +184,14 @@ U *transform(T1 const *__restrict first1,
   const auto size_prologue_loop = range.first;
   const auto size_simd_loop = range.second;
 
-  auto i = 0;
+  size_t i = 0;
 
   //---prologue
-  for (; i < size_prologue_loop; ++i) { *out++ = f(*first1++, *first2++, *first3++); }
+  for (; i < static_cast<size_t>(size_prologue_loop); ++i) { *out++ = f(*first1++, *first2++, *first3++); }
 
   //---main simd loop
   if (simd::IsAligned(first2, alignment) && simd::IsAligned(first3, alignment) && simd::IsAligned(out, alignment)) {
-    for (; i < size_simd_loop; i += simd_size) {
+    for (; i < static_cast<size_t>(size_simd_loop); i += simd_size) {
       simd_type_T1 element1 = xs::load_aligned(first1);
       simd_type_T2 element2 = xs::load_aligned(first2);
       simd_type_T3 element3 = xs::load_aligned(first3);
@@ -202,7 +203,7 @@ U *transform(T1 const *__restrict first1,
       out += simd_size;
     }
   } else {
-    for (; i < size_simd_loop; i += simd_size) {
+    for (; i < static_cast<size_t>(size_simd_loop); i += simd_size) {
       simd_type_T1 element1 = xs::load_aligned(first1);
       simd_type_T2 element2 = xs::load_unaligned(first2);
       simd_type_T3 element3 = xs::load_unaligned(first3);
@@ -214,7 +215,7 @@ U *transform(T1 const *__restrict first1,
     }
   }
   //---epilogue
-  for (; i < size; ++i) { *out++ = f(*first1++, *first2++, *first3++); }
+  for (; i < static_cast<size_t>(size); ++i) { *out++ = f(*first1++, *first2++, *first3++); }
   return out;
 }
 
@@ -261,15 +262,15 @@ U *transform(T1 const *__restrict first1,
   const auto size_prologue_loop = range.first;
   const auto size_simd_loop = range.second;
 
-  auto i = 0;
+  size_t i = 0;
 
   //---prologue
-  for (; i < size_prologue_loop; ++i) { *out++ = f(*first1++, *first2++, *first3++, *first4++); }
+  for (; i < static_cast<size_t>(size_prologue_loop); ++i) { *out++ = f(*first1++, *first2++, *first3++, *first4++); }
 
   //---main simd loop
   if (simd::IsAligned(first2, alignment) && simd::IsAligned(first3, alignment) && simd::IsAligned(first4, alignment)
       && simd::IsAligned(out, alignment)) {
-    for (; i < size_simd_loop; i += simd_size) {
+    for (; i < static_cast<size_t>(size_simd_loop); i += simd_size) {
       simd_type_T1 element1 = xs::load_aligned(first1);
       simd_type_T2 element2 = xs::load_aligned(first2);
       simd_type_T3 element3 = xs::load_aligned(first3);
@@ -283,7 +284,7 @@ U *transform(T1 const *__restrict first1,
       out += simd_size;
     }
   } else {
-    for (; i < size_simd_loop; i += simd_size) {
+    for (; i < static_cast<size_t>(size_simd_loop); i += simd_size) {
       simd_type_T1 element1 = xs::load_aligned(first1);
       simd_type_T2 element2 = xs::load_unaligned(first2);
       simd_type_T3 element3 = xs::load_unaligned(first3);
@@ -297,7 +298,7 @@ U *transform(T1 const *__restrict first1,
     }
   }
   //---epilogue
-  for (; i < size; ++i) { *out++ = f(*first1++, *first2++, *first3++, *first4++); }
+  for (; i < static_cast<size_t>(size); ++i) { *out++ = f(*first1++, *first2++, *first3++, *first4++); }
   return out;
 }
 }// namespace poutre::simd

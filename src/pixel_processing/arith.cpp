@@ -24,7 +24,7 @@
 
 namespace poutre {
 
-template<size_t NumDims, PType P>
+template<ptrdiff_t NumDims, PType P>
 void ArithSaturatedAddConstantDispatch(const IInterface &i_img, const ScalarTypeVariant &vscalar, IInterface &o_img)
 {
   using pType = typename enum_to_type<CompoundType::CompoundType_Scalar, P>::type;
@@ -42,7 +42,7 @@ void ArithSaturatedAddConstantDispatch(const IInterface &i_img, const ScalarType
   }
 }
 
-template<size_t NumDims, PType P>
+template<ptrdiff_t NumDims, PType P>
 void ArithSaturatedSubConstantDispatch(const IInterface &i_img, const ScalarTypeVariant &vscalar, IInterface &o_img)
 {
   using pType = typename enum_to_type<CompoundType::CompoundType_Scalar, P>::type;
@@ -59,7 +59,7 @@ void ArithSaturatedSubConstantDispatch(const IInterface &i_img, const ScalarType
   }
 }
 
-template<size_t NumDims, PType P>
+template<ptrdiff_t NumDims, PType P>
 void ArithSaturatedAddImageDispatch(const IInterface &i_img1, const IInterface &i_img2, IInterface &o_img)
 {
   using ImgType = details::image_t<typename enum_to_type<CompoundType::CompoundType_Scalar, P>::type, NumDims>;
@@ -73,7 +73,7 @@ void ArithSaturatedAddImageDispatch(const IInterface &i_img1, const IInterface &
 }
 
 
-template<size_t NumDims, PType P>
+template<ptrdiff_t NumDims, PType P>
 void ArithSaturatedSubImageDispatch(const IInterface &i_img1, const IInterface &i_img2, IInterface &o_img)
 {
   using ImgType = details::image_t<typename enum_to_type<CompoundType::CompoundType_Scalar, P>::type, NumDims>;
@@ -86,7 +86,7 @@ void ArithSaturatedSubImageDispatch(const IInterface &i_img1, const IInterface &
   details::t_ArithSaturatedSub(*img1_t, *img2_t, *img3_t);
 }
 
-template<size_t NumDims, PType P>
+template<ptrdiff_t NumDims, PType P>
 void ArithSupImageDispatch(const IInterface &i_img1, const IInterface &i_img2, IInterface &o_img)
 {
   using ImgType = details::image_t<typename enum_to_type<CompoundType::CompoundType_Scalar, P>::type, NumDims>;
@@ -99,7 +99,7 @@ void ArithSupImageDispatch(const IInterface &i_img1, const IInterface &i_img2, I
   details::t_ArithSup(*img1_t, *img2_t, *img3_t);
 }
 
-template<size_t NumDims, PType P>
+template<ptrdiff_t NumDims, PType P>
 void ArithInfImageDispatch(const IInterface &i_img1, const IInterface &i_img2, IInterface &o_img)
 {
   using ImgType = details::image_t<typename enum_to_type<CompoundType::CompoundType_Scalar, P>::type, NumDims>;
@@ -112,7 +112,7 @@ void ArithInfImageDispatch(const IInterface &i_img1, const IInterface &i_img2, I
   details::t_ArithInf(*img1_t, *img2_t, *img3_t);
 }
 
-template<size_t NumDims, PType P> void ArithInvertImageDispatch(const IInterface &i_img, IInterface &o_img)
+template<ptrdiff_t NumDims, PType P> void ArithInvertImageDispatch(const IInterface &i_img, IInterface &o_img)
 {
   using ImgType = details::image_t<typename enum_to_type<CompoundType::CompoundType_Scalar, P>::type, NumDims>;
   const auto *img1_t = dynamic_cast<const ImgType *>(&i_img);
@@ -132,8 +132,7 @@ void ArithSaturatedAddImage(const IInterface &i_img1, const IInterface &i_img2, 
 
   POUTRE_CHECK(i_img1.GetCType() == CompoundType::CompoundType_Scalar, "ArithSaturatedAddImage must be scalar");
 
-  const auto &numDims = i_img1.GetRank();
-  switch (numDims) {
+  switch (i_img1.GetRank()) {
   case 0: {
     POUTRE_RUNTIME_ERROR("ArithSaturatedAddImage Unsupported number of dims:0");
   } break;
@@ -203,8 +202,7 @@ void ArithSaturatedSubImage(const IInterface &i_img1, const IInterface &i_img2, 
 
   POUTRE_CHECK(i_img1.GetCType() == CompoundType::CompoundType_Scalar, "ArithSaturatedSubImage must be scalar");
 
-  const auto &numDims = i_img1.GetRank();
-  switch (numDims) {
+  switch (i_img1.GetRank()) {
   case 0: {
     POUTRE_RUNTIME_ERROR("ArithSaturatedSubImage Unsupported number of dims:0");
   } break;
@@ -273,8 +271,7 @@ void ArithSupImage(const IInterface &i_img1, const IInterface &i_img2, IInterfac
 
   POUTRE_CHECK(i_img1.GetCType() == CompoundType::CompoundType_Scalar, "ArithSupImage must be scalar");
 
-  const auto &numDims = i_img1.GetRank();
-  switch (numDims) {
+  switch (i_img1.GetRank()) {
   case 0: {
     POUTRE_RUNTIME_ERROR("ArithSupImage Unsupported number of dims:0");
   } break;
@@ -344,8 +341,7 @@ void ArithInfImage(const IInterface &i_img1, const IInterface &i_img2, IInterfac
 
   POUTRE_CHECK(i_img1.GetCType() == CompoundType::CompoundType_Scalar, "ArithInfImage must be scalar");
 
-  const auto &numDims = i_img1.GetRank();
-  switch (numDims) {
+  switch (i_img1.GetRank()) {
   case 0: {
     POUTRE_RUNTIME_ERROR("ArithInfImage Unsupported number of dims:0");
   } break;
@@ -412,8 +408,7 @@ void ArithSaturatedAddConstant(const IInterface &i_img,const ScalarTypeVariant &
   AssertAsTypesCompatible(i_img, o_img, "ArithSaturatedAddConstant images must have compatible types");
   POUTRE_CHECK(i_img.GetCType() == CompoundType::CompoundType_Scalar, "ArithSaturatedAddConstant must be scalar");
 
-  const auto &numDims = i_img.GetRank();
-  switch (numDims) {
+  switch (i_img.GetRank()) {
   case 0: {
     POUTRE_RUNTIME_ERROR("ArithSaturatedAddConstant Unsupported number of dims:0");
   } break;
@@ -480,8 +475,7 @@ void ArithSaturatedSubConstant(const IInterface &i_img,const ScalarTypeVariant &
   AssertAsTypesCompatible(i_img, o_img, "ArithSaturatedSubConstant images must have compatible types");
   POUTRE_CHECK(i_img.GetCType() == CompoundType::CompoundType_Scalar, "ArithSaturatedSubConstant must be scalar");
 
-  const auto &numDims = i_img.GetRank();
-  switch (numDims) {
+  switch (i_img.GetRank()) {
   case 0: {
     POUTRE_RUNTIME_ERROR("ArithSaturatedSubConstant Unsupported number of dims:0");
   } break;
@@ -548,8 +542,7 @@ void ArithInvertImage(const IInterface &i_img, IInterface &o_img)
   AssertAsTypesCompatible(i_img, o_img, "ArithInvertImage images must have compatible types");
   POUTRE_CHECK(i_img.GetCType() == CompoundType::CompoundType_Scalar, "ArithInvertImage must be scalar");
 
-  const auto &numDims = i_img.GetRank();
-  switch (numDims) {
+  switch (i_img.GetRank()) {
   case 0: {
     POUTRE_RUNTIME_ERROR("ArithInvertImage Unsupported number of dims:0");
   } break;

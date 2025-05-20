@@ -10,7 +10,7 @@
 #pragma once
 
 /**
- * @file copie_convert_t.hpp
+ * @file copy_convert_t.hpp
  * @author thomas.retornaz@mines-paris.org
  * @brief
  * @version 0.1

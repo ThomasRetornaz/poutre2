@@ -23,15 +23,15 @@
 #include <poutre/base/types.hpp>
 #include <vector>
 
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wold-style-cast"
-#pragma clang diagnostic ignored "-Wsign-conversion"
-#pragma clang diagnostic ignored "-Wfloat-conversion"
-#pragma clang diagnostic ignored "-Wshorten-64-to-32"
-#pragma clang diagnostic ignored "-Wcast-align"
-#pragma clang diagnostic ignored "-Wdouble-promotion"
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wold-style-cast"
+#pragma GCC diagnostic ignored "-Wsign-conversion"
+#pragma GCC diagnostic ignored "-Wfloat-conversion"
+#pragma GCC diagnostic ignored "-Wuseless-cast"
+#pragma GCC diagnostic ignored "-Wcast-align"
+#pragma GCC diagnostic ignored "-Wdouble-promotion"
 #include <xsimd/xsimd.hpp>
-#pragma clang diagnostic pop
+#pragma GCC diagnostic pop
 
 namespace xs = xsimd;
 
@@ -44,8 +44,7 @@ namespace poutre::simd {
  *@{
  */
 POUTRE_ALWAYS_INLINE bool IsAligned(const void *ptr,
-  std::size_t alignment = SIMD_IDEAL_MAX_ALIGN_BYTES)// NSIMD_MAX_ALIGNMENT)
-                                                     // POUTRE_NOEXCEPTONLYNDEBUG
+  std::size_t alignment = SIMD_IDEAL_MAX_ALIGN_BYTES)
 {
   // NOLINTBEGIN
   POUTRE_ASSERTCHECK(((alignment & (alignment - 1)) == 0), "bad alignment value");
@@ -78,7 +77,7 @@ template<typename T> size_t t_ReachNextAlignedSize(size_t size)
   // have a look at
   // http://stackoverflow.com/questions/227897/solve-the-memory-alignment-in-c-interview-question-that-stumped-me
   // for explanation
-  return ((static_cast<size_t>(size) + padd - 1) & ~(padd - 1));// from boost\align\detail\align_up.hpp
+  return ((size + padd - 1) & ~(padd - 1));// from boost\align\detail\align_up.hpp
 }
 
 /**
@@ -99,7 +98,7 @@ const std::pair<ptrdiff_t, ptrdiff_t> POUTRE_ALWAYS_INLINE t_SIMDInputRange(cons
   POUTRE_ASSERTCHECK(last, "null ptr");
   const ptrdiff_t simd_size = xs::simd_type<T>::size;
   const ptrdiff_t size = last - first;
-  // get aligned adress from first
+  // get aligned address from first
   const T *ptr_aligned_first = t_ReachNextAligned(first, SIMD_IDEAL_MAX_ALIGN_BYTES);
   // Next aligned address may be out of range, so make sure size_prologue_loop
   // is not bigger than size

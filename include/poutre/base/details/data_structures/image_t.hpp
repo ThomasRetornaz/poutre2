@@ -51,11 +51,11 @@ public:
     xs::aligned_allocator<typename poutre::TypeTraits<valuetype>::storage_type, SIMD_IDEAL_MAX_ALIGN_BYTES>;
   using value_type = valuetype;// typename
                                // TypeTraits<ptype>::storage_type;
-  using const_value_type = typename std::add_const<value_type>::type;
-  using pointer = typename std::add_pointer<value_type>::type;
-  using reference = typename std::add_lvalue_reference<value_type>::type;
-  using const_pointer = typename std::add_pointer<const_value_type>::type;
-  using const_reference = typename std::add_lvalue_reference<const_value_type>::type;
+  using const_value_type = std::add_const_t<value_type>;
+  using pointer = std::add_pointer_t<value_type>;
+  using reference = std::add_lvalue_reference_t<value_type>;
+  using const_pointer = std::add_pointer_t<const_value_type>;
+  using const_reference = std::add_lvalue_reference_t<const_value_type>;
 
   using difference_type = std::ptrdiff_t;
 
@@ -71,8 +71,8 @@ public:
   using const_reverse_iterator = typename storage_type::const_reverse_iterator;
   
   // static const std::ptrdiff_t m_numdims = NumDims;
-  static const PType m_ptype = TypeTraits<value_type>::pixel_type;
-  static const CompoundType m_ctype = TypeTraits<value_type>::compound_type;
+  static const PType m_ptype = TypeTraits<value_type>::p_type;
+  static const CompoundType m_ctype = TypeTraits<value_type>::c_type;
   static const std::ptrdiff_t m_numdims = Rank;
 
   [[nodiscard]] CompoundType GetCType() const noexcept override { return m_ctype; }
@@ -101,15 +101,15 @@ public:
 
   iterator begin() noexcept {return m_storage.begin(); }
 
-  const_iterator cbegin() const noexcept { return m_storage.cbegin(); }
+  [[nodiscard]] const_iterator cbegin() const noexcept { return m_storage.cbegin(); }
 
   iterator end() noexcept { return m_storage.end(); }
 
-  const_iterator cend() const noexcept { return m_storage.cend();; }
+  [[nodiscard]] const_iterator cend() const noexcept { return m_storage.cend();; }
 
   reverse_iterator rbegin() noexcept { return m_storage.rbegin(); }
 
-  const_reverse_iterator crbegin() const noexcept
+  [[nodiscard]] const_reverse_iterator crbegin() const noexcept
   {
     return m_storage.crbegin();
   }
@@ -117,7 +117,7 @@ public:
   //! assign value to all elements
   void fill(const value_type &val) { std::fill(m_storage.begin(), m_storage.end(), val); }
 
-  std::string str() const noexcept override
+  [[nodiscard]] std::string str() const noexcept override
   {
     std::ostringstream out;
     out << "Image" << std::endl;
@@ -215,9 +215,9 @@ public:
   }
 
   template<size_t R = Rank, typename = std::enable_if_t<R == 2>>
-  void SetPixel(av::idx2d index, value_type value) POUTRE_NOEXCEPTONLYNDEBUG
+  void SetPixel(av::idx2d idx, value_type value) POUTRE_NOEXCEPTONLYNDEBUG
   {
-    this->SetPixel(index[1], index[0], value);
+    this->SetPixel(idx[1], idx[0], value);
   }
 
   template<size_t R = Rank, typename = std::enable_if_t<R == 2>>
@@ -231,9 +231,9 @@ public:
   }
 
   template<size_t R = Rank, typename = std::enable_if_t<R == 2>>
-  POUTRE_CONSTEXPR value_type GetPixel(av::idx2d index) const POUTRE_NOEXCEPTONLYNDEBUG
+  POUTRE_CONSTEXPR value_type GetPixel(av::idx2d idx) const POUTRE_NOEXCEPTONLYNDEBUG
   {
-    return this->GetPixel(index[1], index[0]);
+    return this->GetPixel(idx[1], idx[0]);
   }
 
   void swap(self_type &rhs) noexcept
@@ -242,7 +242,7 @@ public:
       using std::swap;
       swap(this->m_storage, rhs.m_storage);// nothrow
       swap(this->m_coordinnates,
-        rhs.m_coordinnates);// notthrow
+        rhs.m_coordinnates);// nothrow
       swap(this->m_numelement, rhs.m_numelement);
     }
   }
@@ -265,7 +265,6 @@ template<class valuetype, std::ptrdiff_t Rank>
     return poutre::details::av::array_view<const valuetype, Rank>(i_img.data(), i_img.shape());
   }
 
-// todo define macros
 extern template class BASE_API image_t<pUINT8, 1>;
 extern template class BASE_API image_t<pINT32, 1>;
 extern template class BASE_API image_t<pFLOAT, 1>;

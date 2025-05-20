@@ -21,7 +21,7 @@
 
 #include <poutre/base/config.hpp>
 #include <poutre/base/trace.hpp>
-#include <poutre/base/details//simd/simd_algorithm.hpp> //simd transform
+#include <poutre/base/details/simd/simd_algorithm.hpp> //simd transform
 #include <poutre/base/details/data_structures/array_view.hpp>
 #include <poutre/base/details/data_structures/image_t.hpp>
 
@@ -56,7 +56,7 @@ struct PixelWiseBinaryOpDispatcher
                   || std::is_same_v<View2<T2, Rank>, av::strided_array_view<T2, Rank>>
                   || std::is_same_v<View2<T2, Rank>, av::strided_array_view<const T2, Rank>>
                   || std::is_same_v<ViewOut<Tout, Rank>, av::strided_array_view<Tout, Rank>>),
-    "strided view only specialization fail for arrayview");
+    "strided view only specialization fail for array view");
 
   void operator()(const View1<T1, Rank> &i_vin1,
     const BinOp &op,

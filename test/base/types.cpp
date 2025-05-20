@@ -77,7 +77,7 @@ TEST_CASE("types", "[compound_pixel_4]")
   // REQUIRE(p00[3] == 3);
 
   c4G32 p0; //default uninitialized
-  p0.fill(static_cast<poutre::pINT32>(12));
+  p0.fill(12);
   REQUIRE(p0[0] == 12);
   REQUIRE(p0[1] == 12);
   REQUIRE(p0[2] == 12);

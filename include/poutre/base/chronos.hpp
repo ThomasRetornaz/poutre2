@@ -34,7 +34,7 @@ namespace poutre {
 
 /**
  * @brief Simple Timer class (wrapping std::chronos) with classical
- * start,stop interface and serialisation capabilites
+ * start,stop interface and serialisation capabilities
  * @todo think about multi-threading
  */
 class BASE_API Timer// see http://en.cppreference.com/w/cpp/chrono/c/clock

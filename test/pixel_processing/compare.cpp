@@ -585,9 +585,9 @@ TEST_CASE("sis whole image equal", "[compare]")
 
   poutre::details::ViewCompare_sis_func_helper(v_img,
     poutre::CompOpType::CompOpEqual,
-    static_cast<poutre::pINT32>(1), //NOLINT
+    1, //NOLINT
     v_imgtrue,
-    static_cast<poutre::pINT32>(0), //NOLINT
+    0, //NOLINT
     v_imgout);
 
   const std::string expected =
@@ -640,9 +640,9 @@ TEST_CASE("sis whole image not equal", "[compare]")
 
   poutre::details::ViewCompare_sis_func_helper(v_img,
     poutre::CompOpType::CompOpDiff,
-    static_cast<poutre::pINT32>(1),
+    1,
     v_imgtrue,
-    static_cast<poutre::pINT32>(0),
+    0,
     v_imgout);
 
   const std::string expected =
@@ -695,9 +695,9 @@ TEST_CASE("sis whole image sup", "[compare]")
 
   poutre::details::ViewCompare_sis_func_helper(v_img,
     poutre::CompOpType::CompOpSup,
-    static_cast<poutre::pINT32>(1),
+    1,
     v_imgtrue,
-    static_cast<poutre::pINT32>(0),
+    0,
     v_imgout);
 
   const std::string expected =
@@ -750,9 +750,9 @@ TEST_CASE("sis whole image sup equal", "[compare]")
 
   poutre::details::ViewCompare_sis_func_helper(v_img,
     poutre::CompOpType::CompOpSupEqual,
-    static_cast<poutre::pINT32>(1),
+    1,
     v_imgtrue,
-    static_cast<poutre::pINT32>(0),
+    0,
     v_imgout);
 
   const std::string expected =
@@ -805,9 +805,9 @@ TEST_CASE("sis whole image inf", "[compare]")
 
   poutre::details::ViewCompare_sis_func_helper(v_img,
     poutre::CompOpType::CompOpInf,
-    static_cast<poutre::pINT32>(1),
+    1,
     v_imgtrue,
-    static_cast<poutre::pINT32>(0),
+    0,
     v_imgout);
 
   const std::string expected =
@@ -860,9 +860,9 @@ TEST_CASE("sis whole image inf equal", "[compare]")
 
   poutre::details::ViewCompare_sis_func_helper(v_img,
     poutre::CompOpType::CompOpInfEqual,
-    static_cast<poutre::pINT32>(1),
+    1,
     v_imgtrue,
-    static_cast<poutre::pINT32>(0),
+    0,
     v_imgout);
 
   const std::string expected =
@@ -916,8 +916,8 @@ TEST_CASE("ssi whole image equal", "[compare]")
 
   poutre::details::ViewCompare_ssi_func_helper(v_img,
     poutre::CompOpType::CompOpEqual,
-    static_cast<poutre::pINT32>(5), //NOLINT
-    static_cast<poutre::pINT32>(1), //NOLINT
+    5, //NOLINT
+    1, //NOLINT
     v_imgfalse,
     v_imgout);
 
@@ -971,8 +971,8 @@ TEST_CASE("ssi whole image not equal", "[compare]")
 
   poutre::details::ViewCompare_ssi_func_helper(v_img,
     poutre::CompOpType::CompOpDiff,
-    static_cast<poutre::pINT32>(5), //NOLINT
-    static_cast<poutre::pINT32>(1), //NOLINT
+    5, //NOLINT
+    1, //NOLINT
     v_imgfalse,
     v_imgout);
 
@@ -1027,8 +1027,8 @@ TEST_CASE("ssi whole image sup", "[compare]")
 
   poutre::details::ViewCompare_ssi_func_helper(v_img,
     poutre::CompOpType::CompOpSup,
-    static_cast<poutre::pINT32>(5), //NOLINT
-    static_cast<poutre::pINT32>(1), //NOLINT
+    5, //NOLINT
+    1, //NOLINT
     v_imgfalse,
     v_imgout);
 
@@ -1082,8 +1082,8 @@ TEST_CASE("ssi whole image sup equal", "[compare]")
 
   poutre::details::ViewCompare_ssi_func_helper(v_img,
     poutre::CompOpType::CompOpSupEqual,
-    static_cast<poutre::pINT32>(5), //NOLINT
-    static_cast<poutre::pINT32>(1), //NOLINT
+    5, //NOLINT
+    1, //NOLINT
     v_imgfalse,
     v_imgout);
 
@@ -1138,8 +1138,8 @@ TEST_CASE("ssi whole image inf", "[compare]")
 
   poutre::details::ViewCompare_ssi_func_helper(v_img,
     poutre::CompOpType::CompOpInf,
-    static_cast<poutre::pINT32>(5), //NOLINT
-    static_cast<poutre::pINT32>(1), //NOLINT
+    5, //NOLINT
+    1, //NOLINT
     v_imgfalse,
     v_imgout);
 
@@ -1326,7 +1326,7 @@ TEST_CASE("sii whole image not equal", "[compare]")
   auto v_imgout = poutre::details::view(imgout);
 
   poutre::details::ViewCompare_sii_dispatch(
-    v_img, poutre::CompOpType::CompOpDiff, static_cast<poutre::pINT32>(5), v_imgtrue, v_imgfalse, v_imgout); //NOLINT
+    v_img, poutre::CompOpType::CompOpDiff, 5, v_imgtrue, v_imgfalse, v_imgout); //NOLINT
 
   const std::string expected =
     "Scalar GINT32 2 5 6\
@@ -1388,7 +1388,7 @@ TEST_CASE("sii whole image sup", "[compare]")
   auto v_imgout = poutre::details::view(imgout);
 
   poutre::details::ViewCompare_sii_dispatch(
-    v_img, poutre::CompOpType::CompOpSup, static_cast<poutre::pINT32>(5), v_imgtrue, v_imgfalse, v_imgout); //NOLINT
+    v_img, poutre::CompOpType::CompOpSup, 5, v_imgtrue, v_imgfalse, v_imgout); //NOLINT
 
   const std::string expected =
     "Scalar GINT32 2 5 6\
@@ -1450,7 +1450,7 @@ TEST_CASE("sii whole image sup equal", "[compare]")
   auto v_imgout = poutre::details::view(imgout);
 
   poutre::details::ViewCompare_sii_dispatch(
-    v_img, poutre::CompOpType::CompOpSupEqual, static_cast<poutre::pINT32>(5), v_imgtrue, v_imgfalse, v_imgout); //NOLINT
+    v_img, poutre::CompOpType::CompOpSupEqual, 5, v_imgtrue, v_imgfalse, v_imgout); //NOLINT
 
   const std::string expected =
     "Scalar GINT32 2 5 6\
@@ -1512,7 +1512,7 @@ TEST_CASE("sii whole image inf", "[compare]")
   auto v_imgout = poutre::details::view(imgout);
 
   poutre::details::ViewCompare_sii_dispatch(
-    v_img, poutre::CompOpType::CompOpInf, static_cast<poutre::pINT32>(5), v_imgtrue, v_imgfalse, v_imgout); //NOLINT
+    v_img, poutre::CompOpType::CompOpInf, 5, v_imgtrue, v_imgfalse, v_imgout); //NOLINT
 
   const std::string expected =
     "Scalar GINT32 2 5 6\
@@ -1575,7 +1575,7 @@ TEST_CASE("sii whole image inf equal", "[compare]")
   auto v_imgout = poutre::details::view(imgout);
 
   poutre::details::ViewCompare_sii_dispatch(
-    v_img, poutre::CompOpType::CompOpInfEqual, static_cast<poutre::pINT32>(5), v_imgtrue, v_imgfalse, v_imgout); //NOLINT
+    v_img, poutre::CompOpType::CompOpInfEqual, 5, v_imgtrue, v_imgfalse, v_imgout); //NOLINT
 
   const std::string expected =
     "Scalar GINT32 2 5 6\

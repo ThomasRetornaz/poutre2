@@ -42,7 +42,7 @@ namespace poutre::details {
 template<typename T1, typename T2, typename = void> struct op_Invert
 {
 public:
-  op_Invert() {}
+  op_Invert() = default;
   POUTRE_ALWAYS_INLINE T2 operator()(T1 const &a0) const POUTRE_NOEXCEPT { return -a0; }
 };
 
@@ -52,7 +52,7 @@ struct op_Invert<T1,
   std::enable_if_t<std::is_same_v<std::remove_const_t<T1>, std::remove_const_t<T2>> && std::is_arithmetic_v<T1>>>
 {
 public:
-  op_Invert() {}
+  op_Invert() = default;
 
   POUTRE_ALWAYS_INLINE T1 operator()(T1 const &a0) const POUTRE_NOEXCEPT { return -a0; }
 
@@ -311,7 +311,7 @@ public:
   POUTRE_ALWAYS_INLINE T2 operator()(T1 const &a0) const POUTRE_NOEXCEPT
   {
     accutype res = static_cast<accutype>(a0) - static_cast<accutype>(m_val);
-    if (res < static_cast<accutype>(m_minval)) return m_minval;
+    if (res < static_cast<accutype>(m_minval)) { return m_minval;}
     return static_cast<T2>(res);
   }
 };
@@ -372,7 +372,7 @@ void t_ArithSaturatedSubConstant(const image_t<T1, Rank> &i_img, T2 val, image_t
 template<typename T1, typename T2, typename T3, typename = void> struct op_Sup
 {
 public:
-  op_Sup() {}
+  op_Sup() = default;
   POUTRE_ALWAYS_INLINE T3 operator()(T1 const &a0, T2 const &a1) const POUTRE_NOEXCEPT
   {
     return static_cast<T3>(a0 > a1 ? a0 : a1);
@@ -387,7 +387,7 @@ struct op_Sup<T1,
                    && std::is_same_v<std::remove_const_t<T1>, std::remove_const_t<T3>> && std::is_arithmetic_v<T1>>>
 {
 public:
-  op_Sup() {}
+  op_Sup() = default;
   POUTRE_ALWAYS_INLINE T3 operator()(T1 const &a0, T2 const &a1) const POUTRE_NOEXCEPT { return (a0 > a1 ? a0 : a1); }
   template<typename U> POUTRE_ALWAYS_INLINE U operator()(U const &a0, U const &a1) const POUTRE_NOEXCEPT
   {
@@ -429,7 +429,7 @@ void t_ArithSup(const image_t<T1, Rank> &i_img1, const image_t<T2, Rank> &i_img2
 template<typename T1, typename T2, typename T3, typename = void> struct op_Inf
 {
 public:
-  op_Inf() {}
+  op_Inf() = default;
   POUTRE_ALWAYS_INLINE T3 operator()(T1 const &a0, T2 const &a1) const POUTRE_NOEXCEPT
   {
     return static_cast<T3>(a0 < a1 ? a0 : a1);
@@ -444,7 +444,7 @@ struct op_Inf<T1,
                    && std::is_same_v<std::remove_const_t<T1>, std::remove_const_t<T3>> && std::is_arithmetic_v<T1>>>
 {
 public:
-  op_Inf() {}
+  op_Inf() = default;
 
   POUTRE_ALWAYS_INLINE T3 operator()(T1 const &a0, T2 const &a1) const POUTRE_NOEXCEPT { return (a0 < a1 ? a0 : a1); }
 

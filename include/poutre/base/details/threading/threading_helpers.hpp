@@ -38,11 +38,11 @@
  *@{
  */
 namespace poutre::thread {
-// Use max threads-1 as a reasonnable default
+// Use max threads-1 as a reasonable default
 static int POUTRE_NUM_THREADS = std::max<int>(static_cast<int>(std::thread::hardware_concurrency()) - 2, 1);
 
 //! helper class to change the number of thread used by poutre at scope level
-//@warning We only force if OMP_NUM_THREADS environnement variable is not set by user
+//@warning We only force if OMP_NUM_THREADS environment variable is not set by user
 struct BASE_API ScopedForceNbThreads
 {
   explicit ScopedForceNbThreads(int nbThread);

@@ -65,7 +65,7 @@ void CopyInto(const IInterface &i_img, IInterface &o_img)
   ConvertInto(i_img, o_img);
 }
 
-template<size_t NumDims, PType Pin> void ConvertIntoDispatchScalarP(const IInterface &i_img1, IInterface &o_img2)
+template<ptrdiff_t NumDims, PType Pin> void ConvertIntoDispatchScalarP(const IInterface &i_img1, IInterface &o_img2)
 {
   using ImgType1 = details::image_t<typename enum_to_type<CompoundType::CompoundType_Scalar, Pin>::type, NumDims>;
   const auto *img1_t = dynamic_cast<const ImgType1 *>(&i_img1);
@@ -113,7 +113,7 @@ template<size_t NumDims, PType Pin> void ConvertIntoDispatchScalarP(const IInter
   }
 }
 
-template<size_t NumDims, PType Pin> void ConvertIntoDispatch3PLanesP(const IInterface &i_img1, IInterface &o_img2)
+template<ptrdiff_t NumDims, PType Pin> void ConvertIntoDispatch3PLanesP(const IInterface &i_img1, IInterface &o_img2)
 {
   using ImgType1 = details::image_t<typename enum_to_type<CompoundType::CompoundType_3Planes, Pin>::type, NumDims>;
   const auto *img1_t = dynamic_cast<const ImgType1 *>(&i_img1);
@@ -161,7 +161,7 @@ template<size_t NumDims, PType Pin> void ConvertIntoDispatch3PLanesP(const IInte
   }
 }
 
-template<size_t NumDims, PType Pin> void ConvertIntoDispatch4PLanesP(const IInterface &i_img1, IInterface &o_img2)
+template<ptrdiff_t NumDims, PType Pin> void ConvertIntoDispatch4PLanesP(const IInterface &i_img1, IInterface &o_img2)
 {
   using ImgType1 = details::image_t<typename enum_to_type<CompoundType::CompoundType_4Planes, Pin>::type, NumDims>;
   const auto *img1_t = dynamic_cast<const ImgType1 *>(&i_img1);
@@ -209,7 +209,7 @@ template<size_t NumDims, PType Pin> void ConvertIntoDispatch4PLanesP(const IInte
   }
 }
 
-template<size_t numDims> void ConvertIntoDispatch(const IInterface &i_img1, IInterface &o_img2)
+template<ptrdiff_t numDims> void ConvertIntoDispatch(const IInterface &i_img1, IInterface &o_img2)
 {
   POUTRE_CHECK(i_img1.GetCType() == o_img2.GetCType(), "ConvertInto must have same CType");
   switch (i_img1.GetCType()) {

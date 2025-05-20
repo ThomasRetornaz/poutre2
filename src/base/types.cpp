@@ -19,7 +19,6 @@
 
 namespace poutre {
 
-
 template class compound_type<pUINT8, 3>;
 template class compound_type<pINT32, 3>;
 template class compound_type<pFLOAT, 3>;

@@ -11,7 +11,7 @@
 /**
  * @file   compare.hpp
  * @author Thomas Retornaz
- * @brief  Comparaisons operators over images
+ * @brief  Comparisons operators over images
  *
  *
  */

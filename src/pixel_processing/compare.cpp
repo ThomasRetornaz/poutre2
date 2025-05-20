@@ -26,7 +26,7 @@ namespace {
 using namespace poutre;
 
 // sss
-template<size_t NumDims, PType Pin, PType Pout>
+template<ptrdiff_t NumDims, PType Pin, PType Pout>
 void CompareImage_sss_Dispatch(const IInterface &i_img,
   CompOpType compOpType,
   const ScalarTypeVariant &i_comp,// NOLINT
@@ -99,7 +99,7 @@ void CompareImage_sss_Pin_Dispatch(const IInterface &i_img,
 }
 
 // iii
-template<size_t NumDims, PType Pin, PType Pout>
+template<ptrdiff_t NumDims, PType Pin, PType Pout>
 void CompareImage_iii_Dispatch(const IInterface &i_img,
   CompOpType compOpType,
   const IInterface &i_imgcomp,// NOLINT
@@ -166,7 +166,7 @@ void CompareImage_iii_Pin_Dispatch(const IInterface &i_img,
 }
 
 // sii
-template<size_t NumDims, PType Pin, PType Pout>
+template<ptrdiff_t NumDims, PType Pin, PType Pout>
 void CompareImage_sii_Dispatch(const IInterface &i_img,
   CompOpType compOpType,
   const ScalarTypeVariant &i_comp,
@@ -235,7 +235,7 @@ void CompareImage_sii_Pin_Dispatch(const IInterface &i_img,
 }
 
 // sis
-template<size_t NumDims, PType Pin, PType Pout>
+template<ptrdiff_t NumDims, PType Pin, PType Pout>
 void CompareImage_sis_Dispatch(const IInterface &i_img,
   CompOpType compOpType,
   const ScalarTypeVariant &i_comp,
@@ -308,7 +308,7 @@ void CompareImage_sis_Pin_Dispatch(const IInterface &i_img,
 }
 
 /// isi
-template<size_t NumDims, PType Pin, PType Pout>
+template<ptrdiff_t NumDims, PType Pin, PType Pout>
 void CompareImage_isi_Dispatch(const IInterface &i_img,
   CompOpType compOpType,
   const IInterface &i_imgcomp,
@@ -377,7 +377,7 @@ void CompareImage_isi_Pin_Dispatch(const IInterface &i_img,
   }
 }
 // iss
-template<size_t NumDims, PType Pin, PType Pout>
+template<ptrdiff_t NumDims, PType Pin, PType Pout>
 void CompareImage_iss_Dispatch(const IInterface &i_img,
   CompOpType compOpType,
   const IInterface &i_imgcomp,
@@ -452,7 +452,7 @@ void CompareImage_iss_Pin_Dispatch(const IInterface &i_img,
 }
 
 // ssi
-template<size_t NumDims, PType Pin, PType Pout>
+template<ptrdiff_t NumDims, PType Pin, PType Pout>
 void CompareImage_ssi_Dispatch(const IInterface &i_img,
   CompOpType compOpType,
   const ScalarTypeVariant &i_comp,// NOLINT
@@ -525,7 +525,7 @@ void CompareImage_ssi_Pin_Dispatch(const IInterface &i_img,
 }
 
 // iis
-template<size_t NumDims, PType Pin, PType Pout>
+template<ptrdiff_t NumDims, PType Pin, PType Pout>
 void CompareImage_iis_Dispatch(const IInterface &i_img,
   CompOpType compOpType,
   const IInterface &i_imgcomp, //NOLINT
@@ -610,8 +610,7 @@ void CompareImage(const IInterface &i_img,
   POUTRE_CHECK(i_img.GetCType() == CompoundType::CompoundType_Scalar, "CompareImage images must be scalar");
   POUTRE_CHECK(o_img.GetCType() == CompoundType::CompoundType_Scalar, "CompareImage images must be scalar");
 
-  const auto &numDims = i_img.GetRank();
-  switch (numDims) {
+  switch (i_img.GetRank()) {
   case 0: {
     POUTRE_RUNTIME_ERROR("CompareImage Unsupported number of dims:0");
   } break;
@@ -691,8 +690,7 @@ void CompareImage(const IInterface &i_img,
   POUTRE_CHECK(i_imgfalse.GetCType() == CompoundType::CompoundType_Scalar, "CompareImage images must be scalar");
   POUTRE_CHECK(o_img.GetCType() == CompoundType::CompoundType_Scalar, "CompareImage images must be scalar");
 
-  const auto &numDims = i_img.GetRank();
-  switch (numDims) {
+  switch (i_img.GetRank()) {
   case 0: {
     POUTRE_RUNTIME_ERROR("CompareImage Unsupported number of dims:0");
   } break;
@@ -776,8 +774,7 @@ void CompareImage(const IInterface &i_img,
   POUTRE_CHECK(i_imgfalse.GetCType() == CompoundType::CompoundType_Scalar, "CompareImage images must be scalar");
   POUTRE_CHECK(o_img.GetCType() == CompoundType::CompoundType_Scalar, "CompareImage images must be scalar");
 
-  const auto &numDims = i_img.GetRank();
-  switch (numDims) {
+  switch (i_img.GetRank()) {
   case 0: {
     POUTRE_RUNTIME_ERROR("CompareImage Unsupported number of dims:0");
   } break;
@@ -853,8 +850,7 @@ void CompareImage(const IInterface &i_img,
   POUTRE_CHECK(i_imgtrue.GetCType() == CompoundType::CompoundType_Scalar, "CompareImage images must be scalar");
   POUTRE_CHECK(o_img.GetCType() == CompoundType::CompoundType_Scalar, "CompareImage images must be scalar");
 
-  const auto &numDims = i_img.GetRank();
-  switch (numDims) {
+  switch (i_img.GetRank()) {
   case 0: {
     POUTRE_RUNTIME_ERROR("CompareImage Unsupported number of dims:0");
   } break;
@@ -930,8 +926,7 @@ void CompareImage(const IInterface &i_img,
   POUTRE_CHECK(i_imgfalse.GetCType() == CompoundType::CompoundType_Scalar, "CompareImage images must be scalar");
   POUTRE_CHECK(o_img.GetCType() == CompoundType::CompoundType_Scalar, "CompareImage images must be scalar");
 
-  const auto &numDims = i_img.GetRank();
-  switch (numDims) {
+  switch (i_img.GetRank()) {
   case 0: {
     POUTRE_RUNTIME_ERROR("CompareImage Unsupported number of dims:0");
   } break;
@@ -1012,8 +1007,7 @@ void CompareImage(const IInterface &i_img,
   POUTRE_CHECK(i_imgcomp.GetCType() == CompoundType::CompoundType_Scalar, "CompareImage images must be scalar");
   POUTRE_CHECK(o_img.GetCType() == CompoundType::CompoundType_Scalar, "CompareImage images must be scalar");
 
-  const auto &numDims = i_img.GetRank();
-  switch (numDims) {
+  switch (i_img.GetRank()) {
   case 0: {
     POUTRE_RUNTIME_ERROR("CompareImage Unsupported number of dims:0");
   } break;
@@ -1095,8 +1089,7 @@ void CompareImage(const IInterface &i_img,
   POUTRE_CHECK(i_imgfalse.GetCType() == CompoundType::CompoundType_Scalar, "CompareImage images must be scalar");
   POUTRE_CHECK(o_img.GetCType() == CompoundType::CompoundType_Scalar, "CompareImage images must be scalar");
 
-  const auto &numDims = i_img.GetRank();
-  switch (numDims) {
+  switch (i_img.GetRank()) {
   case 0: {
     POUTRE_RUNTIME_ERROR("CompareImage Unsupported number of dims:0");
   } break;
@@ -1172,8 +1165,7 @@ void CompareImage(const IInterface &i_img,
   POUTRE_CHECK(i_imgtrue.GetCType() == CompoundType::CompoundType_Scalar, "CompareImage images must be scalar");
   POUTRE_CHECK(o_img.GetCType() == CompoundType::CompoundType_Scalar, "CompareImage images must be scalar");
 
-  const auto &numDims = i_img.GetRank();
-  switch (numDims) {
+  switch (i_img.GetRank()) {
   case 0: {
     POUTRE_RUNTIME_ERROR("CompareImage Unsupported number of dims:0");
   } break;

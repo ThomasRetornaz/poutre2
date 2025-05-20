@@ -15,7 +15,7 @@
 #include <format>
 
 /**
- * @file   poutreConfig.hpp
+ * @file   config.hpp
  * @author Thomas Retornaz
  * @brief  Various macro and alias
  *

@@ -114,7 +114,7 @@ BASE_API std::unique_ptr<IInterface> Create(const std::vector<std::size_t> &dims
 BASE_API std::string ImageToString(const IInterface &i_image);
 
 /**
-* @brief From human readable string create an IInterface see @c ImageToString
+* @brief From human-readable string create an IInterface see @c ImageToString
 *
 * @param i_str
 * @return Image

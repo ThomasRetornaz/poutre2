@@ -20,7 +20,7 @@
  */
 #include <algorithm>//transform
 #include <poutre/base/config.hpp>
-#include <poutre/base/details//simd/simd_algorithm.hpp> //simd transform
+#include <poutre/base/details/simd/simd_algorithm.hpp> //simd transform
 #include <poutre/base/details/data_structures/array_view.hpp>
 #include <poutre/base/details/data_structures/image_t.hpp>
 
@@ -59,7 +59,7 @@ struct PixelWiseTernaryOpDispatcher
                   || std::is_same_v<View2<T3, Rank>, av::strided_array_view<T3, Rank>>
                   || std::is_same_v<View2<T3, Rank>, av::strided_array_view<const T3, Rank>>
                   || std::is_same_v<ViewOut<Tout, Rank>, av::strided_array_view<Tout, Rank>>),
-    "strided view only specilization fail for arrayview");
+    "strided view only specialization fail for array view");
 
   void operator()(const View1<T1, Rank> &i_vin1,
     const TerOp &op,
@@ -160,7 +160,7 @@ struct PixelWiseTernaryOpDispatcher<T1,
     const av::array_view<T3, Rank> &i_vin3,
     const av::array_view<Tout, Rank> &o_vout) const
   {
-    POUTRE_ENTERING("PixelWiseTernaryOpDispatcher both array view arithemic same type");
+    POUTRE_ENTERING("PixelWiseTernaryOpDispatcher both array view arithmetic same type");
     auto i_vinbeg1 = i_vin1.data();
     auto i_vinend1 = i_vin1.data() + i_vin1.size();
     auto i_vinbeg2 = i_vin2.data();

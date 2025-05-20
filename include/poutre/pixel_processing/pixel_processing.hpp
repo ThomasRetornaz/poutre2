@@ -12,7 +12,7 @@
 /**
  * @file   pixel_processing.hpp
  * @author Thomas Retornaz
- * @brief  Define import/export for shared librairies
+ * @brief  Define import/export for shared libraries
  *
  *
  */
