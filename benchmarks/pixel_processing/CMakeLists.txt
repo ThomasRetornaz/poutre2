@@ -7,6 +7,7 @@ set(PoutrePPBenchSRC
   ${subdirsource}/main.hpp
   ${subdirsource}/main.cpp
   ${subdirsource}/arith.cpp
+  ${subdirsource}/compare.cpp
 )
 
 add_executable(poutre_pixel_processing_bench ${PoutrePPBenchSRC})
