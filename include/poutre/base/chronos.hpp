@@ -70,7 +70,7 @@ public:
   [[nodiscard]] std::size_t NbIter() const POUTRE_NOEXCEPT;
 
   //! String serialization
-  [[nodiscard]] std::string to_str() const POUTRE_NOEXCEPT;
+  [[nodiscard]] std::string to_str() const;
 
   //! Reset the chrono
   void Reset() POUTRE_NOEXCEPT;

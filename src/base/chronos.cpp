@@ -64,7 +64,7 @@ Timer::timerep Timer::GetMeanCpuTime() const POUTRE_NOEXCEPT
 std::size_t Timer::NbIter() const POUTRE_NOEXCEPT { return m_nbiter; }
 
 //! String serialization
-std::string Timer::to_str() const POUTRE_NOEXCEPT
+std::string Timer::to_str() const
 {
   std::stringstream sstr;
   sstr << "Cumulative wall time in ms: " << GetCumulativeTime() << "\n Nb iter " << m_nbiter

@@ -30,7 +30,6 @@
 #include <functional>
 #include <future>
 #include <mutex>
-#include <omp.h>
 #include <queue>
 #include <thread>
 #include <utility>

@@ -138,13 +138,11 @@ public:
     if (dims.size() != m_numdims)
       POUTRE_RUNTIME_ERROR("Invalid input initializer Mismatch between Rank and dims.size()");
     for (size_t i = 0; i < this->m_numdims; ++i) { this->m_coordinnates[i] = static_cast<ptrdiff_t>(dims[i]); }
-    if (m_numdims > 0) {
       m_numelement = static_cast<std::size_t>(m_coordinnates[0]);
       for (size_t i = 1; i < static_cast<std::size_t>(m_numdims); i++) {
         m_numelement *= (static_cast<std::size_t>(m_coordinnates[i]));
       }
       m_storage.resize(m_numelement);
-    }
   }
 
   constexpr explicit image_t(const std::initializer_list<size_t> &dims) : m_storage(), m_coordinnates(), m_numelement(0)

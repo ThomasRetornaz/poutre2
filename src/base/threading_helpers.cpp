@@ -1,6 +1,8 @@
 #include <poutre/base/details/threading/threading_helpers.hpp>
 #include <poutre/base/config.hpp>
-
+#ifdef _OPENMP
+#include <omp.h>
+#endif
 // #include <cstdlib> // getenv
 #include <mutex>
 
