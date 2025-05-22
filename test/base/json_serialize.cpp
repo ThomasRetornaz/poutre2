@@ -80,9 +80,12 @@ TEST_CASE("serializer", "[json]")
 \"m_fTestFloat\" : 3.1415899999999999,\n\
 \"m_nTestInt\" : 42\n\
 }\n";
+  auto rm_space = [](const char character) { return isspace(character); };
 
-  output.erase(remove_if(output.begin(), output.end(), isspace), output.end());
-  expected.erase(remove_if(expected.begin(), expected.end(), isspace), expected.end());
-  //   std::cout << "output" << output;
+  const auto [first, last] = std::ranges::remove_if(output, rm_space);
+  output.erase(first, last);
+  const auto [first_exp, last_exp] = std::ranges::remove_if(expected, rm_space);
+  expected.erase(first_exp, last_exp);
+
   REQUIRE(std::strcmp(expected.c_str(), output.c_str()) == 0);
 }
