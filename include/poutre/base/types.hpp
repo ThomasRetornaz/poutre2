@@ -549,10 +549,26 @@ extern template class BASE_API compound_type<pINT32, 4>;
 extern template class BASE_API compound_type<pFLOAT, 4>;
 extern template class BASE_API compound_type<pINT64, 4>;
 extern template class BASE_API compound_type<pDOUBLE, 4>;
+#else
+template class BASE_API compound_type<pUINT8, 3>;
+template class BASE_API compound_type<pINT32, 3>;
+template class BASE_API compound_type<pFLOAT, 3>;
+template class BASE_API compound_type<pINT64, 3>;
+template class BASE_API compound_type<pDOUBLE, 3>;
+
+template class BASE_API compound_type<pUINT8, 4>;
+template class BASE_API compound_type<pINT32, 4>;
+template class BASE_API compound_type<pFLOAT, 4>;
+template class BASE_API compound_type<pINT64, 4>;
+template class BASE_API compound_type<pDOUBLE, 4>;
 #endif
 
 }// namespace poutre
 
+#if defined(POUTRE_IS_MSVC)
+#pragma warning(push)
+#pragma warning(disable : 4702)
+#endif
 namespace std {
 
 template<> struct formatter<poutre::CompoundType> : std::formatter<const char *>
@@ -622,3 +638,6 @@ template<> struct formatter<poutre::PType> : std::formatter<const char *>
   }
 };
 }// namespace std
+#if defined(POUTRE_IS_MSVC)
+#pragma warning(pop)
+#endif

@@ -20,7 +20,7 @@
 #include <poutre/base/config.hpp>
 
 #ifdef POUTRE_DYNAMIC// defined if POUTRE is compiled as a DLL
-#ifdef poutre_pp_EXPORTS// defined if we are building the POUTRE DLL (instead of using it)
+#ifdef poutre_pixel_processing_EXPORTS// defined if we are building the POUTRE DLL (instead of using it)
 #define PP_API MODULE_EXPORT
 #else
 #define PP_API MODULE_IMPORT

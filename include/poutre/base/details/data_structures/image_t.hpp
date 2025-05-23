@@ -152,13 +152,11 @@ public:
     auto it = dims.begin();
     for (size_t i = 0; i < this->m_numdims; ++i, ++it) { this->m_coordinnates[i] = static_cast<std::ptrdiff_t>(*it); }
     // compute full array size
-    if (m_numdims > 0) {
       m_numelement = static_cast<std::size_t>(m_coordinnates[0]);
       for (size_t i = 1; i < static_cast<std::size_t>(m_numdims); i++) {
         m_numelement *= (static_cast<std::size_t>(m_coordinnates[i]));
       }
       m_storage.resize(m_numelement);
-    }
   }
 
   // see this later
@@ -299,6 +297,43 @@ extern template class BASE_API image_t<pINT32, 4>;
 extern template class BASE_API image_t<pFLOAT, 4>;
 extern template class BASE_API image_t<pINT64, 4>;
 extern template class BASE_API image_t<pDOUBLE, 4>;
+#else
+  template class BASE_API image_t<pUINT8, 1>;
+  template class BASE_API image_t<pINT32, 1>;
+  template class BASE_API image_t<pFLOAT, 1>;
+  template class BASE_API image_t<pINT64, 1>;
+  template class BASE_API image_t<pDOUBLE, 1>;
+
+  template class BASE_API image_t<pUINT8, 2>;
+  template class BASE_API image_t<pINT32, 2>;
+  template class BASE_API image_t<pFLOAT, 2>;
+  template class BASE_API image_t<pINT64, 2>;
+  template class BASE_API image_t<pDOUBLE, 2>;
+
+  template class BASE_API image_t<compound_type<pUINT8, 3>, 2>;
+  template class BASE_API image_t<compound_type<pINT32, 3>, 2>;
+  template class BASE_API image_t<compound_type<pFLOAT, 3>, 2>;
+  template class BASE_API image_t<compound_type<pINT64, 3>, 2>;
+  template class BASE_API image_t<compound_type<pDOUBLE, 3>, 2>;
+
+  template class BASE_API image_t<compound_type<pUINT8, 4>, 2>;
+  template class BASE_API image_t<compound_type<pINT32, 4>, 2>;
+  template class BASE_API image_t<compound_type<pFLOAT, 4>, 2>;
+  template class BASE_API image_t<compound_type<pINT64, 4>, 2>;
+  template class BASE_API image_t<compound_type<pDOUBLE, 4>, 2>;
+
+  template class BASE_API image_t<pUINT8, 3>;
+  template class BASE_API image_t<pINT32, 3>;
+  template class BASE_API image_t<pFLOAT, 3>;
+  template class BASE_API image_t<pINT64, 3>;
+  template class BASE_API image_t<pDOUBLE, 3>;
+
+  template class BASE_API image_t<pUINT8, 4>;
+  template class BASE_API image_t<pINT32, 4>;
+  template class BASE_API image_t<pFLOAT, 4>;
+  template class BASE_API image_t<pINT64, 4>;
+  template class BASE_API image_t<pDOUBLE, 4>;
+
 #endif
 
 //! @} doxygroup: image_processing_container_group

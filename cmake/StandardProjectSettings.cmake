@@ -35,6 +35,16 @@ elseif(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
   endif()
 elseif(CMAKE_CXX_COMPILER_ID STREQUAL "MSVC" AND MSVC_VERSION GREATER 1900)
   add_compile_options(/diagnostics:column)
+  # Setup 64bit and 64bit windows systems
+  if(CMAKE_CL_64)
+    add_definitions("-D_WIN64")
+    message(STATUS "- MSVC: 64-bit platform, enforced -D_WIN64 parameter")
+
+    #Enable extended object support for all compiles on X64
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /bigobj")
+    message(STATUS "- MSVC: Enabled extended object-support for all-compiles")
+
+  endif()
 else()
   message(STATUS "No colored compiler diagnostic set for '${CMAKE_CXX_COMPILER_ID}' compiler.")
 endif()
