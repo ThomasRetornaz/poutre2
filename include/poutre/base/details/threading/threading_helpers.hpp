@@ -26,6 +26,7 @@
 #pragma GCC diagnostic ignored "-Wdeprecated-declarations"
 #endif
 
+#include <atomic>
 #include <condition_variable>
 #include <functional>
 #include <future>
