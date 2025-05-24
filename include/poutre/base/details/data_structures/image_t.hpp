@@ -165,7 +165,7 @@ public:
   // see this later
   image_t(image_t &&other) = default;
   image_t &operator=(image_t &&other) = default;
-  ~image_t() = default;
+  ~image_t() override = default;
 
   constexpr const coordinate_type shape() const noexcept { return m_coordinnates; }
 

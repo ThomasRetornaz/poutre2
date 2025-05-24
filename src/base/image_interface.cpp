@@ -150,13 +150,13 @@ std::unique_ptr<IInterface>
   switch (ctype) {
   case CompoundType::CompoundType_Scalar: {
     return CreateDenseDispatchPTypeScalar<numDims>(dims, ptype);
-  } break;
+  }
   case CompoundType::CompoundType_3Planes: {
     return CreateDenseDispatchPType3PLanes<numDims>(dims, ptype);
-  } break;
+  }
   case CompoundType::CompoundType_4Planes: {
     return CreateDenseDispatchPType4PLanes<numDims>(dims, ptype);
-  } break;
+  }
   default: {
     POUTRE_RUNTIME_ERROR(std::format("Unsupported compound type:{}", ctype));
   }
@@ -191,7 +191,7 @@ std::unique_ptr<IInterface> CreateImage1DDispatch(const std::vector<std::size_t>
   switch (ctype) {
   case CompoundType::CompoundType_Scalar: {
     return CreateImage1DDispatchPTypeScalar<numDims>(dims, ptype);
-  } break;
+  }
   // case CompoundType::CompoundType_3Planes:
   //   {
   //   return  CreateDenseDispatchPType3PLanes<numDims>(dims, ptype);
@@ -276,13 +276,13 @@ std::unique_ptr<IInterface> CreateImage2DDispatch(const std::vector<std::size_t>
   switch (ctype) {
   case CompoundType::CompoundType_Scalar: {
     return CreateImage2DDispatchPTypeScalar<numDims>(dims, ptype);
-  } break;
+  }
   case CompoundType::CompoundType_3Planes: {
     return CreateImage2DDispatchPType3PLanes<numDims>(dims, ptype);
-  } break;
+  }
   case CompoundType::CompoundType_4Planes: {
     return CreateImage2DDispatchPType4PLanes<numDims>(dims, ptype);
-  } break;
+  }
   default: {
     POUTRE_RUNTIME_ERROR(std::format("Unsupported compound type:{}", ctype));
   }
@@ -359,13 +359,13 @@ std::unique_ptr<IInterface> CreateImage3DDispatch(const std::vector<std::size_t>
   switch (ctype) {
   case CompoundType::CompoundType_Scalar: {
     return CreateImage3DDispatchPTypeScalar<numDims>(dims, ptype);
-  } break;
+  }
   case CompoundType::CompoundType_3Planes: {
     return CreateImage3DDispatchPType3PLanes<numDims>(dims, ptype);
-  } break;
+  }
   case CompoundType::CompoundType_4Planes: {
     return CreateImage3DDispatchPType4PLanes<numDims>(dims, ptype);
-  } break;
+  }
   default: {
     POUTRE_RUNTIME_ERROR(std::format("Unsupported compound type:{}", ctype));
   }
@@ -380,19 +380,19 @@ std::unique_ptr<IInterface> Create(const std::vector<std::size_t> &dims, Compoun
   switch (numDims) {
   case 0: {
     POUTRE_RUNTIME_ERROR("Unsupported number of dims:0");
-  } break;
+  }
   case 1: {
     return CreateImage1DDispatch<1>(dims, ctype, ptype);
-  } break;
+  }
   case 2: {
     return CreateImage2DDispatch<2>(dims, ctype, ptype);
-  } break;
+  }
   case 3: {
     return CreateImage3DDispatch<3>(dims, ctype, ptype);
-  } break;
+  }
   case 4: {
     return CreateDenseDispatchDims<4>(dims, ctype, ptype);
-  } break;
+  }
   default: {
     POUTRE_RUNTIME_ERROR("Unsupported number of dims");
   }
@@ -665,7 +665,7 @@ std::unique_ptr<IInterface> ImageFromString(const std::string &i_str)
   switch (NumDims) {
   case 0: {
     POUTRE_RUNTIME_ERROR("Unsupported number of dims:0");
-  } break;
+  }
   case 1: {
     ImageFromStringDispatchDense<1>(*img, cptype, ptype, istrm);
   } break;
@@ -894,7 +894,7 @@ std::string ImageToString(const poutre::IInterface &i_image)// NOLINT(misc-unuse
   switch (numdim) {
   case 0: {
     POUTRE_RUNTIME_ERROR("Unsupported number of dims:0");
-  } break;
+  }
   case 1: {
     ImageToStringDispatchDense<1>(i_image, cptype, ptype, ostrm);
   } break;

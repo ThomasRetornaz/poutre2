@@ -613,7 +613,7 @@ void CompareImage(const IInterface &i_img,
   switch (i_img.GetRank()) {
   case 0: {
     POUTRE_RUNTIME_ERROR("CompareImage Unsupported number of dims:0");
-  } break;
+  }
   // case 1: {
   //   ConvertInto1DDispatch<1>(i_img, o_img);
   // } break;
@@ -693,7 +693,7 @@ void CompareImage(const IInterface &i_img,
   switch (i_img.GetRank()) {
   case 0: {
     POUTRE_RUNTIME_ERROR("CompareImage Unsupported number of dims:0");
-  } break;
+  }
   // case 1: {
   //   ConvertInto1DDispatch<1>(i_img, o_img);
   // } break;
@@ -777,7 +777,7 @@ void CompareImage(const IInterface &i_img,
   switch (i_img.GetRank()) {
   case 0: {
     POUTRE_RUNTIME_ERROR("CompareImage Unsupported number of dims:0");
-  } break;
+  }
   // case 1: {
   //   ConvertInto1DDispatch<1>(i_img, o_img);
   // } break;
@@ -853,7 +853,7 @@ void CompareImage(const IInterface &i_img,
   switch (i_img.GetRank()) {
   case 0: {
     POUTRE_RUNTIME_ERROR("CompareImage Unsupported number of dims:0");
-  } break;
+  }
   // case 1: {
   //   ConvertInto1DDispatch<1>(i_img, o_img);
   // } break;
@@ -929,7 +929,7 @@ void CompareImage(const IInterface &i_img,
   switch (i_img.GetRank()) {
   case 0: {
     POUTRE_RUNTIME_ERROR("CompareImage Unsupported number of dims:0");
-  } break;
+  }
   // case 1: {
   //   ConvertInto1DDispatch<1>(i_img, o_img);
   // } break;
@@ -1010,7 +1010,7 @@ void CompareImage(const IInterface &i_img,
   switch (i_img.GetRank()) {
   case 0: {
     POUTRE_RUNTIME_ERROR("CompareImage Unsupported number of dims:0");
-  } break;
+  }
   // case 1: {
   //   ConvertInto1DDispatch<1>(i_img, o_img);
   // } break;
@@ -1092,7 +1092,7 @@ void CompareImage(const IInterface &i_img,
   switch (i_img.GetRank()) {
   case 0: {
     POUTRE_RUNTIME_ERROR("CompareImage Unsupported number of dims:0");
-  } break;
+  }
   // case 1: {
   //   ConvertInto1DDispatch<1>(i_img, o_img);
   // } break;
@@ -1168,7 +1168,7 @@ void CompareImage(const IInterface &i_img,
   switch (i_img.GetRank()) {
   case 0: {
     POUTRE_RUNTIME_ERROR("CompareImage Unsupported number of dims:0");
-  } break;
+  }
   // case 1: {
   //   ConvertInto1DDispatch<1>(i_img, o_img);
   // } break;

@@ -135,7 +135,7 @@ void ArithSaturatedAddImage(const IInterface &i_img1, const IInterface &i_img2, 
   switch (i_img1.GetRank()) {
   case 0: {
     POUTRE_RUNTIME_ERROR("ArithSaturatedAddImage Unsupported number of dims:0");
-  } break;
+  }
   // case 1: {
   //   ConvertInto1DDispatch<1>(i_img, o_img);
   // } break;
@@ -205,7 +205,7 @@ void ArithSaturatedSubImage(const IInterface &i_img1, const IInterface &i_img2, 
   switch (i_img1.GetRank()) {
   case 0: {
     POUTRE_RUNTIME_ERROR("ArithSaturatedSubImage Unsupported number of dims:0");
-  } break;
+  }
   // case 1: {
   //   ConvertInto1DDispatch<1>(i_img, o_img);
   // } break;
@@ -274,7 +274,7 @@ void ArithSupImage(const IInterface &i_img1, const IInterface &i_img2, IInterfac
   switch (i_img1.GetRank()) {
   case 0: {
     POUTRE_RUNTIME_ERROR("ArithSupImage Unsupported number of dims:0");
-  } break;
+  }
   // case 1: {
   //   ConvertInto1DDispatch<1>(i_img, o_img);
   // } break;
@@ -344,7 +344,7 @@ void ArithInfImage(const IInterface &i_img1, const IInterface &i_img2, IInterfac
   switch (i_img1.GetRank()) {
   case 0: {
     POUTRE_RUNTIME_ERROR("ArithInfImage Unsupported number of dims:0");
-  } break;
+  }
   // case 1: {
   //   ConvertInto1DDispatch<1>(i_img, o_img);
   // } break;
@@ -411,7 +411,7 @@ void ArithSaturatedAddConstant(const IInterface &i_img,const ScalarTypeVariant &
   switch (i_img.GetRank()) {
   case 0: {
     POUTRE_RUNTIME_ERROR("ArithSaturatedAddConstant Unsupported number of dims:0");
-  } break;
+  }
   // case 1: {
   //   ConvertInto1DDispatch<1>(i_img, o_img);
   // } break;
@@ -478,7 +478,7 @@ void ArithSaturatedSubConstant(const IInterface &i_img,const ScalarTypeVariant &
   switch (i_img.GetRank()) {
   case 0: {
     POUTRE_RUNTIME_ERROR("ArithSaturatedSubConstant Unsupported number of dims:0");
-  } break;
+  }
   // case 1: {
   //   ConvertInto1DDispatch<1>(i_img, o_img);
   // } break;
@@ -545,7 +545,7 @@ void ArithInvertImage(const IInterface &i_img, IInterface &o_img)
   switch (i_img.GetRank()) {
   case 0: {
     POUTRE_RUNTIME_ERROR("ArithInvertImage Unsupported number of dims:0");
-  } break;
+  }
   // case 1: {
   //   ConvertInto1DDispatch<1>(i_img, o_img);
   // } break;

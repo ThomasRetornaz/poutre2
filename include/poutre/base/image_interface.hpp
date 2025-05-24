@@ -52,7 +52,7 @@ public:
   //! Dtor
   virtual ~IInterface() = default;
   //! Stringification
-  virtual std::string str() const = 0;
+  [[nodiscard]] virtual std::string str() const = 0;
 };
 
 //! operator<< for IInterface

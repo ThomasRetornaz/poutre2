@@ -235,7 +235,7 @@ template<ptrdiff_t numDims> void ConvertIntoDispatch(const IInterface &i_img1, I
     }
     }
     break;
-  } break;
+  }
   case CompoundType::CompoundType_3Planes:
    {
     switch (i_img1.GetPType()) {
@@ -259,7 +259,7 @@ template<ptrdiff_t numDims> void ConvertIntoDispatch(const IInterface &i_img1, I
       }
       }
       break;
-  } break;
+  }
   case CompoundType::CompoundType_4Planes:
   {
     switch (i_img1.GetPType()) {
@@ -283,7 +283,7 @@ template<ptrdiff_t numDims> void ConvertIntoDispatch(const IInterface &i_img1, I
       }
       }
       break;
-  } break;
+  }
   default: {
     POUTRE_RUNTIME_ERROR("ConvertIntoDispatch unsupported CTYPE");
   }
@@ -301,7 +301,7 @@ void ConvertInto(const IInterface &i_img, IInterface &o_img)
   switch (numDims) {
   case 0: {
     POUTRE_RUNTIME_ERROR("Unsupported number of dims:0");
-  } break;
+  }
   // case 1: {
   //   ConvertInto1DDispatch<1>(i_img, o_img);
   // } break;
