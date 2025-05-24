@@ -57,6 +57,13 @@ find_package(OpenMP)
 if(OpenMP_CXX_FOUND)
   target_link_libraries(poutre_base PUBLIC OpenMP::OpenMP_CXX)
 endif()
+
+if (NOT EMSCRIPTEN)
+  find_package(Threads)
+  target_link_libraries(poutre_base
+          PUBLIC Threads::Threads)
+endif()
+
 # set_source_files_properties(
 #   ${subdirsource}/image_t.cpp
 #   PROPERTIES

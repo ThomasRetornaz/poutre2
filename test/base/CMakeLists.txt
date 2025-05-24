@@ -25,6 +25,12 @@ target_link_libraries(
   PUBLIC poutre_base::poutre_base
 )
 
+if (NOT EMSCRIPTEN)
+  find_package(Threads)
+  target_link_libraries(poutre_base_tests
+          PUBLIC Threads::Threads)
+endif()
+
 find_package(OpenMP)
 if(OpenMP_CXX_FOUND)
   target_link_libraries(poutre_base_tests PUBLIC OpenMP::OpenMP_CXX)
