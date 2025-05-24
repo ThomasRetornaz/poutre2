@@ -311,14 +311,15 @@ public:
     }
   }
 
-  TreadPool() : TreadPool(POUTRE_NUM_THREADS) {}
+  TreadPool();
 
   TreadPool(const TreadPool &rhs) = delete;
   TreadPool &operator=(const TreadPool &rhs) = delete;
   TreadPool(TreadPool &&other) noexcept = delete;
   TreadPool &operator=(TreadPool &&other) noexcept = delete;
 
-  ~TreadPool() { destroy(); }
+  ~TreadPool();
+
 
   size_t capacity() const { return m_threads.size(); }
 

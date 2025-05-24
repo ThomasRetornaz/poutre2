@@ -7,6 +7,14 @@
 #include <mutex>
 
 namespace poutre::thread {
+
+TreadPool::TreadPool() : TreadPool(POUTRE_NUM_THREADS)
+{
+}
+
+TreadPool::~TreadPool() { destroy(); }
+
+
 ScopedForceNbThreads::ScopedForceNbThreads(int nbThread) : nbThreadToRestore(POUTRE_NUM_THREADS)
 {
   if (nbThread <= 0) { POUTRE_RUNTIME_ERROR("Number of thread must be a positive non zero value"); }
