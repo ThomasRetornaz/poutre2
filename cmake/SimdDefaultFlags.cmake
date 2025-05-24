@@ -11,11 +11,11 @@ if(CMAKE_SYSTEM_PROCESSOR MATCHES "(amd64.*)|(x86_64.*)|(AMD64.*)|(i686.*)|(i386
   endif()
 elseif(CMAKE_SYSTEM_PROCESSOR MATCHES "^(aarch64.*|AARCH64.*|arm64.*|ARM64.*|arm.*|ARM.*)")
   if(CMAKE_CXX_COMPILER_ID MATCHES ".*Clang")
-      if(NOT CMAKE_SYSTEM_PROCESSOR MATCHES "^(aarch64.*|AARCH64.*)") #NEON defined by default
+      if(NOT CMAKE_SYSTEM_PROCESSOR MATCHES "^(aarch64.*|AARCH64.*)" AND NOT (CMAKE_SYSTEM_NAME STREQUAL "Darwin" AND CMAKE_SYSTEM_PROCESSOR STREQUAL "arm64")) #NEON defined by default
         add_compile_options(-mfpu=neon)
       endif()
   elseif(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
-      if(NOT CMAKE_SYSTEM_PROCESSOR MATCHES "^(aarch64.*|AARCH64.*)") #NEON defined by default
+      if(NOT CMAKE_SYSTEM_PROCESSOR MATCHES "^(aarch64.*|AARCH64.*)" AND NOT (CMAKE_SYSTEM_NAME STREQUAL "Darwin" AND CMAKE_SYSTEM_PROCESSOR STREQUAL "arm64"))
           add_compile_options(-mfpu=neon)
       endif()
   elseif(CMAKE_CXX_COMPILER_ID STREQUAL "MSVC" AND MSVC_VERSION GREATER 1900)
@@ -23,9 +23,4 @@ elseif(CMAKE_SYSTEM_PROCESSOR MATCHES "^(aarch64.*|AARCH64.*|arm64.*|ARM64.*|arm
   else()
     MESSAGE(INFO "simd not set for '${CMAKE_CXX_COMPILER_ID}' compiler.")
     endif()
-endif()
-
-if(CMAKE_SYSTEM_NAME STREQUAL "Darwin" AND CMAKE_SYSTEM_PROCESSOR STREQUAL "arm64")
-    message(STATUS "Removing '-mfpu' flag for macOS arm64")
-    string(REPLACE "-mfpu=" "" CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}")
 endif()
