@@ -389,27 +389,27 @@ void ViewCompare_sss_dispatch(const ViewIn<const Tin, Rank> &i_vin,
   case CompOpType::CompOpEqual: {
     OpCompEqualValue<Tin> myop(i_compval);
     return t_ViewCompare_sss(i_vin, myop, i_valtrue, i_valfalse, o_vout);
-  } break;
+  }
   case CompOpType::CompOpDiff: {
     OpCompDiffValue<Tin> myop(i_compval);
     return t_ViewCompare_sss(i_vin, myop, i_valtrue, i_valfalse, o_vout);
-  } break;
+  }
   case CompOpType::CompOpSup: {
     OpCompSupValue<Tin> myop(i_compval);
     return t_ViewCompare_sss(i_vin, myop, i_valtrue, i_valfalse, o_vout);
-  } break;
+  }
   case CompOpType::CompOpSupEqual: {
     OpCompSupEqualValue<Tin> myop(i_compval);
     return t_ViewCompare_sss(i_vin, myop, i_valtrue, i_valfalse, o_vout);
-  } break;
+  }
   case CompOpType::CompOpInf: {
     OpCompInfValue<Tin> myop(i_compval);
     return t_ViewCompare_sss(i_vin, myop, i_valtrue, i_valfalse, o_vout);
-  } break;
+  }
   case CompOpType::CompOpInfEqual: {
     OpCompInfEqualValue<Tin> myop(i_compval);
     return t_ViewCompare_sss(i_vin, myop, i_valtrue, i_valfalse, o_vout);
-  } break;
+  }
   default: {
     POUTRE_RUNTIME_ERROR("ViewCompare_sss_dispatch CompOpType not implemented");
   }
@@ -554,22 +554,22 @@ void ViewCompare_iii_dispatch(const ViewIn<const Tin, Rank> &i_vin,
   switch (compOpType) {
   case CompOpType::CompOpEqual: {
     return t_ViewCompare_iii(i_vin, OpCompEqual<Tin, Tcomp>(), i_vcomp, i_vtrue, i_vfalse, o_vout);
-  } break;
+  }
   case CompOpType::CompOpDiff: {
     return t_ViewCompare_iii(i_vin, OpCompDiff<Tin, Tcomp>(), i_vcomp, i_vtrue, i_vfalse, o_vout);
-  } break;
+  }
   case CompOpType::CompOpSup: {
     return t_ViewCompare_iii(i_vin, OpCompSup<Tin, Tcomp>(), i_vcomp, i_vtrue, i_vfalse, o_vout);
-  } break;
+  }
   case CompOpType::CompOpSupEqual: {
     return t_ViewCompare_iii(i_vin, OpCompSupEqual<Tin, Tcomp>(), i_vcomp, i_vtrue, i_vfalse, o_vout);
-  } break;
+  }
   case CompOpType::CompOpInf: {
     return t_ViewCompare_iii(i_vin, OpCompInf<Tin, Tcomp>(), i_vcomp, i_vtrue, i_vfalse, o_vout);
-  } break;
+  }
   case CompOpType::CompOpInfEqual: {
     return t_ViewCompare_iii(i_vin, OpCompInfEqual<Tin, Tcomp>(), i_vcomp, i_vtrue, i_vfalse, o_vout);
-  } break;
+  }
   default: {
     POUTRE_RUNTIME_ERROR("ViewCompare_iii_dispatch CompOpType not implemented");
   }
@@ -714,22 +714,22 @@ void ViewCompare_sii_dispatch(const ViewIn<const Tin, Rank> &i_vin,
   switch (compOpType) {
   case CompOpType::CompOpEqual: {
     return t_ViewCompare_sii(i_vin, OpCompEqual<Tin, Tin>(), i_compval, i_vtrue, i_vfalse, o_vout);
-  } break;
+  }
   case CompOpType::CompOpDiff: {
     return t_ViewCompare_sii(i_vin, OpCompDiff<Tin, Tin>(), i_compval, i_vtrue, i_vfalse, o_vout);
-  } break;
+  }
   case CompOpType::CompOpSup: {
     return t_ViewCompare_sii(i_vin, OpCompSup<Tin, Tin>(), i_compval, i_vtrue, i_vfalse, o_vout);
-  } break;
+  }
   case CompOpType::CompOpSupEqual: {
     return t_ViewCompare_sii(i_vin, OpCompSupEqual<Tin, Tin>(), i_compval, i_vtrue, i_vfalse, o_vout);
-  } break;
+  }
   case CompOpType::CompOpInf: {
     return t_ViewCompare_sii(i_vin, OpCompInf<Tin, Tin>(), i_compval, i_vtrue, i_vfalse, o_vout);
-  } break;
+  }
   case CompOpType::CompOpInfEqual: {
     return t_ViewCompare_sii(i_vin, OpCompInfEqual<Tin, Tin>(), i_compval, i_vtrue, i_vfalse, o_vout);
-  } break;
+  }
   default: {
     POUTRE_RUNTIME_ERROR("ViewCompare_sii_dispatch CompOpType not implemented");
   }
@@ -855,27 +855,27 @@ void ViewCompare_sis_dispatch(const ViewIn<const Tin, Rank> &i_vin,
   case CompOpType::CompOpEqual: {
     OpCompEqualValue<Tin> myop(i_compval);
     return t_ViewCompare_sis(i_vin, myop, i_vtrue, i_valfalse, o_vout);
-  } break;
+  }
   case CompOpType::CompOpDiff: {
     OpCompDiffValue<Tin> myop(i_compval);
     return t_ViewCompare_sis(i_vin, myop, i_vtrue, i_valfalse, o_vout);
-  } break;
+  }
   case CompOpType::CompOpSup: {
     OpCompSupValue<Tin> myop(i_compval);
     return t_ViewCompare_sis(i_vin, myop, i_vtrue, i_valfalse, o_vout);
-  } break;
+  }
   case CompOpType::CompOpSupEqual: {
     OpCompSupEqualValue<Tin> myop(i_compval);
     return t_ViewCompare_sis(i_vin, myop, i_vtrue, i_valfalse, o_vout);
-  } break;
+  }
   case CompOpType::CompOpInf: {
     OpCompInfValue<Tin> myop(i_compval);
     return t_ViewCompare_sis(i_vin, myop, i_vtrue, i_valfalse, o_vout);
-  } break;
+  }
   case CompOpType::CompOpInfEqual: {
     OpCompInfEqualValue<Tin> myop(i_compval);
     return t_ViewCompare_sis(i_vin, myop, i_vtrue, i_valfalse, o_vout);
-  } break;
+  }
   default: {
     POUTRE_RUNTIME_ERROR("ViewCompare_sis_dispatch CompOpType not implemented");
   }
@@ -1014,22 +1014,22 @@ void ViewCompare_isi_dispatch(const ViewIn<const Tin, Rank> &i_vin,
   switch (compOpType) {
   case CompOpType::CompOpEqual: {
     return t_ViewCompare_isi(i_vin, OpCompEqual<Tin, Tcomp>(), i_vcomp, i_valtrue, i_vfalse, o_vout);
-  } break;
+  }
   case CompOpType::CompOpDiff: {
     return t_ViewCompare_isi(i_vin, OpCompDiff<Tin, Tcomp>(), i_vcomp, i_valtrue, i_vfalse, o_vout);
-  } break;
+  }
   case CompOpType::CompOpSup: {
     return t_ViewCompare_isi(i_vin, OpCompSup<Tin, Tcomp>(), i_vcomp, i_valtrue, i_vfalse, o_vout);
-  } break;
+  }
   case CompOpType::CompOpSupEqual: {
     return t_ViewCompare_isi(i_vin, OpCompSupEqual<Tin, Tcomp>(), i_vcomp, i_valtrue, i_vfalse, o_vout);
-  } break;
+  }
   case CompOpType::CompOpInf: {
     return t_ViewCompare_isi(i_vin, OpCompInf<Tin, Tcomp>(), i_vcomp, i_valtrue, i_vfalse, o_vout);
-  } break;
+  }
   case CompOpType::CompOpInfEqual: {
     return t_ViewCompare_isi(i_vin, OpCompInfEqual<Tin, Tcomp>(), i_vcomp, i_valtrue, i_vfalse, o_vout);
-  } break;
+  }
   default: {
     POUTRE_RUNTIME_ERROR("ViewCompare_isi_dispatch CompOpType not implemented");
   }
@@ -1172,22 +1172,22 @@ void ViewCompare_iis_dispatch(const ViewIn<const Tin, Rank> &i_vin,
   switch (compOpType) {
   case CompOpType::CompOpEqual: {
     return t_ViewCompare_iis(i_vin, OpCompEqual<Tin, Tcomp>(), i_vcomp, i_vtrue, i_valfalse, o_vout);
-  } break;
+  }
   case CompOpType::CompOpDiff: {
     return t_ViewCompare_iis(i_vin, OpCompDiff<Tin, Tcomp>(), i_vcomp, i_vtrue, i_valfalse, o_vout);
-  } break;
+  }
   case CompOpType::CompOpSup: {
     return t_ViewCompare_iis(i_vin, OpCompSup<Tin, Tcomp>(), i_vcomp, i_vtrue, i_valfalse, o_vout);
-  } break;
+  }
   case CompOpType::CompOpSupEqual: {
     return t_ViewCompare_iis(i_vin, OpCompSupEqual<Tin, Tcomp>(), i_vcomp, i_vtrue, i_valfalse, o_vout);
-  } break;
+  }
   case CompOpType::CompOpInf: {
     return t_ViewCompare_iis(i_vin, OpCompInf<Tin, Tcomp>(), i_vcomp, i_vtrue, i_valfalse, o_vout);
-  } break;
+  }
   case CompOpType::CompOpInfEqual: {
     return t_ViewCompare_iis(i_vin, OpCompInfEqual<Tin, Tcomp>(), i_vcomp, i_vtrue, i_valfalse, o_vout);
-  } break;
+  }
   default: {
     POUTRE_RUNTIME_ERROR("ViewCompare_iis_dispatch CompOpType not implemented");
   }
@@ -1312,27 +1312,27 @@ void ViewCompare_ssi_dispatch(const ViewIn<const Tin, Rank> &i_vin,
   case CompOpType::CompOpEqual: {
     OpCompEqualValue<Tin> myop(i_compval);
     return t_ViewCompare_ssi(i_vin, myop, i_valtrue, i_vfalse, o_vout);
-  } break;
+  }
   case CompOpType::CompOpDiff: {
     OpCompDiffValue<Tin> myop(i_compval);
     return t_ViewCompare_ssi(i_vin, myop, i_valtrue, i_vfalse, o_vout);
-  } break;
+  }
   case CompOpType::CompOpSup: {
     OpCompSupValue<Tin> myop(i_compval);
     return t_ViewCompare_ssi(i_vin, myop, i_valtrue, i_vfalse, o_vout);
-  } break;
+  }
   case CompOpType::CompOpSupEqual: {
     OpCompSupEqualValue<Tin> myop(i_compval);
     return t_ViewCompare_ssi(i_vin, myop, i_valtrue, i_vfalse, o_vout);
-  } break;
+  }
   case CompOpType::CompOpInf: {
     OpCompInfValue<Tin> myop(i_compval);
     return t_ViewCompare_ssi(i_vin, myop, i_valtrue, i_vfalse, o_vout);
-  } break;
+  }
   case CompOpType::CompOpInfEqual: {
     OpCompInfEqualValue<Tin> myop(i_compval);
     return t_ViewCompare_ssi(i_vin, myop, i_valtrue, i_vfalse, o_vout);
-  } break;
+  }
   default: {
     POUTRE_RUNTIME_ERROR("ViewCompare_ssi_dispatch CompOpType not implemented");
   }
@@ -1463,22 +1463,22 @@ void ViewCompare_iss_dispatch(const ViewIn1<const Tin1, Rank> &i_vin1,
   switch (compOpType) {
   case CompOpType::CompOpEqual: {
     return t_ViewCompare_iss(i_vin1, OpCompEqual<Tin1, Tin2>(), i_vin2, i_valtrue, i_valfalse, o_vout);
-  } break;
+  }
   case CompOpType::CompOpDiff: {
     return t_ViewCompare_iss(i_vin1, OpCompDiff<Tin1, Tin2>(), i_vin2, i_valtrue, i_valfalse, o_vout);
-  } break;
+  }
   case CompOpType::CompOpSup: {
     return t_ViewCompare_iss(i_vin1, OpCompSup<Tin1, Tin2>(), i_vin2, i_valtrue, i_valfalse, o_vout);
-  } break;
+  }
   case CompOpType::CompOpSupEqual: {
     return t_ViewCompare_iss(i_vin1, OpCompSupEqual<Tin1, Tin2>(), i_vin2, i_valtrue, i_valfalse, o_vout);
-  } break;
+  }
   case CompOpType::CompOpInf: {
     return t_ViewCompare_iss(i_vin1, OpCompInf<Tin1, Tin2>(), i_vin2, i_valtrue, i_valfalse, o_vout);
-  } break;
+  }
   case CompOpType::CompOpInfEqual: {
     return t_ViewCompare_iss(i_vin1, OpCompInfEqual<Tin1, Tin2>(), i_vin2, i_valtrue, i_valfalse, o_vout);
-  } break;
+  }
   default: {
     POUTRE_RUNTIME_ERROR("ViewCompare_iss_dispatch CompOpType not implemented");
   }
