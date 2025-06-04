@@ -26,7 +26,7 @@ IF(WIN32)
     spdlog::spdlog
     Catch2::Catch2WithMain
     PUBLIC poutre_base::poutre_base
-    PUBLIC poutre_pixel_processing::poutre_pixel_processing
+    #PUBLIC poutre_pixel_processing::poutre_pixel_processing
   )
 ELSE()
   target_link_libraries(poutre_pixel_processing_bench
@@ -38,7 +38,7 @@ ELSE()
     spdlog::spdlog
     Catch2::Catch2WithMain
     PUBLIC poutre_base::poutre_base
-    PUBLIC poutre_pixel_processing::poutre_pixel_processing
+    #PUBLIC poutre_pixel_processing::poutre_pixel_processing
   )
 ENDIF()
 
