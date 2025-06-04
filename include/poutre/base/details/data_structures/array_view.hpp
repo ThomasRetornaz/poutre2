@@ -343,10 +343,16 @@ public:
   // construction
   constexpr index() noexcept = default;
   // cppcheck-suppress noExplicitConstructor
-  template<size_t R = Rank, typename = std::enable_if_t<R == 1>> constexpr index(value_type v) noexcept
+  // template<size_t R = Rank, typename = std::enable_if_t<R == 1>> constexpr index(value_type v) noexcept
+  // {
+  //   (*this)[0] = v;
+  // }
+
+  constexpr index(value_type v) noexcept
   {
-    (*this)[0] = v;
+    std::fill(index_.begin(),index_.end(),v);
   }
+
   constexpr index(std::initializer_list<value_type> il);
 
   // element access
@@ -380,6 +386,12 @@ public:
 
   constexpr index &operator*=(value_type v);
   constexpr index &operator/=(value_type v);
+
+  // ordering for sorting op
+  constexpr bool operator<(const index& rhs) const noexcept;
+  constexpr bool operator<=(const index& rhs) const noexcept;
+  constexpr bool operator>(const index& rhs) const noexcept;
+  constexpr bool operator>=(const index& rhs) const noexcept;
 
 private:
   std::array<value_type, static_cast<size_t>(rank)> index_ = {};
@@ -421,6 +433,49 @@ template<ptrdiff_t Rank> constexpr index<Rank> &index<Rank>::operator/=(value_ty
   return *this;
 }
 
+template <ptrdiff_t Rank> constexpr bool index<Rank>::operator<(const index& rhs) const noexcept
+{
+  // cppcheck-suppress useStlAlgorithm
+  for( ptrdiff_t i = Rank - 1; i >= 0; --i )
+  {
+    if( index_[static_cast<size_t>(i)] == rhs.index_[static_cast<size_t>(i)] )
+      continue;
+    return (index_[static_cast<size_t>(i)] < rhs.index_[static_cast<size_t>(i)]);
+  }
+  return false;
+}
+
+template <ptrdiff_t Rank> constexpr bool index<Rank>::operator<=(const index& rhs) const noexcept
+{
+  // cppcheck-suppress useStlAlgorithm
+  for( ptrdiff_t i = Rank - 1; i >= 0; --i )
+  {
+    if( index_[static_cast<size_t>(i)] > rhs.index_[static_cast<size_t>(i)] )
+      return false;
+  }
+  return true;
+}
+template <ptrdiff_t Rank> constexpr bool index<Rank>::operator>(const index& rhs) const noexcept
+{
+  // cppcheck-suppress useStlAlgorithm
+  for( ptrdiff_t i = Rank - 1; i >= 0; i-- )
+  {
+    if( index_[static_cast<size_t>(i)] == rhs.index_[static_cast<size_t>(i)] )
+      continue;
+    return (index_[static_cast<size_t>(i)] > rhs.index_[static_cast<size_t>(i)]);
+  }
+  return false;
+}
+template <ptrdiff_t Rank> constexpr bool index<Rank>::operator>=(const index& rhs) const noexcept
+{
+  // cppcheck-suppress useStlAlgorithm
+  for( ptrdiff_t i = Rank - 1; i >= 0; i-- )
+  {
+    if( index_[static_cast<size_t>(i)] < rhs.index_[static_cast<size_t>(i)] )
+      return false;
+  }
+  return true;
+}
 
 // Free functions
 
@@ -1067,4 +1122,20 @@ using idx3d = index<3>;//! alias index 3D
 using idx4d = index<4>;//! alias index 4D
 
 }// namespace poutre::details::av
+
+// hashable
+namespace std
+{
+template <
+  ptrdiff_t Rank>
+struct hash< poutre::details::av::index<Rank> >
+{
+  size_t operator()(poutre::details::av::index<Rank> const& coord) const
+  {
+    return std::hash(std::begin(coord.coords), std::end(coord.coords));;
+  }
+};
+
+}
+
 // NOLINTEND

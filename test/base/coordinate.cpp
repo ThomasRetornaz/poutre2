@@ -90,10 +90,10 @@ TEST_CASE("index ordering", "[coord]")
   poutre::details::av::index<2> idx2{ 1, 3 };
   poutre::details::av::index<2> idx3{ 3, 3 };
 
-  // REQUIRE(idx2 < idx == true);
-  // REQUIRE(idx2 <= idx == true);
-  // REQUIRE(idx3 > idx == true);
-  // REQUIRE(idx3 >= idx == true);
+  REQUIRE(idx2 < idx);
+  REQUIRE(idx2 <= idx);
+  REQUIRE(idx3 > idx);
+  REQUIRE(idx3 >= idx);
 
   REQUIRE_FALSE(idx == idx2);
   REQUIRE_FALSE(idx2 == idx3);
