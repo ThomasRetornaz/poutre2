@@ -40,7 +40,7 @@ class BASE_API IInterface
 {
 public:
   //! Get @c PType belong to @c IInterface
-  [[nodiscard]]virtual PType GetPType() const = 0;
+  [[nodiscard]] virtual PType GetPType() const = 0;
   //! Get @c CompoundType belong to @c IInterface
   [[nodiscard]] virtual CompoundType GetCType() const = 0;
   //! Get size over dimensions
