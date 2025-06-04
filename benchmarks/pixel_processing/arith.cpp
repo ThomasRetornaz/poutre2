@@ -94,20 +94,26 @@ BENCHMARK_REGISTER_F(ArithmeticsFixture, Sup)
   ->Arg(32 * 32)//-V112
   ->Arg(64 * 64)
   ->Arg(128 * 128)
-  ->Arg(256 * 256);//->Unit(benchmark::kMillisecond); //-V112
+  ->Arg(256 * 256)
+  ->Arg(512 * 512)
+  ->Arg(1024 * 1024);//->Unit(benchmark::kMillisecond); //-V112
 
 BENCHMARK_REGISTER_F(ArithmeticsFixture, SupSection)
   ->Arg(16 * 16)
   ->Arg(32 * 32)//-V112
   ->Arg(64 * 64)
   ->Arg(128 * 128)
-  ->Arg(256 * 256);//->Unit(benchmark::kMillisecond); //-V112
+  ->Arg(256 * 256)
+  ->Arg(512 * 512)
+  ->Arg(1024 * 1024);//->Unit(benchmark::kMillisecond); //-V112
 
 BENCHMARK_REGISTER_F(ArithmeticsFixture, AddConst)
   ->Arg(16 * 16)
   ->Arg(32 * 32)//-V112
   ->Arg(64 * 64)
   ->Arg(128 * 128)
-  ->Arg(256 * 256);//->Unit(benchmark::kMillisecond); //-V112
+  ->Arg(256 * 256)
+  ->Arg(512 * 512)
+  ->Arg(1024 * 1024);//->Unit(benchmark::kMillisecond); //-V112
 
 // NOLINTEND
