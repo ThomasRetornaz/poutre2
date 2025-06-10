@@ -20,6 +20,7 @@
 #include <memory>
 #include <poutre/base/config.hpp>
 #include <poutre/structuring_element/structuring_element.hpp>
+#include <poutre/structuring_element/se_types_and_tags.hpp>
 
 namespace poutre::se {
 /**
@@ -27,15 +28,6 @@ namespace poutre::se {
  * @ingroup poutre_se_group
  *@{
  */
-
-enum class se_type {
-  runtime,                            //! SE computed at runtime (think amoeba)
-  neighbor_list,                      //!< Neighbor list structuring element
-  image,                              //!< Image structuring element
-  internal,                           //!< Template for internal use, not available through interface
-  chain,                              //!< Chain of structuring element
-};
-
 
 class SE_API IStructuringElement {
 
@@ -49,7 +41,6 @@ class SE_API IStructuringElement {
       [[nodiscard]] virtual se_type GetType() const  = 0;
 
       //! Removes the center point from the structuring element
-      //! (usually useful for propagating algorithms, hit-or-miss etc.)
       [[nodiscard]] virtual std::unique_ptr<IStructuringElement> RemoveCenter() const = 0;
 
       //! Returns the size of the structuring element in number of neighbors (the center, if defined, is included)

@@ -16,25 +16,25 @@
 
 namespace poutre::se {
 
-const neighbor_list_t< 1 > SESegmentX1D({ // NOLINT
+const details::neighbor_list_t< 1 > SESegmentX1D({ // NOLINT
   { 0 },
   { -1 },
   { +1 },
 });
 
-const neighbor_list_t< 2 > SESegmentX2D({ // NOLINT
+const details::neighbor_list_t< 2 > SESegmentX2D({ // NOLINT
   { 0,0 },
   { 0,-1 },
   { 0,+1 },
 });
 
-const neighbor_list_t< 2 > SESegmentY2D({ // NOLINT
+const details::neighbor_list_t< 2 > SESegmentY2D({ // NOLINT
   { 0,0 },
   { -1,0 },
   { +1, 0 },
 });
 
-const neighbor_list_t< 2 > SESquare2D({ // NOLINT
+const details::neighbor_list_t< 2 > SESquare2D({ // NOLINT
   { 0,0 },
 {-1, -1}, {+0, -1}, {+1, -1},
 {-1, +0}, {+1, +0},
@@ -42,12 +42,12 @@ const neighbor_list_t< 2 > SESquare2D({ // NOLINT
 });
 
 
-const neighbor_list_t< 2 > SECross2D({ // NOLINT
+const details::neighbor_list_t< 2 > SECross2D({ // NOLINT
   { 0,0 },{+0, -1},
 {-1, +0}, {+1, +0}, {+0, +1},
 });
 
-const neighbor_list_t< 3 > SECross3D({ // NOLINT
+const details::neighbor_list_t< 3 > SECross3D({ // NOLINT
   { 0,0,0 },
   {+0, +0, -1},
   {+0, -1, +0},
@@ -57,7 +57,7 @@ const neighbor_list_t< 3 > SECross3D({ // NOLINT
   {+0, +0, +1}
 });
 
-const neighbor_list_t< 3 > SESquare3D({ // NOLINT
+const details::neighbor_list_t< 3 > SESquare3D({ // NOLINT
   { 0,0,0 },
 {-1, -1, -1}, {+0, -1, -1}, {+1, -1, -1},
 {-1, +0, -1}, {+0, +0, -1}, {+1, +0, -1},
@@ -72,19 +72,19 @@ const neighbor_list_t< 3 > SESquare3D({ // NOLINT
 {-1, +1, +1}, {+0, +1, +1}, {+1, +1, +1},
   });
 
-const neighbor_list_t< 3 > SESegmentX3D({ // NOLINT
+const details::neighbor_list_t< 3 > SESegmentX3D({ // NOLINT
   { 0, 0, 0 },
 { 0, 0, -1 },
 { 0, 0,+1 },
   });
 
-const neighbor_list_t< 3 > SESegmentY3D({ // NOLINT
+const details::neighbor_list_t< 3 > SESegmentY3D({ // NOLINT
   { 0, 0, 0 },
 { 0, -1, 0 },
 { 0, +1, 0 },
   });
 
-const neighbor_list_t< 3 > SESegmentZ3D({ // NOLINT
+const details::neighbor_list_t< 3 > SESegmentZ3D({ // NOLINT
   { 0, 0, 0 },
 { -1, 0, 0 },
 { +1, 0, 0 },

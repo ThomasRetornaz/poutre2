@@ -44,6 +44,11 @@ TEST_CASE("split", "[se_nl]")
   const auto [upper,lower] = se_square.split_upper_lower();
   REQUIRE(!upper.is_symmetric());
   REQUIRE(!lower.is_symmetric());
+
+  const auto se_square3d = poutre::se::SESquare3D;
+  const auto [upper3d,lower3d] = se_square3d.split_upper_lower();
+  REQUIRE(!upper3d.is_symmetric());
+  REQUIRE(!lower3d.is_symmetric());
 }
 
 TEST_CASE("extension", "se_nl")

@@ -24,28 +24,18 @@
 #include <poutre/base/details/data_structures/array_view.hpp>
 #include <poutre/structuring_element/se_interface.hpp>
 
-namespace poutre::se {
+namespace poutre::se::details {
 /**
  * @addtogroup poutre_se_group
  *@{
  */
-
-struct adaptative_neighbourhood_tag
-{
-};
-
-struct runtime_neighbourhood_tag : adaptative_neighbourhood_tag
-{
-};
-struct static_neighbourhood_tag : runtime_neighbourhood_tag
-{
-};
 
 // Idea of design stolen from Yayi
 template <ptrdiff_t Rank>
 struct neighbor_list_t : public IStructuringElement
 {
 public:
+  static const std::ptrdiff_t rank = Rank;
   using neighbor_element = poutre::details::av::index<Rank>;
   using self_type = neighbor_list_t<Rank>;
   using parent_interface = IStructuringElement;
@@ -55,7 +45,7 @@ public:
   using reverse_iterator = typename storage_type::reverse_iterator;
   using const_reverse_iterator = typename storage_type::const_reverse_iterator;
 
-  using se_tag = runtime_neighbourhood_tag;
+  using se_tag = runtime_neighborhood_tag;
 
   // see this later
   neighbor_list_t(const neighbor_list_t &rhs) = default;
@@ -105,7 +95,7 @@ public:
             it != ite;
             ++it)
     {
-      if(*it == center) continue;
+      if(*it == center) { continue;}
       if(*it < center) {
         upper.push_back(*it);
       }
@@ -113,7 +103,7 @@ public:
         lower.push_back(*it);
       }
     }
-    return std::make_pair(self_type(lower), self_type(upper));
+    return std::make_pair(self_type(upper), self_type(lower));
   }
 
   //! Returns a transposed copy of this structuring element
