@@ -3,16 +3,20 @@ set(subdirsource ${PROJECT_SOURCE_DIR}/src/structuring_element)
 
 set(PoutreSESRC_DETAILS
         ${subdirheader}/details/neighbor_list_se_t.hpp
+        ${subdirheader}/details/neighbor_list_static_se_t.hpp
 )
 
 set(PoutreSESRC_PUBLICHEADERS
         ${subdirheader}/structuring_element.hpp
         ${subdirheader}/se_interface.hpp
         ${subdirheader}/predefined_nl_se.hpp
+        ${subdirheader}/se_chained.hpp
+        ${subdirheader}/se_types_and_tags.hpp
 )
 
 set(PoutreSESRC_CPP
         ${subdirsource}/predefined_nl_se.cpp
+        ${subdirsource}/se_chained.cpp
 )
 
 source_group(details FILES ${PoutreSESRC_DETAILS})

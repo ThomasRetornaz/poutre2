@@ -3,6 +3,7 @@ set(subdirsource ${PROJECT_SOURCE_DIR}/structuring_element)
 # Test project
 set(PoutreSETestSRC
   ${subdirsource}/neighbor_list_se_t.cpp
+  ${subdirsource}/neighbor_list_static_se_t.cpp
 )
 
 add_executable(poutre_se_tests ${PoutreSETestSRC})
