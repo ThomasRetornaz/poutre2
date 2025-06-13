@@ -408,14 +408,14 @@ template<ptrdiff_t Rank> constexpr index<Rank>::index(std::initializer_list<valu
 template<ptrdiff_t Rank> constexpr index<Rank> &index<Rank>::operator+=(const index &rhs)
 {
   // cppcheck-suppress useStlAlgorithm
-  for (size_type i = 0; i < Rank; ++i) { (*this)[i] += rhs[i]; }
+  for (std::size_t i = 0; i < Rank; ++i) { (*this)[i] += rhs[i]; }
   return *this;
 }
 
 template<ptrdiff_t Rank> constexpr index<Rank> &index<Rank>::operator-=(const index &rhs)
 {
   // cppcheck-suppress useStlAlgorithm
-  for (size_type i = 0; i < Rank; ++i) { (*this)[i] -= rhs[i]; }
+  for (std::size_t i = 0; i < Rank; ++i) { (*this)[i] -= rhs[i]; }
   return *this;
 }
 
