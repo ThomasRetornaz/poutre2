@@ -82,7 +82,7 @@ template<typename T, ptrdiff_t Rank> struct CopyOpDispatcher<T, T, Rank, av::arr
 {
   void operator()(const av::array_view<const T, Rank> &i_vin, const av::array_view<T, Rank> &o_vout) const
   {
-    std::memcpy(reinterpret_cast<void *>(o_vout.data()), reinterpret_cast<void *>(i_vin.data()), sizeof(T) * i_vin.size());
+    std::memcpy(reinterpret_cast<void *>(o_vout.data()), reinterpret_cast<const void *>(i_vin.data()), sizeof(T) * i_vin.size());
   }
 };
 
@@ -94,7 +94,7 @@ template<typename T1,
   class View1,
   template<typename, ptrdiff_t>
   class View2>
-void t_Copy(const View1<T1, Rank> &i_vin, View2<T2, Rank> &o_vout)
+void t_Copy(const View1<const T1, Rank> &i_vin, const View2<T2, Rank> &o_vout)
 {
   POUTRE_CHECK(i_vin.size() == o_vout.size(), "Incompatible views size");
   CopyOpDispatcher<T1, T2, Rank, View1, View2> dispatcher;
