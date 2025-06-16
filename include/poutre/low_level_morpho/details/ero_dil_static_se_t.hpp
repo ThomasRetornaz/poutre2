@@ -77,6 +77,44 @@ void t_LineBufferShiftRight(const T *i_viewlinein, scoord lenghtline, scoord nbs
               static_cast<std::size_t>(lenghtline - nbshift) * sizeof(T)); //<---faster than explicit call to simd::transform
 }
 
+
+// helper to extract a slice of image 3d (sliceNumber) and put the result in 2D image
+// TODO use view instead ?
+template<typename T>
+   void t_3DCopyOneSliceTo2D(T *imIn3d,
+                                      const std::size_t xSize, const std::size_t ySize,
+                                      const std::size_t wxSize, const std::size_t wySize,
+                                      const std::size_t sliceNumber,
+                                      T *imOut2d)
+{
+
+  T *ptrIn = imIn3d + sliceNumber*(xSize*ySize);
+
+  for(std::size_t i = 0 ; i<wySize ; i++) {
+    memcpy(imOut2d, ptrIn, wxSize*sizeof(T));
+    ptrIn += xSize;
+    imOut2d += wxSize;
+  }
+}
+
+// helper to put a 2D image at slice (sliceNumber) in 3D images
+// TODO use view instead ?
+template<typename T>
+    void t_3DCopyOneSliceFrom2D(T *imIn2d,
+                                         const std::size_t xSize, const std::size_t ySize,
+                                         const std::size_t wxSize, const std::size_t wySize,
+                                         const std::size_t sliceNumber,
+                                         T *imOut3d) {
+
+  T *ptrOut = imOut3d + sliceNumber*(xSize*ySize);
+
+  for(std::size_t i = 0 ; i<wySize ; i++) {
+    memcpy(ptrOut, imIn2d, wxSize*sizeof(T));
+    ptrOut += xSize;
+    imIn2d += wxSize;
+  }
+}
+
 template<typename T>
 void t_LineBufferShiftLeft(const T *i_viewlinein, scoord lenghtline, scoord nbshift, T paddValue, T *o_viewlineout)
 {
@@ -445,8 +483,7 @@ void t_ErodeDilateIterateBorderArrayView2DHelper(const T1 *&i_vin,
 template<typename TIn, typename TOut, class HelperOp>
   struct t_ErodeDilateDispatcher<se::Common_NL_SE::SECross2D, TIn, TOut, 2, poutre::details::av::array_view, poutre::details::av::array_view, HelperOp>
   {
-    // cppcheck-suppress constParameterReference
-    void operator()(const poutre::details::av::array_view<const TIn, 2> &i_vin, poutre::details::av::array_view<TOut, 2> &o_vout) const
+    void operator()(const poutre::details::av::array_view<const TIn, 2> &i_vin, const poutre::details::av::array_view<TOut, 2> &o_vout) const
     {
       POUTRE_CHECK(i_vin.size() == o_vout.size(), "Incompatible views size");
       auto   ibd     = i_vin.bound();
@@ -634,6 +671,235 @@ template<typename TIn, typename TOut, class HelperOp>
     }
   };
 
+// Helper structure
+template<  typename T,
+           //ptrdiff_t Rank,
+           template<typename, ptrdiff_t>
+           class ViewIn,
+           template<typename, ptrdiff_t>
+           class ViewOut> struct Dilate2DFor3DSquare
+{
+public:
+  using LineOp        = LineBufferShiftAndArithDilateHelperOp<T>;
+
+  static void ApplyArith(const ViewIn<const T, 2> &i_vin1, const ViewIn<const T, 2> &i_vin2, const ViewOut<T, 2> &o_vout)
+  {
+    poutre::details::t_ArithSup(i_vin1,i_vin2,o_vout);
+  }
+  static void EroDilOp2D(const ViewIn<const T, 2> &i_vin, const ViewOut<T, 2> &o_vout)
+  {
+    t_ErodeDilateDispatcher<poutre::se::Common_NL_SE::SESquare2D, T, T, 2, ViewIn, ViewOut, LineOp> dispatcher;
+    dispatcher(i_vin, o_vout);
+  }
+};
+
+template<  typename T,
+           //ptrdiff_t Rank,
+           template<typename, ptrdiff_t>
+           class ViewIn,
+           template<typename, ptrdiff_t>
+           class ViewOut> struct Dilate2DFor3DCross
+{
+public:
+  using LineOp        = LineBufferShiftAndArithDilateHelperOp<T>;
+
+  static void ApplyArith(const ViewIn<const T, 2> &i_vin1, const ViewIn<const T, 2> &i_vin2, const ViewOut<T, 2> &o_vout)
+  {
+    poutre::details::t_ArithSup(i_vin1,i_vin2,o_vout);
+  }
+  static void EroDilOp2D(const ViewIn<const T, 2> &i_vin, const ViewOut<T, 2> &o_vout)
+  {
+    t_ErodeDilateDispatcher<poutre::se::Common_NL_SE::SECross2D, T, T, 2, ViewIn, ViewOut, LineOp> dispatcher;
+    dispatcher(i_vin, o_vout);
+  }
+};
+
+template<  typename T,
+           //ptrdiff_t Rank,
+           template<typename, ptrdiff_t>
+           class ViewIn,
+           template<typename, ptrdiff_t>
+           class ViewOut> struct Erode2DFor3DSquare
+{
+public:
+  using LineOp        = LineBufferShiftAndArithErodeHelperOp<T>;
+
+  static void ApplyArith(const ViewIn<const T, 2> &i_vin1, const ViewIn<const T, 2> &i_vin2, const ViewOut<T, 2> &o_vout)
+  {
+    poutre::details::t_ArithInf(i_vin1,i_vin2,o_vout);
+  }
+  static void EroDilOp2D(const ViewIn<const T, 2> &i_vin, const ViewOut<T, 2> &o_vout)
+  {
+    t_ErodeDilateDispatcher<poutre::se::Common_NL_SE::SESquare2D, T, T, 2, ViewIn, ViewOut, LineOp> dispatcher;
+    dispatcher(i_vin, o_vout);
+  }
+};
+
+
+template<  typename T,
+           //ptrdiff_t Rank,
+           template<typename, ptrdiff_t>
+           class ViewIn,
+           template<typename, ptrdiff_t>
+           class ViewOut> struct Erode2DFor3DCross
+{
+public:
+  using LineOp        = LineBufferShiftAndArithErodeHelperOp<T>;
+
+  static void ApplyArith(const ViewIn<const T, 2> &i_vin1, const ViewIn<const T, 2> &i_vin2, const ViewOut<T, 2> &o_vout)
+  {
+    poutre::details::t_ArithInf(i_vin1,i_vin2,o_vout);
+  }
+  static void EroDilOp2D(const ViewIn<const T, 2> &i_vin, const ViewOut<T, 2> &o_vout)
+  {
+    t_ErodeDilateDispatcher<poutre::se::Common_NL_SE::SECross2D, T, T, 2, ViewIn, ViewOut, LineOp> dispatcher;
+    dispatcher(i_vin, o_vout);
+  }
+};
+
+template<typename TIn, typename TOut, class HelperOp>
+  struct t_ErodeDilateDispatcher<se::Common_NL_SE::SESquare3D, TIn, TOut, 3, poutre::details::av::array_view, poutre::details::av::array_view, HelperOp>
+{
+  void operator()(const poutre::details::av::array_view<const TIn, 3> &i_vin, const poutre::details::av::array_view<TOut, 3> &o_vout) const
+  {
+    POUTRE_CHECK(i_vin.size() == o_vout.size(), "Incompatible views size");
+    auto   ibd     = i_vin.bound();
+    auto   obd     = o_vout.bound(); // NOLINT
+    auto   istride = i_vin.stride();
+    auto   ostride = o_vout.stride();
+    const std::size_t xsize   = static_cast<std::size_t>(ibd[0]);
+    const std::size_t ysize   = static_cast<std::size_t>(ibd[1]);
+    const std::size_t zsize   = static_cast<std::size_t>(ibd[2]);
+    POUTRE_CHECK(ibd == obd, "bound not compatible");
+    POUTRE_CHECK(istride == ostride, "stride not compatible");
+
+    TIn *psrc  = const_cast<TIn *>(i_vin.data());
+    TOut *pdest = o_vout.data();
+
+    auto imtmp1 = poutre::details::image_t<TIn, 2>( {xsize, ysize});
+    auto imtmp2 = poutre::details::image_t<TIn, 2>( {xsize, ysize});
+    auto imtmp3 = poutre::details::image_t<TIn, 2>( {xsize, ysize});
+    auto imtmpL = poutre::details::image_t<TIn, 2>( {xsize, ysize});
+    auto imtmp  = poutre::details::image_t<TIn, 2>( {xsize, ysize});
+    TIn *ppivot  = nullptr;
+
+    TIn *ptmp1 = imtmp1.data();
+    TIn *ptmp2 = imtmp2.data();
+    TIn *ptmp3 = imtmp3.data();
+    TIn *ptmpL = imtmpL.data();
+
+    // first at boundary clip SE
+    t_3DCopyOneSliceTo2D(psrc, xsize, ysize, xsize, ysize, 0, ptmp1);
+    t_3DCopyOneSliceTo2D(psrc, xsize, ysize, xsize, ysize, 1, ptmp2);
+
+    HelperOp::EroDilOp2D(view(imtmp1), view(imtmp));
+    imtmp.swap(imtmp1);
+    HelperOp::EroDilOp2D(view(imtmp2), view(imtmp));
+    imtmp.swap(imtmp2);
+
+    HelperOp::ApplyArith(view(imtmp1),view(imtmp2),view(imtmpL));
+    //copy back slice to 3D
+    t_3DCopyOneSliceFrom2D(ptmpL, xsize, ysize, xsize, ysize, 0, pdest);
+
+    // main loop
+    for(std::size_t i = 2 ; i< zsize ; i++) {
+      t_3DCopyOneSliceTo2D(psrc, xsize, ysize, xsize, ysize, i, ptmp3);
+
+      HelperOp::EroDilOp2D(view(imtmp3), view(imtmp));
+      imtmp.swap(imtmp3);
+
+      HelperOp::ApplyArith(view(imtmp1),view(imtmp2),view(imtmpL));
+      HelperOp::ApplyArith(view(imtmpL),view(imtmp3),view(imtmp));
+      imtmp.swap(imtmpL);
+
+      t_3DCopyOneSliceFrom2D(ptmpL, xsize,ysize,xsize, ysize, i-1, pdest);
+
+      ppivot = ptmp1;
+      ptmp1 = ptmp2;
+      ptmp2 = ptmp3;
+      ptmp3 = ppivot;
+
+      imtmp = imtmp1;
+      imtmp1 = imtmp2;
+      imtmp2 = imtmp3;
+      imtmp3 = imtmp;
+    }
+    HelperOp::ApplyArith(view(imtmp1),view(imtmp2),view(imtmpL));
+
+    t_3DCopyOneSliceFrom2D(ptmpL, xsize, ysize,xsize,ysize, zsize-1, pdest);
+  }
+};
+
+template<typename TIn, typename TOut, class HelperOp>
+  struct t_ErodeDilateDispatcher<se::Common_NL_SE::SECross3D, TIn, TOut, 3, poutre::details::av::array_view, poutre::details::av::array_view, HelperOp>
+{
+  void operator()(const poutre::details::av::array_view<const TIn, 3> &i_vin, const poutre::details::av::array_view<TOut, 3> &o_vout) const
+  {
+    POUTRE_CHECK(i_vin.size() == o_vout.size(), "Incompatible views size");
+    auto   ibd     = i_vin.bound();
+    auto   obd     = o_vout.bound(); // NOLINT
+    auto   istride = i_vin.stride();
+    auto   ostride = o_vout.stride();
+    const std::size_t xsize   = static_cast<std::size_t>(ibd[0]);
+    const std::size_t ysize   = static_cast<std::size_t>(ibd[1]);
+    const std::size_t zsize   = static_cast<std::size_t>(ibd[2]);
+    POUTRE_CHECK(ibd == obd, "bound not compatible");
+    POUTRE_CHECK(istride == ostride, "stride not compatible");
+
+    TIn *psrc  = const_cast<TIn *>(i_vin.data());
+    TOut *pdest = o_vout.data();
+
+    auto imtmp1 = poutre::details::image_t<TIn, 2>( {xsize, ysize});
+    auto imtmp2 = poutre::details::image_t<TIn, 2>( {xsize, ysize});
+    auto imtmp3 = poutre::details::image_t<TIn, 2>( {xsize, ysize});
+    auto imtmpL = poutre::details::image_t<TIn, 2>( {xsize, ysize});
+    auto imtmp  = poutre::details::image_t<TIn, 2>( {xsize, ysize});
+    TIn *ppivot  = nullptr;
+
+    TIn *ptmp1 = imtmp1.data();
+    TIn *ptmp2 = imtmp2.data();
+    TIn *ptmp3 = imtmp3.data();
+    TIn *ptmpL = imtmpL.data();
+
+    t_3DCopyOneSliceTo2D(psrc, xsize, ysize, xsize, ysize, 0, ptmp1);
+    t_3DCopyOneSliceTo2D(psrc, xsize, ysize, xsize, ysize,  1, ptmp2);
+
+    HelperOp::EroDilOp2D(view(imtmp1), view(imtmpL));
+
+    HelperOp::ApplyArith(view(imtmpL),view(imtmp2),view(imtmp));
+    imtmp.swap(imtmpL);
+
+    t_3DCopyOneSliceFrom2D(ptmpL, xsize,ysize,xsize,ysize, 0, pdest);
+
+    for(std::size_t i = 2 ; i< zsize ; i++) {
+      t_3DCopyOneSliceTo2D(psrc, xsize, ysize, xsize, ysize, i, ptmp3);
+
+      HelperOp::EroDilOp2D(view(imtmp2), view(imtmpL));
+
+      HelperOp::ApplyArith(view(imtmpL),view(imtmp1),view(imtmpL));
+      HelperOp::ApplyArith(view(imtmpL),view(imtmp3),view(imtmp));
+      imtmp.swap(imtmpL);
+
+      t_3DCopyOneSliceFrom2D(ptmpL, xsize,ysize,xsize, ysize, i-1, pdest);
+
+      ppivot = ptmp1;
+      ptmp1 = ptmp2;
+      ptmp2 = ptmp3;
+      ptmp3 = ppivot;
+
+      imtmp = imtmp1;
+      imtmp1 = imtmp2;
+      imtmp2 = imtmp3;
+      imtmp3 = imtmp;
+
+    }
+    HelperOp::EroDilOp2D(view(imtmp2), view(imtmpL));
+    HelperOp::ApplyArith(view(imtmpL),view(imtmp1),view(imtmpL));
+
+    t_3DCopyOneSliceFrom2D(ptmpL,  xsize, ysize,xsize, ysize,  zsize-1, pdest);
+  }
+};
+
 template<typename TIn,
          typename TOut,
          ptrdiff_t Rank,
@@ -699,11 +965,15 @@ void t_Dilate(const ViewIn<const TIn, Rank> &i_vin,
   if constexpr (Rank == 3) {
     switch(nl_static) {
     case poutre::se::Common_NL_SE::SECross3D: {
-      t_ErodeDilateDispatcher<poutre::se::Common_NL_SE::SECross3D, TIn,TOut, Rank, ViewIn, ViewOut, BinOp> dispatcher;
+      //t_ErodeDilateDispatcher<poutre::se::Common_NL_SE::SECross3D, TIn,TOut, Rank, ViewIn, ViewOut, BinOp> dispatcher;
+      //dispatcher(i_vin, o_vout);
+      using Helper2DOp = Dilate2DFor3DCross<TIn,ViewIn, ViewOut> ;
+      t_ErodeDilateDispatcher<poutre::se::Common_NL_SE::SECross3D, TIn,TOut, Rank, ViewIn, ViewOut, Helper2DOp> dispatcher;
       dispatcher(i_vin, o_vout);
     } break;
     case poutre::se::Common_NL_SE::SESquare3D: {
-      t_ErodeDilateDispatcher<poutre::se::Common_NL_SE::SESquare3D, TIn,TOut, Rank, ViewIn, ViewOut, BinOp> dispatcher;
+      using Helper2DOp = Dilate2DFor3DSquare<TIn,ViewIn, ViewOut> ;
+      t_ErodeDilateDispatcher<poutre::se::Common_NL_SE::SESquare3D, TIn,TOut, Rank, ViewIn, ViewOut, Helper2DOp> dispatcher;
       dispatcher(i_vin, o_vout);
     } break;
     case poutre::se::Common_NL_SE::SESegmentX3D: {
@@ -791,11 +1061,17 @@ void t_Dilate(const ViewIn<const TIn, Rank> &i_vin,
   if constexpr (Rank == 3) {
     switch(nl_static) {
     case poutre::se::Common_NL_SE::SECross3D: {
-      t_ErodeDilateDispatcher<poutre::se::Common_NL_SE::SECross3D, TIn,TOut, Rank, ViewIn, ViewOut, BinOp> dispatcher;
+      //t_ErodeDilateDispatcher<poutre::se::Common_NL_SE::SECross3D, TIn,TOut, Rank, ViewIn, ViewOut, BinOp> dispatcher;
+      //dispatcher(i_vin, o_vout);
+      using Helper2DOp = Erode2DFor3DCross<TIn,ViewIn, ViewOut> ;
+      t_ErodeDilateDispatcher<poutre::se::Common_NL_SE::SECross3D, TIn,TOut, Rank, ViewIn, ViewOut, Helper2DOp> dispatcher;
       dispatcher(i_vin, o_vout);
     } break;
     case poutre::se::Common_NL_SE::SESquare3D: {
-      t_ErodeDilateDispatcher<poutre::se::Common_NL_SE::SESquare3D, TIn,TOut, Rank, ViewIn, ViewOut, BinOp> dispatcher;
+      // t_ErodeDilateDispatcher<poutre::se::Common_NL_SE::SESquare3D, TIn,TOut, Rank, ViewIn, ViewOut, BinOp> dispatcher;
+      // dispatcher(i_vin, o_vout);
+      using Helper2DOp = Erode2DFor3DSquare<TIn,ViewIn, ViewOut> ;
+      t_ErodeDilateDispatcher<poutre::se::Common_NL_SE::SESquare3D, TIn,TOut, Rank, ViewIn, ViewOut, Helper2DOp> dispatcher;
       dispatcher(i_vin, o_vout);
     } break;
     case poutre::se::Common_NL_SE::SESegmentX3D: {

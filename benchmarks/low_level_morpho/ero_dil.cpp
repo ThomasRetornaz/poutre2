@@ -29,7 +29,6 @@ decltype(auto) ConstructVector(std::ptrdiff_t size)
   return m_vect;
 }
 
-
 }// namespace
 
 class EroDilFixture : public ::benchmark::Fixture
@@ -62,19 +61,29 @@ BENCHMARK_DEFINE_F(EroDilFixture, DilateSquare2DStatic)(benchmark::State &state)
   state.SetItemsProcessed(state.iterations() * size);
 }
 
-// cppcheck-suppress unknownMacro
-BENCHMARK_DEFINE_F(EroDilFixture, ErodeCross2DStatic)(benchmark::State &state)
+BENCHMARK_DEFINE_F(EroDilFixture, DilateSquare3DStatic)(benchmark::State &state)
 {
   const auto size = state.range(0);
-  std::ptrdiff_t sizeextent = static_cast<std::ptrdiff_t>(std::sqrt(size));
+  std::ptrdiff_t sizeextent = static_cast<std::ptrdiff_t>(std::sqrt(std::sqrt(size)));
   for (auto _ : state) {
-    auto view2din = poutre::details::av::array_view<const poutre::pINT32, 2>(m_vect_in, { sizeextent, sizeextent});
-    auto view2dout = poutre::details::av::array_view<poutre::pINT32, 2>(m_vect_out, { sizeextent, sizeextent });
-    poutre::llm::details::t_Erode(view2din, poutre::se::Common_NL_SE::SECross2D, view2dout);
+    auto view2din = poutre::details::av::array_view<const poutre::pINT32, 3>(m_vect_in, { sizeextent, sizeextent, sizeextent});
+    auto view2dout = poutre::details::av::array_view<poutre::pINT32, 3>(m_vect_out, { sizeextent, sizeextent, sizeextent});
+    poutre::llm::details::t_Dilate(view2din, poutre::se::Common_NL_SE::SESquare3D, view2dout);
   }
   state.SetItemsProcessed(state.iterations() * size);
 }
 
+BENCHMARK_DEFINE_F(EroDilFixture, DilateCross3DStatic)(benchmark::State &state)
+{
+  const auto size = state.range(0);
+  std::ptrdiff_t sizeextent = static_cast<std::ptrdiff_t>(std::sqrt(std::sqrt(size)));
+  for (auto _ : state) {
+    auto view2din = poutre::details::av::array_view<const poutre::pINT32, 3>(m_vect_in, { sizeextent, sizeextent, sizeextent});
+    auto view2dout = poutre::details::av::array_view<poutre::pINT32, 3>(m_vect_out, { sizeextent, sizeextent, sizeextent});
+    poutre::llm::details::t_Dilate(view2din, poutre::se::Common_NL_SE::SECross3D, view2dout);
+  }
+  state.SetItemsProcessed(state.iterations() * size);
+}
 
 // cppcheck-suppress unknownMacro
 BENCHMARK_REGISTER_F(EroDilFixture, DilateSquare2DStatic)
@@ -87,13 +96,16 @@ BENCHMARK_REGISTER_F(EroDilFixture, DilateSquare2DStatic)
   ->Arg(1024 * 1024)->Unit(benchmark::kMillisecond); //-V112
 
 // cppcheck-suppress unknownMacro
-BENCHMARK_REGISTER_F(EroDilFixture, ErodeCross2DStatic)
-  ->Arg(16 * 16)
-  ->Arg(32 * 32)//-V112
-  ->Arg(64 * 64)
-  ->Arg(128 * 128)
-  ->Arg(256 * 256)
-  ->Arg(512 * 512)
-  ->Arg(1024 * 1024)->Unit(benchmark::kMillisecond); //-V112
+BENCHMARK_REGISTER_F(EroDilFixture, DilateSquare3DStatic)
+  ->Arg(64 * 64 * 64 )
+  ->Arg(128 * 128 * 128)
+  ->Arg(256 * 256 * 256 )->Unit(benchmark::kMillisecond); //-V112
+
+// cppcheck-suppress unknownMacro
+BENCHMARK_REGISTER_F(EroDilFixture, DilateCross3DStatic)
+  ->Arg(64 * 64 * 64 )
+  ->Arg(128 * 128 * 128)
+  ->Arg(256 * 256 * 256 )->Unit(benchmark::kMillisecond); //-V112
+
 
 // NOLINTEND
