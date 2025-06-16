@@ -20,8 +20,10 @@
 
 namespace poutre::se
 {
+ChainedStructuringElement::ChainedStructuringElement(): m_vect_se(){}
 
-void ChainedStructuringElement::append(std::unique_ptr<IStructuringElement> strel)
+void ChainedStructuringElement::append(
+  std::unique_ptr<IStructuringElement> strel)
 {
   m_vect_se.push_back(std::move(strel));
 }
