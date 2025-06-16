@@ -28,6 +28,7 @@
 
 #pragma once
 
+#include <algorithm> // for std::fill on clang macos
 #include <array>
 #include <cassert>
 #include <cstddef>
