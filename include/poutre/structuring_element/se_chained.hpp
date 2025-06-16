@@ -34,6 +34,14 @@ class SE_API ChainedStructuringElement : public IStructuringElement {
 
 public:
   ~ChainedStructuringElement() override = default;
+  ChainedStructuringElement();
+
+  // see this later
+  ChainedStructuringElement(const ChainedStructuringElement &rhs) = delete;
+  ChainedStructuringElement &operator=(const ChainedStructuringElement &rhs) = delete;
+  // see this later
+  ChainedStructuringElement(ChainedStructuringElement &&other) = delete;
+  ChainedStructuringElement &operator=(ChainedStructuringElement &&other) = delete;
 
   //! Append the se to the list @WARNING the ownership is transferred
   void append(std::unique_ptr<IStructuringElement> strel);
