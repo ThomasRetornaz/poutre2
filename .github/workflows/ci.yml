@@ -122,6 +122,14 @@ jobs:
 
 
     steps:
+      - name: Install libc++ and libc++abi
+        if: runner.os == 'macOS'
+        run: |
+          brew install llvm
+          ln -s "$(brew --prefix llvm)/include/c++/v1" /usr/local/include/c++
+          ln -s "$(brew --prefix llvm)/lib/libc++.dylib" /usr/local/lib/
+          ln -s "$(brew --prefix llvm)/lib/libc++abi.dylib" /usr/local/lib/
+
       - name: Check for llvm version mismatches
         if: ${{ contains(matrix.compiler, 'llvm') && !contains(matrix.compiler, env.CLANG_TIDY_VERSION) }}
         uses: actions/github-script@v7
