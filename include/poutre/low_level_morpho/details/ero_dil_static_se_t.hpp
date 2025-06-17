@@ -960,7 +960,7 @@ void t_Dilate(const ViewIn<const TIn, Rank> &i_vin,
     {
       POUTRE_RUNTIME_ERROR("t_Dilate unsupported nl_static");}
     }
-    return;
+    //return;
   }
   if constexpr (Rank == 3) {
     switch(nl_static) {
@@ -992,9 +992,9 @@ void t_Dilate(const ViewIn<const TIn, Rank> &i_vin,
     {
       POUTRE_RUNTIME_ERROR("t_Dilate unsupported nl_static");}
     }
-    return;
+    //return;
   }
-    POUTRE_RUNTIME_ERROR("t_Dilate unsupported nl_static");
+//    POUTRE_RUNTIME_ERROR("t_Dilate unsupported nl_static");
   }
 
   template<typename TIn,
@@ -1092,7 +1092,7 @@ void t_Dilate(const ViewIn<const TIn, Rank> &i_vin,
     }
     return;
   }
-    POUTRE_RUNTIME_ERROR("t_Erode unsupported nl_static");
+//    POUTRE_RUNTIME_ERROR("t_Erode unsupported nl_static");
   }
 
 template<typename T1, typename T2, ptrdiff_t Rank>
