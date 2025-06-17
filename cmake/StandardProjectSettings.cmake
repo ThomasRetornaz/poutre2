@@ -54,6 +54,11 @@ if(CMAKE_SYSTEM_NAME STREQUAL "Darwin" AND CMAKE_SYSTEM_PROCESSOR STREQUAL "arm6
   set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -stdlib=libc++")
 endif()
 
+IF (APPLE)
+  ADD_COMPILE_OPTIONS(-mmacosx-version-min=14.7) # compile option
+  set(CMAKE_OSX_DEPLOYMENT_TARGET "14.7" CACHE STRING "" FORCE) # and cmake_osx_deployment target
+ENDIF()
+
 # run vcvarsall when msvc is used
 include("${CMAKE_CURRENT_LIST_DIR}/VCEnvironment.cmake")
 run_vcvarsall()
