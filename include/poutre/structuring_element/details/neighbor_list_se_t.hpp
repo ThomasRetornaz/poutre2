@@ -32,7 +32,7 @@ namespace poutre::se::details {
 
 // Idea of design stolen from Yayi
 template <ptrdiff_t Rank>
-struct neighbor_list_t : public IStructuringElement
+  struct neighbor_list_t : public IStructuringElement
 {
 public:
   static const std::ptrdiff_t rank = Rank;
