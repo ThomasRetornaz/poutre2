@@ -46,7 +46,7 @@ IF(POUTRE_CI)
 ENDIF()
 
 if(APPLE AND CMAKE_CXX_COMPILER_ID MATCHES "Clang")
-    target_link_libraries(poutre_base_tests PUBLIC c++abi)
+    target_link_libraries(poutre_base_tests PRIVATE c++ c++abi)
 endif()
 
 # set_target_properties(poutre_base_tests PROPERTIES VERSION "0.0.1"
