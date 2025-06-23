@@ -3,13 +3,16 @@ set(subdirsource ${PROJECT_SOURCE_DIR}/src/low_level_morpho)
 
 set(PoutreLLMSRC_DETAILS
         ${subdirheader}/details/ero_dil_static_se_t.hpp
+        ${subdirheader}/details/ero_dil_runtime_nl_se_t.hpp
 )
 
 set(PoutreLLMSRC_PUBLICHEADERS
         ${subdirheader}/low_level_morpho.hpp
+        ${subdirheader}/ero_dil.hpp
 )
 
 set(PoutreLLMSRC_CPP
+        ${subdirsource}/ero_dil_static.cpp
         ${subdirsource}/ero_dil.cpp
 )
 

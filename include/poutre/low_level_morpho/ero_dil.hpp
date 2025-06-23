@@ -19,6 +19,7 @@
 #include <poutre/base/image_interface.hpp>
 #include <poutre/low_level_morpho/low_level_morpho.hpp>
 #include <poutre/structuring_element/se_types_and_tags.hpp>
+#include <poutre/structuring_element/se_interface.hpp>
 
 namespace poutre {
 /**
@@ -32,6 +33,12 @@ LLM_API void Erode(const IInterface &i_img, se::Common_NL_SE nl_static, const in
 
 //! Dilate iter times i_img regarding the nl_static SE, put the result in o_img
 LLM_API void Dilate(const IInterface &i_img, se::Common_NL_SE nl_static, const int iter, IInterface &o_img);
+
+//! Erode i_img regarding the SE, put the result in o_img
+LLM_API void Erode(const IInterface &i_img, const se::IStructuringElement& str_el, IInterface &o_img);
+
+//! Dilate i_img regarding the SE, put the result in o_img
+LLM_API void Dilate(const IInterface &i_img, const se::IStructuringElement& str_el, IInterface &o_img);
 
 //! @} doxygroup: image_processing_llm_group
 }// namespace poutre
