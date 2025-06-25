@@ -9,13 +9,11 @@ set(PoutreLLMSRC_DETAILS
 set(PoutreLLMSRC_PUBLICHEADERS
         ${subdirheader}/low_level_morpho.hpp
         ${subdirheader}/ero_dil.hpp
-        ${subdirheader}/ero_dil_line.hpp
 )
 
 set(PoutreLLMSRC_CPP
         ${subdirsource}/ero_dil_static.cpp
         ${subdirsource}/ero_dil.cpp
-        ${subdirsource}/ero_dil_line.cpp
 )
 
 source_group(details FILES ${PoutreLLMSRC_DETAILS})
