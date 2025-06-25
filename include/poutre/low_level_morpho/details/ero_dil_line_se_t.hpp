@@ -111,10 +111,9 @@ template<typename T,  class BinOp> struct t_ErodeDilateXOpLineDispatcher<T, T, 1
   void operator()(const poutre::details::av::array_view<const T, 1> &i_vin, ptrdiff_t size_line_segment, const poutre::details::av::array_view<T, 1> &o_vout) const
   {
     BinOp op;
-    POUTRE_CHECK(i_vin.size() == o_vout.size(), "Incompatible views size");
+    POUTRE_ASSERTCHECK(i_vin.size() == o_vout.size(), "Incompatible views size");
     auto   ibd = i_vin.bound();
-    auto   obd = o_vout.bound();
-    POUTRE_CHECK(ibd == obd, "bound not compatible");
+    // auto   obd = o_vout.bound();
     scoord size_line   = ibd[0];
     if( size_line == 0 )
       return;
@@ -142,15 +141,15 @@ template<typename T, class BinOp> struct t_ErodeDilateXOpLineDispatcher<T, T, 2,
   void operator()(const poutre::details::av::array_view<const T, 2> &i_vin,  ptrdiff_t size_line_segment, poutre::details::av::array_view<T, 2> &o_vout) const
   {
     BinOp op;
-    POUTRE_CHECK(i_vin.size() == o_vout.size(), "Incompatible views size");
+    POUTRE_ASSERTCHECK(i_vin.size() == o_vout.size(), "Incompatible views size");
     auto   ibd     = i_vin.bound();
-    auto   obd     = o_vout.bound();
-    auto   istride = i_vin.stride();
-    auto   ostride = o_vout.stride();
+    // auto   obd     = o_vout.bound();
+    // auto   istride = i_vin.stride();
+    // auto   ostride = o_vout.stride();
     scoord ysize   = ibd[0];
     scoord xsize   = ibd[1];
-    POUTRE_CHECK(ibd == obd, "bound not compatible");
-    POUTRE_CHECK(istride == ostride, "stride not compatible");
+    POUTRE_ASSERTCHECK(ibd == obd, "bound not compatible");
+    POUTRE_ASSERTCHECK(istride == ostride, "stride not compatible");
     if( xsize == 0 || ysize == 0 )
       return;
 
