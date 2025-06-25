@@ -4,6 +4,7 @@ set(subdirsource ${PROJECT_SOURCE_DIR}/low_level_morpho)
 set(PoutreLLMTestSRC
         ${subdirsource}/ero_dil_static_se_t.cpp
         ${subdirsource}/ero_dil_runtime_se.cpp
+        ${subdirsource}/ero_dil_line_se.cpp
 )
 
 add_executable(poutre_llm_tests ${PoutreLLMTestSRC})
