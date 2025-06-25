@@ -15,6 +15,7 @@
 #include <poutre/base/details/data_structures/array_view.hpp>
 #include <poutre/low_level_morpho/details/ero_dil_static_se_t.hpp>
 #include <poutre/low_level_morpho/details/ero_dil_runtime_nl_se_t.hpp>
+#include <poutre/low_level_morpho/details/ero_dil_line_se_t.hpp>
 #include <poutre/structuring_element/predefined_nl_se.hpp>
 #include <cstdlib>
 #include <vector>
@@ -101,6 +102,19 @@ BENCHMARK_DEFINE_F(EroDilFixture, DilateSquare3DRuntime)(benchmark::State &state
 }
 
 // cppcheck-suppress unknownMacro
+BENCHMARK_DEFINE_F(EroDilFixture, DilateX2D)(benchmark::State &state)
+{
+  const auto size = state.range(0);
+  std::ptrdiff_t sizeextent = static_cast<std::ptrdiff_t>(std::sqrt(size));
+  for (auto _ : state) {
+    auto view2din = poutre::details::av::array_view<const poutre::pINT32, 2>(m_vect_in, { sizeextent, sizeextent});
+    auto view2dout = poutre::details::av::array_view<poutre::pINT32, 2>(m_vect_out, { sizeextent, sizeextent });
+    poutre::llm::details::t_DilateX(view2din, 15, view2dout);
+  }
+  state.SetItemsProcessed(state.iterations() * size);
+}
+
+// cppcheck-suppress unknownMacro
 BENCHMARK_REGISTER_F(EroDilFixture, DilateSquare2DStatic)
   ->Arg(16 * 16)
   ->Arg(32 * 32)//-V112
@@ -126,6 +140,17 @@ BENCHMARK_REGISTER_F(EroDilFixture, DilateSquare2DRuntime)
   ->Arg(256 * 256)
   ->Arg(512 * 512)
   ->Arg(1024 * 1024)->Unit(benchmark::kMillisecond); //-V112
+
+// cppcheck-suppress unknownMacro
+BENCHMARK_REGISTER_F(EroDilFixture, DilateX2D)
+  ->Arg(16 * 16)
+  ->Arg(32 * 32)//-V112
+  ->Arg(64 * 64)
+  ->Arg(128 * 128)
+  ->Arg(256 * 256)
+  ->Arg(512 * 512)
+  ->Arg(1024 * 1024)->Unit(benchmark::kMillisecond); //-V112
+
 
 // cppcheck-suppress unknownMacro
 BENCHMARK_REGISTER_F(EroDilFixture, DilateSquare3DRuntime)
