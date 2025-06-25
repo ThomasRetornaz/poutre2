@@ -24,6 +24,7 @@
 #include <poutre/base/details/data_structures/image_t.hpp>
 #include <poutre/base/trace.hpp>
 #include <poutre/pixel_processing/details/copy_convert_t.hpp>
+#include <poutre/pixel_processing/details/transpose_op_t.hpp>
 
 namespace poutre::llm::details {
 /**
@@ -226,12 +227,43 @@ template<typename TIn, typename TOut, ptrdiff_t Rank>
 void t_DilateX(const poutre::details::image_t<TIn, Rank> &i_img, ptrdiff_t size_segment, poutre::details::image_t<TOut, Rank> &o_img)
 {
   POUTRE_ENTERING("t_DilateX");
-  AssertSizesCompatible(i_img, o_img, "t_Dilate incompatible size");
-  AssertAsTypesCompatible(i_img, o_img, "t_Dilate incompatible types");
-  AssertImagesAreDifferent(i_img, o_img, "t_Dilate output must be != than input images");
+  AssertSizesCompatible(i_img, o_img, "t_DilateX incompatible size");
+  AssertAsTypesCompatible(i_img, o_img, "t_DilateX incompatible types");
+  AssertImagesAreDifferent(i_img, o_img, "t_DilateX output must be != than input images");
   auto viewIn = view(i_img);
   auto viewOut = view(o_img);
   return t_DilateX(viewIn, size_segment, viewOut);
 }
+
+template<typename TIn, typename TOut>
+void t_DilateY(const poutre::details::image_t<TIn, 2> &i_img, ptrdiff_t size_segment, poutre::details::image_t<TOut, 2> &o_img)
+{
+  POUTRE_ENTERING("t_DilateY");
+  AssertSizesCompatible(i_img, o_img, "t_DilateY incompatible size");
+  AssertAsTypesCompatible(i_img, o_img, "t_DilateY incompatible types");
+  AssertImagesAreDifferent(i_img, o_img, "t_DilateY output must be != than input images");
+  const auto shape= i_img.shape();
+  poutre::details::image_t<TOut,2> tmp{static_cast<std::size_t>(shape[0]),static_cast<std::size_t>(shape[1])};
+  poutre::details::image_t<TOut,2> tmp2{static_cast<std::size_t>(shape[0]),static_cast<std::size_t>(shape[1])};
+  poutre::details::t_transpose(i_img,tmp);
+  t_DilateX(tmp, size_segment, tmp2);
+  poutre::details::t_transpose(tmp2,o_img);
+}
+
+template<typename TIn, typename TOut>
+void t_ErodeY(const poutre::details::image_t<TIn, 2> &i_img, ptrdiff_t size_segment, poutre::details::image_t<TOut, 2> &o_img)
+{
+  POUTRE_ENTERING("t_DilateY");
+  AssertSizesCompatible(i_img, o_img, "t_DilateY incompatible size");
+  AssertAsTypesCompatible(i_img, o_img, "t_DilateY incompatible types");
+  AssertImagesAreDifferent(i_img, o_img, "t_DilateY output must be != than input images");
+  const auto shape= i_img.shape();
+  poutre::details::image_t<TOut,2> tmp{static_cast<std::size_t>(shape[0]),static_cast<std::size_t>(shape[1])};
+  poutre::details::image_t<TOut,2> tmp2{static_cast<std::size_t>(shape[0]),static_cast<std::size_t>(shape[1])};
+  poutre::details::t_transpose(i_img,tmp);
+  t_ErodeX(tmp, size_segment, tmp2);
+  poutre::details::t_transpose(tmp2,o_img);
+}
+
 //! @} doxygroup: poutre_llm_group
 }//poutre::llm::details

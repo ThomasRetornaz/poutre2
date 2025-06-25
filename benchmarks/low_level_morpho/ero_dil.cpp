@@ -115,6 +115,18 @@ BENCHMARK_DEFINE_F(EroDilFixture, DilateX2D)(benchmark::State &state)
 }
 
 // cppcheck-suppress unknownMacro
+BENCHMARK_DEFINE_F(EroDilFixture, DilateY2D)(benchmark::State &state)
+{
+  const auto size = state.range(0);
+  std::ptrdiff_t sizeextent = static_cast<std::ptrdiff_t>(std::sqrt(size));
+  for (auto _ : state) {
+    poutre::details::image_t<poutre::pINT32, 2> img_in{ static_cast<std::size_t>(sizeextent), static_cast<std::size_t>(sizeextent)};
+    poutre::details::image_t<poutre::pINT32, 2> img_out{ static_cast<std::size_t>(sizeextent), static_cast<std::size_t>(sizeextent)};
+    poutre::llm::details::t_DilateY(img_in, 15, img_out);
+  }
+  state.SetItemsProcessed(state.iterations() * size);
+}
+// cppcheck-suppress unknownMacro
 BENCHMARK_REGISTER_F(EroDilFixture, DilateSquare2DStatic)
   ->Arg(16 * 16)
   ->Arg(32 * 32)//-V112
@@ -151,6 +163,15 @@ BENCHMARK_REGISTER_F(EroDilFixture, DilateX2D)
   ->Arg(512 * 512)
   ->Arg(1024 * 1024)->Unit(benchmark::kMillisecond); //-V112
 
+// cppcheck-suppress unknownMacro
+BENCHMARK_REGISTER_F(EroDilFixture, DilateY2D)
+  ->Arg(16 * 16)
+  ->Arg(32 * 32)//-V112
+  ->Arg(64 * 64)
+  ->Arg(128 * 128)
+  ->Arg(256 * 256)
+  ->Arg(512 * 512)
+  ->Arg(1024 * 1024)->Unit(benchmark::kMillisecond); //-V112
 
 // cppcheck-suppress unknownMacro
 BENCHMARK_REGISTER_F(EroDilFixture, DilateSquare3DRuntime)

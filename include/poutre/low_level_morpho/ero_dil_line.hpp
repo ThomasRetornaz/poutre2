@@ -28,15 +28,25 @@ namespace poutre {
  *@{
  */
 
-/*!@brief Erode i_img regarding a line segment SE (SE size = 2* size_half_segment+1), put the result in o_img
+/*!@brief Erode i_img along X regarding a line segment SE (SE size = 2* size_half_segment+1), put the result in o_img
  * @warning 1D and 2D only
  */
 LLM_API void ErodeX(const IInterface &i_img, const ptrdiff_t size_half_segment, IInterface &o_img);
 
-/*!@brief Dilate i_img regarding a line segment SE (SE size = 2* size_half_segment+1), put the result in o_img
+/*!@brief Dilate i_img along X regarding a line segment SE (SE size = 2* size_half_segment+1), put the result in o_img
  * @warning 1D and 2D only
  */
 LLM_API void DilateX(const IInterface &i_img, const ptrdiff_t size_half_segment, IInterface &o_img);
+
+/*!@brief Erode i_img along Y regarding a line segment SE (SE size = 2* size_half_segment+1), put the result in o_img
+ * @warning 2D only
+ */
+LLM_API void ErodeY(const IInterface &i_img, const ptrdiff_t size_half_segment, IInterface &o_img);
+
+/*!@brief Dilate i_img along Y regarding a line segment SE (SE size = 2* size_half_segment+1), put the result in o_img
+ * @warning 1D and 2D only
+ */
+LLM_API void DilateY(const IInterface &i_img, const ptrdiff_t size_half_segment, IInterface &o_img);
 
 
 //! @} doxygroup: image_processing_llm_group

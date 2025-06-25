@@ -112,3 +112,59 @@ TEST_CASE("erodeX 2D", "[low_level_morpho]")
   const auto img_str = poutre::ImageToString(img_out);
   REQUIRE_THAT(img_str, Catch::Matchers::Equals(expected));
 }
+
+TEST_CASE("DilateY 2D", "[low_level_morpho]")
+{
+  const std::vector<std::size_t> shape = { 5, 5 };
+
+  const auto img_in = poutre::ImageFromString(
+    R"(Scalar GINT64 2 5 5
+ 8 0 0 0 0
+ 0 5 5 5 0
+ 0 5 6 5 0
+ 0 5 5 5 0
+ 0 0 0 0 0
+)");
+  using ImageType = const poutre::details::image_t<poutre::pINT64>;
+  const auto *img = dynamic_cast<ImageType *>(img_in.get());
+  poutre::details::image_t<poutre::pINT64> img_out(shape);
+  poutre::llm::details::t_DilateY(*img, 1, img_out);
+
+  const std::string expected =
+    "Scalar GINT64 2 5 5\
+ 8 5 5 5 0\
+ 8 5 6 5 0\
+ 0 5 6 5 0\
+ 0 5 6 5 0\
+ 0 5 5 5 0";
+  const auto img_str = poutre::ImageToString(img_out);
+  REQUIRE_THAT(img_str, Catch::Matchers::Equals(expected));
+}
+
+TEST_CASE("erodeY 2D", "[low_level_morpho]")
+{
+  const std::vector<std::size_t> shape = { 5, 5 };
+
+  const auto img_in = poutre::ImageFromString(
+    R"(Scalar GINT64 2 5 5
+ 8 0 0 0 0
+ 0 5 5 5 0
+ 0 5 6 5 0
+ 0 5 5 5 0
+ 0 0 0 0 0
+)");
+  using ImageType = const poutre::details::image_t<poutre::pINT64>;
+  const auto *img = dynamic_cast<ImageType *>(img_in.get());
+  poutre::details::image_t<poutre::pINT64> img_out(shape);
+  poutre::llm::details::t_ErodeY(*img, 1, img_out);
+
+  const std::string expected =
+    "Scalar GINT64 2 5 5\
+ 0 0 0 0 0\
+ 0 0 0 0 0\
+ 0 5 5 5 0\
+ 0 0 0 0 0\
+ 0 0 0 0 0";
+  const auto img_str = poutre::ImageToString(img_out);
+  REQUIRE_THAT(img_str, Catch::Matchers::Equals(expected));
+}
