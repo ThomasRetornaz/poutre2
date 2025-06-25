@@ -88,5 +88,5 @@ set_target_properties(
         VISIBILITY_INLINES_HIDDEN YES)
 
 if(APPLE AND CMAKE_CXX_COMPILER_ID MATCHES "Clang")
-    target_link_libraries(poutre_base PRIVATE c++ c++abi)
+    target_link_libraries(poutre_base_tests PRIVATE c++ c++abi)
 endif()
