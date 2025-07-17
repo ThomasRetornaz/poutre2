@@ -31,7 +31,9 @@
 #if defined(POUTRE_IS_GCC) || defined(POUTRE_IS_CLANG)
 #pragma GCC diagnostic push //memcpy  false positive
 #pragma GCC diagnostic ignored "-Warray-bounds"
+#if defined(POUTRE_IS_GCC)
 #pragma GCC diagnostic ignored "-Wstringop-overflow"
+#endif
 #endif
 
 namespace poutre::llm::details {
