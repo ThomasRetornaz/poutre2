@@ -11,7 +11,7 @@
 /**
  * @file unary_op_t.hpp
  * @author thomas.retornaz@mines-paris.org
- * @brief Genneric unary operations over images or views
+ * @brief Generic unary operations over images or views
  * @version 0.1
  * @date 2020-05-08
  *
@@ -52,7 +52,7 @@ struct PixelWiseUnaryOpDispatcher
   static_assert((std::is_same_v<ViewIn<TIn, Rank>, av::strided_array_view<TIn, Rank>>
                   || std::is_same_v<ViewIn<TIn, Rank>, av::strided_array_view<const TIn, Rank>>
                   || std::is_same_v<ViewOut<TOut, Rank>, av::strided_array_view<TOut, Rank>>),
-    "strided view only specilization fail for arrayview");
+    "strided view only specialization fail for array view");
 
   void operator()(const ViewIn<TIn, Rank> &i_vin, UnOp op, const ViewOut<TOut, Rank> &o_vout) const
   {
