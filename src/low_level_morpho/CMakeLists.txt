@@ -3,7 +3,9 @@ set(subdirsource ${PROJECT_SOURCE_DIR}/src/low_level_morpho)
 
 set(PoutreLLMSRC_DETAILS
         ${subdirheader}/details/ero_dil_static_se_t.hpp
+        ${subdirheader}/details/ero_dil_compound_static_se_t.hpp
         ${subdirheader}/details/ero_dil_runtime_nl_se_t.hpp
+        ${subdirheader}/details/ero_dil_line_se_t.hpp
 )
 
 set(PoutreLLMSRC_PUBLICHEADERS
@@ -16,6 +18,7 @@ set(PoutreLLMSRC_CPP
         ${subdirsource}/ero_dil_static.cpp
         ${subdirsource}/ero_dil.cpp
         ${subdirsource}/ero_dil_line.cpp
+        ${subdirsource}/ero_dil_compound_static.cpp
 )
 
 source_group(details FILES ${PoutreLLMSRC_DETAILS})

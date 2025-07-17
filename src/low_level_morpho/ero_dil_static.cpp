@@ -22,6 +22,7 @@
 #include <poutre/structuring_element/se_types_and_tags.hpp>
 #include <poutre/low_level_morpho/ero_dil.hpp>
 #include <poutre/low_level_morpho/details/ero_dil_static_se_t.hpp>
+#include <poutre/low_level_morpho/details/ero_dil_compound_static_se_t.hpp>
 #include <poutre/pixel_processing/copy_convert.hpp>
 
 namespace {

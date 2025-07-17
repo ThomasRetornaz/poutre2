@@ -28,6 +28,12 @@
 #include <poutre/structuring_element/details/neighbor_list_static_se_t.hpp>
 #include <poutre/base/trace.hpp>
 
+#if defined(POUTRE_IS_GCC) || defined(POUTRE_IS_CLANG)
+#pragma GCC diagnostic push //memcpy  false positive
+#pragma GCC diagnostic ignored "-Warray-bounds"
+#pragma GCC diagnostic ignored "-Wstringop-overflow"
+#endif
+
 namespace poutre::llm::details {
 /**
  * @addtogroup poutre_llm_group
@@ -72,9 +78,11 @@ void t_LineBufferShiftRight(const T *i_viewlinein, scoord lenghtline, scoord nbs
     lineout[i] = paddValue;
   }
   // shift to right
+
   std::memcpy(lineout + nbshift,
               linein,
-              static_cast<std::size_t>(lenghtline - nbshift) * sizeof(T)); //<---faster than explicit call to simd::transform
+              static_cast<std::size_t>(lenghtline - nbshift) * sizeof(T)); // <---faster than explicit call to simd::transform
+
 }
 
 
@@ -133,6 +141,7 @@ void t_LineBufferShiftLeft(const T *i_viewlinein, scoord lenghtline, scoord nbsh
   }
 
   // shift to left
+  // NOLINT
   std::memcpy(lineout, linein + nbshift, static_cast<std::size_t>(lenghtline - nbshift) * sizeof(T));
 
   // then pad right border
@@ -1119,3 +1128,7 @@ void t_Dilate(const poutre::details::image_t<TIn, Rank> &i_img, poutre::se::Comm
 
 //! @} doxygroup: poutre_llm_group
 }//poutre::llm::details
+
+#if defined(POUTRE_IS_GCC) || defined(POUTRE_IS_CLANG)
+#pragma GCC diagnostic pop
+#endif

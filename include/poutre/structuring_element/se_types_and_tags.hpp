@@ -57,5 +57,12 @@ enum class Common_NL_SE
   SESquare3D,        //!< 3D Square SE
 };
 
+enum class Compound_NL_SE
+{
+  Undef,
+  Octagon,             //!< alternate 2D Cross and Square SE
+  Rhombicuboctahedron  //!< alternate 3D Cross and Square SE
+};
+
 //! @} doxygroup: poutre_se_interface_group
 }// namespace poutre
