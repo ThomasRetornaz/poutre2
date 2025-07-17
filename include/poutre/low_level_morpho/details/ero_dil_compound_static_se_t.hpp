@@ -173,7 +173,7 @@ void t_Dilate(const poutre::details::image_t<TIn, Rank> &i_img,
   if constexpr (Rank == 2) {
     switch(compound_nl) {
     case poutre::se::Compound_NL_SE::Octagon: {
-      return t_DilateOctagon(i_img, size,o_img);
+      t_DilateOctagon(i_img, size,o_img);
     } break;
     default: {
       POUTRE_RUNTIME_ERROR("t_Dilate 2D unsupported compound_nl");
@@ -183,7 +183,7 @@ void t_Dilate(const poutre::details::image_t<TIn, Rank> &i_img,
   if constexpr (Rank == 3) {
   switch(compound_nl) {
     case poutre::se::Compound_NL_SE::Rhombicuboctahedron: {
-      return t_DilateRhombicuboctahedron(i_img, size,o_img);
+      t_DilateRhombicuboctahedron(i_img, size,o_img);
     } break;
     default: {
       POUTRE_RUNTIME_ERROR("t_Dilate 3D unsupported compound_nl");
@@ -203,7 +203,7 @@ void t_Erode(const poutre::details::image_t<TIn, Rank> &i_img,
   if constexpr (Rank == 2) {
     switch(compound_nl) {
     case poutre::se::Compound_NL_SE::Octagon: {
-      return t_ErodeOctagon(i_img, size,o_img);
+      t_ErodeOctagon(i_img, size,o_img);
     } break;
     default: {
       POUTRE_RUNTIME_ERROR("t_Erode 2D unsupported compound_nl");
@@ -213,7 +213,7 @@ void t_Erode(const poutre::details::image_t<TIn, Rank> &i_img,
   if constexpr (Rank == 3) {
     switch(compound_nl) {
     case poutre::se::Compound_NL_SE::Rhombicuboctahedron: {
-      return t_ErodeRhombicuboctahedron(i_img, size,o_img);
+      t_ErodeRhombicuboctahedron(i_img, size,o_img);
     } break;
     default: {
       POUTRE_RUNTIME_ERROR("t_Erode 3D unsupported compound_nl");
