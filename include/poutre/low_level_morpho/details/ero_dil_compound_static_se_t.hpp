@@ -190,7 +190,7 @@ void t_Dilate(const poutre::details::image_t<TIn, Rank> &i_img,
     }
     }
   }
-  POUTRE_RUNTIME_ERROR("t_Dilate unsupported compound_nl");
+  // POUTRE_RUNTIME_ERROR("t_Dilate unsupported compound_nl");
 }
 
 template<typename TIn, typename TOut, ptrdiff_t Rank>
@@ -220,7 +220,7 @@ void t_Erode(const poutre::details::image_t<TIn, Rank> &i_img,
     }
     }
   }
-  POUTRE_RUNTIME_ERROR("t_Erode unsupported compound_nl");
+  // POUTRE_RUNTIME_ERROR("t_Erode unsupported compound_nl");
 }
 //! @} doxygroup: poutre_llm_group
 }//poutre::llm::details
