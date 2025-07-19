@@ -65,8 +65,10 @@
 #    define POUTRE_CXX 2014
 #  elif POUTRE__cplusplus == 201703L
 #    define POUTRE_CXX 2017
-#  elif POUTRE__cplusplus >= 201704L
+#  elif POUTRE__cplusplus == 201704L
 #    define POUTRE_CXX 2020
+#  elif POUTRE__cplusplus >= 202100L
+#    define POUTRE_CXX 2023
 #  else
 #    define POUTRE_CXX 0
 #  endif
