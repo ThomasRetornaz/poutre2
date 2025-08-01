@@ -159,6 +159,8 @@ function(poutre2_setup_dependencies)
         # Define the header-only xsimd target
         add_library(xsimd::xsimd INTERFACE IMPORTED GLOBAL)
         target_include_directories(xsimd::xsimd SYSTEM INTERFACE ${xsimd_SOURCE_DIR})
+
+        SET(XSIMD_INCLUDE_DIRECTORY "${xsimd_SOURCE_DIR}/include" PARENT_SCOPE)
     endif()
 
     # ### JSONCPP
