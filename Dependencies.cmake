@@ -4,252 +4,189 @@ include(cmake/CPM.cmake)
 # CMAKE_CXX_FLAGS don't propagate out to other
 # targets
 function(poutre2_setup_dependencies)
-  message(STATUS "┌─ Dependencies.cmake")
-  list(APPEND CMAKE_MESSAGE_INDENT "│    ")
+    message(STATUS "┌─ Dependencies.cmake")
+    #list(APPEND CMAKE_MESSAGE_INDENT "│    ")
 
-  include(ExternalProject)
+    include(ExternalProject)
 
-  # ### Benchmark
-  if(NOT TARGET googlebenchmark::googlebenchmark)
-    cpmaddpackage(
-      NAME googlebenchmark
-      GITHUB_REPOSITORY google/benchmark
+    # ### Benchmark
+    if(NOT TARGET googlebenchmark::googlebenchmark)
+        cpmaddpackage(
+                NAME googlebenchmark
+                GITHUB_REPOSITORY google/benchmark
 
-      # VERSION ${ogs.minimum_version.gtest}
-      GIT_TAG v1.9.0
+                # VERSION ${ogs.minimum_version.gtest}
+                GIT_TAG v1.9.0
 
-      OPTIONS "BENCHMARK_ENABLE_GTEST_TESTS OFF" "BENCHMARK_ENABLE_TESTING OFF"
+                OPTIONS "BENCHMARK_ENABLE_GTEST_TESTS OFF" "BENCHMARK_ENABLE_TESTING OFF"
 
-      # "BUILD_SHARED_LIBS OFF"
-      EXCLUDE_FROM_ALL YES SYSTEM TRUE
-    )
-  endif()
+                # "BUILD_SHARED_LIBS OFF"
+                EXCLUDE_FROM_ALL YES SYSTEM TRUE
+        )
+    endif()
 
-  # ### FMTLIB
-  if(NOT TARGET fmtlib::fmtlib)
-    cpmaddpackage("gh:fmtlib/fmt#11.1.4")
-  endif()
+    # ### FMTLIB
+    if(NOT TARGET fmtlib::fmtlib)
+        cpmaddpackage("gh:fmtlib/fmt#11.1.4")
+    endif()
 
-  # ### BOOST PREPROCESSOR 
+    # ### BOOST PREPROCESSOR
   if(NOT TARGET boost_preprocessor)
-    cpmaddpackage(
-      NAME boost_preprocessor
-      GIT_TAG boost-1.88.0
-      GITHUB_REPOSITORY "boostorg/preprocessor")
-  endif()
+        cpmaddpackage(
+                NAME boost_preprocessor
+                GIT_TAG boost-1.88.0
+                GITHUB_REPOSITORY "boostorg/preprocessor")
+    endif()
 
-  if(NOT TARGET spdlog::spdlog)
-    cpmaddpackage(
-      NAME
-      spdlog
-      VERSION
-      1.15.2
-      GITHUB_REPOSITORY
-      "gabime/spdlog"
-      OPTIONS
-      "SPDLOG_FMT_EXTERNAL ON")
-  endif()
+    if(NOT TARGET spdlog::spdlog)
+        cpmaddpackage(
+                NAME
+                spdlog
+                VERSION
+                1.15.2
+                GITHUB_REPOSITORY
+                "gabime/spdlog"
+                OPTIONS
+                "SPDLOG_FMT_EXTERNAL ON")
+    endif()
 
-  # ### Catch2
-  if(NOT TARGET Catch2::Catch2WithMain)
-    cpmaddpackage("gh:catchorg/Catch2@3.8.1")
-  endif()
+    # ### Catch2
+    if(NOT TARGET Catch2::Catch2WithMain)
+        cpmaddpackage("gh:catchorg/Catch2@3.8.1")
+    endif()
 
-  # ### CLI
-  if(NOT TARGET CLI11::CLI11)
-    cpmaddpackage("gh:CLIUtils/CLI11@2.5.0")
-  endif()
+    # ### CLI
+    if(NOT TARGET CLI11::CLI11)
+        cpmaddpackage("gh:CLIUtils/CLI11@2.5.0")
+    endif()
 
-  # ### ftxui
-  if(NOT TARGET ftxui::screen)
-    cpmaddpackage("gh:ArthurSonzogni/FTXUI@6.0.2")
-  endif()
+    # ### ftxui
+    if(NOT TARGET ftxui::screen)
+        cpmaddpackage("gh:ArthurSonzogni/FTXUI@6.0.2")
+    endif()
 
-  # ### tools
-  if(NOT TARGET tools::tools)
-    cpmaddpackage("gh:lefticus/tools#update_build_system")
-  endif()
+    # ### tools
+    if(NOT TARGET tools::tools)
+        cpmaddpackage("gh:lefticus/tools#update_build_system")
+    endif()
 
-  # ### ZLIB
-  if(NOT TARGET zlib::zlib)
-    # Add ZLIB
-    set(ZLIB_REPO "https://github.com/madler/zlib.git"
-      CACHE STRING "ZLIB repository location."
-    )
+
+    #set(SYSROOT ${CMAKE_CURRENT_BINARY_DIR}/EXTERNAL_PROJECT_INSTALLED_FILES)
+    # ### ZLIB
+    #    if(NOT TARGET zlib::zlib)
+    #        set(ZLIB_REPO "https://github.com/madler/zlib.git"
+    #                CACHE STRING "ZLIB repository location."
+    #        )
+    #        ExternalProject_Add(
+    #                external_project_zlib
+    #                GIT_REPOSITORY ${ZLIB_REPO}
+    #                GIT_TAG "v1.3.1"
+    #                # --Update/Patch step----------
+    #                UPDATE_COMMAND ""
+    #                PATCH_COMMAND ""
+    #                INSTALL_COMMAND ""
+    #                CMAKE_ARGS
+    #                -DCMAKE_INSTALL_PREFIX:PATH=${CMAKE_CURRENT_BINARY_DIR}
+    #                -DCMAKE_POSITION_INDEPENDENT_CODE=TRUE
+    #                #-DCMAKE_POLICY_DEFAULT_CMP0042:STRING=NEW
+    #        )
+    #        #  ExternalProject_Get_Property(external_project_zlib TMP_DIR STAMP_DIR DOWNLOAD_DIR SOURCE_DIR BINARY_DIR INSTALL_DIR)
+    #        #  set(ZIB_LIBRARY zlib)
+    #        #  set(ZLIB_INCLUDE_DIRS ${SOURCE_DIR}/include)
+    #        #  set(ZLIB_LIBRARIES ${BINARY_DIR})
+    #    endif()
+
+
+
+
+    if (NOT TARGET openimageio::openimageio)
+        set(OPENIMAGEIO_REPO "https://github.com/AcademySoftwareFoundation/OpenImageIO"
+                CACHE STRING "OPENIMAGEIO repository location."
+        )
+        # Doesn't work
+#        cpmaddpackage(
+#                NAME
+#                openimageio
+#                VERSION
+#                3.0.8.1
+#                GITHUB_REPOSITORY
+#                "AcademySoftwareFoundation/OpenImageIO"
+#                OPTIONS
+#                "BUILD_TESTING OFF"
+#                "BUILD_DOCS OFF"
+#                "INSTALL_DOCS OFF"
+#                "INSTALL_FONTS OFF"
+#                "OIIO_BUILD_TOOLS 0"
+#                "USE_PYTHON 0"
+#                "OIIO_INTERNALIZE_FMT OFF"
+#                "OpenImageIO_BUILD_MISSING_DEPS all"
+#                "BUILD_SHARED_LIBS 0"
+#                "LINKSTATIC 1"
+#        )#"CMAKE_INSTALL_PREFIX:PATH=${CMAKE_CURRENT_BINARY_DIR}")
+
+        ExternalProject_Add(external_project_openimageio
+                GIT_REPOSITORY ${OPENIMAGEIO_REPO}
+                GIT_TAG "v3.0.8.1"
+                # --Update/Patch step----------
+                UPDATE_COMMAND ""
+                PATCH_COMMAND ""
+                INSTALL_COMMAND ""
+                CMAKE_ARGS
+                -DCMAKE_INSTALL_PREFIX:PATH=${CMAKE_CURRENT_BINARY_DIR}
+                -DCMAKE_POSITION_INDEPENDENT_CODE=TRUE
+                -DBUILD_TESTING=OFF
+                -DBUILD_DOCS=OFF
+                -DINSTALL_DOCS=OFF
+                -DINSTALL_FONTS=OFF
+                -DOIIO_BUILD_TOOLS=0
+                -DUSE_PYTHON=0
+                -DOpenImageIO_BUILD_MISSING_DEPS=all
+                -DBUILD_SHARED_LIBS=0
+                -DLINKSTATIC=1
+        )
+    endif()
+
+    # ### XSIMD
+
     CPMAddPackage(
-      NAME zlib
-      GIT_REPOSITORY ${ZLIB_REPO}
-      GIT_TAG "v1.3.1"
-      OPTIONS
-      "CMAKE_POSITION_INDEPENDENT_CODE True"
+            NAME xsimd
+            GIT_TAG 13.2.0
+            GITHUB_REPOSITORY
+            "QuantStack/xsimd"
+            DOWNLOAD_ONLY True
     )
-
-    add_library(zlib::zlib ALIAS zlib)
-    # add_library(zlib ALIAS zlibstatic)
-
-    set(ZLIB_ROOT "${zlib_SOURCE_DIR}" CACHE INTERNAL "Root for the zlib library, used by libpng")
-    set(ZLIB_LIBRARY zlib CACHE INTERNAL "" FORCE)
-    set(ZLIB_INCLUDE_DIR "${zlib_SOURCE_DIR};${zlib_BINARY_DIR}" CACHE INTERNAL "" FORCE)
-    
-    if(zlib_ADDED)
-      target_include_directories(zlib
-        PUBLIC $<BUILD_INTERFACE:${zlib_BINARY_DIR}>
-        PUBLIC $<INSTALL_INTERFACE:include>)
-      target_include_directories(zlibstatic
-        PUBLIC $<BUILD_INTERFACE:${zlib_BINARY_DIR}>
-        PUBLIC $<INSTALL_INTERFACE:include>)
-
-      # message(STATUS "Cmake added local zlib: ${zlib_SOURCE_DIR}")
+    if(xsimd_ADDED)
+        # Define the header-only xsimd target
+        add_library(xsimd::xsimd INTERFACE IMPORTED GLOBAL)
+        target_include_directories(xsimd::xsimd SYSTEM INTERFACE ${xsimd_SOURCE_DIR})
     endif()
-  endif()
 
-  # ### JPEG-TURBO
-  set(JPEG_TURBO_REPO "https://github.com/libjpeg-turbo/libjpeg-turbo.git"
-    CACHE STRING "libjpeg-turbo repository location."
-  )
+    # ### JSONCPP
+    if(NOT TARGET jsoncpp::jsoncpp)
+        cpmaddpackage(
+                NAME
+                jsoncpp
+                GIT_TAG
+                1.9.6
+                GITHUB_REPOSITORY
+                "open-source-parsers/jsoncpp"
+                OPTIONS "JSONCPP_WITH_TESTS OFF"
+                "JSONCPP_WITH_CMAKE_PACKAGE OFF"
+                "JSONCPP_WITH_PKGCONFIG_SUPPORT OFF"
+                "JSONCPP_WITH_POST_BUILD_UNITTEST OFF"
+                "BUILD_SHARED_LIBS ON")
 
-  ExternalProject_Add(libjpeg-turbo
-    GIT_REPOSITORY ${JPEG_TURBO_REPO}
-    GIT_TAG "3.0.90"
-    PREFIX ${CMAKE_CURRENT_BINARY_DIR}
+        if(jsoncpp_ADDED)
+            add_library(jsoncpp::jsoncpp INTERFACE IMPORTED)
+            target_include_directories(
+                    jsoncpp::jsoncpp SYSTEM
+                    INTERFACE ${jsoncpp_SOURCE_DIR}/include
+            )
 
-    # --Update/Patch step----------
-    UPDATE_COMMAND ""
-    PATCH_COMMAND ""
-    INSTALL_COMMAND ""
-
-    CMAKE_ARGS
-    -DCMAKE_CXX_COMPILER:FILEPATH=${CMAKE_CXX_COMPILER}
-    -DCMAKE_C_COMPILER:FILEPATH=${CMAKE_C_COMPILER}
-    -DCMAKE_BUILD_TYPE:STRING=${CMAKE_BUILD_TYPE}
-    -DBUILD_SHARED_LIBS:BOOL=${BUILD_SHARED_LIBS}
-    -DCMAKE_INSTALL_PREFIX:PATH=${CMAKE_CURRENT_BINARY_DIR}
-
-    # --Configure step-------------
-    #
-    BUILD_COMMAND ""
-  )
-
-  ExternalProject_Get_Property(libjpeg-turbo TMP_DIR STAMP_DIR DOWNLOAD_DIR SOURCE_DIR BINARY_DIR INSTALL_DIR)
-
-  # message("Build libjpeg-turbo src ${SOURCE_DIR} in ${BINARY_DIR}")
-
-  # add_library(libjpeg-turbo INTERFACE IMPORTED)
-  # target_include_directories(
-  # libjpeg-turbo SYSTEM
-  # INTERFACE ${jsoncpp_SOURCE_DIR}/include
-  # )
-  INCLUDE_DIRECTORIES(
-    ${CMAKE_CURRENT_SOURCE_DIR}/libjpeg-turbo
-    ${CMAKE_CURRENT_BINARY_DIR}/libjpeg-turbo
-  )
-  set(JPEG_LIBRARY jpeg-static)
-  set(JPEG_INCLUDE_DIRS ${SOURCE_DIR}/include)
-  set(JPEG_LIBRARIES ${BINARY_DIR})
-
-  set(JPEG_FOUND TRUE)
-
-  # message(STATUS "**************JPEG: ${JPEG_INCLUDE_DIRS} ${JPEG_LIBRARIES}")
-
-  # ### PNG
-  if(NOT TARGET png::png)
-    # FIXME local zlib not found
-    # cpmaddpackage(
-    #   NAME
-    #   png
-    #   VERSION
-    #   1.6.44
-    #   GITHUB_REPOSITORY
-    #   "pnggroup/libpng"
-    #   OPTIONS
-    #   "ZLIB_INCLUDE_DIR=${ZLIB_INCLUDE_DIR}"
-    #   "ZLIB_LIBRARY=${ZLIB_LIBRARY}"
-    #   "BUILD_SHARED_LIBS=${BUILD_SHARED_LIBS}"
-    #   "CMAKE_POSITION_INDEPENDENT_CODE YES"
-    #   "PNG_TESTS NO"
-    #   "PNG_TOOLS NO")
-  endif()
-
-  # ### XSIMD
-
-  # clone approach
-  ExternalProject_Add(XsimdDep
-    GIT_REPOSITORY https://github.com/QuantStack/xsimd.git
-    GIT_TAG 13.2.0
-    PREFIX ${CMAKE_CURRENT_BINARY_DIR}
-
-    # --Update/Patch step----------
-    UPDATE_COMMAND ""
-    PATCH_COMMAND ""
-    INSTALL_COMMAND ""
-
-    # --Configure step-------------
-    #
-    BUILD_COMMAND ""
-  )
-
-  ExternalProject_Get_Property(XsimdDep TMP_DIR STAMP_DIR DOWNLOAD_DIR SOURCE_DIR BINARY_DIR INSTALL_DIR)
-
-  # message("Build XsimdDep src ${SOURCE_DIR} in ${BINARY_DIR}")
-  add_library(xsimd INTERFACE)
-  target_include_directories(xsimd INTERFACE
-    $<BUILD_INTERFACE:${SOURCE_DIR}/include> # we can do better
-    $<INSTALL_INTERFACE:include/xsimd>
-  )
-  SET(XSIMD_INCLUDE_DIRECTORY "${SOURCE_DIR}/include" PARENT_SCOPE)
-
-  # ### MDSPAN
-  # ExternalProject_Add(mdspanDep
-  #   GIT_REPOSITORY https://github.com/kokkos/mdspan.git
-  #   GIT_TAG stable
-  #   PREFIX ${CMAKE_CURRENT_BINARY_DIR}
-
-  #   # --Update/Patch step----------
-  #   UPDATE_COMMAND ""
-  #   PATCH_COMMAND ""
-  #   INSTALL_COMMAND ""
-
-  #   # --Configure step-------------
-  #   #
-  #   BUILD_COMMAND ""
-  # )
-
-  # ExternalProject_Get_Property(mdspanDep TMP_DIR STAMP_DIR DOWNLOAD_DIR SOURCE_DIR BINARY_DIR INSTALL_DIR)
-
-  # # message("Build mdspan src ${SOURCE_DIR} in ${BINARY_DIR}")
-  # add_library(mdspan INTERFACE)
-  # target_include_directories(mdspan INTERFACE
-  #   $<BUILD_INTERFACE:${SOURCE_DIR}/include> # we can do better
-  #   $<INSTALL_INTERFACE:include/mdspan>
-  # )
-  # SET(MDSPAN_INCLUDE_DIRECTORY "${SOURCE_DIR}/include" PARENT_SCOPE)
-
-  # ### JSONCPP
-  if(NOT TARGET jsoncpp::jsoncpp)
-    cpmaddpackage(
-      NAME
-      jsoncpp
-      GIT_TAG
-      1.9.6
-      GITHUB_REPOSITORY
-      "open-source-parsers/jsoncpp"
-      OPTIONS "JSONCPP_WITH_TESTS OFF"
-      "JSONCPP_WITH_CMAKE_PACKAGE OFF"
-      "JSONCPP_WITH_PKGCONFIG_SUPPORT OFF"
-      "JSONCPP_WITH_POST_BUILD_UNITTEST OFF"
-      "BUILD_SHARED_LIBS ON")
-
-    if(jsoncpp_ADDED)
-      add_library(jsoncpp::jsoncpp INTERFACE IMPORTED)
-      target_include_directories(
-        jsoncpp::jsoncpp SYSTEM
-        INTERFACE ${jsoncpp_SOURCE_DIR}/include
-      )
-
-      # message(STATUS "Cmake added local jsoncpp: ${jsoncpp_SOURCE_DIR}")
+            # message(STATUS "Cmake added local jsoncpp: ${jsoncpp_SOURCE_DIR}")
+        endif()
     endif()
-  endif()
 
-  list(POP_BACK CMAKE_MESSAGE_INDENT)
-  message(STATUS "└─ End Dependencies.cmake")
+    #list(POP_BACK CMAKE_MESSAGE_INDENT)
+    message(STATUS "└─ End Dependencies.cmake")
 endfunction()

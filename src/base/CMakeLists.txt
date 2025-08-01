@@ -50,7 +50,7 @@ target_link_libraries(poutre_base PRIVATE poutre2_options
         PRIVATE poutre2_warnings
         PRIVATE jsoncpp_lib
         PRIVATE spdlog::spdlog
-        INTERFACE xsimd
+        INTERFACE xsimd::xsimd
 )
 
 find_package(OpenMP)
@@ -71,7 +71,7 @@ target_link_libraries(poutre_base
 # )
 
 # force custom target before start
-add_dependencies(poutre_base xsimd)
+add_dependencies(poutre_base xsimd::xsimd)
 target_include_directories(poutre_base ${WARNING_GUARD} PUBLIC $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>
         $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}/include>)
 

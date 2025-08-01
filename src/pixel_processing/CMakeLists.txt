@@ -39,7 +39,7 @@ target_link_libraries(poutre_pixel_processing PRIVATE poutre2_options
   PRIVATE poutre2_warnings
   PRIVATE jsoncpp_lib
   PRIVATE spdlog::spdlog
-  INTERFACE xsimd
+  INTERFACE xsimd::xsimd
   PUBLIC poutre_base::poutre_base
 )
 
@@ -49,7 +49,7 @@ if(OpenMP_CXX_FOUND)
 endif()
 
 # force custom target before start
-add_dependencies(poutre_pixel_processing xsimd)
+add_dependencies(poutre_pixel_processing xsimd::xsimd)
 target_include_directories(poutre_pixel_processing ${WARNING_GUARD} PUBLIC $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>
   $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}/include>)
 
