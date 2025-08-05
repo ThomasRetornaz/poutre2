@@ -124,7 +124,7 @@ function(poutre2_setup_dependencies)
 #                "LINKSTATIC 1"
 #        )#"CMAKE_INSTALL_PREFIX:PATH=${CMAKE_CURRENT_BINARY_DIR}")
 
-        ExternalProject_Add(oiio
+        ExternalProject_Add(openimageio
                 GIT_REPOSITORY ${OPENIMAGEIO_REPO}
                 GIT_TAG "v3.0.8.1"
                 # --Update/Patch step----------
@@ -132,7 +132,7 @@ function(poutre2_setup_dependencies)
                 PATCH_COMMAND ""
                 INSTALL_COMMAND ""
                 CMAKE_ARGS
-                -DCMAKE_INSTALL_PREFIX:PATH=${CMAKE_CURRENT_BINARY_DIR}
+                #-DCMAKE_INSTALL_PREFIX:PATH=${CMAKE_CURRENT_BINARY_DIR}
                 -DCMAKE_POSITION_INDEPENDENT_CODE=TRUE
                 -DBUILD_TESTING=OFF
                 -DBUILD_DOCS=OFF
