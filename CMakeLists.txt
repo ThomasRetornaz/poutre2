@@ -66,9 +66,8 @@ add_library(poutre2::poutre2_warnings ALIAS poutre2_warnings)
 # add_library(poutre2::poutre2_warnings INTERFACE IMPORTED)
 # configure files based on CMake configuration options
 add_subdirectory(configured_files)
-
 # Adding the src:
-include_directories(BEFORE ${XSIMD_INCLUDE_DIRECTORY})
+# include_directories(BEFORE ${XSIMD_INCLUDE_DIRECTORY})
 include_directories(BEFORE ${CMAKE_SOURCE_DIR}/include)
 add_subdirectory(src)
 
