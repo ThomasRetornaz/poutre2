@@ -269,13 +269,13 @@ function(poutre2_setup_dependencies)
             GIT_TAG 13.2.0
             GITHUB_REPOSITORY
             "QuantStack/xsimd"
-            DOWNLOAD_ONLY True
+            #DOWNLOAD_ONLY True
     )
     if(xsimd_ADDED)
         # Define the header-only xsimd target
         add_library(xsimd::xsimd INTERFACE IMPORTED GLOBAL)
         target_include_directories(xsimd::xsimd SYSTEM BEFORE INTERFACE ${xsimd_SOURCE_DIR}/include)
-
+        # message(FATAL_ERROR "${xsimd_SOURCE_DIR}")
         # SET(XSIMD_INCLUDE_DIRECTORY "${xsimd_SOURCE_DIR}/include" PARENT_SCOPE)
     endif()
 
