@@ -169,6 +169,36 @@ public:
 
   constexpr const coordinate_type shape() const noexcept { return m_coordinnates; }
 
+  // cppcheck-suppress functionConst
+  POUTRE_CONSTEXPR reference operator[](size_type idx) POUTRE_NOEXCEPT
+{
+  POUTRE_ASSERTCHECK(idx < m_numelement, "Access out of bound");
+  // POUTRE_ASSERTCHECK(n >= 0, "Access out of bound");
+  return m_storage[idx];
+}
+
+  POUTRE_CONSTEXPR const_reference operator[](size_type idx) const POUTRE_NOEXCEPT
+  {
+    POUTRE_ASSERTCHECK(idx < m_numelement, "Access out of bound");
+    // POUTRE_ASSERTCHECK(n >= 0, "Access out of bound");
+    return m_storage[idx];
+  }
+  // cppcheck-suppress functionConst
+  POUTRE_CONSTEXPR reference at(size_type idx)
+  {
+    if( idx >= m_numelement ) {
+      POUTRE_RUNTIME_ERROR("Access out of bound");
+}
+    return m_storage[idx];
+  }
+
+  POUTRE_CONSTEXPR const_reference at(size_type n) const
+  {
+    if( n >= m_numelement ) {
+      POUTRE_RUNTIME_ERROR("Access out of bound");
+}
+    return m_storage[n];
+  }
 
   template<size_t R = Rank, typename = std::enable_if_t<R == 2>>
   constexpr scoord GetXSize() const noexcept
