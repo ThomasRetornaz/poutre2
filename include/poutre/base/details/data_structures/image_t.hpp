@@ -40,7 +40,7 @@ namespace poutre::details {
  *@{
  */
 
-template<class valuetype, std::ptrdiff_t Rank = 2>  class BASE_API image_t : public IInterface
+template<class valuetype, std::ptrdiff_t Rank = 2> class /*BASE_API */ image_t : public IInterface
 {
   static_assert(Rank > 0, "Rank must be >0");
 
