@@ -51,7 +51,7 @@ target_link_libraries(poutre_base PRIVATE poutre2_options
         PRIVATE jsoncpp::jsoncpp
         PRIVATE jsoncpp_lib
         PRIVATE spdlog::spdlog
-        INTERFACE xsimd::xsimd
+        PUBLIC xsimd::xsimd
 )
 
 find_package(OpenMP)
