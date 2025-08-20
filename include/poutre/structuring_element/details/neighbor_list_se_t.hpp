@@ -19,6 +19,7 @@
 
 #include <algorithm>
 #include <memory>
+#include <numeric>
 #include <vector>
 #include <poutre/base/config.hpp>
 #include <poutre/base/details/data_structures/array_view.hpp>
@@ -144,19 +145,30 @@ public:
   ptrdiff_t maximum_extension(const size_t dimension, const bool direction) const {
     if(direction) {
       typename neighbor_element::value_type extension = 0;
-      for(size_t i = 0; i < vector_coordinate.size(); i++) {
-        extension = std::max(extension, vector_coordinate[i][dimension]);
-      }
+      // for(size_t i = 0; i < vector_coordinate.size(); i++) {
+      //   extension = std::max(extension, vector_coordinate[i][dimension]);
+      // }
+      extension = std::accumulate(
+          vector_coordinate.begin(), vector_coordinate.end(), extension,
+          [dimension](auto ext, const auto& coord) {
+          return std::max(ext, coord[dimension]);
+      });
       return extension;
     }
     else {
       typename neighbor_element::value_type extension = 0;
-      for(size_t i = 0; i < vector_coordinate.size(); i++) {
-        extension = std::max(extension, -vector_coordinate[i][dimension]);
-      }
+      // for(size_t i = 0; i < vector_coordinate.size(); i++) {
+      //   extension = std::max(extension, -vector_coordinate[i][dimension]);
+      // }
+      extension = std::accumulate(
+          vector_coordinate.begin(), vector_coordinate.end(), extension,
+          [dimension](auto ext, const auto& coord) {
+          return std::max(ext, -coord[dimension]);
+      });
       return extension;
     }
   }
+
 
 
   /*!Returns the maximal extension of this structuring element on every direction*/
