@@ -61,13 +61,13 @@ target_include_directories(poutre_io
         $<BUILD_INTERFACE:${hdf5_INCLUDE_DIRS}>
 )
 target_link_libraries(poutre_io
-        PUBLIC hdf5::hdf5
-        PUBLIC hdf5-static
-        PUBLIC hdf5_cpp-static
         PRIVATE poutre2_options
         PRIVATE poutre2_warnings
-        PRIVATE spdlog::spdlog
         PUBLIC poutre_base::poutre_base
+        PRIVATE spdlog::spdlog
+        PRIVATE hdf5::hdf5
+        PRIVATE hdf5-static
+        PRIVATE hdf5_cpp-static
 
 )
 

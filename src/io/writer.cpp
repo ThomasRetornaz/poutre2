@@ -60,13 +60,15 @@ void ImageWriter::Write(const IInterface &i_img) const
   // switch on extension
   auto extension = localPath.extension().string();
   std::ranges::transform(extension, extension.begin(),
-     [](unsigned char charac){ return std::tolower(charac); });
+     [](unsigned char charac){ return static_cast<unsigned char>(std::tolower(charac)); });
 
   if( extension == ".h5" ) {
     DumpHDF5(localPath.string(), i_img, m_i_name);
     }
-  else {
+#if defined POUTRE_BUILD_WITH_OIIO
     DumpOIIO(localPath.string(), i_img);
-  }
+#else
+    POUTRE_RUNTIME_ERROR("Not supported file type. May you need to build with OpenImageIO");
+#endif
 }
 }

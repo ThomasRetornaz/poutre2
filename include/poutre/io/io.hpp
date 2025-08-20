@@ -22,8 +22,10 @@
 #ifdef POUTRE_DYNAMIC// defined if POUTRE is compiled as a DLL
 #ifdef poutre_io_EXPORTS// defined if we are building the POUTRE DLL (instead of using it)
 #define IO_API MODULE_EXPORT
+#define IO_TEMPLATE
 #else
 #define IO_API MODULE_IMPORT
+#define IO_TEMPLATE extern
 #endif// POUTRE_DLL_EXPORTS
 #define IO_LOCAL MODULE_LOCAL
 #else// POUTRE_DLL is not defined: this means POUTRE is a static lib.

@@ -58,13 +58,16 @@ std::unique_ptr<IInterface> ImageLoader::Load() const
   // switch on extension
   auto extension = localPath.extension().string();
 
-  std::ranges::transform(extension, extension.begin(),
-      [](unsigned char charac){ return std::tolower(charac); });
+  std::ranges::transform(extension, extension.begin(), [](unsigned char charac) { return static_cast<unsigned char>(std::tolower(charac)); });
 
   if( extension == ".h5" )
   {
     return LoadHDF5(localPath.string(),m_i_name);
   }
+#if defined POUTRE_BUILD_WITH_OIIO
   return LoadOIIO(localPath.string());
+#else
+  POUTRE_RUNTIME_ERROR("Not supported file type. May you need to build with OpenImageIO");
+#endif
 }
 }

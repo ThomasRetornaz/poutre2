@@ -34,7 +34,6 @@
 
 #include <filesystem>
 #include <format>
-#include <memory>
 
 namespace poutre::io::details {
 /**
@@ -44,23 +43,23 @@ namespace poutre::io::details {
 
 namespace fs = std::filesystem;
 
-    constexpr H5std_string DATASET_NAME("Images");
-    constexpr H5std_string CHANNEL1("channel_1");
-    constexpr H5std_string CHANNEL2("channel_2");
-    constexpr H5std_string CHANNEL3("channel_3");
-    constexpr H5std_string CHANNEL4("channel_4");
+    const H5std_string DATASET_NAME("Images");
+    const H5std_string CHANNEL1("channel_1");
+    const H5std_string CHANNEL2("channel_2");
+    const H5std_string CHANNEL3("channel_3");
+    const H5std_string CHANNEL4("channel_4");
 
     // compound_types
-    constexpr H5std_string IMAGEScalar("Scalar");
-    constexpr H5std_string IMAGE3Planes("3Planes");
-    constexpr H5std_string IMAGE4Planes("4Planes");
+    const H5std_string IMAGEScalar("Scalar");
+    const H5std_string IMAGE3Planes("3Planes");
+    const H5std_string IMAGE4Planes("4Planes");
 
     // ptype
-    constexpr H5std_string PUINT8("pUINT8");
-    constexpr H5std_string PINT32("pINT32");
-    constexpr H5std_string PINT64("pINT64");
-    constexpr H5std_string PFLOAT("pF32");
-    constexpr H5std_string PDOUBLE("pD64");
+    const H5std_string PUINT8("pUINT8");
+    const H5std_string PINT32("pINT32");
+    const H5std_string PINT64("pINT64");
+    const H5std_string PFLOAT("pF32");
+    const H5std_string PDOUBLE("pD64");
 
     void CreateAttribute(H5::DataSet &dataSet, const std::string &key, const std::string &value) // NOLINT(misc-unused-parameters)
     {
@@ -264,7 +263,7 @@ namespace fs = std::filesystem;
       }
       nativeTypeToH5DataType<T> hdf5_type;
 
-      const auto &dimensions = ImageCoordToHDF5Dim((*im_t).GetShape());
+      // const auto &dimensions = ImageCoordToHDF5Dim((*im_t).GetShape());
 
       try
       {
