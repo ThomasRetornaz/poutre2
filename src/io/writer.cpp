@@ -64,6 +64,7 @@ void ImageWriter::Write(const IInterface &i_img) const
 
   if( extension == ".h5" ) {
     DumpHDF5(localPath.string(), i_img, m_i_name);
+    return;
     }
 #if defined POUTRE_BUILD_WITH_OIIO
     DumpOIIO(localPath.string(), i_img);
