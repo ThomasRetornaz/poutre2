@@ -13,7 +13,7 @@
 #define FMT_HEADER_ONLY
 #endif
 #include <format>
-
+#include <inttypes.h>
 /**
  * @file   config.hpp
  * @author Thomas Retornaz
@@ -256,18 +256,8 @@ namespace poutre
   using i16 = signed   short;
   using u32 = unsigned int;
   using i32 = signed   int;
-  #if POUTRE_WORD_SIZE == 64
-    using u64 = unsigned long;
-    using i64 = signed long;
-  #else
-    #if defined(POUTRE_IS_GCC) || defined(POUTRE_IS_CLANG)
-      __extension__ typedef __signed__ long long i64;
-      __extension__ typedef unsigned long long u64;
-    #else
-      typedef __signed__ long long i64;
-      typedef unsigned long long u64;
-    #endif
-  #endif
+  using u64 = uint64_t;
+  using i64 = int64_t;
 #endif
 
 
