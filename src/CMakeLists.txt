@@ -1,4 +1,5 @@
 add_subdirectory(base)
 add_subdirectory(pixel_processing)
+add_subdirectory(io)
 add_subdirectory(structuring_element)
 add_subdirectory(low_level_morpho)
