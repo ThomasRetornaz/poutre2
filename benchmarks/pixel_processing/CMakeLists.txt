@@ -23,7 +23,6 @@ IF(WIN32)
     PUBLIC shlwapi.lib
     PRIVATE poutre2::poutre2_warnings
     poutre2::poutre2_options
-    jsoncpp_lib
     spdlog::spdlog
     Catch2::Catch2WithMain
     PUBLIC poutre_base::poutre_base
@@ -35,7 +34,6 @@ ELSE()
     PUBLIC benchmark_main
     PRIVATE poutre2::poutre2_warnings
     poutre2::poutre2_options
-    jsoncpp_lib
     spdlog::spdlog
     Catch2::Catch2WithMain
     PUBLIC poutre_base::poutre_base

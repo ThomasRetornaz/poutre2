@@ -30,11 +30,6 @@ if(OpenMP_CXX_FOUND)
   target_link_libraries(poutre_llm_tests PUBLIC OpenMP::OpenMP_CXX)
 endif()
 
-# add_definitions(-D_GLIBCXX_USE_CXX11_ABI)
-IF(BUILD_SHARED_LIBS)
-  set_target_properties(poutre_llm_tests PROPERTIES COMPILE_FLAGS -DJSON_DLL)
-ENDIF(BUILD_SHARED_LIBS)
-
 IF(POUTRE_CI)
   set_target_properties(poutre_llm_tests PROPERTIES COMPILE_FLAGS -DPOUTRE_CI)
 ENDIF()

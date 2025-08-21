@@ -15,14 +15,12 @@ set(PoutreBaseSRC_PUBLICHEADERS
         ${subdirheader}/config.hpp
         ${subdirheader}/types.hpp
         ${subdirheader}/types_traits.hpp
-        ${subdirheader}/json.hpp
         ${subdirheader}/trace.hpp
         ${subdirheader}/registrar.hpp
         ${subdirheader}/chronos.hpp
         ${subdirheader}/image_interface.hpp)
 
 set(PoutreBaseSRC_CPP
-        ${subdirsource}/json.cpp
         ${subdirsource}/trace.cpp
         ${subdirsource}/types.cpp
         ${subdirsource}/chronos.cpp
@@ -48,8 +46,7 @@ add_library(poutre_base::poutre_base ALIAS poutre_base)
 
 target_link_libraries(poutre_base PRIVATE poutre2_options
         PRIVATE poutre2_warnings
-        PRIVATE jsoncpp::jsoncpp
-        PRIVATE jsoncpp_lib
+        PRIVATE json::json
         PRIVATE spdlog::spdlog
         PUBLIC xsimd::xsimd
 )
@@ -77,10 +74,6 @@ target_include_directories(poutre_base ${WARNING_GUARD} PUBLIC $<BUILD_INTERFACE
         $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}/include>)
 
 target_compile_features(poutre_base PUBLIC cxx_std_23)
-
-IF(BUILD_SHARED_LIBS)
-    SET_TARGET_PROPERTIES(poutre_base PROPERTIES COMPILE_FLAGS -DJSON_DLL)
-ENDIF(BUILD_SHARED_LIBS)
 
 set_target_properties(
         poutre_base

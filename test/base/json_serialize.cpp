@@ -14,72 +14,56 @@
 #include <catch2/catch_test_macros.hpp>
 #include <cctype>
 #include <cstring>
-#include <json/value.h>
-#include <poutre/base/json.hpp>
+//#include <iostream>
+#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <string>
 #include <vector>
 
-class TestClassA : public poutre::InterfaceJsonSerializable// NOLINT
-{
-public:
-  TestClassA();
-  ~TestClassA() override;
-  void Serialize(Json::Value &root) override;
-  void Deserialize(Json::Value &root) override;
+using json = nlohmann::json;
 
-private:
+struct TestClassA
+{
+  TestClassA();
   int m_nTestInt{};
   double m_fTestFloat{};
   std::string m_TestString;
   bool m_bTestBool{};
-  std::vector<float> m_array;
+  std::vector<double> m_array;
 };
+
+void to_json(json& jso, const TestClassA& test) {
+  jso = json{
+    {"int", test.m_nTestInt},
+    {"double",test.m_fTestFloat},
+    {"string",test.m_TestString},
+    {"bool", test.m_bTestBool},
+    {"array", test.m_array} };
+}
+
+  void from_json(const json& jvalue, TestClassA& test) {
+  jvalue.at("int").get_to(test.m_nTestInt);
+  jvalue.at("double").get_to(test.m_fTestFloat);
+  jvalue.at("string").get_to(test.m_TestString);
+  jvalue.at("bool").get_to(test.m_bTestBool);
+  jvalue.at("array").get_to(test.m_array);
+  }
+
 
 TestClassA::TestClassA()
   : m_nTestInt(42), m_fTestFloat(3.14159), m_TestString("foo"), m_bTestBool(true),// NOLINT
-    m_array({ 1.1f, 2.1f, 3.1f })// NOLINT
+    m_array({ 1.1, 2.1, 3.1 })// NOLINT
 {}
-TestClassA::~TestClassA() = default;
 
-void TestClassA::Deserialize(Json::Value &root)
-{
-  // deserialize primitives
-  m_nTestInt = root.get("m_nTestInt", 0).asInt();
-  m_fTestFloat = root.get("m_fTestFloat", 0.0).asDouble();
-  m_TestString = root.get("m_TestString", "").asString();
-  m_bTestBool = root.get("m_bTestBool", false).asBool();
-  const Json::Value &jsonarray = root.get("m_array", Json::Value(Json::arrayValue));
-  m_array.clear();
-  m_array.reserve(jsonarray.size());
-  // cppcheck-suppress useStlAlgorithm
-  for (const auto &val : jsonarray) { m_array.emplace_back(val.asFloat()); }
-}
-
-void TestClassA::Serialize(Json::Value &root)
-{
-  // serialize primitives
-  root["m_nTestInt"] = m_nTestInt;
-  root["m_fTestFloat"] = m_fTestFloat;
-  root["m_TestString"] = m_TestString;
-  root["m_bTestBool"] = m_bTestBool;
-  // const Json::Value& array = root["m_array"];
-  for (auto var : m_array) { root["m_array"].append(static_cast<double>(var)).asFloat(); }
-}
 
 TEST_CASE("serializer", "[json]")
 {
-  TestClassA testClass;
-  std::string output;
-  poutre::JsonSerializer::Serialize(&testClass, output);
-  std::string expected =
-    "\
-{\n\
-\"m_TestString\" : \"foo\",\n\
-\"m_array\" : [\n1.1000000238418579,\n2.0999999046325684,\n3.0999999046325684\n],\n\
-\"m_bTestBool\" : true,\n\
-\"m_fTestFloat\" : 3.1415899999999999,\n\
-\"m_nTestInt\" : 42\n\
-}\n";
+  TestClassA const testClass;
+  json jvalue;
+  to_json(jvalue,testClass);
+  std::string output = jvalue.dump();
+  //std::cout <<'\n'<< output << '\n';
+  std::string expected =R"({"array":[1.1,2.1,3.1],"bool":true,"double":3.14159,"int":42,"string":"foo"})";
   auto rm_space = [](const char character) { return isspace(character); };
 
   const auto [first, last] = std::ranges::remove_if(output, rm_space);

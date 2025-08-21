@@ -25,13 +25,8 @@ function(poutre2_setup_dependencies)
         )
     endif()
 
-    # ### FMTLIB
-#    if(NOT TARGET fmtlib::fmtlib)
-#        cpmaddpackage("gh:fmtlib/fmt#11.1.4")
-#    endif()
-
     # ### BOOST PREPROCESSOR
-  if(NOT TARGET boost_preprocessor)
+    if(NOT TARGET boost_preprocessor)
         cpmaddpackage(
                 NAME boost_preprocessor
                 GIT_TAG boost-1.88.0
@@ -87,24 +82,6 @@ function(poutre2_setup_dependencies)
                 "CMAKE_POSITION_INDEPENDENT_CODE ON"
                 "ZLIB_BUILD_EXAMPLES OFF"
         )
-        #        ExternalProject_Add(
-        #                zlib
-        #                GIT_REPOSITORY ${ZLIB_REPO}
-        #                GIT_TAG "v1.3.1"
-        #                # --Update/Patch step----------
-        #                UPDATE_COMMAND ""
-        #                PATCH_COMMAND ""
-        #                # INSTALL_COMMAND ""
-        #                CMAKE_ARGS
-        #                -DCMAKE_INSTALL_PREFIX:PATH=${CMAKE_CURRENT_BINARY_DIR}/zlib_install
-        #                -DCMAKE_POSITION_INDEPENDENT_CODE=TRUE
-        #                -DZLIB_BUILD_EXAMPLES=OFF
-        #                #-DCMAKE_POLICY_DEFAULT_CMP0042:STRING=NEW
-        #        )
-        #        ExternalProject_Get_Property(zlib TMP_DIR STAMP_DIR DOWNLOAD_DIR SOURCE_DIR BINARY_DIR INSTALL_DIR)
-        #        set(ZIB_LIBRARY zlib)
-        #        set(ZLIB_INCLUDE_DIRS ${CMAKE_CURRENT_BINARY_DIR}/zlib_install/include)
-        #        set(ZLIB_LIBRARIES_DIRS ${CMAKE_CURRENT_BINARY_DIR}/zlib_install/lib)
     endif()
 
     find_package(OpenImageIO QUIET)
@@ -211,55 +188,7 @@ function(poutre2_setup_dependencies)
                     ${hdf5_SOURCE_DIR}/src ${hdf5_SOURCE_DIR}/c++/src ${hdf5_BINARY_DIR}/src
                     ${hdf5_SOURCE_DIR}/src/H5FDsubfiling
             )
-
-            # message(STATUS "Cmake added local jsoncpp: ${jsoncpp_SOURCE_DIR}")
         endif()
-#        ExternalProject_Add(hdf5
-#                GIT_REPOSITORY ${HDF5_REPO}
-#                GIT_TAG "hdf5_1.14.6"
-#                EXCLUDE_FROM_ALL
-#                # --Update/Patch step----------
-#                UPDATE_COMMAND ""
-#                PATCH_COMMAND ""
-#                #INSTALL_COMMAND ""
-#                CMAKE_ARGS
-#                -DCMAKE_INSTALL_PREFIX:PATH=${CMAKE_CURRENT_BINARY_DIR}/hdf5_install
-#                -DBUILD_STATIC_LIBS=ON
-#                -DHDF5_EXTERNALLY_CONFIGURED=ON
-#                -DHDF5_GENERATE_HEADERS=OFF
-#                -DHDF5_DISABLE_COMPILER_WARNINGS=ON
-#                -DHDF5_BUILD_DOC=OFF
-#                -DBUILD_TESTING=OFF
-#                -DHDF5_BUILD_TOOLS=OFF
-#                -DHDF5_ENABLE_PLUGIN_SUPPORT=OFF
-#                -DBUILD_SHARED_LIBS=OFF
-#                -DHDF5_BUILD_HL_LIB=ON
-#                -DHDF5_BUILD_FORTRAN=OFF
-#                -DHDF5_BUILD_CPP_LIB=ON
-#                -DHDF5_BUILD_JAVA=OFF
-#                -DHDF5_BUILD_EXAMPLES=OFF
-#        )
-#        ExternalProject_Get_Property(hdf5 TMP_DIR STAMP_DIR DOWNLOAD_DIR SOURCE_DIR BINARY_DIR INSTALL_DIR)
-#        set(HDF5_ROOT ${INSTALL_DIR})
-#        set(HDF5_INCLUDE_DIRS ${CMAKE_CURRENT_BINARY_DIR}/hdf5_install/include PARENT_SCOPE)
-#        # set(HDF5_BINARY_DIRS ${CMAKE_CURRENT_BINARY_DIR}/hdf5_install/lib PARENT_SCOPE)
-#
-#        if(WIN32) # or import target ?
-#            set(HDF5_LIBRARIES
-#                    ${CMAKE_CURRENT_BINARY_DIR}/hdf5_install/lib/hdf5.lib
-#                    ${CMAKE_CURRENT_BINARY_DIR}/hdf5_install/lib/hdf5_cpp.lib
-#                    ${CMAKE_CURRENT_BINARY_DIR}/hdf5_install/lib/hdf5_hl.lib
-#                    ${CMAKE_CURRENT_BINARY_DIR}/hdf5_install/lib/hdf5_hl_cpp.lib)
-#            set(HDF5_LIBRARIES ${HDF5_LIBRARIES} PARENT_SCOPE)
-#        else()
-#            set(HDF5_LIBRARIES
-#                    ${CMAKE_CURRENT_BINARY_DIR}/hdf5_install/lib/libhdf5.a
-#                    ${CMAKE_CURRENT_BINARY_DIR}/hdf5_install/lib/libhdf5_cpp.a
-#                    ${CMAKE_CURRENT_BINARY_DIR}/hdf5_install/lib/libhdf5_hl.a
-#                    ${CMAKE_CURRENT_BINARY_DIR}/hdf5_install/lib/libhdf5_hl_cpp.a)
-#            set(HDF5_LIBRARIES ${HDF5_LIBRARIES} PARENT_SCOPE)
-#        endif()
-
     endif()
 
     # ### XSIMD
@@ -275,34 +204,26 @@ function(poutre2_setup_dependencies)
         # Define the header-only xsimd target
         add_library(xsimd::xsimd INTERFACE IMPORTED GLOBAL)
         target_include_directories(xsimd::xsimd SYSTEM BEFORE INTERFACE ${xsimd_SOURCE_DIR}/include)
-        # message(FATAL_ERROR "${xsimd_SOURCE_DIR}")
-        # SET(XSIMD_INCLUDE_DIRECTORY "${xsimd_SOURCE_DIR}/include" PARENT_SCOPE)
     endif()
 
-    # ### JSONCPP
-    if(NOT TARGET jsoncpp::jsoncpp)
-        cpmaddpackage(
-                NAME
-                jsoncpp
-                GIT_TAG
-                1.9.6
-                GITHUB_REPOSITORY
-                "open-source-parsers/jsoncpp"
-                OPTIONS "JSONCPP_WITH_TESTS OFF"
-                "JSONCPP_WITH_CMAKE_PACKAGE OFF"
-                "JSONCPP_WITH_PKGCONFIG_SUPPORT OFF"
-                "JSONCPP_WITH_POST_BUILD_UNITTEST OFF"
-                "BUILD_SHARED_LIBS ON")
-
-        if(jsoncpp_ADDED)
-            add_library(jsoncpp::jsoncpp INTERFACE IMPORTED)
-            target_include_directories(
-                    jsoncpp::jsoncpp SYSTEM
-                    BEFORE INTERFACE ${jsoncpp_SOURCE_DIR}/include
-            )
-
-            # message(STATUS "Cmake added local jsoncpp: ${jsoncpp_SOURCE_DIR}")
-        endif()
+    # ### nolhmann json
+    CPMAddPackage(
+            NAME json
+            GIT_TAG "v3.12.0"
+            GITHUB_REPOSITORY
+            "nlohmann/json"
+            OPTIONS
+            "JSON_BuildTests OFF"
+            "JSON_CI OFF"
+            "JSON_Diagnostics OFF"
+            "JSON_Install OFF"
+    )
+    if(json_ADDED)
+        add_library(json::json INTERFACE IMPORTED)
+        target_include_directories(
+                json::json SYSTEM
+                BEFORE INTERFACE ${json_SOURCE_DIR}/include
+        )
     endif()
 
     #list(POP_BACK CMAKE_MESSAGE_INDENT)

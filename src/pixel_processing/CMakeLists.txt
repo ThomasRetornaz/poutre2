@@ -37,7 +37,6 @@ add_library(poutre_pixel_processing::poutre_pixel_processing ALIAS poutre_pixel_
 
 target_link_libraries(poutre_pixel_processing PRIVATE poutre2_options
   PRIVATE poutre2_warnings
-  PRIVATE jsoncpp_lib
   PRIVATE spdlog::spdlog
   PUBLIC poutre_base::poutre_base
 )

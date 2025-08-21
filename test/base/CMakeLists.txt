@@ -19,7 +19,7 @@ target_link_libraries(
         poutre_base_tests
         PRIVATE poutre2::poutre2_warnings
         poutre2::poutre2_options
-        jsoncpp_lib
+        PRIVATE json::json
         spdlog::spdlog
         Catch2::Catch2WithMain
         PUBLIC poutre_base::poutre_base
@@ -33,11 +33,6 @@ find_package(OpenMP)
 if(OpenMP_CXX_FOUND)
     target_link_libraries(poutre_base_tests PUBLIC OpenMP::OpenMP_CXX)
 endif()
-
-# add_definitions(-D_GLIBCXX_USE_CXX11_ABI)
-IF(BUILD_SHARED_LIBS)
-    set_target_properties(poutre_base_tests PROPERTIES COMPILE_FLAGS -DJSON_DLL)
-ENDIF(BUILD_SHARED_LIBS)
 
 IF(POUTRE_CI)
     set_target_properties(poutre_base_tests PROPERTIES COMPILE_FLAGS -DPOUTRE_CI)
