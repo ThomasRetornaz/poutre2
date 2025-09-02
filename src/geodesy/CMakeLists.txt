@@ -36,6 +36,7 @@ target_link_libraries(poutre_geodesy PRIVATE poutre2_options
         PRIVATE poutre2_warnings
         PRIVATE spdlog::spdlog
         PUBLIC poutre_base::poutre_base
+        PUBLIC poutre_pixel_processing::poutre_pixel_processing
 )
 
 
