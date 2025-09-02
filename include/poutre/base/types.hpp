@@ -17,17 +17,18 @@
  */
 
 #include "config.hpp"
-#include <array>
-#include <cstddef>
-#include <type_traits>
+#include <poutre/base/base.hpp>
 
 #ifndef __clang__
 #include <compare>
 #endif
 
+#include <array>
+#include <cstddef>
+#include <type_traits>
 #include <format>
+#include <limits>
 #include <initializer_list>
-#include <poutre/base/base.hpp>
 #include <sstream>
 #include <string>
 #include <variant>
@@ -530,6 +531,52 @@ enum class PType {
 };
 
 using ScalarTypeVariant = std::variant<pUINT8, pINT32, pINT64, pFLOAT, pDOUBLE>;
+
+inline ScalarTypeVariant get_lowest(const PType ptype)
+{
+  switch(ptype) {
+  case PType::PType_GrayUINT8: {
+    return std::numeric_limits<pUINT8>::lowest();
+  }break;
+  case PType::PType_GrayINT32: {
+    return std::numeric_limits<pINT32>::lowest();
+  }break;
+  case PType::PType_GrayINT64: {
+    return std::numeric_limits<pINT64>::lowest();
+  }break;
+  case PType::PType_F32: {
+    return std::numeric_limits<pFLOAT>::lowest();
+  }break;
+  case PType::PType_D64: {
+    return std::numeric_limits<pDOUBLE>::lowest();
+  }break;
+  default://  Undef;
+    POUTRE_RUNTIME_ERROR("unsupported ptype");
+  }
+}
+
+inline ScalarTypeVariant get_highest(const PType ptype)
+{
+  switch(ptype) {
+  case PType::PType_GrayUINT8: {
+    return std::numeric_limits<pUINT8>::max();
+  }break;
+  case PType::PType_GrayINT32: {
+    return std::numeric_limits<pINT32>::max();
+  }break;
+  case PType::PType_GrayINT64: {
+    return std::numeric_limits<pINT64>::max();
+  }break;
+  case PType::PType_F32: {
+    return std::numeric_limits<pFLOAT>::max();
+  }break;
+  case PType::PType_D64: {
+    return std::numeric_limits<pDOUBLE>::max();
+  }break;
+  default://  Undef;
+    POUTRE_RUNTIME_ERROR("unsupported ptype");
+  }
+}
 
 //! operator<< for PType
 BASE_API std::ostream &operator<<(std::ostream &, PType);
