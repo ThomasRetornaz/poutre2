@@ -240,4 +240,53 @@ TEST_CASE("bound iter 3d", "[coord]")
   // REQUIRE(itFromOut == bnd.end());
 }
 
+TEST_CASE("bound reverse iter 1d", "[coord]")
+{
+  using idx = poutre::details::av::index<1>;
+  using bnd = poutre::details::av::bounds<1>;
+  // using iterator = poutre::details::av::bounds_iterator<1>;
+
+  bnd bnd1D = { 10 };
+
+  std::vector<idx> expected = { { 0 }, { 1 }, { 2 }, { 3 }, { 4 }, { 5 }, { 6 }, { 7 }, { 8 }, { 9 } };
+  // TODO ?
+  // std::vector<idx> rexpected = { {9}, {8}, {7}, {6}, {5}, {4}, {3}, {2}, {1}, {0} };
+  //using citer = std::vector<idx>::const_reverse_iterator;
+  auto iter2 = expected.rbegin();
+  for (auto iter = bnd1D.rbegin(); iter != bnd1D.rend(); ++iter, ++iter2) {
+    REQUIRE(*iter == *iter2);
+  }
+}
+
+TEST_CASE("bound reverse iter 2d", "[coord]")
+{
+  using bnd = poutre::details::av::bounds<2>;
+  using idx = poutre::details::av::index<2>;
+
+  bnd bnd2D{ 2, 4 };
+  std::vector<idx> expected = {
+    idx{ 0, 0 }, idx{ 0, 1 }, idx{ 0, 2 }, idx{ 0, 3 }, idx{ 1, 0 }, idx{ 1, 1 }, idx{ 1, 2 }, idx{ 1, 3 }
+  };
+  auto iter2 = expected.rbegin();
+  for (auto iter = bnd2D.rbegin(); iter != bnd2D.rend(); ++iter, ++iter2) { REQUIRE(*iter == *iter2); }
+}
+
+TEST_CASE("bound reverse iter 3d", "[coord]")
+{
+  using idx = poutre::details::av::index<3>;
+  using bound = poutre::details::av::bounds<3>;
+
+  const bound bnd{ 1, 2, 3 };
+
+
+  std::vector<idx> expected = {
+    idx{ 0, 0, 0 }, idx{ 0, 0, 1 }, idx{ 0, 0, 2 }, idx{ 0, 1, 0 }, idx{ 0, 1, 1 }, idx{ 0, 1, 2 }
+  };
+  auto iter2 = expected.rbegin();
+  auto bditer=  rbegin(bnd);
+  auto bditerend =  rend(bnd);
+
+  for (; bditer!= bditerend; ++bditer, ++iter2) { REQUIRE(*bditer == *iter2); }
+}
+
 // NOLINTEND

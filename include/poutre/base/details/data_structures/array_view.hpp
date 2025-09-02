@@ -33,8 +33,11 @@
 #include <cassert>
 #include <cstddef>
 #include <initializer_list>
-#include <poutre/base/config.hpp>
+#include <iterator>
 #include <type_traits>
+
+#include <poutre/base/config.hpp>
+#include <poutre/base/types.hpp>
 
 /*
 template <ptrdiff_t Rank>
@@ -530,6 +533,8 @@ public:
   using const_reference = const std::ptrdiff_t &;
   using iterator = bounds_iterator<rank>;
   using const_iterator = bounds_iterator<rank>;
+  using reverse_iterator = std::reverse_iterator<bounds_iterator<rank>>;
+  using const_reverse_iterator = std::reverse_iterator<bounds_iterator<rank>>;
   using size_type = size_t;
   using value_type = std::ptrdiff_t;
 
@@ -556,6 +561,13 @@ public:
   {
     iterator iter{ *this };
     return iter._setOffTheEnd();
+  }
+
+  const_reverse_iterator rbegin() const noexcept {  return const_reverse_iterator{ end() }; };
+  const_reverse_iterator rend() const noexcept
+  {
+    return const_reverse_iterator{ begin() };
+
   }
 
   // element access
@@ -594,12 +606,48 @@ template<ptrdiff_t Rank> constexpr size_t bounds<Rank>::size() const noexcept
   return product;
 }
 
+template<ptrdiff_t Rank> struct contains_op
+{
+  POUTRE_ALWAYS_INLINE static POUTRE_CONSTEXPR bool op(bounds<Rank> const &bnd, index<Rank> const &id) POUTRE_NOEXCEPT
+  {
+    for( size_t i = 0; i < Rank; i++ )
+    {
+      if( id[i] < 0 )
+        return false;
+      if( id[i] >= bnd[i] )
+        return false;
+    }
+    return true;
+  }
+};
+
+template<> struct contains_op<1>
+{
+  POUTRE_ALWAYS_INLINE static POUTRE_CONSTEXPR bool op(bounds<1> const &bnd, index<1> const &id) POUTRE_NOEXCEPT
+  {
+    return (id[0] >= 0) && (id[0] < bnd[0]);
+  }
+};
+
+template<> struct contains_op<2>
+{
+  POUTRE_ALWAYS_INLINE static POUTRE_CONSTEXPR bool op(bounds<2> const &bnd, index<2> const &id) POUTRE_NOEXCEPT
+  {
+    return ((id[0] >= 0) && (id[0] < bnd[0]) && (id[1] >= 0) && (id[1] < bnd[1]));
+  }
+};
+
+template<> struct contains_op<3>
+{
+  POUTRE_ALWAYS_INLINE static POUTRE_CONSTEXPR bool op( bounds<3> const &bnd, index<3> const &id) POUTRE_NOEXCEPT
+  {
+    return (id[0] >= 0) && (id[0] < bnd[0]) && (id[1] >= 0) && (id[1] < bnd[1]) && (id[2] >= 0) && (id[2] < bnd[2]);
+  }
+};
+
 template<ptrdiff_t Rank> constexpr bool bounds<Rank>::contains(const index<Rank> &idx) const noexcept
 {
-  for (size_type i = 0; i < Rank; ++i) {
-    if (!(0 <= idx[i] && idx[i] < (*this)[i])) { return false; }
-  }
-  return true;
+  return contains_op<Rank>::op(*this, idx);
 }
 
 // iterators
@@ -690,6 +738,9 @@ template<ptrdiff_t Rank> bounds_iterator<Rank> begin(const bounds<Rank> &b) noex
 
 template<ptrdiff_t Rank> bounds_iterator<Rank> end(const bounds<Rank> &b) noexcept { return b.end(); }
 
+template<ptrdiff_t Rank> std::reverse_iterator<bounds_iterator<Rank>> rbegin(const bounds<Rank> &b) noexcept { return b.rbegin(); }
+
+template<ptrdiff_t Rank> std::reverse_iterator<bounds_iterator<Rank>> rend(const bounds<Rank> &b) noexcept { return b.rend(); }
 
 template<ptrdiff_t Rank> class bounds_iterator
 {
@@ -874,6 +925,159 @@ template<ptrdiff_t Rank> bool operator>=(const bounds_iterator<Rank> &lhs, const
 template<ptrdiff_t Rank>
 bounds_iterator<Rank> operator+(typename bounds_iterator<Rank>::difference_type n, const bounds_iterator<Rank> &rhs);
 
+template<ptrdiff_t Rank> struct get_offset_from_coord_uniform_stride
+    {
+      POUTRE_ALWAYS_INLINE static POUTRE_CONSTEXPR poutre::offset op( const bounds<Rank> &i_bnd, const index<Rank>  &i_idx) POUTRE_NOEXCEPT
+      {
+        offset    current_offset = i_idx[Rank - 1]; // at least rank==1
+        ptrdiff_t stride         = i_bnd[Rank - 1];
+        for( auto i = Rank - 2; i >= 0; --i )
+        {
+          current_offset += i_idx[i] * stride;
+          stride *= i_bnd[i];
+        }
+        return current_offset;
+      }
+    };
+
+  template<ptrdiff_t Rank> struct get_offset_from_coord
+  {
+    POUTRE_ALWAYS_INLINE static POUTRE_CONSTEXPR poutre::offset op( const index<Rank>  &i_idx,const index<Rank> &i_stride) POUTRE_NOEXCEPT
+    {
+      std::ptrdiff_t off{0};
+      for (std::size_t i = 0; i < Rank; ++i) { off += i_idx[i] * i_stride[i]; }
+      return off;
+    }
+  };
+
+    // specialize 1D
+    template<> struct get_offset_from_coord_uniform_stride<1>
+    {
+      POUTRE_ALWAYS_INLINE static POUTRE_CONSTEXPR offset op(POUTRE_MAYBE_UNUSED const bounds<1> &i_bnd, const index<1>  &i_idx) POUTRE_NOEXCEPT
+      {
+        return i_idx[0];
+      }
+    };
+
+    template<> struct get_offset_from_coord<1>
+    {
+      POUTRE_ALWAYS_INLINE static POUTRE_CONSTEXPR poutre::offset op(const index<1>  &i_idx, const index<1> &i_stride) POUTRE_NOEXCEPT
+      {
+        std::ptrdiff_t off{0};
+        off = i_idx[0] * i_stride[0];
+        return off;
+      }
+    };
+
+    // specialize 2D
+    template<> struct get_offset_from_coord_uniform_stride<2>
+    {
+      POUTRE_ALWAYS_INLINE static POUTRE_CONSTEXPR offset op(const bounds<2> &i_bnd, const index<2>  &i_idx) POUTRE_NOEXCEPT
+      {
+        return (i_idx[1] + i_idx[0] * i_bnd[1]);
+      }
+    };
+
+    template<> struct get_offset_from_coord<2>
+    {
+      POUTRE_ALWAYS_INLINE static POUTRE_CONSTEXPR poutre::offset op(const index<2>  &i_idx, const index<2> &i_stride) POUTRE_NOEXCEPT
+      {
+        std::ptrdiff_t off{0};
+        off = i_idx[1] * i_stride[1];
+        off += i_idx[0] * i_stride[0];
+        return off;
+      }
+    };
+
+    template<ptrdiff_t Rank> struct get_coord_from_offset_uniform_stride
+    {
+      POUTRE_ALWAYS_INLINE static POUTRE_CONSTEXPR void
+      op(const bounds<Rank> &i_bnd, offset off, index<Rank> &o_idx) POUTRE_NOEXCEPTONLYNDEBUG
+      {
+        POUTRE_ASSERTCHECK(off >= 0, "get_offset: provided offset must be >0");
+#  ifndef NDEBUG
+        // compute max allowed offset
+
+#  endif
+        // recreate idx
+        auto i = Rank - 1;
+        for( ; i >= 0 && off != 0; --i )
+        {
+          POUTRE_ASSERTCHECK(i_bnd[i] >= 0, "get_offset: bnd[i] must be >0");
+          auto dv  = std::div(off, i_bnd[i]);
+          o_idx[i] = dv.rem;  // offset % current;
+          off      = dv.quot; // offset=offset/current
+        }
+        for( ; i >= 0; --i )
+        {
+          o_idx[i] = 0;
+        }
+      }
+    };
+
+    template<> struct get_coord_from_offset_uniform_stride<1>
+    {
+      POUTRE_ALWAYS_INLINE static POUTRE_CONSTEXPR void
+      op(const bounds<1> , offset off, index<1> &o_idx) POUTRE_NOEXCEPTONLYNDEBUG
+      {
+        POUTRE_ASSERTCHECK(off >= 0, "get_offset: provided offset must be >0");
+        POUTRE_ASSERTCHECK(off < i_bnd[0], "get_offset: provided offset out of bound");
+        o_idx[0] = off;
+      }
+    };
+
+    template<> struct get_coord_from_offset_uniform_stride<2>
+    {
+      POUTRE_ALWAYS_INLINE static POUTRE_CONSTEXPR void
+      op(bounds<2> const &i_bnd, offset off, index<2>  &o_idx) POUTRE_NOEXCEPTONLYNDEBUG
+      {
+        POUTRE_ASSERTCHECK(off >= 0, "get_offset: provided offset must be >0");
+        auto dv  = std::div(off, i_bnd[1]);
+        o_idx[1] = dv.rem;  // offset % current;
+        o_idx[0] = dv.quot; // offset=offset/current
+        return;
+      }
+    };
+
+    template<ptrdiff_t Rank> struct shift_op_uniform_stride
+    {
+      POUTRE_ALWAYS_INLINE static POUTRE_CONSTEXPR void
+      op(bounds<Rank> const &i_bnd, index<Rank> const &i_idx, offset shift, index<Rank> &o_idx) POUTRE_NOEXCEPT
+      {
+        // quick exit
+        if( shift == 0 )
+        {
+          o_idx=i_idx;
+          return;
+        }
+        // current offset belong to in
+        offset current_offset = get_offset_from_coord_uniform_stride<Rank>::op(i_bnd, i_idx);
+        // shift
+        current_offset += shift;
+        // recreate idx
+        get_coord_from_offset_uniform_stride<Rank>::op(i_bnd, current_offset, o_idx);
+      }
+    };
+
+  // template<ptrdiff_t Rank> struct shift_op
+  // {
+  //   POUTRE_ALWAYS_INLINE static POUTRE_CONSTEXPR void
+  //   op(index<Rank> const &i_idx, index<Rank> const &i_stride, offset shift, index<Rank> &o_idx) POUTRE_NOEXCEPT
+  //   {
+  //     // quick exit
+  //     if( shift == 0 )
+  //     {
+  //       o_idx=i_idx;
+  //       return;
+  //     }
+  //     // current offset belong to in
+  //     offset current_offset = get_offset_from_coord<Rank>::op(i_idx, i_stride);
+  //     // shift
+  //     current_offset += shift;
+  //     // recreate idx
+  //     get_coord_from_offset_uniform_stride<Rank>::op(i_bnd, current_offset, o_idx);
+  //   }
+  // };
 namespace {
 
   template<typename Viewable, typename U, typename View = std::remove_reference_t<Viewable>>
@@ -893,9 +1097,7 @@ namespace {
   template<typename T, ptrdiff_t Rank>
   constexpr T &view_access(T *data, const index<Rank> &idx, const index<Rank> &stride)
   {
-    std::ptrdiff_t off{};
-    for (std::size_t i = 0; i < Rank; ++i) { off += idx[i] * stride[i]; }
-    return data[off];
+    return data[get_offset_from_coord<Rank>::op(idx,stride)];
   }
 
 }// namespace
@@ -1110,7 +1312,6 @@ template<class ViewType1, class ViewType2> struct is_same_view_type : std::false
 template<class ViewType> struct is_same_view_type<ViewType, ViewType> : std::true_type
 {
 };
-
 
 using bd1d = bounds<1>;//! alias bounds 1D
 using bd2d = bounds<2>;//! alias bounds 2D
