@@ -43,7 +43,7 @@ public:
   ChainedStructuringElement(ChainedStructuringElement &&other) = delete;
   ChainedStructuringElement &operator=(ChainedStructuringElement &&other) = delete;
 
-  //! Append the se to the list @WARNING the ownership is transferred
+  //! Append the se to the list \warning{the ownership is transferred}
   void append(std::unique_ptr<IStructuringElement> strel);
 
   /*!

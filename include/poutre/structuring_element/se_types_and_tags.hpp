@@ -19,7 +19,7 @@
 
 namespace poutre::se {
 /**
- * @addtogroup poutre_se_interface_group Str
+ * @addtogroup poutre_se_interface_group
  *@{
  */
 

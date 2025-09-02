@@ -27,13 +27,13 @@
 #include <spdlog/logger.h>
 #include <spdlog/common.h>
 
+
+namespace poutre {
 /**
  * @addtogroup trace_group Trace facilities
  * @ingroup poutre_base_group
  *@{
  */
-namespace poutre {
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
 class BASE_API GlobalLogger
 {
 public:
@@ -119,7 +119,6 @@ private:
 
 //! operator<< for GlobalLogger::LoggerLevel
 BASE_API std::ostream &operator<<(std::ostream &, GlobalLogger::LoggerLevel level);
-#endif// DOXYGEN_SHOULD_SKIP_THIS
 
 /** @name Global logger macros
  */
@@ -154,6 +153,6 @@ BASE_API std::ostream &operator<<(std::ostream &, GlobalLogger::LoggerLevel leve
     std::format("Entering: {} at {} {}", MSG, __FILE__, __LINE__).c_str(), GlobalLogger::LoggerLevel::trace)
 /**@}*/
 
-}// namespace poutre
-
 // !@} doxygroup: trace_group
+
+}// namespace poutre

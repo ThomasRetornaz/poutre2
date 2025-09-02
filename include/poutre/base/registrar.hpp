@@ -47,6 +47,8 @@ public:
 
   /** @name Singleton interface
    */
+  /**@{*/
+
   //! Get concrete instance (lazy construct)
   static Registrar &getInstance()
   {
@@ -66,6 +68,7 @@ public:
 private:
   //! Private ctor
   Registrar() = default;
+
   /**@}*/
 
   KeyFactoryMap m_keyfactory_map;//! container which store factories
