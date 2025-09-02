@@ -6,8 +6,8 @@ cmake_minimum_required(VERSION 3.21...4.1)
 
 # Only set the cxx_standard if it is not set by someone else
 if (NOT DEFINED CMAKE_CXX_STANDARD)
-  set(CMAKE_CXX_STANDARD 23)
-  set(CMAKE_CXX_STANDARD_REQUIRED ON)
+    set(CMAKE_CXX_STANDARD 23)
+    set(CMAKE_CXX_STANDARD_REQUIRED ON)
 endif()
 
 # strongly encouraged to enable this globally to avoid conflicts between
@@ -17,11 +17,11 @@ set(CMAKE_CXX_EXTENSIONS ON)
 
 # Set the project name and language
 project(
-  poutre2
-  VERSION 0.0.1
-  DESCRIPTION ""
-  HOMEPAGE_URL "https://github.com/ThomasRetornaz/poutre2"
-  LANGUAGES CXX C ASM ASM_MASM)
+        poutre2
+        VERSION 0.0.1
+        DESCRIPTION ""
+        HOMEPAGE_URL "https://github.com/ThomasRetornaz/poutre2"
+        LANGUAGES CXX C ASM ASM_MASM)
 
 option(BUILD_SHARED_LIBS "Build Shared Libraries" ON)
 OPTION(POUTRE_BUILD_TEST "Build Tests Suites" YES)
@@ -29,10 +29,10 @@ OPTION(POUTRE_BUILD_BENCH "Build Benchmark Suites" YES)
 OPTION(POUTRE_BUILD_DOC "Build doxygen documentation" NO)
 
 if(BUILD_SHARED_LIBS)
-  message(STATUS "Building shared libraries")
-  add_definitions(-DPOUTRE_DYNAMIC)
+    message(STATUS "Building shared libraries")
+    add_definitions(-DPOUTRE_DYNAMIC)
 else()
-  message(STATUS "Building static libraries")
+    message(STATUS "Building static libraries")
 endif()
 
 include(cmake/PreventInSourceBuilds.cmake)
@@ -49,13 +49,13 @@ poutre2_local_options()
 set(CMAKE_CXX_VISIBILITY_PRESET hidden)
 
 set(GIT_SHA
-  "Unknown"
-  CACHE STRING "SHA this build was generated from")
+        "Unknown"
+        CACHE STRING "SHA this build was generated from")
 string(
-  SUBSTRING "${GIT_SHA}"
-  0
-  8
-  GIT_SHORT_SHA)
+        SUBSTRING "${GIT_SHA}"
+        0
+        8
+        GIT_SHORT_SHA)
 
 target_compile_features(poutre2_options INTERFACE cxx_std_${CMAKE_CXX_STANDARD})
 
@@ -72,54 +72,54 @@ include_directories(BEFORE ${CMAKE_SOURCE_DIR}/include)
 add_subdirectory(src)
 
 # Don't even look at tests/benchmark/documentation if we're not top level
-if(NOT PROJECT_IS_TOP_LEVEL)
-  return()
+if (NOT PROJECT_IS_TOP_LEVEL)
+    return()
 endif()
 
 # Adding documentation
-if(POUTRE_BUILD_DOC)
-  message(STATUS "Configuring the documentation")
-  include(cmake/Doxygen.cmake)
-  poutre2_enable_doxygen("")
+if (POUTRE_BUILD_DOC)
+    message(STATUS "Configuring the documentation")
+    include(cmake/Doxygen.cmake)
+    poutre2_enable_doxygen("awesome-sidebar")
 endif()
 
 # Adding the benchmarks:
-if(POUTRE_BUILD_BENCH)
-  message(STATUS "Building Benchmarks")
-  add_subdirectory(benchmarks)
+if (POUTRE_BUILD_BENCH)
+    message(STATUS "Building Benchmarks")
+    add_subdirectory(benchmarks)
 endif()
 
 # Adding the tests:
 include(CTest)
 
-if(BUILD_TESTING)
-  message(STATUS "Building Tests. Be sure to check out test/constexpr_tests.cpp for constexpr testing")
-  add_subdirectory(test)
+if (BUILD_TESTING)
+    message(STATUS "Building Tests. Be sure to check out test/constexpr_tests.cpp for constexpr testing")
+    add_subdirectory(test)
 endif()
 
-if(poutre2_BUILD_FUZZ_TESTS)
-  message(AUTHOR_WARNING "Building Fuzz Tests, using fuzzing sanitizer https://www.llvm.org/docs/LibFuzzer.html")
-  if (NOT poutre2_ENABLE_ADDRESS_SANITIZER AND NOT poutre2_ENABLE_THREAD_SANITIZER)
-    message(WARNING "You need asan or tsan enabled for meaningful fuzz testing")
-  endif()
+if (poutre2_BUILD_FUZZ_TESTS)
+    message(AUTHOR_WARNING "Building Fuzz Tests, using fuzzing sanitizer https://www.llvm.org/docs/LibFuzzer.html")
+    if (NOT poutre2_ENABLE_ADDRESS_SANITIZER AND NOT poutre2_ENABLE_THREAD_SANITIZER)
+        message(WARNING "You need asan or tsan enabled for meaningful fuzz testing")
+    endif()
 
-  # add_subdirectory(fuzz_test)
+    # add_subdirectory(fuzz_test)
 endif()
 
 # If MSVC is being used, and ASAN is enabled, we need to set the debugger environment
 # so that it behaves well with MSVC's debugger, and we can run the target from visual studio
-if(MSVC)
-  get_all_installable_targets(all_targets)
-  message("all_targets=${all_targets}")
-  set_target_properties(${all_targets} PROPERTIES VS_DEBUGGER_ENVIRONMENT "PATH=$(VC_ExecutablePath_x64);%PATH%")
+if (MSVC)
+    get_all_installable_targets(all_targets)
+    message("all_targets=${all_targets}")
+    set_target_properties(${all_targets} PROPERTIES VS_DEBUGGER_ENVIRONMENT "PATH=$(VC_ExecutablePath_x64);%PATH%")
 endif()
 
 # set the startup project for the "play" button in MSVC
 set_property(DIRECTORY PROPERTY VS_STARTUP_PROJECT poutre_base)
 
-if(CMAKE_SKIP_INSTALL_RULES)
-  return()
-endif()
+if (CMAKE_SKIP_INSTALL_RULES)
+    return()
+endif ()
 
 include(cmake/PackageProject.cmake)
 
@@ -138,7 +138,7 @@ include(cmake/PackageProject.cmake)
 # out potential ABI related issues before they start, while helping you
 # track a build to a specific GIT SHA
 set(CPACK_PACKAGE_FILE_NAME
-    "${CMAKE_PROJECT_NAME}-${CMAKE_PROJECT_VERSION}-${GIT_SHORT_SHA}-${CMAKE_SYSTEM_NAME}-${CMAKE_BUILD_TYPE}-${CMAKE_CXX_COMPILER_ID}-${CMAKE_CXX_COMPILER_VERSION}"
+        "${CMAKE_PROJECT_NAME}-${CMAKE_PROJECT_VERSION}-${GIT_SHORT_SHA}-${CMAKE_SYSTEM_NAME}-${CMAKE_BUILD_TYPE}-${CMAKE_CXX_COMPILER_ID}-${CMAKE_CXX_COMPILER_VERSION}"
 )
 
 include(CPack)
