@@ -7,6 +7,7 @@ set(PoutreBaseTestSRC
         ${subdirsource}/registrar.cpp
         ${subdirsource}/image.cpp
         ${subdirsource}/image_iostring.cpp
+        ${subdirsource}/iterate_view.cpp
         ${subdirsource}/coordinate.cpp
         ${subdirsource}/containerview.cpp
         ${subdirsource}/threading.cpp
