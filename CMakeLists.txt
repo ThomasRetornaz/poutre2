@@ -15,6 +15,8 @@ endif()
 # when compiling with PCH enabled
 set(CMAKE_CXX_EXTENSIONS ON)
 
+set(CMAKE_CXX_SCAN_FOR_MODULES NO)
+
 # Set the project name and language
 project(
         poutre2
