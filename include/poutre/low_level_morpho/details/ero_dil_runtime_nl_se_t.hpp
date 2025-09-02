@@ -11,7 +11,7 @@
 /**
  * @file   ero_dil_runtime_nl_se_t.hpp
  * @author Thomas Retornaz
- * @brief  Erode dilate with runtime neighor list SE
+ * @brief  Erode dilate with runtime neighbor list SE
  *
  *
  */

@@ -92,7 +92,7 @@ public:
   //! Get total number of elements
   [[nodiscard]] constexpr size_type size() const noexcept { return m_numelement; }
 
-  //! no const direct access to underlying storage @Warning
+  //! no const direct access to underlying storage @warning
   // cppcheck-suppress functionConst
   [[nodiscard]] pointer data() noexcept { return m_storage.data(); }
 
