@@ -45,6 +45,12 @@ struct static_se_traits<Common_NL_SE::SESegmentX1D>
             neighbor_element{-1},
             neighbor_element{+1}
     }};
+
+  static POUTRE_CONSTEXPR const std::array<neighbor_element, 2> coordinates_no_center =
+  {{
+    neighbor_element{-1},
+    neighbor_element{+1}
+  }};
   POUTRE_STATIC_CONSTEXPR ptrdiff_t rank        = 1;
   POUTRE_STATIC_CONSTEXPR ptrdiff_t size        = 3;
 
@@ -71,6 +77,12 @@ struct static_se_traits<Common_NL_SE::SESegmentX2D>
       neighbor_element{ 0,+1 },
     }};
 
+  static POUTRE_CONSTEXPR const std::array<neighbor_element, 2> coordinates_no_center =
+  {{
+    neighbor_element{ 0,-1 },
+    neighbor_element{ 0,+1 },
+  }};
+
   POUTRE_STATIC_CONSTEXPR ptrdiff_t rank        = 2;
   POUTRE_STATIC_CONSTEXPR ptrdiff_t size        = 3;
 
@@ -95,6 +107,12 @@ struct static_se_traits<Common_NL_SE::SESegmentY2D>
       neighbor_element{ -1,+0 },
       neighbor_element{ +1,+0 },
     }};
+
+  static POUTRE_CONSTEXPR const std::array<neighbor_element, 2> coordinates_no_center =
+  {{
+    neighbor_element{ -1,+0 },
+    neighbor_element{ +1,+0 },
+  }};
 
   POUTRE_STATIC_CONSTEXPR ptrdiff_t rank        = 2;
   POUTRE_STATIC_CONSTEXPR ptrdiff_t size        = 3;
@@ -121,6 +139,12 @@ struct static_se_traits<Common_NL_SE::SESegmentY3D>
       neighbor_element{ 0, +1,+0 },
     }};
 
+  static POUTRE_CONSTEXPR const std::array<neighbor_element, 2> coordinates_no_center =
+  {{
+    neighbor_element{ 0, -1,+0 },
+    neighbor_element{ 0, +1,+0 },
+  }};
+
   POUTRE_STATIC_CONSTEXPR ptrdiff_t rank        = 3;
   POUTRE_STATIC_CONSTEXPR ptrdiff_t size        = 3;
 
@@ -145,6 +169,12 @@ struct static_se_traits<Common_NL_SE::SESegmentZ3D>
       neighbor_element{ -1, 0,+0 },
       neighbor_element{ +1, 0,+0 },
     }};
+
+  static POUTRE_CONSTEXPR const std::array<neighbor_element, 2> coordinates_no_center =
+  {{
+    neighbor_element{ -1, 0,+0 },
+    neighbor_element{ +1, 0,+0 },
+  }};
 
   POUTRE_STATIC_CONSTEXPR ptrdiff_t rank        = 3;
   POUTRE_STATIC_CONSTEXPR ptrdiff_t size        = 3;
@@ -171,6 +201,11 @@ struct static_se_traits<Common_NL_SE::SESegmentX3D>
       neighbor_element{ 0, 0, +1 },
     }};
 
+  static POUTRE_CONSTEXPR const std::array<neighbor_element, 2> coordinates_no_center =
+  {{
+    neighbor_element{ 0, 0, -1 },
+    neighbor_element{ 0, 0, +1 },
+  }};
   POUTRE_STATIC_CONSTEXPR ptrdiff_t rank        = 3;
   POUTRE_STATIC_CONSTEXPR ptrdiff_t size        = 3;
 
@@ -196,6 +231,20 @@ struct static_se_traits<Common_NL_SE::SESquare2D>
     neighbor_element{-1, +1}, neighbor_element{+0, +1}, neighbor_element{+1, +1},
     }};
 
+  static POUTRE_CONSTEXPR const std::array<neighbor_element, 8> coordinates_no_center =
+  {{
+    neighbor_element{-1, -1},
+    neighbor_element{-1, 0},
+    neighbor_element{-1, 1},
+    neighbor_element{0, -1},
+
+    neighbor_element{0, +1},
+    neighbor_element{1, -1},
+    neighbor_element{+1, +0},
+    neighbor_element{+1, +1},
+    }};
+
+
   POUTRE_STATIC_CONSTEXPR ptrdiff_t rank        = 2;
   POUTRE_STATIC_CONSTEXPR ptrdiff_t size        = 9;
 
@@ -205,15 +254,15 @@ struct static_se_traits<Common_NL_SE::SESquare2D>
   {
     POUTRE_CONSTEXPR std::array<neighbor_element, 4> coordinates_upper = {
     neighbor_element{-1, -1},
-    neighbor_element{-1, +0},
-    neighbor_element{-1, +1},
-    neighbor_element{+0, -1},
+    neighbor_element{-1, 0},
+    neighbor_element{-1, 1},
+    neighbor_element{0, -1},
 };
     POUTRE_CONSTEXPR std::array<neighbor_element, 4> coordinates_lower = {
-      neighbor_element{+1, -1},
+      neighbor_element{0, +1},
+      neighbor_element{1, -1},
       neighbor_element{+1, +0},
       neighbor_element{+1, +1},
-      neighbor_element{+0, +1},
 };
     return std::make_pair(coordinates_upper, coordinates_lower);
   }
@@ -232,7 +281,13 @@ struct static_se_traits<Common_NL_SE::SECross2D>
       neighbor_element{+1, +0},
       neighbor_element{+0, +1},
       }};
-
+  static POUTRE_CONSTEXPR const std::array<neighbor_element, 4> coordinates_no_center =
+  {{
+    neighbor_element{+0, -1},
+    neighbor_element{-1, +0},
+    neighbor_element{+1, +0},
+    neighbor_element{+0, +1},
+    }};
   POUTRE_STATIC_CONSTEXPR ptrdiff_t rank        = 2;
   POUTRE_STATIC_CONSTEXPR ptrdiff_t size        = 5;
 
@@ -267,6 +322,16 @@ struct static_se_traits<Common_NL_SE::SECross3D>
       neighbor_element{+0, +1, +0},
       neighbor_element{+0, +0, +1}
       }};
+
+  static POUTRE_CONSTEXPR const std::array<neighbor_element, 6> coordinates_no_center =
+  {{
+    neighbor_element{+0, +0, -1},
+    neighbor_element{+0, -1, +0},
+    neighbor_element{-1, +0, +0},
+    neighbor_element{+1, +0, +0},
+    neighbor_element{+0, +1, +0},
+    neighbor_element{+0, +0, +1}
+  }};
 
   POUTRE_STATIC_CONSTEXPR ptrdiff_t rank        = 3;
   POUTRE_STATIC_CONSTEXPR ptrdiff_t size        = 7;
@@ -309,6 +374,21 @@ struct static_se_traits<Common_NL_SE::SESquare3D>
     {-1, +0, +1}, {+0, +0, +1}, {+1, +0, +1},
     {-1, +1, +1}, {+0, +1, +1}, {+1, +1, +1},
     }};
+
+  static POUTRE_CONSTEXPR const std::array<neighbor_element, 26> coordinates_no_center =
+  {{
+  {-1, -1, -1}, {+0, -1, -1}, {+1, -1, -1},
+  {-1, +0, -1}, {+0, +0, -1}, {+1, +0, -1},
+  {-1, +1, -1}, {+0, +1, -1}, {+1, +1, -1},
+  // ----
+  {-1, -1, +0}, {+0, -1, +0}, {+1, -1, +0},
+  {-1, +0, +0},               {+1, +0, +0},
+  {-1, +1, +0}, {+0, +1, +0}, {+1, +1, +0},
+  // ----
+  {-1, -1, +1}, {+0, -1, +1}, {+1, -1, +1},
+  {-1, +0, +1}, {+0, +0, +1}, {+1, +0, +1},
+  {-1, +1, +1}, {+0, +1, +1}, {+1, +1, +1},
+  }};
 
   POUTRE_STATIC_CONSTEXPR ptrdiff_t rank        = 3;
   POUTRE_STATIC_CONSTEXPR ptrdiff_t size        = 27;
