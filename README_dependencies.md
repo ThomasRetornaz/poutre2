@@ -29,165 +29,170 @@ RefreshEnv.cmd # reload the environment
 ```
 
 ### Necessary Dependencies
-1. A C++ compiler that supports C++17.
-See [cppreference.com](https://en.cppreference.com/w/cpp/compiler_support)
-to see which features are supported by each compiler.
-The following compilers should work:
 
-  * [gcc 7+](https://gcc.gnu.org/)
-	<details>
-	<summary>Install command</summary>
+1. A C++ compiler that supports C++23.
+   See [cppreference.com](https://en.cppreference.com/w/cpp/compiler_support)
+   to see which features are supported by each compiler.
+   The following compilers should work:
 
-	- Debian/Ubuntu:
+* [gcc 13+](https://gcc.gnu.org/)
+  <details>
+  <summary>Install command</summary>
 
-			sudo apt install build-essential
+    - Debian/Ubuntu:
 
-	- Windows:
+      	sudo apt install build-essential
 
-			choco install mingw -y
+    - Windows:
 
-	- MacOS:
+      	choco install mingw -y
 
-			brew install gcc
-	</details>
+    - MacOS:
 
-  * [clang 6+](https://clang.llvm.org/)
-	<details>
-	<summary>Install command</summary>
+      	brew install gcc
+  </details>
 
-	- Debian/Ubuntu:
+* [clang 18+](https://clang.llvm.org/)
+  <details>
+  <summary>Install command</summary>
 
-			bash -c "$(wget -O - https://apt.llvm.org/llvm.sh)"
+    - Debian/Ubuntu:
 
-	- Windows:
+      	bash -c "$(wget -O - https://apt.llvm.org/llvm.sh)"
 
-		Visual Studio 2019 ships with LLVM (see the Visual Studio section). However, to install LLVM separately:
+    - Windows:
 
-			choco install llvm -y
+      Visual Studio 2019 ships with LLVM (see the Visual Studio section). However, to install LLVM separately:
 
-		llvm-utils for using external LLVM with Visual Studio generator:
+      	choco install llvm -y
 
-			git clone https://github.com/zufuliu/llvm-utils.git
-			cd llvm-utils/VS2017
-			.\install.bat
+      llvm-utils for using external LLVM with Visual Studio generator:
 
-	- MacOS:
+      	git clone https://github.com/zufuliu/llvm-utils.git
+      	cd llvm-utils/VS2022
+      	.\install.bat
 
-			brew install llvm
-			brew install libomp
-	</details>
+    - MacOS:
 
-  * [Visual Studio 2019 or higher](https://visualstudio.microsoft.com/)
-	<details>
-	<summary>Install command + Environment setup</summary>
+      	brew install llvm
+      	brew install libomp
+  </details>
 
-	On Windows, you need to install Visual Studio 2019 because of the SDK and libraries that ship with it.
+* [Visual Studio 2022 or higher](https://visualstudio.microsoft.com/)
+  <details>
+  <summary>Install command + Environment setup</summary>
 
-  	Visual Studio IDE - 2019 Community (installs Clang too):
+  On Windows, you need to install Visual Studio 2022 because of the SDK and libraries that ship with it.
 
-  	  	choco install -y visualstudio2019community --package-parameters "add Microsoft.VisualStudio.Workload.NativeDesktop --includeRecommended --includeOptional --passive --locale en-US"
+  Visual Studio IDE - 2022 Community (installs Clang too):
 
-	Put MSVC compiler, Clang compiler, and vcvarsall.bat on the path:
+    	choco install -y visualstudio2022community --package-parameters "add Microsoft.VisualStudio.Workload.NativeDesktop --includeRecommended --includeOptional --passive --locale en-US"
 
-			choco install vswhere -y
-			refreshenv
+  Put MSVC compiler, Clang compiler, and vcvarsall.bat on the path:
 
-			# change to x86 for 32bit
-			$clpath = vswhere -products * -latest -prerelease -find **/Hostx64/x64/*
-			$clangpath = vswhere -products * -latest -prerelease -find **/Llvm/bin/*
-			$vcvarsallpath =  vswhere -products * -latest -prerelease -find **/Auxiliary/Build/*
+  		choco install vswhere -y
+  		refreshenv
 
-			$path = [System.Environment]::GetEnvironmentVariable("PATH", "User")
-			[Environment]::SetEnvironmentVariable("Path", $path + ";$clpath" + ";$clangpath" + ";$vcvarsallpath", "User")
-			refreshenv
+  		# change to x86 for 32bit
+  		$clpath = vswhere -products * -latest -prerelease -find **/Hostx64/x64/*
+  		$clangpath = vswhere -products * -latest -prerelease -find **/Llvm/bin/*
+  		$vcvarsallpath =  vswhere -products * -latest -prerelease -find **/Auxiliary/Build/*
 
-	</details>
+  		$path = [System.Environment]::GetEnvironmentVariable("PATH", "User")
+  		[Environment]::SetEnvironmentVariable("Path", $path + ";$clpath" + ";$clangpath" + ";$vcvarsallpath", "User")
+  		refreshenv
+
+  </details>
 
 
 2. [CMake 3.21+](https://cmake.org/)
-	<details>
-	<summary>Install Command</summary>
+   <details>
+   <summary>Install Command</summary>
 
-	- Debian/Ubuntu:
+    - Debian/Ubuntu:
 
-			sudo apt-get install cmake
+          sudo apt-get install cmake
 
-	- Windows:
+    - Windows:
 
-			choco install cmake -y
+          choco install cmake -y
 
-	- MacOS:
+    - MacOS:
 
-			brew install cmake
+          brew install cmake
 
-	</details>
+   </details>
 
 ### Optional Dependencies
+
+TODO OpenImageIO
+
 #### C++ Tools
-  * [Doxygen](http://doxygen.nl/)
-	<details>
-	<summary>Install Command</summary>
 
-	- Debian/Ubuntu:
+* [Doxygen](http://doxygen.nl/)
+  <details>
+  <summary>Install Command</summary>
 
-			sudo apt-get install doxygen
-			sudo apt-get install graphviz
+    - Debian/Ubuntu:
 
-	- Windows:
+      	sudo apt-get install doxygen
+      	sudo apt-get install graphviz
 
-			choco install doxygen.install -y
-			choco install graphviz -y
+    - Windows:
 
-	- MacOS:
+      	choco install doxygen.install -y
+      	choco install graphviz -y
 
-			brew install doxygen
-	 		brew install graphviz
+    - MacOS:
 
-	</details>
+      	brew install doxygen
+      	brew install graphviz
 
-
-  * [ccache](https://ccache.dev/)
-	<details>
-	<summary>Install Command</summary>
-
-	- Debian/Ubuntu:
-
-			sudo apt-get install ccache
-
-	- Windows:
-
-			choco install ccache -y
-
-	- MacOS:
-
-			brew install ccache
-
-	</details>
+  </details>
 
 
-  * [Cppcheck](http://cppcheck.sourceforge.net/)
-	<details>
-	<summary>Install Command</summary>
+* [ccache](https://ccache.dev/)
+  <details>
+  <summary>Install Command</summary>
 
-	- Debian/Ubuntu:
+    - Debian/Ubuntu:
 
-			sudo apt-get install cppcheck
+      	sudo apt-get install ccache
 
-	- Windows:
+    - Windows:
 
-			choco install cppcheck -y
+      	choco install ccache -y
 
-	- MacOS:
+    - MacOS:
 
-			brew install cppcheck
+      	brew install ccache
 
-	</details>
+  </details>
 
 
-  * [include-what-you-use](https://include-what-you-use.org/)
-	<details>
-	<summary>Install Command</summary>
+* [Cppcheck](http://cppcheck.sourceforge.net/)
+  <details>
+  <summary>Install Command</summary>
 
-	Follow instructions here:
-	https://github.com/include-what-you-use/include-what-you-use#how-to-install
-	</details>
+    - Debian/Ubuntu:
+
+      	sudo apt-get install cppcheck
+
+    - Windows:
+
+      	choco install cppcheck -y
+
+    - MacOS:
+
+      	brew install cppcheck
+
+  </details>
+
+
+* [include-what-you-use](https://include-what-you-use.org/)
+  <details>
+  <summary>Install Command</summary>
+
+  Follow instructions here:
+  https://github.com/include-what-you-use/include-what-you-use#how-to-install
+  </details>

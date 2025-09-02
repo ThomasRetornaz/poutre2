@@ -9,7 +9,7 @@ For the subsequent builds, in case you change the source code, you only need to 
 
 ### (1) Specify the compiler using environment variables
 
-By default (if you don't set environment variables `CC` and `CXX`), the system default compiler will be used.
+By default, (if you don't set environment variables `CC` and `CXX`), the system default compiler will be used.
 
 CMake uses the environment variables CC and CXX to decide which compiler to use. So to avoid the conflict issues only specify the compilers using these variables.
 
@@ -19,66 +19,66 @@ CMake uses the environment variables CC and CXX to decide which compiler to use.
 
 - Debian/Ubuntu/MacOS:
 
-	Set your desired compiler (`clang`, `gcc`, etc):
+  Set your desired compiler (`clang`, `gcc`, etc):
 
-	- Temporarily (only for the current shell)
+    - Temporarily (only for the current shell)
 
-		Run one of the followings in the terminal:
+      Run one of the followings in the terminal:
 
-		- clang
+        - clang
 
-				CC=clang CXX=clang++
+          	CC=clang CXX=clang++
 
-		- gcc
+        - gcc
 
-				CC=gcc CXX=g++
+          	CC=gcc CXX=g++
 
-	- Permanent:
+    - Permanent:
 
-		Open `~/.bashrc` using your text editor:
+      Open `~/.bashrc` using your text editor:
 
-			gedit ~/.bashrc
+      	gedit ~/.bashrc
 
-		Add `CC` and `CXX` to point to the compilers:
+      Add `CC` and `CXX` to point to the compilers:
 
-			export CC=clang
-			export CXX=clang++
+      	export CC=clang
+      	export CXX=clang++
 
-		Save and close the file.
+      Save and close the file.
 
 - Windows:
 
-	- Permanent:
+    - Permanent:
 
-		Run one of the followings in PowerShell:
+      Run one of the followings in PowerShell:
 
-		- Visual Studio generator and compiler (cl)
+        - Visual Studio generator and compiler (cl)
 
-				[Environment]::SetEnvironmentVariable("CC", "cl.exe", "User")
-				[Environment]::SetEnvironmentVariable("CXX", "cl.exe", "User")
-				refreshenv
+          	[Environment]::SetEnvironmentVariable("CC", "cl.exe", "User")
+          	[Environment]::SetEnvironmentVariable("CXX", "cl.exe", "User")
+          	refreshenv
 
-		  Set the architecture using [vcvarsall](https://docs.microsoft.com/en-us/cpp/build/building-on-the-command-line?view=vs-2019#vcvarsall-syntax):
+          Set the architecture using [vcvarsall](https://docs.microsoft.com/en-us/cpp/build/building-on-the-command-line?view=vs-2019#vcvarsall-syntax):
 
-				vcvarsall.bat x64
+          	vcvarsall.bat x64
 
-		- clang
+        - clang
 
-				[Environment]::SetEnvironmentVariable("CC", "clang.exe", "User")
-				[Environment]::SetEnvironmentVariable("CXX", "clang++.exe", "User")
-				refreshenv
+          	[Environment]::SetEnvironmentVariable("CC", "clang.exe", "User")
+          	[Environment]::SetEnvironmentVariable("CXX", "clang++.exe", "User")
+          	refreshenv
 
-		- gcc
+        - gcc
 
-				[Environment]::SetEnvironmentVariable("CC", "gcc.exe", "User")
-				[Environment]::SetEnvironmentVariable("CXX", "g++.exe", "User")
-				refreshenv
+          	[Environment]::SetEnvironmentVariable("CC", "gcc.exe", "User")
+          	[Environment]::SetEnvironmentVariable("CXX", "g++.exe", "User")
+          	refreshenv
 
 
-  - Temporarily (only for the current shell):
+- Temporarily (only for the current shell):
 
-			$Env:CC="clang.exe"
-			$Env:CXX="clang++.exe"
+  		$Env:CC="clang.exe"
+  		$Env:CXX="clang++.exe"
 
 </details>
 

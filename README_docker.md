@@ -8,8 +8,8 @@ docker build -f ./.devcontainer/Dockerfile --tag=my_project:latest .
 docker run -it my_project:latest
 ```
 
-This command will put you in a `bash` session in a Ubuntu 20.04 Docker container,
-with all of the tools listed in the [Dependencies](#dependencies) section already installed.
+This command will put you in a `bash` session in a Ubuntu 24.04 Docker container,
+with all the tools listed in the [Dependencies](README_dependencies.md) section already installed.
 Additionally, you will have `g++-11` and `clang++-13` installed as the default
 versions of `g++` and `clang++`.
 
@@ -42,7 +42,7 @@ docker run -it \
 	my_project:latest
 ```
 
-You can configure and build [as directed above](#build) using these commands:
+You can configure and build [as directed above](README_building.md) using these commands:
 
 ```bash
 /starter_project# mkdir build
@@ -61,7 +61,7 @@ with these commands:
 
 The `ccmake` tool is also installed; you can substitute `ccmake` for `cmake` to
 configure the project interactively.
-All of the tools this project supports are installed in the Docker image;
+All the tools this project supports are installed in the Docker image;
 enabling them is as simple as flipping a switch using the `ccmake` interface.
 Be aware that some of the sanitizers conflict with each other, so be sure to
 run them separately.
