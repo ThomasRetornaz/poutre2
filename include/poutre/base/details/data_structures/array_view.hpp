@@ -361,7 +361,7 @@ public:
 
   // element access
   // cppcheck-suppress functionConst
-  reference operator[](std::size_t n) { return index_[n]; }
+  constexpr reference operator[](std::size_t n) { return index_[n]; }
   constexpr const_reference operator[](std::size_t n) const { return index_[n]; }
 
   // arithmetic
@@ -572,7 +572,7 @@ public:
 
   // element access
   // cppcheck-suppress functionConst
-  reference operator[](std::size_t n) { return bounds_[n]; }
+  constexpr reference operator[](std::size_t n) { return bounds_[n]; }
   constexpr const_reference operator[](std::size_t n) const { return bounds_[n]; }
 
   // arithmetic
@@ -782,7 +782,7 @@ public:
   reference operator*() const { return index_; }
   pointer operator->() const { return &index_; }
 
-  reference operator[](difference_type n) const
+  constexpr reference operator[](difference_type n) const
   {
     bounds_iterator<Rank> iter(*this);
     return (iter += n).index_;
@@ -991,7 +991,7 @@ template<ptrdiff_t Rank> struct get_offset_from_coord_uniform_stride
 
     template<ptrdiff_t Rank> struct get_coord_from_offset_uniform_stride
     {
-      POUTRE_ALWAYS_INLINE static POUTRE_CONSTEXPR void
+      POUTRE_ALWAYS_INLINE static /*consteval*/ void
       op(const bounds<Rank> &i_bnd, offset off, index<Rank> &o_idx) POUTRE_NOEXCEPTONLYNDEBUG
       {
         POUTRE_ASSERTCHECK(off >= 0, "get_offset: provided offset must be >0");
@@ -1004,7 +1004,7 @@ template<ptrdiff_t Rank> struct get_offset_from_coord_uniform_stride
         for( ; i >= 0 && off != 0; --i )
         {
           POUTRE_ASSERTCHECK(i_bnd[i] >= 0, "get_offset: bnd[i] must be >0");
-          auto dv  = std::div(off, i_bnd[i]);
+          constexpr auto dv = std::div(off, i_bnd[i]);// c++23 constexpr !
           o_idx[i] = dv.rem;  // offset % current;
           off      = dv.quot; // offset=offset/current
         }
@@ -1017,8 +1017,8 @@ template<ptrdiff_t Rank> struct get_offset_from_coord_uniform_stride
 
     template<> struct get_coord_from_offset_uniform_stride<1>
     {
-      POUTRE_ALWAYS_INLINE static POUTRE_CONSTEXPR void
-      op(const bounds<1> , offset off, index<1> &o_idx) POUTRE_NOEXCEPTONLYNDEBUG
+      POUTRE_ALWAYS_INLINE static consteval void
+      op(POUTRE_MAYBE_UNUSED const bounds<1> i_bnd, offset off, index<1> &o_idx) POUTRE_NOEXCEPTONLYNDEBUG
       {
         POUTRE_ASSERTCHECK(off >= 0, "get_offset: provided offset must be >0");
         POUTRE_ASSERTCHECK(off < i_bnd[0], "get_offset: provided offset out of bound");
@@ -1028,11 +1028,11 @@ template<ptrdiff_t Rank> struct get_offset_from_coord_uniform_stride
 
     template<> struct get_coord_from_offset_uniform_stride<2>
     {
-      POUTRE_ALWAYS_INLINE static POUTRE_CONSTEXPR void
-      op(bounds<2> const &i_bnd, offset off, index<2>  &o_idx) POUTRE_NOEXCEPTONLYNDEBUG
+      POUTRE_ALWAYS_INLINE static /*consteval*/ void
+      op(bounds<2> const &i_bnd, const offset off, index<2>  &o_idx) POUTRE_NOEXCEPTONLYNDEBUG
       {
         POUTRE_ASSERTCHECK(off >= 0, "get_offset: provided offset must be >0");
-        auto dv  = std::div(off, i_bnd[1]);
+        auto dv = std::div(off, i_bnd[1]);// c++23 constexpr !
         o_idx[1] = dv.rem;  // offset % current;
         o_idx[0] = dv.quot; // offset=offset/current
         return;
