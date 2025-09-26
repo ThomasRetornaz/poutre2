@@ -532,24 +532,48 @@ enum class PType {
 
 using ScalarTypeVariant = std::variant<pUINT8, pINT32, pINT64, pFLOAT, pDOUBLE>;
 
+template <typename T>
+ScalarTypeVariant CreatePixelValue(T value, const PType ptype)
+{
+  switch(ptype) {
+  case PType::PType_GrayUINT8: {
+    return static_cast<pUINT8>(value);
+  }
+  case PType::PType_GrayINT32: {
+    return static_cast<pINT32>(value);
+  }
+  case PType::PType_GrayINT64: {
+    return static_cast<pINT64>(value);
+  }
+  case PType::PType_F32: {
+    return static_cast<pFLOAT>(value);
+  }
+  case PType::PType_D64: {
+    return static_cast<pDOUBLE>(value);
+  }
+  default://  Undef;
+    POUTRE_RUNTIME_ERROR("unsupported ptype");
+  }
+}
+
 inline ScalarTypeVariant get_lowest(const PType ptype)
 {
   switch(ptype) {
   case PType::PType_GrayUINT8: {
     return std::numeric_limits<pUINT8>::lowest();
-  }break;
+  }
   case PType::PType_GrayINT32: {
     return std::numeric_limits<pINT32>::lowest();
-  }break;
+  }
   case PType::PType_GrayINT64: {
     return std::numeric_limits<pINT64>::lowest();
-  }break;
+  }
   case PType::PType_F32: {
     return std::numeric_limits<pFLOAT>::lowest();
-  }break;
+  }
   case PType::PType_D64: {
     return std::numeric_limits<pDOUBLE>::lowest();
-  }break;
+  }
   default://  Undef;
     POUTRE_RUNTIME_ERROR("unsupported ptype");
   }
