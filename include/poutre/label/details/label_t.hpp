@@ -329,7 +329,7 @@ size_t t_label_binaryDispatch(
     {
       POUTRE_RUNTIME_ERROR("t_label_binaryDispatch unsupported nl_static");}
     }
-    return 0;
+    //return 0;
   }
   if constexpr (Rank == 2) {
     switch(nl_static) {
@@ -381,7 +381,7 @@ size_t t_label_binaryDispatch(
       POUTRE_RUNTIME_ERROR("t_label_binaryDispatch unsupported nl_static");}
     }
   }
-  return 0;
+  //return 0;
 }
 
 template<typename Tin, typename Tout, ptrdiff_t Rank>
@@ -422,7 +422,7 @@ size_t t_label_flat_zonesDispatch(
     {
       POUTRE_RUNTIME_ERROR("t_label_flat_zonesDispatch unsupported nl_static");}
     }
-    return 0;
+    //return 0;
   }
   if constexpr (Rank == 2) {
     switch(nl_static) {
@@ -474,7 +474,7 @@ size_t t_label_flat_zonesDispatch(
       POUTRE_RUNTIME_ERROR("t_label_flat_zonesDispatch unsupported nl_static");}
     }
   }
-  return 0;
+  //return 0;
 }
 
 template<typename Tin, typename Tout, ptrdiff_t Rank>

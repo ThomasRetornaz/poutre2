@@ -20,7 +20,7 @@
 #include <poutre/base/config.hpp>
 
 #ifdef POUTRE_DYNAMIC// defined if POUTRE is compiled as a DLL
-#ifdef poutre_geodesy_EXPORTS// defined if we are building the POUTRE DLL (instead of using it)
+#ifdef poutre_label_EXPORTS// defined if we are building the POUTRE DLL (instead of using it)
 #define LAB_API MODULE_EXPORT
 #else
 #define LAB_API MODULE_IMPORT
