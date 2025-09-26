@@ -24,6 +24,7 @@ add_subdirectory(structuring_element)
 add_subdirectory(low_level_morpho)
 add_subdirectory(io)
 add_subdirectory(geodesy)
+add_subdirectory(label)
 
 # Provide a simple smoke test to make sure that the CLI works and can display a --help message
 add_test(NAME cli.has_help COMMAND poutre_base_tests --help)
