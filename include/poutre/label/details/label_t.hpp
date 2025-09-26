@@ -381,7 +381,9 @@ size_t t_label_binaryDispatch(
       POUTRE_RUNTIME_ERROR("t_label_binaryDispatch unsupported nl_static");}
     }
   }
-  //return 0;
+  POUTRE_RUNTIME_ERROR("t_label_binaryDispatch unsupported nb dims");
+  // cppcheck-suppress missingReturn
+  //return 0; //NOLINT
 }
 
 template<typename Tin, typename Tout, ptrdiff_t Rank>
@@ -474,7 +476,9 @@ size_t t_label_flat_zonesDispatch(
       POUTRE_RUNTIME_ERROR("t_label_flat_zonesDispatch unsupported nl_static");}
     }
   }
-  //return 0;
+  // cppcheck-suppress missingReturn
+  POUTRE_RUNTIME_ERROR("t_label_flat_zonesDispatch unsupported nb dims");
+  //return 0; //NOLINT
 }
 
 template<typename Tin, typename Tout, ptrdiff_t Rank>
