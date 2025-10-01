@@ -46,7 +46,7 @@ jobs:
           - ON
           - OFF
         build_shared:
-          - OFF
+          - ON
 
         exclude:
           # mingw is determined by this author to be too buggy to support
