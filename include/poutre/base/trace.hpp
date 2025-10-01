@@ -36,6 +36,10 @@ namespace poutre {
  */
 class BASE_API GlobalLogger
 {
+private:
+  static GlobalLogger* m_instance;
+  static std::once_flag m_initFlag;
+
 public:
   enum class LoggerLevel {
     trace,
@@ -49,9 +53,8 @@ public:
   };
   static GlobalLogger &get()
   {
-    static GlobalLogger instance;
-    // Instantiated on first use.
-    return instance;
+    std::call_once(m_initFlag, []() { m_instance = new GlobalLogger(); });
+    return *m_instance;
   }
 
   GlobalLogger(const GlobalLogger &) = delete;

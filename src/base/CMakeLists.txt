@@ -51,6 +51,8 @@ target_link_libraries(poutre_base PRIVATE poutre2_options
         PUBLIC xsimd::xsimd
 )
 
+target_compile_definitions(poutre_base PUBLIC SPDLOG_COMPILED_LIB)
+
 find_package(OpenMP)
 if(OpenMP_CXX_FOUND)
     target_link_libraries(poutre_base PUBLIC OpenMP::OpenMP_CXX)

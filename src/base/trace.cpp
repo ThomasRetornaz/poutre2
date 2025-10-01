@@ -15,8 +15,12 @@
 #include <spdlog/sinks/stdout_color_sinks.h>
 #include <spdlog/common.h>
 #include <ostream>
+#include <mutex>
 
 namespace poutre {
+
+GlobalLogger* GlobalLogger::m_instance;
+std::once_flag GlobalLogger::m_initFlag;
 
 //! Private ctor
 GlobalLogger::GlobalLogger() : m_innerlogger(spdlog::stdout_color_st("POUTRE_GLOBAL_LOGGER"))
