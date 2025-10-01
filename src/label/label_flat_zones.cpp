@@ -68,7 +68,7 @@ size_t label_flat_zones(const IInterface &i_img,  se::Common_NL_SE nl_static, II
       POUTRE_RUNTIME_ERROR("label_flat_zones unsupported PTYPE");
     }
     }
-  } break;
+  }
   case 2: {
     switch (i_img.GetPType()) {
     case poutre::PType::PType_GrayUINT8: {
@@ -115,7 +115,7 @@ size_t label_flat_zones(const IInterface &i_img,  se::Common_NL_SE nl_static, II
   }
   // case 4: {
   //   // ConvertIntoDispatchDims<4>(i_img1, o_img2);
-  // } break;
+  // }
   default: {
     POUTRE_RUNTIME_ERROR("label_flat_zones Unsupported number of dims");
   }

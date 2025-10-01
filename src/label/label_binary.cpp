@@ -60,7 +60,7 @@ size_t label_binary(const IInterface &i_img,  se::Common_NL_SE nl_static, IInter
     }
     case poutre::PType::PType_F32: {
       return label_binaryImageDispatch<1, poutre::PType::PType_F32>(i_img, nl_static, o_img);
-    } break;
+    }
     case poutre::PType::PType_D64: {
       return label_binaryImageDispatch<1, poutre::PType::PType_D64>(i_img, nl_static, o_img);
     }
@@ -68,7 +68,7 @@ size_t label_binary(const IInterface &i_img,  se::Common_NL_SE nl_static, IInter
       POUTRE_RUNTIME_ERROR("label_binary unsupported PTYPE");
     }
     }
-  } break;
+  }
   case 2: {
     switch (i_img.GetPType()) {
     case poutre::PType::PType_GrayUINT8: {
@@ -90,7 +90,7 @@ size_t label_binary(const IInterface &i_img,  se::Common_NL_SE nl_static, IInter
       POUTRE_RUNTIME_ERROR("label_binary unsupported PTYPE");
     }
     }
-  } break;
+  }
   case 3: {
     switch (i_img.GetPType()) {
     case poutre::PType::PType_GrayUINT8: {
@@ -115,7 +115,7 @@ size_t label_binary(const IInterface &i_img,  se::Common_NL_SE nl_static, IInter
   }
   // case 4: {
   //   // ConvertIntoDispatchDims<4>(i_img1, o_img2);
-  // } break;
+  // }
   default: {
     POUTRE_RUNTIME_ERROR("label_binary Unsupported number of dims");
   }
