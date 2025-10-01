@@ -9,14 +9,14 @@ function(poutre2_setup_dependencies)
 
     include(ExternalProject)
 
-    # ### Benchmark
+    # ### GoogleBenchmark
     if(NOT TARGET googlebenchmark::googlebenchmark)
         cpmaddpackage(
                 NAME googlebenchmark
                 GITHUB_REPOSITORY google/benchmark
 
                 # VERSION ${ogs.minimum_version.gtest}
-                GIT_TAG v1.9.0
+                GIT_TAG v1.9.4
 
                 OPTIONS "BENCHMARK_ENABLE_GTEST_TESTS OFF" "BENCHMARK_ENABLE_TESTING OFF"
 
@@ -25,20 +25,21 @@ function(poutre2_setup_dependencies)
         )
     endif()
 
-    # ### BOOST PREPROCESSOR
-    if(NOT TARGET boost_preprocessor)
-        cpmaddpackage(
-                NAME boost_preprocessor
-                GIT_TAG boost-1.88.0
-                GITHUB_REPOSITORY "boostorg/preprocessor")
-    endif()
+    # ### BOOST HISTOGRAM
+#    if(NOT TARGET boost_histogram)
+#        cpmaddpackage(
+#                NAME boost_histogram
+#                GIT_TAG boost-1.89.0
+#                GITHUB_REPOSITORY "boostorg/histogram")
+#    endif()
 
+    # ### SPDLOG
     if(NOT TARGET spdlog::spdlog)
         cpmaddpackage(
                 NAME
                 spdlog
                 VERSION
-                1.15.2
+                1.15.3
                 GITHUB_REPOSITORY
                 "gabime/spdlog"
                 OPTIONS
@@ -49,7 +50,7 @@ function(poutre2_setup_dependencies)
 
     # ### Catch2
     if(NOT TARGET Catch2::Catch2WithMain)
-        cpmaddpackage("gh:catchorg/Catch2@3.8.1")
+        cpmaddpackage("gh:catchorg/Catch2@3.11.0")
     endif()
 
     # ### CLI
@@ -59,7 +60,7 @@ function(poutre2_setup_dependencies)
 
     # ### ftxui
     if(NOT TARGET ftxui::screen)
-        cpmaddpackage("gh:ArthurSonzogni/FTXUI@6.0.2")
+        cpmaddpackage("gh:ArthurSonzogni/FTXUI@6.1.9")
     endif()
 
     # ### tools
