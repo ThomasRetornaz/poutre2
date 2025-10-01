@@ -51,19 +51,19 @@ size_t label_flat_zones(const IInterface &i_img,  se::Common_NL_SE nl_static, II
     switch (i_img.GetPType()) {
     case poutre::PType::PType_GrayUINT8: {
       return label_flat_zonesImageDispatch<1, poutre::PType::PType_GrayUINT8>(i_img, nl_static, o_img);
-    } break;
+    }
     case poutre::PType::PType_GrayINT32: {
       return label_flat_zonesImageDispatch<1, poutre::PType::PType_GrayINT32>(i_img, nl_static, o_img);
-    } break;
+    }
     case poutre::PType::PType_GrayINT64: {
       return label_flat_zonesImageDispatch<1, poutre::PType::PType_GrayINT64>(i_img, nl_static, o_img);
-    } break;
+    }
     case poutre::PType::PType_F32: {
       return label_flat_zonesImageDispatch<1, poutre::PType::PType_F32>(i_img, nl_static, o_img);
-    } break;
+    }
     case poutre::PType::PType_D64: {
       return label_flat_zonesImageDispatch<1, poutre::PType::PType_D64>(i_img, nl_static, o_img);
-    } break;
+    }
     default: {
       POUTRE_RUNTIME_ERROR("label_flat_zones unsupported PTYPE");
     }
@@ -73,46 +73,46 @@ size_t label_flat_zones(const IInterface &i_img,  se::Common_NL_SE nl_static, II
     switch (i_img.GetPType()) {
     case poutre::PType::PType_GrayUINT8: {
       return label_flat_zonesImageDispatch<2, poutre::PType::PType_GrayUINT8>(i_img, nl_static, o_img);
-    } break;
+    }
     case poutre::PType::PType_GrayINT32: {
       return label_flat_zonesImageDispatch<2, poutre::PType::PType_GrayINT32>(i_img, nl_static, o_img);
-    } break;
+    }
     case poutre::PType::PType_GrayINT64: {
       return label_flat_zonesImageDispatch<2, poutre::PType::PType_GrayINT64>(i_img, nl_static, o_img);
-    } break;
+    }
     case poutre::PType::PType_F32: {
       return label_flat_zonesImageDispatch<2, poutre::PType::PType_F32>(i_img, nl_static, o_img);
-    } break;
+    }
     case poutre::PType::PType_D64: {
       return label_flat_zonesImageDispatch<2, poutre::PType::PType_D64>(i_img, nl_static, o_img);
-    } break;
+    }
     default: {
       POUTRE_RUNTIME_ERROR("label_flat_zones unsupported PTYPE");
     }
     }
-  } break;
+  }
   case 3: {
     switch (i_img.GetPType()) {
     case poutre::PType::PType_GrayUINT8: {
       return label_flat_zonesImageDispatch<3, poutre::PType::PType_GrayUINT8>(i_img, nl_static, o_img);
-    } break;
+    }
     case poutre::PType::PType_GrayINT32: {
       return label_flat_zonesImageDispatch<3, poutre::PType::PType_GrayINT32>(i_img, nl_static, o_img);
-    } break;
+    }
     case poutre::PType::PType_GrayINT64: {
       return label_flat_zonesImageDispatch<3, poutre::PType::PType_GrayINT64>(i_img, nl_static, o_img);
-    } break;
+    }
     case poutre::PType::PType_F32: {
       return label_flat_zonesImageDispatch<3, poutre::PType::PType_F32>(i_img, nl_static, o_img);
-    } break;
+    }
     case poutre::PType::PType_D64: {
       return label_flat_zonesImageDispatch<3, poutre::PType::PType_D64>(i_img, nl_static, o_img);
-    } break;
+    }
     default: {
       POUTRE_RUNTIME_ERROR("label_flat_zones unsupported PTYPE");
     }
     }
-  } break;
+  }
   // case 4: {
   //   // ConvertIntoDispatchDims<4>(i_img1, o_img2);
   // } break;

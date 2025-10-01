@@ -584,19 +584,19 @@ inline ScalarTypeVariant get_highest(const PType ptype)
   switch(ptype) {
   case PType::PType_GrayUINT8: {
     return std::numeric_limits<pUINT8>::max();
-  }break;
+  }
   case PType::PType_GrayINT32: {
     return std::numeric_limits<pINT32>::max();
-  }break;
+  }
   case PType::PType_GrayINT64: {
     return std::numeric_limits<pINT64>::max();
-  }break;
+  }
   case PType::PType_F32: {
     return std::numeric_limits<pFLOAT>::max();
-  }break;
+  }
   case PType::PType_D64: {
     return std::numeric_limits<pDOUBLE>::max();
-  }break;
+  }
   default://  Undef;
     POUTRE_RUNTIME_ERROR("unsupported ptype");
   }
