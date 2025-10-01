@@ -58,7 +58,7 @@ public:
   GlobalLogger &operator=(const GlobalLogger &) = delete;
   GlobalLogger(GlobalLogger &&other) = delete;
   GlobalLogger &operator=(GlobalLogger &&other) = delete;
-  ~GlobalLogger() = default;
+  ~GlobalLogger();
 
   void setLoggerLevel(LoggerLevel l)
   {
