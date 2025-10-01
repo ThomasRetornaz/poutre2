@@ -32,6 +32,11 @@
 #include <queue>
 #include <vector>
 
+#if defined(POUTRE_IS_MSVC)
+#pragma warning(push)
+#pragma warning(disable : 4702)
+#endif
+
 namespace poutre::label::details {
 /**
  * @addtogroup poutre_label_group
@@ -324,7 +329,7 @@ size_t t_label_binaryDispatch(
     case poutre::se::Common_NL_SE::SESegmentX1D: {
       t_label_binaryHelper<poutre::se::Common_NL_SE::SESegmentX1D, Tin, Tout, Rank, ViewIn, ViewOut> op;
       return op(i_vin, o_vout);
-    } break;
+    }
     default:
     {
       POUTRE_RUNTIME_ERROR("t_label_binaryDispatch unsupported nl_static");}
@@ -336,19 +341,19 @@ size_t t_label_binaryDispatch(
     case poutre::se::Common_NL_SE::SESquare2D: {
       t_label_binaryHelper<poutre::se::Common_NL_SE::SESquare2D, Tin, Tout, Rank, ViewIn, ViewOut> op;
       return op(i_vin, o_vout);
-    } break;
+    }
     case poutre::se::Common_NL_SE::SECross2D: {
       t_label_binaryHelper<poutre::se::Common_NL_SE::SECross2D, Tin, Tout, Rank, ViewIn, ViewOut> op;
       return op(i_vin, o_vout);
-    } break;
+    }
     case poutre::se::Common_NL_SE::SESegmentX2D: {
       t_label_binaryHelper<poutre::se::Common_NL_SE::SESegmentX2D, Tin, Tout, Rank, ViewIn, ViewOut> op;
       return op(i_vin, o_vout);
-    } break;
+    }
     case poutre::se::Common_NL_SE::SESegmentY2D: {
       t_label_binaryHelper<poutre::se::Common_NL_SE::SESegmentY2D, Tin, Tout, Rank, ViewIn, ViewOut> op;
       return op(i_vin, o_vout);
-    } break;
+    }
     default:
     {
       POUTRE_RUNTIME_ERROR("t_label_binaryDispatch unsupported nl_static");}
@@ -359,23 +364,23 @@ size_t t_label_binaryDispatch(
     case poutre::se::Common_NL_SE::SECross3D: {
       t_label_binaryHelper<poutre::se::Common_NL_SE::SECross3D, Tin, Tout, Rank, ViewIn, ViewOut> op;
       return op(i_vin, o_vout);
-    } break;
+    }
     case poutre::se::Common_NL_SE::SESquare3D: {
       t_label_binaryHelper<poutre::se::Common_NL_SE::SESquare3D, Tin, Tout, Rank, ViewIn, ViewOut> op;
       return op(i_vin, o_vout);
-    } break;
+    }
     case poutre::se::Common_NL_SE::SESegmentX3D: {
       t_label_binaryHelper<poutre::se::Common_NL_SE::SESegmentX3D, Tin, Tout, Rank, ViewIn, ViewOut> op;
       return op(i_vin, o_vout);
-    } break;
+    }
     case poutre::se::Common_NL_SE::SESegmentY3D: {
       t_label_binaryHelper<poutre::se::Common_NL_SE::SESegmentY3D, Tin, Tout, Rank, ViewIn, ViewOut> op;
       return op(i_vin, o_vout);
-    } break;
+    }
     case poutre::se::Common_NL_SE::SESegmentZ3D: {
       t_label_binaryHelper<poutre::se::Common_NL_SE::SESegmentZ3D, Tin, Tout, Rank, ViewIn, ViewOut> op;
       return op(i_vin, o_vout);
-    } break;
+    }
     default:
     {
       POUTRE_RUNTIME_ERROR("t_label_binaryDispatch unsupported nl_static");}
@@ -419,7 +424,7 @@ size_t t_label_flat_zonesDispatch(
     case poutre::se::Common_NL_SE::SESegmentX1D: {
       t_label_flat_zones_Helper<poutre::se::Common_NL_SE::SESegmentX1D, Tin, Tout, Rank, ViewIn, ViewOut> op;
       return op(i_vin, o_vout);
-    } break;
+    }
     default:
     {
       POUTRE_RUNTIME_ERROR("t_label_flat_zonesDispatch unsupported nl_static");}
@@ -431,19 +436,19 @@ size_t t_label_flat_zonesDispatch(
     case poutre::se::Common_NL_SE::SESquare2D: {
       t_label_flat_zones_Helper<poutre::se::Common_NL_SE::SESquare2D, Tin, Tout, Rank, ViewIn, ViewOut> op;
       return op(i_vin, o_vout);
-    } break;
+    }
     case poutre::se::Common_NL_SE::SECross2D: {
       t_label_flat_zones_Helper<poutre::se::Common_NL_SE::SECross2D, Tin, Tout, Rank, ViewIn, ViewOut> op;
       return op(i_vin, o_vout);
-    } break;
+    }
     case poutre::se::Common_NL_SE::SESegmentX2D: {
       t_label_flat_zones_Helper<poutre::se::Common_NL_SE::SESegmentX2D, Tin, Tout, Rank, ViewIn, ViewOut> op;
       return op(i_vin, o_vout);
-    } break;
+    }
     case poutre::se::Common_NL_SE::SESegmentY2D: {
       t_label_flat_zones_Helper<poutre::se::Common_NL_SE::SESegmentY2D, Tin, Tout, Rank, ViewIn, ViewOut> op;
       return op(i_vin, o_vout);
-    } break;
+    }
     default:
     {
       POUTRE_RUNTIME_ERROR("t_label_flat_zonesDispatch unsupported nl_static");}
@@ -454,23 +459,23 @@ size_t t_label_flat_zonesDispatch(
     case poutre::se::Common_NL_SE::SECross3D: {
       t_label_flat_zones_Helper<poutre::se::Common_NL_SE::SECross3D, Tin, Tout, Rank, ViewIn, ViewOut> op;
       return op(i_vin, o_vout);
-    } break;
+    }
     case poutre::se::Common_NL_SE::SESquare3D: {
       t_label_flat_zones_Helper<poutre::se::Common_NL_SE::SESquare3D, Tin, Tout, Rank, ViewIn, ViewOut> op;
       return op(i_vin, o_vout);
-    } break;
+    }
     case poutre::se::Common_NL_SE::SESegmentX3D: {
       t_label_flat_zones_Helper<poutre::se::Common_NL_SE::SESegmentX3D, Tin, Tout, Rank, ViewIn, ViewOut> op;
       return op(i_vin, o_vout);
-    } break;
+    }
     case poutre::se::Common_NL_SE::SESegmentY3D: {
       t_label_flat_zones_Helper<poutre::se::Common_NL_SE::SESegmentY3D, Tin, Tout, Rank, ViewIn, ViewOut> op;
       return op(i_vin, o_vout);
-    } break;
+    }
     case poutre::se::Common_NL_SE::SESegmentZ3D: {
       t_label_flat_zones_Helper<poutre::se::Common_NL_SE::SESegmentZ3D, Tin, Tout, Rank, ViewIn, ViewOut> op;
       return op(i_vin, o_vout);
-    } break;
+    }
     default:
     {
       POUTRE_RUNTIME_ERROR("t_label_flat_zonesDispatch unsupported nl_static");}
@@ -496,3 +501,6 @@ size_t t_label_flat_zones(
 }
 //! @} doxygroup: poutre_label_group
 }//poutre::label::details
+#if defined(POUTRE_IS_MSVC)
+#pragma warning(pop)
+#endif
