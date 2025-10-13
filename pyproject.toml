@@ -1,0 +1,12 @@
+[project]
+name = "poutre2"
+version = "0.1.0"
+description = "Generic Image Processing Library"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "mypy>=1.18.1",
+    "numpy>=2.3.3",
+    "ruff>=0.13.0",
+    "pytest>=8.4.2",
+]
