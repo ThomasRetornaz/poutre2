@@ -193,38 +193,71 @@ function(poutre2_setup_dependencies)
     endif()
 
     # ### XSIMD
+    if (NOT TARGET xsimd::xsimd)
+        CPMAddPackage(
+                NAME xsimd
+                GIT_TAG 13.2.0
+                GITHUB_REPOSITORY
+                "QuantStack/xsimd"
+                #DOWNLOAD_ONLY True
+        )
+        if(xsimd_ADDED)
+            # Define the header-only xsimd target
+            add_library(xsimd::xsimd INTERFACE IMPORTED GLOBAL)
+            target_include_directories(xsimd::xsimd SYSTEM BEFORE INTERFACE ${xsimd_SOURCE_DIR}/include)
+        endif()
+    endif ()
 
-    CPMAddPackage(
-            NAME xsimd
-            GIT_TAG 13.2.0
-            GITHUB_REPOSITORY
-            "QuantStack/xsimd"
-            #DOWNLOAD_ONLY True
-    )
-    if(xsimd_ADDED)
-        # Define the header-only xsimd target
-        add_library(xsimd::xsimd INTERFACE IMPORTED GLOBAL)
-        target_include_directories(xsimd::xsimd SYSTEM BEFORE INTERFACE ${xsimd_SOURCE_DIR}/include)
+    if (NOT TARGET json::json)
+        # ### nolhmann json
+        CPMAddPackage(
+                NAME json
+                GIT_TAG "v3.12.0"
+                GITHUB_REPOSITORY
+                "nlohmann/json"
+                OPTIONS
+                "JSON_BuildTests OFF"
+                "JSON_CI OFF"
+                "JSON_Diagnostics OFF"
+                "JSON_Install OFF"
+        )
+        if(json_ADDED)
+            add_library(json::json INTERFACE IMPORTED)
+            target_include_directories(
+                    json::json SYSTEM
+                    BEFORE INTERFACE ${json_SOURCE_DIR}/include
+            )
+        endif()
     endif()
 
-    # ### nolhmann json
-    CPMAddPackage(
-            NAME json
-            GIT_TAG "v3.12.0"
-            GITHUB_REPOSITORY
-            "nlohmann/json"
-            OPTIONS
-            "JSON_BuildTests OFF"
-            "JSON_CI OFF"
-            "JSON_Diagnostics OFF"
-            "JSON_Install OFF"
-    )
-    if(json_ADDED)
-        add_library(json::json INTERFACE IMPORTED)
-        target_include_directories(
-                json::json SYSTEM
-                BEFORE INTERFACE ${json_SOURCE_DIR}/include
+    # generic threadpool
+    if (NOT TARGET BS_thread_pool)
+        CPMAddPackage(
+                NAME BS_thread_pool
+                GITHUB_REPOSITORY bshoshany/thread-pool
+                VERSION 5.0.0
+                EXCLUDE_FROM_ALL
+                SYSTEM
         )
+        add_library(BS_thread_pool INTERFACE)
+        target_include_directories(BS_thread_pool INTERFACE ${BS_thread_pool_SOURCE_DIR}/include)
+    endif()
+
+    # generic threadpool
+    if (NOT TARGET graaf)
+        CPMAddPackage(
+                NAME graaf
+                GITHUB_REPOSITORY bobluppes/graaf
+                VERSION 1.1.1
+                EXCLUDE_FROM_ALL
+                SYSTEM
+                OPTIONS
+                "SKIP_EXAMPLES ON"
+                "SKIP_TESTS ON"
+                "SKIP_BENCHMARKS ON"
+        )
+        add_library(graaf INTERFACE)
+        target_include_directories(graaf INTERFACE ${graaf_SOURCE_DIR}/include)
     endif()
 
     #list(POP_BACK CMAKE_MESSAGE_INDENT)

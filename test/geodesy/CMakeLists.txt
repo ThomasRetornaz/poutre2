@@ -27,11 +27,6 @@ if (NOT EMSCRIPTEN)
             PUBLIC Threads::Threads)
 endif()
 
-find_package(OpenMP)
-if(OpenMP_CXX_FOUND)
-    target_link_libraries(poutre_geodesy_tests PUBLIC OpenMP::OpenMP_CXX)
-endif()
-
 add_definitions(-D_GLIBCXX_USE_CXX11_ABI)
 
 IF(POUTRE_CI)

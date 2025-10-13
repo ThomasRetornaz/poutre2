@@ -10,7 +10,6 @@ set(PoutreBaseTestSRC
         ${subdirsource}/iterate_view.cpp
         ${subdirsource}/coordinate.cpp
         ${subdirsource}/containerview.cpp
-        ${subdirsource}/threading.cpp
         ${subdirsource}/types.cpp
         ${subdirsource}/pq.cpp
 )
@@ -29,11 +28,6 @@ target_link_libraries(
 find_package(Threads REQUIRED)
 target_link_libraries(poutre_base_tests
         PUBLIC Threads::Threads)
-
-find_package(OpenMP)
-if(OpenMP_CXX_FOUND)
-    target_link_libraries(poutre_base_tests PUBLIC OpenMP::OpenMP_CXX)
-endif()
 
 IF(POUTRE_CI)
     set_target_properties(poutre_base_tests PROPERTIES COMPILE_FLAGS -DPOUTRE_CI)

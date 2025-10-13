@@ -4,7 +4,6 @@ set(subdirsource ${PROJECT_SOURCE_DIR}/src/base)
 set(PoutreBaseSRC_DETAILS
         ${subdirheader}/details/simd/simd_helpers.hpp
         ${subdirheader}/details/simd/simd_algorithm.hpp
-        ${subdirheader}/details/threading/threading_helpers.hpp
         ${subdirheader}/details/data_structures/array_view.hpp
         ${subdirheader}/details/data_structures/pq.hpp
         ${subdirheader}/details/data_structures/image_t.hpp
@@ -24,7 +23,6 @@ set(PoutreBaseSRC_CPP
         ${subdirsource}/trace.cpp
         ${subdirsource}/types.cpp
         ${subdirsource}/chronos.cpp
-        ${subdirsource}/threading_helpers.cpp
         ${subdirsource}/image_interface.cpp
         ${subdirsource}/image_t.cpp
 )
@@ -52,12 +50,6 @@ target_link_libraries(poutre_base PRIVATE poutre2_options
 )
 
 target_compile_definitions(poutre_base PUBLIC SPDLOG_COMPILED_LIB)
-
-find_package(OpenMP)
-if(OpenMP_CXX_FOUND)
-    target_link_libraries(poutre_base PUBLIC OpenMP::OpenMP_CXX)
-endif()
-
 
 find_package(Threads REQUIRED)
 target_link_libraries(poutre_base
