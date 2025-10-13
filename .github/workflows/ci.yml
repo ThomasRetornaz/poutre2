@@ -187,13 +187,19 @@ jobs:
           cmake --build ./build --config ${{matrix.build_type}}
 
       - name: Unix - Test and coverage
-        if: runner.os != 'Windows'
+        if: runner.os == 'Linux'
         working-directory: ./build
         # Execute tests defined by the CMake configuration.
         # See https://cmake.org/cmake/help/latest/manual/ctest.1.html for more detail
         run: |
           ctest -C ${{matrix.build_type}} --output-on-failure
           gcovr -j ${{env.nproc}} --root .. --print-summary --xml-pretty --xml coverage.xml . --gcov-executable '${{ matrix.gcov_executable }}'
+
+      - name: Mac - Test
+        if: runner.os == 'macOS'
+        working-directory: ./build
+        run: |
+          ctest -C ${{matrix.build_type}} --output-on-failure
 
       - name: Windows - Test and coverage
         if: runner.os == 'Windows'
