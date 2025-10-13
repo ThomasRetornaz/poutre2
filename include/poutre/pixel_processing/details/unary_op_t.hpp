@@ -24,7 +24,6 @@
 #include <poutre/base/details/data_structures/array_view.hpp>
 #include <poutre/base/details/data_structures/image_t.hpp>
 #include <poutre/base/details/simd/simd_algorithm.hpp>//simd transform
-#include <poutre/base/details/threading/threading_helpers.hpp>//thread pool
 
 namespace poutre::details {
 
