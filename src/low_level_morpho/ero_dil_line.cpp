@@ -32,15 +32,45 @@ template<ptrdiff_t NumDims, poutre::PType P> void ErodeImageLineXDispatch(const 
   poutre::llm::details::t_ErodeX(*img1_t,size_segment,*img2_t);
 }
 
-template<ptrdiff_t NumDims, poutre::PType P> void DilateImageLineXDispatch(const poutre::IInterface &i_img, ptrdiff_t size_segment, poutre::IInterface &o_img)
+template<ptrdiff_t NumDims, poutre::PType P>
+void DilateImageLineXDispatch(const poutre::IInterface &i_img, ptrdiff_t size_segment, poutre::IInterface &o_img)
 {
-  using ImgType = poutre::details::image_t<typename poutre::enum_to_type<poutre::CompoundType::CompoundType_Scalar, P>::type, NumDims>;
+  using ImgType =
+    poutre::details::image_t<typename poutre::enum_to_type<poutre::CompoundType::CompoundType_Scalar, P>::type,
+      NumDims>;
   const auto *img1_t = dynamic_cast<const ImgType *>(&i_img);
   if (!img1_t) { POUTRE_RUNTIME_ERROR("DilateImageLineXDispatch img1_t downcast fail"); }
   auto *img2_t = dynamic_cast<ImgType *>(&o_img);
   if (!img2_t) { POUTRE_RUNTIME_ERROR("DilateImageLineXDispatch img2_t downcast fail"); }
-  poutre::llm::details::t_DilateX(*img1_t,size_segment,*img2_t);
+  poutre::llm::details::t_DilateX(*img1_t, size_segment, *img2_t);
 }
+
+template<ptrdiff_t NumDims, poutre::PType P>
+void ErodeImageLineYDispatch(const poutre::IInterface &i_img, ptrdiff_t size_segment, poutre::IInterface &o_img)
+{
+using ImgType =
+    poutre::details::image_t<typename poutre::enum_to_type<poutre::CompoundType::CompoundType_Scalar, P>::type,
+    NumDims>;
+const auto *img1_t = dynamic_cast<const ImgType *>(&i_img);
+if (!img1_t) { POUTRE_RUNTIME_ERROR("ErodeImageLineYDispatch img1_t downcast fail"); }
+auto *img2_t = dynamic_cast<ImgType *>(&o_img);
+if (!img2_t) { POUTRE_RUNTIME_ERROR("ErodeImageLineYDispatch img2_t downcast fail"); }
+poutre::llm::details::t_ErodeY(*img1_t, size_segment, *img2_t);
+}
+
+template<ptrdiff_t NumDims, poutre::PType P>
+void DilateImageLineYDispatch(const poutre::IInterface &i_img, ptrdiff_t size_segment, poutre::IInterface &o_img)
+{
+using ImgType =
+    poutre::details::image_t<typename poutre::enum_to_type<poutre::CompoundType::CompoundType_Scalar, P>::type,
+    NumDims>;
+const auto *img1_t = dynamic_cast<const ImgType *>(&i_img);
+if (!img1_t) { POUTRE_RUNTIME_ERROR("DilateImageLineYDispatch img1_t downcast fail"); }
+auto *img2_t = dynamic_cast<ImgType *>(&o_img);
+if (!img2_t) { POUTRE_RUNTIME_ERROR("DilateImageLineYDispatch img2_t downcast fail"); }
+poutre::llm::details::t_DilateY(*img1_t, size_segment, *img2_t);
+}
+
 }
 
 namespace poutre {
@@ -108,6 +138,51 @@ void DilateX(const poutre::IInterface &i_img, const ptrdiff_t size_half_segment,
   }
 }
 
+void DilateY(const poutre::IInterface &i_img, const ptrdiff_t size_half_segment, poutre::IInterface &o_img)
+{
+  POUTRE_ENTERING("DilateX");
+  AssertSizesCompatible(i_img, o_img, "DilateY images have not compatible sizes");
+  AssertAsTypesCompatible(i_img, o_img, "DilateY images must have compatible types");
+  AssertImagesAreDifferent(i_img, o_img, "DilateY images input output images must be different");
+
+  switch (i_img.GetRank()) {
+  case 0: {
+    POUTRE_RUNTIME_ERROR("DilateY Unsupported number of dims:0");
+  }
+  case 1: {
+    POUTRE_RUNTIME_ERROR("DilateY Unsupported number of dims:1");
+    }
+  case 2: {
+    switch (i_img.GetPType()) {
+    case poutre::PType::PType_GrayUINT8: {
+      DilateImageLineYDispatch<2, poutre::PType::PType_GrayUINT8>(i_img, size_half_segment, o_img);
+    } break;
+    case poutre::PType::PType_GrayINT32: {
+      DilateImageLineYDispatch<2, poutre::PType::PType_GrayINT32>(i_img, size_half_segment, o_img);
+    } break;
+    case poutre::PType::PType_GrayINT64: {
+      DilateImageLineYDispatch<2, poutre::PType::PType_GrayINT64>(i_img, size_half_segment, o_img);
+    } break;
+    case poutre::PType::PType_F32: {
+      DilateImageLineYDispatch<2, poutre::PType::PType_F32>(i_img, size_half_segment, o_img);
+    } break;
+    case poutre::PType::PType_D64: {
+      DilateImageLineYDispatch<2, poutre::PType::PType_D64>(i_img, size_half_segment, o_img);
+    } break;
+    default: {
+      POUTRE_RUNTIME_ERROR("DilateY unsupported PTYPE");
+    }
+    }
+  } break;
+    // case 4: {
+    //   // ConvertIntoDispatchDims<4>(i_img1, o_img2);
+    // } break;
+  default: {
+    POUTRE_RUNTIME_ERROR("DilateY Unsupported number of dims");
+  }
+  }
+}
+
 void ErodeX(const poutre::IInterface &i_img,  const ptrdiff_t size_half_segment,  poutre::IInterface &o_img)
 {
   POUTRE_ENTERING("ErodeX");
@@ -168,6 +243,50 @@ void ErodeX(const poutre::IInterface &i_img,  const ptrdiff_t size_half_segment,
     // } break;
   default: {
     POUTRE_RUNTIME_ERROR("ErodeX Unsupported number of dims");
+  }
+  }
+}
+void ErodeY(const poutre::IInterface &i_img, const ptrdiff_t size_half_segment, poutre::IInterface &o_img)
+{
+  POUTRE_ENTERING("ErodeY");
+  AssertSizesCompatible(i_img, o_img, "ErodeY images have not compatible sizes");
+  AssertAsTypesCompatible(i_img, o_img, "ErodeY images must have compatible types");
+  AssertImagesAreDifferent(i_img, o_img, "ErodeY images input output images must be different");
+
+  switch (i_img.GetRank()) {
+  case 0: {
+    POUTRE_RUNTIME_ERROR("ErodeY Unsupported number of dims:0");
+  }
+  case 1: {
+    POUTRE_RUNTIME_ERROR("ErodeY Unsupported number of dims:1");
+  }
+  case 2: {
+    switch (i_img.GetPType()) {
+    case poutre::PType::PType_GrayUINT8: {
+      ErodeImageLineYDispatch<2, poutre::PType::PType_GrayUINT8>(i_img, size_half_segment, o_img);
+    } break;
+    case poutre::PType::PType_GrayINT32: {
+      ErodeImageLineYDispatch<2, poutre::PType::PType_GrayINT32>(i_img, size_half_segment, o_img);
+    } break;
+    case poutre::PType::PType_GrayINT64: {
+      ErodeImageLineYDispatch<2, poutre::PType::PType_GrayINT64>(i_img, size_half_segment, o_img);
+    } break;
+    case poutre::PType::PType_F32: {
+      ErodeImageLineYDispatch<2, poutre::PType::PType_F32>(i_img, size_half_segment, o_img);
+    } break;
+    case poutre::PType::PType_D64: {
+      ErodeImageLineYDispatch<2, poutre::PType::PType_D64>(i_img, size_half_segment, o_img);
+    } break;
+    default: {
+      POUTRE_RUNTIME_ERROR("ErodeY unsupported PTYPE");
+    }
+    }
+  } break;
+    // case 4: {
+    //   // ConvertIntoDispatchDims<4>(i_img1, o_img2);
+    // } break;
+  default: {
+    POUTRE_RUNTIME_ERROR("ErodeY Unsupported number of dims");
   }
   }
 }
