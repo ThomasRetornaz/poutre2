@@ -30,11 +30,12 @@
 #pragma GCC diagnostic ignored "-Wfloat-conversion"
 #if defined(POUTRE_IS_CLANG)
 #pragma clang diagnostic ignored "-Wshorten-64-to-32"
-#elif defined(POUTRE_IS_GCC) 
+#elif defined(POUTRE_IS_GCC)
 #pragma GCC diagnostic ignored "-Wuseless-cast"
 #endif
 #pragma GCC diagnostic ignored "-Wcast-align"
 #pragma GCC diagnostic ignored "-Wdouble-promotion"
+#pragma GCC diagnostic ignored "-Warray-bounds"
 #endif
 #include <xsimd/xsimd.hpp>
 #if defined(POUTRE_IS_GCC) || defined(POUTRE_IS_CLANG)
@@ -51,8 +52,7 @@ namespace poutre::simd {
  * @ingroup poutre_base_group
  *@{
  */
-POUTRE_ALWAYS_INLINE bool IsAligned(const void *ptr,
-  std::size_t alignment = SIMD_IDEAL_MAX_ALIGN_BYTES)
+POUTRE_ALWAYS_INLINE bool IsAligned(const void *ptr, std::size_t alignment = SIMD_IDEAL_MAX_ALIGN_BYTES)
 {
   // NOLINTBEGIN
   POUTRE_ASSERTCHECK(((alignment & (alignment - 1)) == 0), "bad alignment value");
@@ -89,18 +89,18 @@ template<typename T> size_t t_ReachNextAlignedSize(size_t size)
 }
 
 /**
-Extract from contigous range [first,last[
+Extract from contiguous range [first,last[
 The two loop counter
--the scalar prologue [start,size_prologue_loop[ i.e the range defined between
+-the scalar prologue [start,size_prologue_loop[ i.e. the range defined between
 the original begin and the first location to be properly aligned to be used
 through simd operators
-- the main simd_loop_part,[size_prologue_loop,size_simd_loop[ i.e the range
+- the main simd_loop_part,[size_prologue_loop,size_simd_loop[ i.e. the range
 where we could apply simd operators
 - Note epilogue equals [size_simd_loop,stop[
 */
 template<typename T>
-const std::pair<ptrdiff_t, ptrdiff_t> POUTRE_ALWAYS_INLINE t_SIMDInputRange(const T *first,
-  const T *last) POUTRE_NOEXCEPTONLYNDEBUG // TODO bench this tricks with erode/dilate
+std::pair<ptrdiff_t, ptrdiff_t> POUTRE_ALWAYS_INLINE t_SIMDInputRange(const T *first,
+  const T *last) POUTRE_NOEXCEPTONLYNDEBUG// TODO bench this tricks with erode/dilate
 {
   POUTRE_ASSERTCHECK(first, "null ptr");
   POUTRE_ASSERTCHECK(last, "null ptr");
@@ -112,7 +112,7 @@ const std::pair<ptrdiff_t, ptrdiff_t> POUTRE_ALWAYS_INLINE t_SIMDInputRange(cons
   // is not bigger than size
   const ptrdiff_t size_prologue_loop = std::min(size, std::distance(first, ptr_aligned_first));
   const ptrdiff_t size_simd_loop =
-  (size >= size_prologue_loop) ? (simd_size * ((size - size_prologue_loop) / simd_size)) : (0u);
+    (size >= size_prologue_loop) ? (simd_size * ((size - size_prologue_loop) / simd_size)) : (0u);
 
   return std::make_pair(size_prologue_loop, size_simd_loop);
 }
