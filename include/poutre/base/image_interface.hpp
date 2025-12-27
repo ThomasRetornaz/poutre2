@@ -82,7 +82,7 @@ BASE_API bool AsSizesCompatible(const IInterface &i_img1, const IInterface &i_im
 BASE_API bool AsTypesCompatible(const IInterface &i_img1, const IInterface &i_img2);
 
 /**
- * @brief Check if images are different regarding adress
+ * @brief Check if images are different regarding address
  *
  * @param i_img1 [in] input image
  * @param i_img2 [in] input image

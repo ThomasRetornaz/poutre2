@@ -30,7 +30,7 @@ namespace poutre::geo {
 
 /*!@brief Low leveling
 *
-A function g is an lower leveling of a function f if and only if
+A function g is a lower leveling of a function f if and only if
 for any couple of neighbouring pixels (p, q) g(p)<g(q)->g(p)>=f
 This algorithm modify marker to become a low_leveling of ref
 */
@@ -38,7 +38,7 @@ GEO_API void low_leveling(const IInterface &i_ref, const IInterface &i_marker,  
 
 /*!@brief High leveling
 *
-A function g is an upper leveling of a function f if and only if
+A function g is a upper leveling of a function f if and only if
 for any couple of neighbouring pixels (p, q) g(p)>g(q)->g(p)<=f
 This algorithm modify marker to become a high_leveling of ref
 */
