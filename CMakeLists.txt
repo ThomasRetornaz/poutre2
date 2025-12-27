@@ -28,6 +28,7 @@ project(
 option(BUILD_SHARED_LIBS "Build Shared Libraries" ON)
 OPTION(POUTRE_BUILD_TEST "Build Tests Suites" YES)
 OPTION(POUTRE_BUILD_BENCH "Build Benchmark Suites" YES)
+OPTION(POUTRE_BUILD_PY_BINDING "Build python bindings Suites" YES)
 OPTION(POUTRE_BUILD_DOC "Build doxygen documentation" NO)
 
 if(BUILD_SHARED_LIBS)
@@ -94,9 +95,14 @@ endif()
 # Adding the tests:
 include(CTest)
 
-if (BUILD_TESTING)
+if (POUTRE_BUILD_TEST)
     message(STATUS "Building Tests. Be sure to check out test/constexpr_tests.cpp for constexpr testing")
     add_subdirectory(test)
+endif()
+
+if (POUTRE_BUILD_PY_BINDING)
+    message(STATUS "Building python bindings")
+    add_subdirectory(python)
 endif()
 
 if (poutre2_BUILD_FUZZ_TESTS)
