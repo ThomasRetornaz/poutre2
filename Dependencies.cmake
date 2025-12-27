@@ -10,7 +10,7 @@ function(poutre2_setup_dependencies)
     include(ExternalProject)
 
     # ### GoogleBenchmark
-    if(NOT TARGET googlebenchmark::googlebenchmark)
+    if (NOT TARGET googlebenchmark::googlebenchmark)
         cpmaddpackage(
                 NAME googlebenchmark
                 GITHUB_REPOSITORY google/benchmark
@@ -23,55 +23,55 @@ function(poutre2_setup_dependencies)
                 # "BUILD_SHARED_LIBS OFF"
                 EXCLUDE_FROM_ALL YES SYSTEM TRUE
         )
-    endif()
+    endif ()
 
     # ### BOOST HISTOGRAM
-#    if(NOT TARGET boost_histogram)
-#        cpmaddpackage(
-#                NAME boost_histogram
-#                GIT_TAG boost-1.89.0
-#                GITHUB_REPOSITORY "boostorg/histogram")
-#    endif()
+    #    if(NOT TARGET boost_histogram)
+    #        cpmaddpackage(
+    #                NAME boost_histogram
+    #                GIT_TAG boost-1.89.0
+    #                GITHUB_REPOSITORY "boostorg/histogram")
+    #    endif()
 
     # ### SPDLOG
-    if(NOT TARGET spdlog::spdlog)
+    if (NOT TARGET spdlog::spdlog)
         cpmaddpackage(
                 NAME
                 spdlog
                 VERSION
-                1.15.3
+                1.16.0
                 GITHUB_REPOSITORY
                 "gabime/spdlog"
                 OPTIONS
                 "SPDLOG_USE_STD_FORMAT ON"
                 "SPDLOG_FMT_EXTERNAL OFF"
         )
-    endif()
+    endif ()
 
     # ### Catch2
-    if(NOT TARGET Catch2::Catch2WithMain)
+    if (NOT TARGET Catch2::Catch2WithMain)
         cpmaddpackage("gh:catchorg/Catch2@3.11.0")
-    endif()
+    endif ()
 
     # ### CLI
-    if(NOT TARGET CLI11::CLI11)
+    if (NOT TARGET CLI11::CLI11)
         cpmaddpackage("gh:CLIUtils/CLI11@2.5.0")
-    endif()
+    endif ()
 
     # ### ftxui
-    if(NOT TARGET ftxui::screen)
+    if (NOT TARGET ftxui::screen)
         cpmaddpackage("gh:ArthurSonzogni/FTXUI@6.1.9")
-    endif()
+    endif ()
 
     # ### tools
-    if(NOT TARGET tools::tools)
+    if (NOT TARGET tools::tools)
         cpmaddpackage("gh:lefticus/tools#update_build_system")
-    endif()
+    endif ()
 
 
     #set(SYSROOT ${CMAKE_CURRENT_BINARY_DIR}/EXTERNAL_PROJECT_INSTALLED_FILES)
     # ### ZLIB
-    if(NOT TARGET ZLIB::ZLIB)
+    if (NOT TARGET ZLIB::ZLIB)
         cpmaddpackage(
                 NAME
                 zlib
@@ -83,13 +83,13 @@ function(poutre2_setup_dependencies)
                 "CMAKE_POSITION_INDEPENDENT_CODE ON"
                 "ZLIB_BUILD_EXAMPLES OFF"
         )
-    endif()
+    endif ()
 
     find_package(OpenImageIO QUIET)
-    if(OpenImageIO_FOUND)
+    if (OpenImageIO_FOUND)
         message(STATUS "OpenImageIO ${OpenImageIO_VERSION} found, image file support enabled")
         set(POUTRE_BUILD_WITH_OIIO ON PARENT_SCOPE)
-    else()
+    else ()
         message(WARNING "OpenImageIO not found: so no image file support")
     endif ()
     # message(FATAL_ERROR ${OpenImageIO_INCLUDE_DIRS})
@@ -161,7 +161,7 @@ function(poutre2_setup_dependencies)
                 NAME
                 hdf5
                 GIT_TAG
-                "hdf5_1.14.6"
+                "hdf5_2.0.0"
                 GITHUB_REPOSITORY
                 "HDFGroup/hdf5"
                 OPTIONS
@@ -181,7 +181,7 @@ function(poutre2_setup_dependencies)
                 "HDF5_BUILD_EXAMPLES OFF"
                 "ZLIB_USE_EXTERNAL ON" # BUG dependencies on zlib not found
         )
-        if(hdf5_ADDED)
+        if (hdf5_ADDED)
             add_library(hdf5::hdf5 INTERFACE IMPORTED)
             target_include_directories(
                     hdf5::hdf5 SYSTEM
@@ -189,23 +189,23 @@ function(poutre2_setup_dependencies)
                     ${hdf5_SOURCE_DIR}/src ${hdf5_SOURCE_DIR}/c++/src ${hdf5_BINARY_DIR}/src
                     ${hdf5_SOURCE_DIR}/src/H5FDsubfiling
             )
-        endif()
-    endif()
+        endif ()
+    endif ()
 
     # ### XSIMD
     if (NOT TARGET xsimd::xsimd)
         CPMAddPackage(
                 NAME xsimd
-                GIT_TAG 13.2.0
+                GIT_TAG 14.0.0
                 GITHUB_REPOSITORY
                 "QuantStack/xsimd"
                 #DOWNLOAD_ONLY True
         )
-        if(xsimd_ADDED)
+        if (xsimd_ADDED)
             # Define the header-only xsimd target
             add_library(xsimd::xsimd INTERFACE IMPORTED GLOBAL)
             target_include_directories(xsimd::xsimd SYSTEM BEFORE INTERFACE ${xsimd_SOURCE_DIR}/include)
-        endif()
+        endif ()
     endif ()
 
     if (NOT TARGET json::json)
@@ -221,14 +221,14 @@ function(poutre2_setup_dependencies)
                 "JSON_Diagnostics OFF"
                 "JSON_Install OFF"
         )
-        if(json_ADDED)
+        if (json_ADDED)
             add_library(json::json INTERFACE IMPORTED)
             target_include_directories(
                     json::json SYSTEM
                     BEFORE INTERFACE ${json_SOURCE_DIR}/include
             )
-        endif()
-    endif()
+        endif ()
+    endif ()
 
     # generic threadpool
     if (NOT TARGET BS_thread_pool)
@@ -241,9 +241,9 @@ function(poutre2_setup_dependencies)
         )
         add_library(BS_thread_pool INTERFACE)
         target_include_directories(BS_thread_pool INTERFACE ${BS_thread_pool_SOURCE_DIR}/include)
-    endif()
+    endif ()
 
-    # generic threadpool
+    # generic graff library
     if (NOT TARGET graaf)
         CPMAddPackage(
                 NAME graaf
@@ -258,7 +258,7 @@ function(poutre2_setup_dependencies)
         )
         add_library(graaf INTERFACE)
         target_include_directories(graaf INTERFACE ${graaf_SOURCE_DIR}/include)
-    endif()
+    endif ()
 
     #list(POP_BACK CMAKE_MESSAGE_INDENT)
     message(STATUS "└─ End Dependencies.cmake")
