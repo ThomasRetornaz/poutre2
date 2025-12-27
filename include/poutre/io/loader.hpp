@@ -22,6 +22,10 @@
 #include <memory>
 #include <string>
 
+#if defined(POUTRE_IS_MSVC)
+  #pragma warning(push)
+  #pragma warning(disable : 4251)// needs to have dll-interface to be used by clients of class
+#endif
 namespace poutre::io {
 /**
  * @addtogroup poutre_io_group
@@ -81,3 +85,6 @@ public:
 
 //! @} doxygroup: poutre_io_group
 }// namespace poutre::io
+#if defined(POUTRE_IS_MSVC)
+	#pragma warning(pop)
+#endif
