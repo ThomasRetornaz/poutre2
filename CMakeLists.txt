@@ -23,7 +23,7 @@ project(
         VERSION 0.0.1
         DESCRIPTION ""
         HOMEPAGE_URL "https://github.com/ThomasRetornaz/poutre2"
-        LANGUAGES CXX C ASM ASM_MASM)
+        LANGUAGES CXX C)
 
 option(BUILD_SHARED_LIBS "Build Shared Libraries" ON)
 OPTION(POUTRE_BUILD_TEST "Build Tests Suites" YES)
