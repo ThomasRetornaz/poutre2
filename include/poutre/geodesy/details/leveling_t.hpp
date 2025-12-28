@@ -27,7 +27,7 @@
 
 namespace poutre::geo::details {
 /**
- * @addtogroup poutre_geo_group
+ * @addtogroup poutre_geodesy_group
  *@{
 */
 
