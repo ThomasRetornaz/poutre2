@@ -16,7 +16,7 @@ function(poutre2_setup_dependencies)
                 GITHUB_REPOSITORY google/benchmark
 
                 # VERSION ${ogs.minimum_version.gtest}
-                GIT_TAG v1.9.4
+                GIT_TAG v1.9.5
 
                 OPTIONS "BENCHMARK_ENABLE_GTEST_TESTS OFF" "BENCHMARK_ENABLE_TESTING OFF"
 
@@ -39,7 +39,7 @@ function(poutre2_setup_dependencies)
                 NAME
                 spdlog
                 VERSION
-                1.16.0
+                1.17.0
                 GITHUB_REPOSITORY
                 "gabime/spdlog"
                 OPTIONS
@@ -50,12 +50,12 @@ function(poutre2_setup_dependencies)
 
     # ### Catch2
     if (NOT TARGET Catch2::Catch2WithMain)
-        cpmaddpackage("gh:catchorg/Catch2@3.11.0")
+        cpmaddpackage("gh:catchorg/Catch2@3.12.0")
     endif ()
 
     # ### CLI
     if (NOT TARGET CLI11::CLI11)
-        cpmaddpackage("gh:CLIUtils/CLI11@2.5.0")
+        cpmaddpackage("gh:CLIUtils/CLI11@2.6.1")
     endif ()
 
     # ### ftxui
@@ -86,7 +86,7 @@ function(poutre2_setup_dependencies)
     endif ()
 
     find_package(OpenImageIO QUIET)
-    if (OpenImageIO_FOUND)
+    if (0)
         message(STATUS "OpenImageIO ${OpenImageIO_VERSION} found, image file support enabled")
         set(POUTRE_BUILD_WITH_OIIO ON PARENT_SCOPE)
     else ()
@@ -235,7 +235,7 @@ function(poutre2_setup_dependencies)
         CPMAddPackage(
                 NAME BS_thread_pool
                 GITHUB_REPOSITORY bshoshany/thread-pool
-                VERSION 5.0.0
+                VERSION 5.1.0
                 EXCLUDE_FROM_ALL
                 SYSTEM
         )
