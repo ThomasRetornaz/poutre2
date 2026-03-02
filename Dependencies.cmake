@@ -82,6 +82,7 @@ function(poutre2_setup_dependencies)
                 OPTIONS
                 "CMAKE_POSITION_INDEPENDENT_CODE ON"
                 "ZLIB_BUILD_EXAMPLES OFF"
+                "ZLIB_BUILD_TESTING OFF"
         )
     endif ()
 
