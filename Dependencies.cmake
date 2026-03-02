@@ -76,7 +76,7 @@ function(poutre2_setup_dependencies)
                 NAME
                 zlib
                 VERSION
-                1.3.1
+                1.3.2
                 GITHUB_REPOSITORY
                 "madler/zlib"
                 OPTIONS
@@ -161,7 +161,7 @@ function(poutre2_setup_dependencies)
                 NAME
                 hdf5
                 GIT_TAG
-                "hdf5_2.0.0"
+                "2.1.0"
                 GITHUB_REPOSITORY
                 "HDFGroup/hdf5"
                 OPTIONS
