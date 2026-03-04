@@ -181,7 +181,7 @@ function(poutre2_setup_dependencies)
                 "HDF5_BUILD_JAVA OFF"
                 "HDF5_BUILD_EXAMPLES OFF"
                 "ZLIB_USE_EXTERNAL ON" # BUG dependencies on zlib not found
-                SYSTEM
+                EXCLUDE_FROM_ALL YES SYSTEM TRUE
         )
         if (hdf5_ADDED)
             add_library(hdf5::hdf5 INTERFACE IMPORTED)
