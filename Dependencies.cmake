@@ -50,7 +50,7 @@ function(poutre2_setup_dependencies)
 
     # ### Catch2
     if (NOT TARGET Catch2::Catch2WithMain)
-        cpmaddpackage("gh:catchorg/Catch2@3.12.0")
+        cpmaddpackage("gh:catchorg/Catch2@3.13.0")
     endif ()
 
     # ### CLI
