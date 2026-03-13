@@ -55,18 +55,18 @@ function(poutre2_setup_dependencies)
 
     # ### CLI
     if (NOT TARGET CLI11::CLI11)
-        cpmaddpackage("gh:CLIUtils/CLI11@2.6.1")
+        cpmaddpackage("gh:CLIUtils/CLI11@2.6.2")
     endif ()
 
     # ### ftxui
-    if (NOT TARGET ftxui::screen)
-        cpmaddpackage("gh:ArthurSonzogni/FTXUI@6.1.9")
-    endif ()
+    #if (NOT TARGET ftxui::screen)
+    #   cpmaddpackage("gh:ArthurSonzogni/FTXUI@6.1.9")
+    #endif ()
 
     # ### tools
-    if (NOT TARGET tools::tools)
-        cpmaddpackage("gh:lefticus/tools#update_build_system")
-    endif ()
+    #if (NOT TARGET lefticus::tools)
+    # cpmaddpackage("gh:lefticus/tools")
+    #endif ()
 
 
     #set(SYSROOT ${CMAKE_CURRENT_BINARY_DIR}/EXTERNAL_PROJECT_INSTALLED_FILES)
