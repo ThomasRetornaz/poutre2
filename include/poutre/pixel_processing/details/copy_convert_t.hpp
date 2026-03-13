@@ -21,7 +21,6 @@
  */
 #include <poutre/base/config.hpp>
 #include <poutre/base/details/data_structures/image_t.hpp>
-//#include <poutre/base/image_interface.hpp>
 
 namespace poutre::details {
 /**
@@ -34,10 +33,8 @@ namespace poutre::details {
 template<typename T1,
   typename T2,
   ptrdiff_t Rank,
-  template<typename, ptrdiff_t>
-  class View1,
-  template<typename, ptrdiff_t>
-  class View2>
+  template<typename, ptrdiff_t> class View1,
+  template<typename, ptrdiff_t> class View2>
 struct CopyOpDispatcher
 {
   void operator()(const View1<const T1, Rank> &i_vin, const View2<T2, Rank> &o_vout) const
@@ -73,7 +70,7 @@ template<typename T1, typename T2, ptrdiff_t Rank> struct CopyOpDispatcher<T1, T
     auto i_vinbeg = i_vin.data();
     auto i_vinend = i_vin.data() + i_vin.size();
     auto i_voutbeg = o_vout.data();
-    for (; i_vinbeg != i_vinend; i_vinbeg++, i_voutbeg++) { *i_voutbeg = static_cast<T2>(*i_vinbeg); }
+    for (; i_vinbeg != i_vinend; ++i_vinbeg, ++i_voutbeg) { *i_voutbeg = static_cast<T2>(*i_vinbeg); }
   }
 };
 
@@ -82,7 +79,8 @@ template<typename T, ptrdiff_t Rank> struct CopyOpDispatcher<T, T, Rank, av::arr
 {
   void operator()(const av::array_view<const T, Rank> &i_vin, const av::array_view<T, Rank> &o_vout) const
   {
-    std::memcpy(reinterpret_cast<void *>(o_vout.data()), reinterpret_cast<const void *>(i_vin.data()), sizeof(T) * i_vin.size());
+    std::memcpy(
+      reinterpret_cast<void *>(o_vout.data()), reinterpret_cast<const void *>(i_vin.data()), sizeof(T) * i_vin.size());
   }
 };
 
@@ -90,10 +88,8 @@ template<typename T, ptrdiff_t Rank> struct CopyOpDispatcher<T, T, Rank, av::arr
 template<typename T1,
   typename T2,
   ptrdiff_t Rank,
-  template<typename, ptrdiff_t>
-  class View1,
-  template<typename, ptrdiff_t>
-  class View2>
+  template<typename, ptrdiff_t> class View1,
+  template<typename, ptrdiff_t> class View2>
 void t_Copy(const View1<const T1, Rank> &i_vin, const View2<T2, Rank> &o_vout)
 {
   POUTRE_CHECK(i_vin.size() == o_vout.size(), "Incompatible views size");
@@ -110,9 +106,7 @@ void t_Copy(const image_t<T1, Rank> &i_image, image_t<T2, Rank> &o_image)
 }
 
 template<typename T, ptrdiff_t Rank> std::unique_ptr<image_t<T, Rank>> t_CloneGeometry(const image_t<T, Rank> &i_image)
-{
-  return std::make_unique<image_t<T, Rank>>(i_image.GetShape());
-}
+{ return std::make_unique<image_t<T, Rank>>(i_image.GetShape()); }
 
 template<typename T, ptrdiff_t Rank> std::unique_ptr<image_t<T, Rank>> t_Clone(const image_t<T, Rank> &i_image)
 {

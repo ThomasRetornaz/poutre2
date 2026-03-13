@@ -20,10 +20,9 @@
  */
 
 #include <poutre/base/config.hpp>
-#include <poutre/base/trace.hpp>
-#include <poutre/base/details/simd/simd_algorithm.hpp> //simd transform
 #include <poutre/base/details/data_structures/array_view.hpp>
-#include <poutre/base/details/data_structures/image_t.hpp>
+#include <poutre/base/details/simd/simd_algorithm.hpp>//simd transform
+#include <poutre/base/trace.hpp>
 
 #include <algorithm>//transform
 
@@ -41,12 +40,9 @@ template<typename T1,
   typename T2,
   typename Tout,
   ptrdiff_t Rank,
-  template<typename, ptrdiff_t>
-  class View1,
-  template<typename, ptrdiff_t>
-  class View2,
-  template<typename, ptrdiff_t>
-  class ViewOut,
+  template<typename, ptrdiff_t> class View1,
+  template<typename, ptrdiff_t> class View2,
+  template<typename, ptrdiff_t> class ViewOut,
   class BinOp,
   typename = void>
 struct PixelWiseBinaryOpDispatcher
@@ -161,12 +157,9 @@ template<typename T1,
   typename T2,
   typename Tout,
   ptrdiff_t Rank,
-  template<typename, ptrdiff_t>
-  class View1,
-  template<typename, ptrdiff_t>
-  class View2,
-  template<typename, ptrdiff_t>
-  class View3,
+  template<typename, ptrdiff_t> class View1,
+  template<typename, ptrdiff_t> class View2,
+  template<typename, ptrdiff_t> class View3,
   class BinOp>
 void t_binary_op(const View1<T1, Rank> &i_vin1,
   const BinOp &op,

@@ -19,7 +19,6 @@
  *
  */
 #include <algorithm>//transform
-#include <iostream>
 #include <poutre/base/config.hpp>
 #include <poutre/base/details/data_structures/array_view.hpp>
 #include <poutre/base/details/data_structures/image_t.hpp>
@@ -39,10 +38,8 @@ namespace poutre::details {
 template<typename TIn,
   typename TOut,
   ptrdiff_t Rank,
-  template<typename, ptrdiff_t>
-  class ViewIn,
-  template<typename, ptrdiff_t>
-  class ViewOut,
+  template<typename, ptrdiff_t> class ViewIn,
+  template<typename, ptrdiff_t> class ViewOut,
   // template<typename, typename>
   class UnOp,
   typename = void>
@@ -124,10 +121,8 @@ struct PixelWiseUnaryOpDispatcher<TIn,
     auto i_vinend = i_vin.data() + i_vin.size();
     auto i_voutbeg = o_vout.data();
 
-    const auto length    = i_vin.size();
-    if( !length ) {
-      return;
-    }
+    const auto length = i_vin.size();
+    if (!length) { return; }
     simd::transform(i_vinbeg, i_vinend, i_voutbeg, op);
     // work but speedup is only 20% for 1024 images and degrade for smaller size
     /* const auto block_size = 2048 * poutre::TypeTraits<TIn>::simd_loop_step;
@@ -168,10 +163,8 @@ struct PixelWiseUnaryOpDispatcher<TIn,
 template<typename TIn,
   typename TOut,
   ptrdiff_t Rank,
-  template<typename, ptrdiff_t>
-  class ViewIn,
-  template<typename, ptrdiff_t>
-  class ViewOut,
+  template<typename, ptrdiff_t> class ViewIn,
+  template<typename, ptrdiff_t> class ViewOut,
   class UnOp>
 void t_unary_op(const ViewIn<TIn, Rank> &i_vin, UnOp op, const ViewOut<TOut, Rank> &o_vout) POUTRE_NOEXCEPTONLYNDEBUG
 {

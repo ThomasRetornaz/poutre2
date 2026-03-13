@@ -25,12 +25,12 @@
 
 #include <array>
 #include <cstddef>
-#include <type_traits>
 #include <format>
-#include <limits>
 #include <initializer_list>
+#include <limits>
 #include <sstream>
 #include <string>
+#include <type_traits>
 #include <variant>
 
 namespace poutre {
@@ -109,8 +109,10 @@ public:
   //   m_array[2] = a2;
   // }
 
-  template<size_t R = Rank, typename = std::enable_if_t<R == 4>>
-  constexpr explicit compound_type(valuetype a0, valuetype a1, valuetype a2, valuetype a3) POUTRE_NOEXCEPT : m_array()
+  template<size_t R = Rank>
+  constexpr explicit compound_type(valuetype a0, valuetype a1, valuetype a2, valuetype a3) POUTRE_NOEXCEPT
+    requires(R == 4)
+    : m_array()
   {
     m_array[0] = a0;
     m_array[1] = a1;
@@ -211,16 +213,12 @@ private:
 template<typename value_type, std::size_t size>
 constexpr bool operator==(const compound_type<value_type, size> &lhs,
   const compound_type<value_type, size> &rhs) noexcept
-{
-  return lhs.operator==(rhs);
-}
+{ return lhs.operator==(rhs); }
 
 template<typename value_type, std::size_t size>
 constexpr bool operator!=(const compound_type<value_type, size> &lhs,
   const compound_type<value_type, size> &rhs) noexcept
-{
-  return lhs.operator!=(rhs);
-}
+{ return lhs.operator!=(rhs); }
 
 
 //! Helper to retrieve dim off pixel storage type
@@ -244,7 +242,7 @@ public:
   using self_type = compound_type<valuetype, 3>;
   using value_type = valuetype;
 
-public:
+
   value_type m_pix1, m_pix2, m_pix3;
 
   //! Default constructor
@@ -257,8 +255,9 @@ public:
   //! Constant assignment constructor
   constexpr explicit compound_type(const value_type &value) : m_pix1(value), m_pix2(value), m_pix3(value) {}
 
-  template<class U, typename = std::enable_if_t<std::is_convertible_v<valuetype, U>>>
-  constexpr compound_type(const compound_type<U, rank> &other)
+  template<class U>
+  constexpr explicit compound_type(const compound_type<U, rank> &other)
+    requires(std::is_convertible_v<valuetype, U>)
     : m_pix1(static_cast<valuetype>(other.m_pix1)), m_pix2(static_cast<valuetype>(other.m_pix2)),
       m_pix3(static_cast<valuetype>(other.m_pix3))
   {}
@@ -297,14 +296,10 @@ public:
 
   //! Strict equality operator
   bool operator==(const self_type &other) const noexcept
-  {
-    return (m_pix1 == other.m_pix1) && (m_pix2 == other.m_pix2) && (m_pix3 == other.m_pix3);
-  }
+  { return (m_pix1 == other.m_pix1) && (m_pix2 == other.m_pix2) && (m_pix3 == other.m_pix3); }
   //! Inequality operator
   bool operator!=(const self_type &other) const noexcept
-  {
-    return (m_pix1 != other.m_pix1) || (m_pix2 != other.m_pix2) || (m_pix3 != other.m_pix3);
-  }
+  { return (m_pix1 != other.m_pix1) || (m_pix2 != other.m_pix2) || (m_pix3 != other.m_pix3); }
 
   [[nodiscard]] std::string to_string() const
   {
@@ -338,7 +333,6 @@ public:
   using self_type = compound_type<valuetype, 4>;
   using value_type = valuetype;
 
-public:
   value_type m_pix1, m_pix2, m_pix3, m_pix4;
 
   //! Default constructor
@@ -351,19 +345,21 @@ public:
   constexpr explicit compound_type(const value_type &value) : m_pix1(value), m_pix2(value), m_pix3(value), m_pix4(value)
   {}
 
-  template<class U, typename = std::enable_if_t<std::is_convertible_v<valuetype, U>>>
+  template<class U>
   // cppcheck-suppress missingMemberCopy
-  constexpr compound_type(const compound_type<U, 4> &other)
-    : m_pix1(static_cast<valuetype>(other.m_pix1)), m_pix2(static_cast<valuetype>(other.m_pix2)), m_pix3(static_cast<valuetype>(other.m_pix3)), m_pix4(static_cast<valuetype>(other.m_pix4))
+  constexpr explicit compound_type(const compound_type<U, 4> &other)
+    requires(std::is_convertible_v<valuetype, U>)
+    : m_pix1(static_cast<valuetype>(other.m_pix1)), m_pix2(static_cast<valuetype>(other.m_pix2)),
+      m_pix3(static_cast<valuetype>(other.m_pix3)), m_pix4(static_cast<valuetype>(other.m_pix4))
   {}
 
   constexpr compound_type(const compound_type<valuetype, 4> &rhs) = default;
 
-  constexpr compound_type<valuetype, 4>  &operator=(const compound_type<valuetype, 4> &rhs) = default;
+  constexpr compound_type<valuetype, 4> &operator=(const compound_type<valuetype, 4> &rhs) = default;
 
   constexpr compound_type(compound_type<valuetype, 4> &&rhs) = default;
 
-  constexpr compound_type<valuetype, 4>  &operator=(compound_type<valuetype, 4> &&rhs) = default;
+  constexpr compound_type<valuetype, 4> &operator=(compound_type<valuetype, 4> &&rhs) = default;
 
   valuetype &operator[](ptrdiff_t idx) POUTRE_NOEXCEPTONLYNDEBUG
   {
@@ -532,10 +528,9 @@ enum class PType {
 
 using ScalarTypeVariant = std::variant<pUINT8, pINT32, pINT64, pFLOAT, pDOUBLE>;
 
-template <typename T>
-ScalarTypeVariant CreatePixelValue(T value, const PType ptype)
+template<typename T> ScalarTypeVariant CreatePixelValue(T value, const PType ptype)
 {
-  switch(ptype) {
+  switch (ptype) {
   case PType::PType_GrayUINT8: {
     return static_cast<pUINT8>(value);
   }
@@ -558,7 +553,7 @@ ScalarTypeVariant CreatePixelValue(T value, const PType ptype)
 
 inline ScalarTypeVariant get_lowest(const PType ptype)
 {
-  switch(ptype) {
+  switch (ptype) {
   case PType::PType_GrayUINT8: {
     return std::numeric_limits<pUINT8>::lowest();
   }
@@ -581,7 +576,7 @@ inline ScalarTypeVariant get_lowest(const PType ptype)
 
 inline ScalarTypeVariant get_highest(const PType ptype)
 {
-  switch(ptype) {
+  switch (ptype) {
   case PType::PType_GrayUINT8: {
     return std::numeric_limits<pUINT8>::max();
   }
@@ -709,6 +704,6 @@ template<> struct formatter<poutre::PType> : std::formatter<const char *>
   }
 };
 }// namespace std
-#if defined(POUTRE_IS_MSVC)
+#ifdef POUTRE_IS_MSVC
 #pragma warning(pop)
 #endif

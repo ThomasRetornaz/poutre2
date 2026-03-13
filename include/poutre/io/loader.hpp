@@ -22,9 +22,9 @@
 #include <memory>
 #include <string>
 
-#if defined(POUTRE_IS_MSVC)
-  #pragma warning(push)
-  #pragma warning(disable : 4251)// needs to have dll-interface to be used by clients of class
+#ifdef POUTRE_IS_MSVC
+#pragma warning(push)
+#pragma warning(disable : 4251)// needs to have dll-interface to be used by clients of class
 #endif
 namespace poutre::io {
 /**
@@ -35,22 +35,21 @@ namespace poutre::io {
 class ImageProvider;
 
 /**
-   * @brief Concrete ImageLoader
-   * Powered by OpenImageIO toolset see https://sites.google.com/site/openimageio/home
-   * so various formats are supported (and deduced from path)
-   * at least the most common ones (PNG,JPEG,TIFF,BMP,...)
-   * @note for Image with more than 2 dimensions, only hdf5 format is supported
-   * @warning in HDF5 case, only one image is loaded correspond to name "poutre_img_1"
-   * for advanced options
-   */
+ * @brief Concrete ImageLoader
+ * Powered by OpenImageIO toolset see https://sites.google.com/site/openimageio/home
+ * so various formats are supported (and deduced from path)
+ * at least the most common ones (PNG,JPEG,TIFF,BMP,...)
+ * @note for Image with more than 2 dimensions, only hdf5 format is supported
+ * @warning in HDF5 case, only one image is loaded correspond to name "poutre_img_1"
+ * for advanced options
+ */
 class IO_API ImageLoader
 {
-  private:
-
+private:
   friend class ImageProvider;
   std::string m_imgPath;
   std::string m_i_name;
-  bool        m_isready;
+  bool m_isready;
 
 public:
   /**
@@ -68,11 +67,11 @@ public:
   ImageLoader &SetPath(const std::string &i_imgpath);
 
   /**
- * @brief Set the name (id) to the image to load. Only make sense for container like hdf5,npz
- *
- * @param i_name  name to the image to load
- * @return self_type& return reference to object to chain call
- */
+   * @brief Set the name (id) to the image to load. Only make sense for container like hdf5,npz
+   *
+   * @param i_name  name to the image to load
+   * @return self_type& return reference to object to chain call
+   */
   ImageLoader &SetName(const std::string &i_name);
 
   /**
@@ -80,11 +79,11 @@ public:
    *
    * @return std::unique_ptr<IInterface>
    */
-  std::unique_ptr<IInterface> Load() const;
+  [[nodiscard]] std::unique_ptr<IInterface> Load() const;
 };
 
 //! @} doxygroup: poutre_io_group
 }// namespace poutre::io
-#if defined(POUTRE_IS_MSVC)
-	#pragma warning(pop)
+#ifdef POUTRE_IS_MSVC
+#pragma warning(pop)
 #endif

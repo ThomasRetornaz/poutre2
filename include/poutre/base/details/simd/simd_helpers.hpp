@@ -18,7 +18,6 @@
  */
 
 #include <cstddef>
-#include <memory>
 #include <poutre/base/config.hpp>
 #include <poutre/base/types.hpp>
 #include <vector>

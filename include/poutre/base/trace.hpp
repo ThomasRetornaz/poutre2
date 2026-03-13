@@ -21,11 +21,10 @@
 #include <poutre/base/config.hpp>
 
 #include <fstream>
-#include <ostream>
+#include <spdlog/common.h>
+#include <spdlog/logger.h>
 #include <spdlog/sinks/stdout_color_sinks.h>
 #include <spdlog/spdlog.h>
-#include <spdlog/logger.h>
-#include <spdlog/common.h>
 
 
 namespace poutre {
@@ -37,11 +36,11 @@ namespace poutre {
 class BASE_API GlobalLogger
 {
 private:
-  static GlobalLogger* m_instance;
+  static GlobalLogger *m_instance;
   static std::once_flag m_initFlag;
 
 public:
-  enum class LoggerLevel {
+  enum class LoggerLevel : std::uint8_t {
     trace,
     debug,
     info,
@@ -63,9 +62,9 @@ public:
   GlobalLogger &operator=(GlobalLogger &&other) = delete;
   ~GlobalLogger();
 
-  void setLoggerLevel(LoggerLevel l)
+  void setLoggerLevel(LoggerLevel level)
   {
-    switch (l) {
+    switch (level) {
     case LoggerLevel::debug:
       (*m_innerlogger).set_level(spdlog::level::debug);
       break;

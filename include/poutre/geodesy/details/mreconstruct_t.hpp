@@ -20,17 +20,15 @@
 #include <algorithm>
 #include <deque>
 #include <filesystem>
-#include <memory>
 #include <numeric>
 #include <poutre/base/config.hpp>
 #include <poutre/base/details/data_structures/array_view.hpp>
-#include <poutre/geodesy/geodesy.hpp>
+#include <poutre/geodesy/mreconstruct.hpp>
 #include <poutre/low_level_morpho/details/ero_dil_static_se_t.hpp>
 #include <poutre/pixel_processing/details/arith_op_t.hpp>
 #include <poutre/structuring_element/details/neighbor_list_static_se_t.hpp>
 #include <poutre/structuring_element/se_types_and_tags.hpp>
 #include <queue>
-#include <vector>
 
 namespace poutre::geo::details {
 /**
@@ -381,7 +379,7 @@ template<poutre::se::Common_NL_SE nl_static,
   template<typename, ptrdiff_t> class ViewMarker,
   template<typename, ptrdiff_t> class ViewMask,
   template<typename, ptrdiff_t> class ViewOut>
-void t_ReconstructionDispatchRectType(reconstruction_type rect_type,
+void t_ReconstructionDispatchRectType(poutre::geo::reconstruction_type rect_type,
   const ViewMarker<const Tmarker, Rank> &i_vmarker,
   const ViewMask<const Tmask, Rank> &i_vmask,
   ViewOut<Tout, Rank> &o_vout)
@@ -418,7 +416,7 @@ template<typename Tmarker,
   template<typename, ptrdiff_t> class ViewMarker,
   template<typename, ptrdiff_t> class ViewMask,
   template<typename, ptrdiff_t> class ViewOut>
-void t_ReconstructionDispatch(reconstruction_type rect_type,
+void t_ReconstructionDispatch(poutre::geo::reconstruction_type rect_type,
   const ViewMarker<const Tmarker, Rank> &i_vmarker,
   const ViewMask<const Tmask, Rank> &i_vmask,
   const poutre::se::Common_NL_SE nl_static,

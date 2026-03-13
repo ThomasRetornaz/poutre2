@@ -24,12 +24,12 @@
 #define SE_API MODULE_EXPORT
 #else
 #define SE_API MODULE_IMPORT
-#endif// POUTRE_DLL_EXPORTS
+#endif// poutre_structuring_element_EXPORTS
 #define SE_LOCAL MODULE_LOCAL
 #else// POUTRE_DLL is not defined: this means POUTRE is a static lib.
 #define SE_API
 #define SE_LOCAL
-#endif// POUTRE_DLL
+#endif// POUTRE_DYNAMIC
 
 namespace poutre {
 /**

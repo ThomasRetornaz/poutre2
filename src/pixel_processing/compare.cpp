@@ -26,7 +26,7 @@ namespace {
 using namespace poutre;
 
 // sss
-template<ptrdiff_t NumDims, PType Pin, PType Pout>
+template<std::ptrdiff_t NumDims, PType Pin, PType Pout>
 void CompareImage_sss_Dispatch(const IInterface &i_img,
   CompOpType compOpType,
   const ScalarTypeVariant &i_comp,// NOLINT
@@ -65,7 +65,7 @@ void CompareImage_sss_Dispatch(const IInterface &i_img,
   details::t_CompareImage_sss(*i_img_t, compOpType, comp_value, true_value, false_value, *o_img_t);
 }
 
-template<size_t NumDims, PType Pin>
+template<std::size_t NumDims, PType Pin>
 void CompareImage_sss_Pin_Dispatch(const IInterface &i_img,
   CompOpType compOpType,
   const ScalarTypeVariant &i_comp,// NOLINT
@@ -528,8 +528,8 @@ void CompareImage_ssi_Pin_Dispatch(const IInterface &i_img,
 template<ptrdiff_t NumDims, PType Pin, PType Pout>
 void CompareImage_iis_Dispatch(const IInterface &i_img,
   CompOpType compOpType,
-  const IInterface &i_imgcomp, //NOLINT
-  const IInterface &i_imgtrue, //NOLINT
+  const IInterface &i_imgcomp,// NOLINT
+  const IInterface &i_imgtrue,// NOLINT
   const ScalarTypeVariant &i_valfalse,
   IInterface &o_img)
 {
@@ -562,8 +562,8 @@ void CompareImage_iis_Dispatch(const IInterface &i_img,
 template<size_t NumDims, PType Pin>
 void CompareImage_iis_Pin_Dispatch(const IInterface &i_img,
   CompOpType compOpType,
-  const IInterface &i_imgcomp, //NOLINT
-  const IInterface &i_imgtrue, //NOLINT
+  const IInterface &i_imgcomp,// NOLINT
+  const IInterface &i_imgtrue,// NOLINT
   const ScalarTypeVariant &i_valfalse,
   IInterface &o_img)
 {

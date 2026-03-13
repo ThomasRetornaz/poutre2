@@ -21,12 +21,10 @@
 
 #include <poutre/base/config.hpp>
 #include <poutre/base/details/data_structures/image_t.hpp>
-#include <poutre/base/types.hpp>
-#include <poutre/base/types_traits.hpp>
 #include <poutre/base/trace.hpp>
-#include <poutre/pixel_processing/details/unary_op_t.hpp>
+#include <poutre/base/types_traits.hpp>
 #include <poutre/pixel_processing/details/binary_op_t.hpp>
-
+#include <poutre/pixel_processing/details/unary_op_t.hpp>
 
 
 namespace poutre::details {
@@ -62,10 +60,8 @@ public:
 template<typename T1,
   typename T2,
   ptrdiff_t Rank,
-  template<typename, ptrdiff_t>
-  class View1,
-  template<typename, ptrdiff_t>
-  class View2>
+  template<typename, ptrdiff_t> class View1,
+  template<typename, ptrdiff_t> class View2>
 void t_ArithInvert(const View1<T1, Rank> &i_vin, const View2<T2, Rank> &o_vout)
 {
   POUTRE_ENTERING("t_ArithInvert");
@@ -96,7 +92,7 @@ public:
   POUTRE_ALWAYS_INLINE T3 operator()(T1 const &a0, T2 const &a1) const POUTRE_NOEXCEPT
   {
     accutype res = static_cast<accutype>(a0) - static_cast<accutype>(a1);
-    if (res < static_cast<accutype>(m_minval)) return m_minval;
+    if (res < static_cast<accutype>(m_minval)) { return m_minval; }
     return static_cast<T3>(res);
   }
 };
@@ -118,29 +114,22 @@ public:
   POUTRE_ALWAYS_INLINE T1 operator()(T1 const &a0, T1 const &a1) const POUTRE_NOEXCEPT
   {
     accutype res = static_cast<accutype>(a0) - static_cast<accutype>(a1);
-    if (res < static_cast<accutype>(m_minval)) return m_minval;
+    if (res < static_cast<accutype>(m_minval)) { return m_minval; }
     return static_cast<T1>(res);
   }
 
   template<typename U> POUTRE_ALWAYS_INLINE U operator()(U const &a0, U const &a1) const POUTRE_NOEXCEPT
-  {
-    return ssub(a0, a1);
-  }
+  { return ssub(a0, a1); }
 };
 
 template<typename T1,
   typename T2,
   typename T3,
   ptrdiff_t Rank,
-  template<typename, ptrdiff_t>
-  class View1,
-  template<typename, ptrdiff_t>
-  class View2,
-  template<typename, ptrdiff_t>
-  class View3>
-void t_ArithSaturatedSub(const View1<T1, Rank> &i_vin1,
-  const View2<T2, Rank> &i_vin2,
-  const View3<T3, Rank> &o_vout)
+  template<typename, ptrdiff_t> class View1,
+  template<typename, ptrdiff_t> class View2,
+  template<typename, ptrdiff_t> class View3>
+void t_ArithSaturatedSub(const View1<T1, Rank> &i_vin1, const View2<T2, Rank> &i_vin2, const View3<T3, Rank> &o_vout)
 {
   POUTRE_ENTERING("t_ArithSaturatedSub");
   using myop = op_Saturated_Sub<T1, T2, T3>;
@@ -170,7 +159,7 @@ public:
   POUTRE_ALWAYS_INLINE T3 operator()(T1 const &a0, T2 const &a1) const POUTRE_NOEXCEPT
   {
     accutype res = static_cast<accutype>(a0) + static_cast<accutype>(a1);
-    if (res > static_cast<accutype>(m_maxval)) return m_maxval;
+    if (res > static_cast<accutype>(m_maxval)) { return m_maxval; }
     return static_cast<T3>(res);
   }
 };
@@ -191,28 +180,21 @@ public:
   POUTRE_ALWAYS_INLINE T1 operator()(T1 const &a0, T1 const &a1) const POUTRE_NOEXCEPT
   {
     accutype res = static_cast<accutype>(a0) + static_cast<accutype>(a1);
-    if (res > static_cast<accutype>(m_maxval)) return m_maxval;
+    if (res > static_cast<accutype>(m_maxval)) { return m_maxval; }
     return static_cast<T1>(res);
   }
   template<typename U> POUTRE_ALWAYS_INLINE U operator()(U const &a0, U const &a1) const POUTRE_NOEXCEPT
-  {
-    return sadd(a0, a1);
-  }
+  { return sadd(a0, a1); }
 };
 
 template<typename T1,
   typename T2,
   typename T3,
   ptrdiff_t Rank,
-  template<typename, ptrdiff_t>
-  class View1,
-  template<typename, ptrdiff_t>
-  class View2,
-  template<typename, ptrdiff_t>
-  class View3>
-void t_ArithSaturatedAdd(const View1<T1, Rank> &i_vin1,
-  const View2<T2, Rank> &i_vin2,
-  const View3<T3, Rank> &o_vout)
+  template<typename, ptrdiff_t> class View1,
+  template<typename, ptrdiff_t> class View2,
+  template<typename, ptrdiff_t> class View3>
+void t_ArithSaturatedAdd(const View1<T1, Rank> &i_vin1, const View2<T2, Rank> &i_vin2, const View3<T3, Rank> &o_vout)
 {
   POUTRE_ENTERING("t_ArithSaturatedAdd");
   using myop = op_Saturated_Add<T1, T2, T3>;
@@ -244,7 +226,7 @@ public:
   POUTRE_ALWAYS_INLINE T2 operator()(T1 const &a0) const POUTRE_NOEXCEPT
   {
     accutype res = static_cast<accutype>(m_val) + static_cast<accutype>(a0);
-    if (res > static_cast<accutype>(m_maxval)) return m_maxval;
+    if (res > static_cast<accutype>(m_maxval)) { return m_maxval; }
     return static_cast<T2>(res);
   }
 };
@@ -264,22 +246,18 @@ public:
   POUTRE_ALWAYS_INLINE T1 operator()(T1 const &a0) const POUTRE_NOEXCEPT
   {
     accutype res = static_cast<accutype>(m_val) + static_cast<accutype>(a0);
-    if (res > static_cast<accutype>(m_maxval)) return m_maxval;
+    if (res > static_cast<accutype>(m_maxval)) { return m_maxval; }
     return static_cast<T1>(res);
   }
   template<typename U> POUTRE_ALWAYS_INLINE U operator()(U const &a0) const POUTRE_NOEXCEPT
-  {
-    return sadd(a0, m_simd_val);
-  }
+  { return sadd(a0, m_simd_val); }
 };
 
 template<typename T1,
   typename T2,
   ptrdiff_t Rank,
-  template<typename, ptrdiff_t>
-  class View1,
-  template<typename, ptrdiff_t>
-  class View2>
+  template<typename, ptrdiff_t> class View1,
+  template<typename, ptrdiff_t> class View2>
 //@warning saturation is related to *View2 type*
 void t_ArithSaturatedAddConstant(const View1<T1, Rank> &i_vin, T2 val, View2<T2, Rank> &o_vout)
 {
@@ -311,7 +289,7 @@ public:
   POUTRE_ALWAYS_INLINE T2 operator()(T1 const &a0) const POUTRE_NOEXCEPT
   {
     accutype res = static_cast<accutype>(a0) - static_cast<accutype>(m_val);
-    if (res < static_cast<accutype>(m_minval)) { return m_minval;}
+    if (res < static_cast<accutype>(m_minval)) { return m_minval; }
     return static_cast<T2>(res);
   }
 };
@@ -332,23 +310,19 @@ public:
   POUTRE_ALWAYS_INLINE T1 operator()(T1 const &a0) const POUTRE_NOEXCEPT
   {
     accutype res = static_cast<accutype>(a0) - static_cast<accutype>(m_val);
-    if (res < static_cast<accutype>(m_minval)) return m_minval;
+    if (res < static_cast<accutype>(m_minval)) { return m_minval; }
     return static_cast<T1>(res);
   }
 
   template<typename U> POUTRE_ALWAYS_INLINE U operator()(U const &a0) const POUTRE_NOEXCEPT
-  {
-    return ssub(a0, m_simd_val);
-  }
+  { return ssub(a0, m_simd_val); }
 };
 
 template<typename T1,
   typename T2,
   ptrdiff_t Rank,
-  template<typename, ptrdiff_t>
-  class View1,
-  template<typename, ptrdiff_t>
-  class View2>
+  template<typename, ptrdiff_t> class View1,
+  template<typename, ptrdiff_t> class View2>
 //@warning saturation is related to *View2 type*
 void t_ArithSaturatedSubConstant(const View1<T1, Rank> &i_vin, T2 val, View2<T2, Rank> &o_vout)
 {
@@ -374,9 +348,7 @@ template<typename T1, typename T2, typename T3, typename = void> struct op_Sup
 public:
   op_Sup() = default;
   POUTRE_ALWAYS_INLINE T3 operator()(T1 const &a0, T2 const &a1) const POUTRE_NOEXCEPT
-  {
-    return static_cast<T3>(a0 > a1 ? a0 : a1);
-  }
+  { return static_cast<T3>(a0 > a1 ? a0 : a1); }
 };
 
 template<typename T1, typename T2, typename T3>
@@ -390,21 +362,16 @@ public:
   op_Sup() = default;
   POUTRE_ALWAYS_INLINE T3 operator()(T1 const &a0, T2 const &a1) const POUTRE_NOEXCEPT { return (a0 > a1 ? a0 : a1); }
   template<typename U> POUTRE_ALWAYS_INLINE U operator()(U const &a0, U const &a1) const POUTRE_NOEXCEPT
-  {
-    return xs::max(a0, a1);
-  }
+  { return xs::max(a0, a1); }
 };
 
 template<typename T1,
   typename T2,
   typename T3,
   ptrdiff_t Rank,
-  template<typename, ptrdiff_t>
-  class View1,
-  template<typename, ptrdiff_t>
-  class View2,
-  template<typename, ptrdiff_t>
-  class View3>
+  template<typename, ptrdiff_t> class View1,
+  template<typename, ptrdiff_t> class View2,
+  template<typename, ptrdiff_t> class View3>
 void t_ArithSup(const View1<T1, Rank> &i_vin1, const View2<T2, Rank> &i_vin2, const View3<T3, Rank> &o_vout)
 {
   POUTRE_ENTERING("t_ArithSup");
@@ -431,9 +398,7 @@ template<typename T1, typename T2, typename T3, typename = void> struct op_Inf
 public:
   op_Inf() = default;
   POUTRE_ALWAYS_INLINE T3 operator()(T1 const &a0, T2 const &a1) const POUTRE_NOEXCEPT
-  {
-    return static_cast<T3>(a0 < a1 ? a0 : a1);
-  }
+  { return static_cast<T3>(a0 < a1 ? a0 : a1); }
 };
 
 template<typename T1, typename T2, typename T3>
@@ -449,21 +414,16 @@ public:
   POUTRE_ALWAYS_INLINE T3 operator()(T1 const &a0, T2 const &a1) const POUTRE_NOEXCEPT { return (a0 < a1 ? a0 : a1); }
 
   template<typename U> POUTRE_ALWAYS_INLINE U operator()(U const &a0, U const &a1) const POUTRE_NOEXCEPT
-  {
-    return xs::min(a0, a1);
-  }
+  { return xs::min(a0, a1); }
 };
 
 template<typename T1,
   typename T2,
   typename T3,
   ptrdiff_t Rank,
-  template<typename, ptrdiff_t>
-  class View1,
-  template<typename, ptrdiff_t>
-  class View2,
-  template<typename, ptrdiff_t>
-  class View3>
+  template<typename, ptrdiff_t> class View1,
+  template<typename, ptrdiff_t> class View2,
+  template<typename, ptrdiff_t> class View3>
 void t_ArithInf(const View1<T1, Rank> &i_vin1, const View2<T2, Rank> &i_vin2, const View3<T3, Rank> &o_vout)
 {
   POUTRE_ENTERING("t_ArithInf");

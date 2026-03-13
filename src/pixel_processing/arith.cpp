@@ -12,7 +12,6 @@
 //==============================================================================
 
 #include <cstddef>
-#include <variant>
 #include <poutre/base/config.hpp>
 #include <poutre/base/details/data_structures/image_t.hpp>
 #include <poutre/base/image_interface.hpp>
@@ -21,10 +20,11 @@
 #include <poutre/base/types_traits.hpp>
 #include <poutre/pixel_processing/arith.hpp>
 #include <poutre/pixel_processing/details/arith_op_t.hpp>
+#include <variant>
 
 namespace poutre {
 
-template<ptrdiff_t NumDims, PType P>
+template<std::ptrdiff_t NumDims, PType P>
 void ArithSaturatedAddConstantDispatch(const IInterface &i_img, const ScalarTypeVariant &vscalar, IInterface &o_img)
 {
   using pType = typename enum_to_type<CompoundType::CompoundType_Scalar, P>::type;
@@ -42,7 +42,7 @@ void ArithSaturatedAddConstantDispatch(const IInterface &i_img, const ScalarType
   }
 }
 
-template<ptrdiff_t NumDims, PType P>
+template<std::ptrdiff_t NumDims, PType P>
 void ArithSaturatedSubConstantDispatch(const IInterface &i_img, const ScalarTypeVariant &vscalar, IInterface &o_img)
 {
   using pType = typename enum_to_type<CompoundType::CompoundType_Scalar, P>::type;
@@ -59,7 +59,7 @@ void ArithSaturatedSubConstantDispatch(const IInterface &i_img, const ScalarType
   }
 }
 
-template<ptrdiff_t NumDims, PType P>
+template<std::ptrdiff_t NumDims, PType P>
 void ArithSaturatedAddImageDispatch(const IInterface &i_img1, const IInterface &i_img2, IInterface &o_img)
 {
   using ImgType = details::image_t<typename enum_to_type<CompoundType::CompoundType_Scalar, P>::type, NumDims>;
@@ -73,7 +73,7 @@ void ArithSaturatedAddImageDispatch(const IInterface &i_img1, const IInterface &
 }
 
 
-template<ptrdiff_t NumDims, PType P>
+template<std::ptrdiff_t NumDims, PType P>
 void ArithSaturatedSubImageDispatch(const IInterface &i_img1, const IInterface &i_img2, IInterface &o_img)
 {
   using ImgType = details::image_t<typename enum_to_type<CompoundType::CompoundType_Scalar, P>::type, NumDims>;
@@ -86,7 +86,7 @@ void ArithSaturatedSubImageDispatch(const IInterface &i_img1, const IInterface &
   details::t_ArithSaturatedSub(*img1_t, *img2_t, *img3_t);
 }
 
-template<ptrdiff_t NumDims, PType P>
+template<std::ptrdiff_t NumDims, PType P>
 void ArithSupImageDispatch(const IInterface &i_img1, const IInterface &i_img2, IInterface &o_img)
 {
   using ImgType = details::image_t<typename enum_to_type<CompoundType::CompoundType_Scalar, P>::type, NumDims>;
@@ -99,7 +99,7 @@ void ArithSupImageDispatch(const IInterface &i_img1, const IInterface &i_img2, I
   details::t_ArithSup(*img1_t, *img2_t, *img3_t);
 }
 
-template<ptrdiff_t NumDims, PType P>
+template<std::ptrdiff_t NumDims, PType P>
 void ArithInfImageDispatch(const IInterface &i_img1, const IInterface &i_img2, IInterface &o_img)
 {
   using ImgType = details::image_t<typename enum_to_type<CompoundType::CompoundType_Scalar, P>::type, NumDims>;
@@ -112,7 +112,7 @@ void ArithInfImageDispatch(const IInterface &i_img1, const IInterface &i_img2, I
   details::t_ArithInf(*img1_t, *img2_t, *img3_t);
 }
 
-template<ptrdiff_t NumDims, PType P> void ArithInvertImageDispatch(const IInterface &i_img, IInterface &o_img)
+template<std::ptrdiff_t NumDims, PType P> void ArithInvertImageDispatch(const IInterface &i_img, IInterface &o_img)
 {
   using ImgType = details::image_t<typename enum_to_type<CompoundType::CompoundType_Scalar, P>::type, NumDims>;
   const auto *img1_t = dynamic_cast<const ImgType *>(&i_img);
@@ -401,7 +401,7 @@ void ArithInfImage(const IInterface &i_img1, const IInterface &i_img2, IInterfac
   }
 }
 
-void ArithSaturatedAddConstant(const IInterface &i_img,const ScalarTypeVariant &pvalue, IInterface &o_img)
+void ArithSaturatedAddConstant(const IInterface &i_img, const ScalarTypeVariant &pvalue, IInterface &o_img)
 {
   POUTRE_ENTERING("ArithSaturatedAddConstant");
   AssertSizesCompatible(i_img, o_img, "ArithSaturatedAddConstant images have not compatible sizes");
@@ -439,7 +439,7 @@ void ArithSaturatedAddConstant(const IInterface &i_img,const ScalarTypeVariant &
   } break;
   case 3: {
     switch (i_img.GetPType()) {
-    case PType::PType_GrayUINT8: { 
+    case PType::PType_GrayUINT8: {
       ArithSaturatedAddConstantDispatch<3, PType::PType_GrayUINT8>(i_img, pvalue, o_img);
     } break;
     case PType::PType_GrayINT32: {
@@ -468,7 +468,7 @@ void ArithSaturatedAddConstant(const IInterface &i_img,const ScalarTypeVariant &
   }
 }
 
-void ArithSaturatedSubConstant(const IInterface &i_img,const ScalarTypeVariant &pvalue, IInterface &o_img)
+void ArithSaturatedSubConstant(const IInterface &i_img, const ScalarTypeVariant &pvalue, IInterface &o_img)
 {
   POUTRE_ENTERING("ArithSaturatedSubConstant");
   AssertSizesCompatible(i_img, o_img, "ArithSaturatedSubConstant images have not compatible sizes");
@@ -506,7 +506,7 @@ void ArithSaturatedSubConstant(const IInterface &i_img,const ScalarTypeVariant &
   } break;
   case 3: {
     switch (i_img.GetPType()) {
-    case PType::PType_GrayUINT8: { 
+    case PType::PType_GrayUINT8: {
       ArithSaturatedSubConstantDispatch<3, PType::PType_GrayUINT8>(i_img, pvalue, o_img);
     } break;
     case PType::PType_GrayINT32: {

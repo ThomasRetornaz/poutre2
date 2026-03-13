@@ -65,7 +65,8 @@ void CopyInto(const IInterface &i_img, IInterface &o_img)
   ConvertInto(i_img, o_img);
 }
 
-template<ptrdiff_t NumDims, PType Pin> void ConvertIntoDispatchScalarP(const IInterface &i_img1, IInterface &o_img2)
+template<std::ptrdiff_t NumDims, PType Pin>
+void ConvertIntoDispatchScalarP(const IInterface &i_img1, IInterface &o_img2)
 {
   using ImgType1 = details::image_t<typename enum_to_type<CompoundType::CompoundType_Scalar, Pin>::type, NumDims>;
   const auto *img1_t = dynamic_cast<const ImgType1 *>(&i_img1);
@@ -113,7 +114,8 @@ template<ptrdiff_t NumDims, PType Pin> void ConvertIntoDispatchScalarP(const IIn
   }
 }
 
-template<ptrdiff_t NumDims, PType Pin> void ConvertIntoDispatch3PLanesP(const IInterface &i_img1, IInterface &o_img2)
+template<std::ptrdiff_t NumDims, PType Pin>
+void ConvertIntoDispatch3PLanesP(const IInterface &i_img1, IInterface &o_img2)
 {
   using ImgType1 = details::image_t<typename enum_to_type<CompoundType::CompoundType_3Planes, Pin>::type, NumDims>;
   const auto *img1_t = dynamic_cast<const ImgType1 *>(&i_img1);
@@ -122,21 +124,24 @@ template<ptrdiff_t NumDims, PType Pin> void ConvertIntoDispatch3PLanesP(const II
   {
   case PType::PType_GrayUINT8: {
     using ImgType2 =
-      details::image_t<typename enum_to_type<CompoundType::CompoundType_3Planes, PType::PType_GrayUINT8>::type, NumDims>;
+      details::image_t<typename enum_to_type<CompoundType::CompoundType_3Planes, PType::PType_GrayUINT8>::type,
+        NumDims>;
     auto *img2_t = dynamic_cast<ImgType2 *>(&o_img2);
     if (!img2_t) { POUTRE_RUNTIME_ERROR("ConvertIntoDispatchP o_img2 downcast fail"); }
     details::t_Copy(*img1_t, *img2_t);
   } break;
   case PType::PType_GrayINT32: {
     using ImgType2 =
-      details::image_t<typename enum_to_type<CompoundType::CompoundType_3Planes, PType::PType_GrayINT32>::type, NumDims>;
+      details::image_t<typename enum_to_type<CompoundType::CompoundType_3Planes, PType::PType_GrayINT32>::type,
+        NumDims>;
     auto *img2_t = dynamic_cast<ImgType2 *>(&o_img2);
     if (!img2_t) { POUTRE_RUNTIME_ERROR("ConvertIntoDispatchP o_img2 downcast fail"); }
     details::t_Copy(*img1_t, *img2_t);
   } break;
   case PType::PType_GrayINT64: {
     using ImgType2 =
-      details::image_t<typename enum_to_type<CompoundType::CompoundType_3Planes, PType::PType_GrayINT64>::type, NumDims>;
+      details::image_t<typename enum_to_type<CompoundType::CompoundType_3Planes, PType::PType_GrayINT64>::type,
+        NumDims>;
     auto *img2_t = dynamic_cast<ImgType2 *>(&o_img2);
     if (!img2_t) { POUTRE_RUNTIME_ERROR("ConvertIntoDispatchP o_img2 downcast fail"); }
     details::t_Copy(*img1_t, *img2_t);
@@ -161,7 +166,8 @@ template<ptrdiff_t NumDims, PType Pin> void ConvertIntoDispatch3PLanesP(const II
   }
 }
 
-template<ptrdiff_t NumDims, PType Pin> void ConvertIntoDispatch4PLanesP(const IInterface &i_img1, IInterface &o_img2)
+template<std::ptrdiff_t NumDims, PType Pin>
+void ConvertIntoDispatch4PLanesP(const IInterface &i_img1, IInterface &o_img2)
 {
   using ImgType1 = details::image_t<typename enum_to_type<CompoundType::CompoundType_4Planes, Pin>::type, NumDims>;
   const auto *img1_t = dynamic_cast<const ImgType1 *>(&i_img1);
@@ -170,21 +176,24 @@ template<ptrdiff_t NumDims, PType Pin> void ConvertIntoDispatch4PLanesP(const II
   {
   case PType::PType_GrayUINT8: {
     using ImgType2 =
-      details::image_t<typename enum_to_type<CompoundType::CompoundType_4Planes, PType::PType_GrayUINT8>::type, NumDims>;
+      details::image_t<typename enum_to_type<CompoundType::CompoundType_4Planes, PType::PType_GrayUINT8>::type,
+        NumDims>;
     auto *img2_t = dynamic_cast<ImgType2 *>(&o_img2);
     if (!img2_t) { POUTRE_RUNTIME_ERROR("ConvertIntoDispatchP o_img2 downcast fail"); }
     details::t_Copy(*img1_t, *img2_t);
   } break;
   case PType::PType_GrayINT32: {
     using ImgType2 =
-      details::image_t<typename enum_to_type<CompoundType::CompoundType_4Planes, PType::PType_GrayINT32>::type, NumDims>;
+      details::image_t<typename enum_to_type<CompoundType::CompoundType_4Planes, PType::PType_GrayINT32>::type,
+        NumDims>;
     auto *img2_t = dynamic_cast<ImgType2 *>(&o_img2);
     if (!img2_t) { POUTRE_RUNTIME_ERROR("ConvertIntoDispatchP o_img2 downcast fail"); }
     details::t_Copy(*img1_t, *img2_t);
   } break;
   case PType::PType_GrayINT64: {
     using ImgType2 =
-      details::image_t<typename enum_to_type<CompoundType::CompoundType_4Planes, PType::PType_GrayINT64>::type, NumDims>;
+      details::image_t<typename enum_to_type<CompoundType::CompoundType_4Planes, PType::PType_GrayINT64>::type,
+        NumDims>;
     auto *img2_t = dynamic_cast<ImgType2 *>(&o_img2);
     if (!img2_t) { POUTRE_RUNTIME_ERROR("ConvertIntoDispatchP o_img2 downcast fail"); }
     details::t_Copy(*img1_t, *img2_t);
@@ -209,26 +218,26 @@ template<ptrdiff_t NumDims, PType Pin> void ConvertIntoDispatch4PLanesP(const II
   }
 }
 
-template<ptrdiff_t numDims> void ConvertIntoDispatch(const IInterface &i_img1, IInterface &o_img2)
+template<std::ptrdiff_t numDims> void ConvertIntoDispatch(const IInterface &i_img1, IInterface &o_img2)
 {
   POUTRE_CHECK(i_img1.GetCType() == o_img2.GetCType(), "ConvertInto must have same CType");
   switch (i_img1.GetCType()) {
   case CompoundType::CompoundType_Scalar: {
     switch (i_img1.GetPType()) {
     case PType::PType_GrayUINT8: {
-      ConvertIntoDispatchScalarP<numDims,PType::PType_GrayUINT8>(i_img1,o_img2);
+      ConvertIntoDispatchScalarP<numDims, PType::PType_GrayUINT8>(i_img1, o_img2);
     } break;
     case PType::PType_GrayINT32: {
-      ConvertIntoDispatchScalarP<numDims,PType::PType_GrayINT32>(i_img1,o_img2);
+      ConvertIntoDispatchScalarP<numDims, PType::PType_GrayINT32>(i_img1, o_img2);
     } break;
     case PType::PType_GrayINT64: {
-      ConvertIntoDispatchScalarP<numDims,PType::PType_GrayINT64>(i_img1,o_img2);
+      ConvertIntoDispatchScalarP<numDims, PType::PType_GrayINT64>(i_img1, o_img2);
     } break;
     case PType::PType_F32: {
-      ConvertIntoDispatchScalarP<numDims,PType::PType_F32>(i_img1,o_img2);
+      ConvertIntoDispatchScalarP<numDims, PType::PType_F32>(i_img1, o_img2);
     } break;
     case PType::PType_D64: {
-      ConvertIntoDispatchScalarP<numDims,PType::PType_D64>(i_img1,o_img2);
+      ConvertIntoDispatchScalarP<numDims, PType::PType_D64>(i_img1, o_img2);
     } break;
     default: {
       POUTRE_RUNTIME_ERROR("ConvertIntoDispatch unsupported PTYPE");
@@ -236,53 +245,51 @@ template<ptrdiff_t numDims> void ConvertIntoDispatch(const IInterface &i_img1, I
     }
     break;
   }
-  case CompoundType::CompoundType_3Planes:
-   {
+  case CompoundType::CompoundType_3Planes: {
     switch (i_img1.GetPType()) {
-      case PType::PType_GrayUINT8: {
-        ConvertIntoDispatch3PLanesP<numDims,PType::PType_GrayUINT8>(i_img1,o_img2);
-      } break;
-      case PType::PType_GrayINT32: {
-        ConvertIntoDispatch3PLanesP<numDims,PType::PType_GrayINT32>(i_img1,o_img2);
-      } break;
-      case PType::PType_GrayINT64: {
-        ConvertIntoDispatch3PLanesP<numDims,PType::PType_GrayINT64>(i_img1,o_img2);
-      } break;
-      case PType::PType_F32: {
-        ConvertIntoDispatch3PLanesP<numDims,PType::PType_F32>(i_img1,o_img2);
-      } break;
-      case PType::PType_D64: {
-        ConvertIntoDispatch3PLanesP<numDims,PType::PType_D64>(i_img1,o_img2);
-      } break;
-      default: {
-        POUTRE_RUNTIME_ERROR("ConvertIntoDispatch unsupported PTYPE");
-      }
-      }
-      break;
+    case PType::PType_GrayUINT8: {
+      ConvertIntoDispatch3PLanesP<numDims, PType::PType_GrayUINT8>(i_img1, o_img2);
+    } break;
+    case PType::PType_GrayINT32: {
+      ConvertIntoDispatch3PLanesP<numDims, PType::PType_GrayINT32>(i_img1, o_img2);
+    } break;
+    case PType::PType_GrayINT64: {
+      ConvertIntoDispatch3PLanesP<numDims, PType::PType_GrayINT64>(i_img1, o_img2);
+    } break;
+    case PType::PType_F32: {
+      ConvertIntoDispatch3PLanesP<numDims, PType::PType_F32>(i_img1, o_img2);
+    } break;
+    case PType::PType_D64: {
+      ConvertIntoDispatch3PLanesP<numDims, PType::PType_D64>(i_img1, o_img2);
+    } break;
+    default: {
+      POUTRE_RUNTIME_ERROR("ConvertIntoDispatch unsupported PTYPE");
+    }
+    }
+    break;
   }
-  case CompoundType::CompoundType_4Planes:
-  {
+  case CompoundType::CompoundType_4Planes: {
     switch (i_img1.GetPType()) {
-      case PType::PType_GrayUINT8: {
-        ConvertIntoDispatch4PLanesP<numDims,PType::PType_GrayUINT8>(i_img1,o_img2);
-      } break;
-      case PType::PType_GrayINT32: {
-        ConvertIntoDispatch4PLanesP<numDims,PType::PType_GrayINT32>(i_img1,o_img2);
-      } break;
-      case PType::PType_GrayINT64: {
-        ConvertIntoDispatch4PLanesP<numDims,PType::PType_GrayINT64>(i_img1,o_img2);
-      } break;
-      case PType::PType_F32: {
-        ConvertIntoDispatch4PLanesP<numDims,PType::PType_F32>(i_img1,o_img2);
-      } break;
-      case PType::PType_D64: {
-        ConvertIntoDispatch4PLanesP<numDims,PType::PType_D64>(i_img1,o_img2);
-      } break;
-      default: {
-        POUTRE_RUNTIME_ERROR("ConvertIntoDispatch unsupported PTYPE");
-      }
-      }
-      break;
+    case PType::PType_GrayUINT8: {
+      ConvertIntoDispatch4PLanesP<numDims, PType::PType_GrayUINT8>(i_img1, o_img2);
+    } break;
+    case PType::PType_GrayINT32: {
+      ConvertIntoDispatch4PLanesP<numDims, PType::PType_GrayINT32>(i_img1, o_img2);
+    } break;
+    case PType::PType_GrayINT64: {
+      ConvertIntoDispatch4PLanesP<numDims, PType::PType_GrayINT64>(i_img1, o_img2);
+    } break;
+    case PType::PType_F32: {
+      ConvertIntoDispatch4PLanesP<numDims, PType::PType_F32>(i_img1, o_img2);
+    } break;
+    case PType::PType_D64: {
+      ConvertIntoDispatch4PLanesP<numDims, PType::PType_D64>(i_img1, o_img2);
+    } break;
+    default: {
+      POUTRE_RUNTIME_ERROR("ConvertIntoDispatch unsupported PTYPE");
+    }
+    }
+    break;
   }
   default: {
     POUTRE_RUNTIME_ERROR("ConvertIntoDispatch unsupported CTYPE");
@@ -297,8 +304,7 @@ void ConvertInto(const IInterface &i_img, IInterface &o_img)
   AssertSizesCompatible(i_img, o_img, "ConvertInto images have not compatible sizes");
   AssertImagesAreDifferent(i_img, o_img, "ConvertInto images must be differents");
 
-  const auto &numDims = i_img.GetRank();
-  switch (numDims) {
+  switch (i_img.GetRank()) {
   case 0: {
     POUTRE_RUNTIME_ERROR("Unsupported number of dims:0");
   }
@@ -312,25 +318,25 @@ void ConvertInto(const IInterface &i_img, IInterface &o_img)
     POUTRE_CHECK(i_img.GetCType() == o_img.GetCType(), "ConvertInto must have same CType");
     POUTRE_CHECK(i_img.GetCType() == CompoundType::CompoundType_Scalar, "ConvertInto must be scalar");
     switch (i_img.GetPType()) {
-      case PType::PType_GrayUINT8: {
-        ConvertIntoDispatchScalarP<3,PType::PType_GrayUINT8>(i_img,o_img);
-      } break;
-      case PType::PType_GrayINT32: {
-        ConvertIntoDispatchScalarP<3,PType::PType_GrayINT32>(i_img,o_img);
-      } break;
-      case PType::PType_GrayINT64: {
-        ConvertIntoDispatchScalarP<3,PType::PType_GrayINT64>(i_img,o_img);
-      } break;
-      case PType::PType_F32: {
-        ConvertIntoDispatchScalarP<3,PType::PType_F32>(i_img,o_img);
-      } break;
-      case PType::PType_D64: {
-        ConvertIntoDispatchScalarP<3,PType::PType_D64>(i_img,o_img);
-      } break;
-      default: {
-        POUTRE_RUNTIME_ERROR("ConvertIntoDispatch unsupported PTYPE");
-      }
-      }
+    case PType::PType_GrayUINT8: {
+      ConvertIntoDispatchScalarP<3, PType::PType_GrayUINT8>(i_img, o_img);
+    } break;
+    case PType::PType_GrayINT32: {
+      ConvertIntoDispatchScalarP<3, PType::PType_GrayINT32>(i_img, o_img);
+    } break;
+    case PType::PType_GrayINT64: {
+      ConvertIntoDispatchScalarP<3, PType::PType_GrayINT64>(i_img, o_img);
+    } break;
+    case PType::PType_F32: {
+      ConvertIntoDispatchScalarP<3, PType::PType_F32>(i_img, o_img);
+    } break;
+    case PType::PType_D64: {
+      ConvertIntoDispatchScalarP<3, PType::PType_D64>(i_img, o_img);
+    } break;
+    default: {
+      POUTRE_RUNTIME_ERROR("ConvertIntoDispatch unsupported PTYPE");
+    }
+    }
   } break;
   // case 4: {
   //   // ConvertIntoDispatchDims<4>(i_img1, o_img2);

@@ -24,12 +24,12 @@
 #define LAB_API MODULE_EXPORT
 #else
 #define LAB_API MODULE_IMPORT
-#endif// POUTRE_DLL_EXPORTS
+#endif// poutre_label_EXPORTS
 #define LAB_LOCAL MODULE_LOCAL
 #else// POUTRE_DLL is not defined: this means POUTRE is a static lib.
 #define LAB_API
 #define LAB_LOCAL
-#endif// POUTRE_DLL
+#endif// POUTRE_DYNAMIC
 
 namespace poutre::label {
 /**
@@ -39,5 +39,4 @@ namespace poutre::label {
  */
 
 //! @} doxygroup: poutre_label_group
-}// namespace poutre
-
+}// namespace poutre::label

@@ -26,12 +26,12 @@
 #else
 #define BASE_API MODULE_IMPORT
 #define EXPIMP_TEMPLATE extern
-#endif// POUTRE_DLL_EXPORTS
+#endif// poutre_base_EXPORTS
 #define BASE_LOCAL MODULE_LOCAL
 #else// POUTRE_DLL is not defined: this means POUTRE is a static lib.
 #define BASE_API
 #define BASE_LOCAL
-#endif// POUTRE_DLL
+#endif// POUTRE_DYNAMIC
 
 namespace poutre {
 /**

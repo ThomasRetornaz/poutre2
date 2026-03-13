@@ -19,11 +19,8 @@
 #include "types.hpp"
 #include <poutre/base/config.hpp>
 #include <poutre/base/details/simd/simd_helpers.hpp>
-#include <poutre/base/types.hpp>
 
 #include <limits>
-#include <stdexcept>
-#include <type_traits>
 #include <xsimd/config/xsimd_arch.hpp>
 
 namespace poutre {
@@ -130,17 +127,11 @@ template<> struct TypeTraits<pUINT8>
   POUTRE_STATIC_CONSTEXPR size_t quant = sizeof(storage_type) * 8;
 
   POUTRE_ALWAYS_INLINE POUTRE_STATIC_CONSTEXPR storage_type lowest() POUTRE_NOEXCEPT
-  {
-    return std::numeric_limits<storage_type>::lowest();
-  }
+  { return std::numeric_limits<storage_type>::lowest(); }
   POUTRE_ALWAYS_INLINE POUTRE_STATIC_CONSTEXPR storage_type min() POUTRE_NOEXCEPT
-  {
-    return std::numeric_limits<storage_type>::min();
-  }
+  { return std::numeric_limits<storage_type>::min(); }
   POUTRE_ALWAYS_INLINE POUTRE_STATIC_CONSTEXPR storage_type max() POUTRE_NOEXCEPT
-  {
-    return std::numeric_limits<storage_type>::max();
-  }
+  { return std::numeric_limits<storage_type>::max(); }
   POUTRE_ALWAYS_INLINE POUTRE_STATIC_CONSTEXPR storage_type inf() { return min(); }
   POUTRE_ALWAYS_INLINE POUTRE_STATIC_CONSTEXPR storage_type sup() { return max(); }
 };
@@ -161,23 +152,17 @@ template<> struct TypeTraits<pINT32>
   static constexpr auto c_type = CompoundType::CompoundType_Scalar;
 
   POUTRE_STATIC_CONSTEXPR size_t alignment = SIMD_IDEAL_MAX_ALIGN_BYTES;
-  POUTRE_STATIC_CONSTEXPR size_t simd_loop_step =  xsimd::batch<storage_type, xsimd::default_arch>::size;
+  POUTRE_STATIC_CONSTEXPR size_t simd_loop_step = xsimd::batch<storage_type, xsimd::default_arch>::size;
   using simd_type = typename xs::batch<storage_type>;
   using simd_mask_type = typename xs::batch_bool<storage_type>;
   POUTRE_STATIC_CONSTEXPR size_t quant = sizeof(storage_type) * 8;
 
   POUTRE_ALWAYS_INLINE POUTRE_STATIC_CONSTEXPR storage_type lowest() POUTRE_NOEXCEPT
-  {
-    return std::numeric_limits<storage_type>::lowest();
-  }
+  { return std::numeric_limits<storage_type>::lowest(); }
   POUTRE_ALWAYS_INLINE POUTRE_STATIC_CONSTEXPR storage_type min() POUTRE_NOEXCEPT
-  {
-    return std::numeric_limits<storage_type>::min();
-  }
+  { return std::numeric_limits<storage_type>::min(); }
   POUTRE_ALWAYS_INLINE POUTRE_STATIC_CONSTEXPR storage_type max() POUTRE_NOEXCEPT
-  {
-    return std::numeric_limits<storage_type>::max();
-  }
+  { return std::numeric_limits<storage_type>::max(); }
   POUTRE_ALWAYS_INLINE POUTRE_STATIC_CONSTEXPR storage_type inf() { return min(); }
   POUTRE_ALWAYS_INLINE POUTRE_STATIC_CONSTEXPR storage_type sup() { return max(); }
 };
@@ -205,17 +190,11 @@ template<> struct TypeTraits<pFLOAT>
   POUTRE_STATIC_CONSTEXPR size_t quant = sizeof(pFLOAT) * 8;
 
   POUTRE_ALWAYS_INLINE POUTRE_STATIC_CONSTEXPR storage_type lowest() POUTRE_NOEXCEPT
-  {
-    return std::numeric_limits<storage_type>::lowest();
-  }
+  { return std::numeric_limits<storage_type>::lowest(); }
   POUTRE_ALWAYS_INLINE POUTRE_STATIC_CONSTEXPR storage_type min() POUTRE_NOEXCEPT
-  {
-    return std::numeric_limits<storage_type>::min();
-  }
+  { return std::numeric_limits<storage_type>::min(); }
   POUTRE_ALWAYS_INLINE POUTRE_STATIC_CONSTEXPR storage_type max() POUTRE_NOEXCEPT
-  {
-    return std::numeric_limits<storage_type>::max();
-  }
+  { return std::numeric_limits<storage_type>::max(); }
   POUTRE_ALWAYS_INLINE POUTRE_STATIC_CONSTEXPR storage_type inf() { return min(); }
   POUTRE_ALWAYS_INLINE POUTRE_STATIC_CONSTEXPR storage_type sup() { return max(); }
 };
@@ -243,17 +222,11 @@ template<> struct TypeTraits<pDOUBLE>
   POUTRE_STATIC_CONSTEXPR size_t quant = sizeof(pDOUBLE) * 8;
 
   POUTRE_ALWAYS_INLINE POUTRE_STATIC_CONSTEXPR storage_type lowest() POUTRE_NOEXCEPT
-  {
-    return std::numeric_limits<storage_type>::lowest();
-  }
+  { return std::numeric_limits<storage_type>::lowest(); }
   POUTRE_ALWAYS_INLINE POUTRE_STATIC_CONSTEXPR storage_type min() POUTRE_NOEXCEPT
-  {
-    return std::numeric_limits<storage_type>::min();
-  }
+  { return std::numeric_limits<storage_type>::min(); }
   POUTRE_ALWAYS_INLINE POUTRE_STATIC_CONSTEXPR storage_type max() POUTRE_NOEXCEPT
-  {
-    return std::numeric_limits<storage_type>::max();
-  }
+  { return std::numeric_limits<storage_type>::max(); }
   POUTRE_ALWAYS_INLINE POUTRE_STATIC_CONSTEXPR storage_type inf() { return min(); }
   POUTRE_ALWAYS_INLINE POUTRE_STATIC_CONSTEXPR storage_type sup() { return max(); }
 };
@@ -280,17 +253,11 @@ template<> struct TypeTraits<pINT64>
   using simd_mask_type = typename xs::batch_bool<storage_type>;
 
   POUTRE_ALWAYS_INLINE POUTRE_STATIC_CONSTEXPR storage_type lowest() POUTRE_NOEXCEPT
-  {
-    return std::numeric_limits<storage_type>::lowest();
-  }
+  { return std::numeric_limits<storage_type>::lowest(); }
   POUTRE_ALWAYS_INLINE POUTRE_STATIC_CONSTEXPR storage_type min() POUTRE_NOEXCEPT
-  {
-    return std::numeric_limits<storage_type>::min();
-  }
+  { return std::numeric_limits<storage_type>::min(); }
   POUTRE_ALWAYS_INLINE POUTRE_STATIC_CONSTEXPR storage_type max() POUTRE_NOEXCEPT
-  {
-    return std::numeric_limits<storage_type>::max();
-  }
+  { return std::numeric_limits<storage_type>::max(); }
   POUTRE_ALWAYS_INLINE POUTRE_STATIC_CONSTEXPR storage_type inf() { return min(); }
   POUTRE_ALWAYS_INLINE POUTRE_STATIC_CONSTEXPR storage_type sup() { return max(); }
 };
@@ -362,7 +329,8 @@ template<class value_type> struct TypeTraits<compound_type<value_type, 4>>
   {
     return poutre::compound_type<value_type, 4>(std::numeric_limits<value_type>::lowest(),
       std::numeric_limits<value_type>::lowest(),
-      std::numeric_limits<value_type>::lowest(),std::numeric_limits<value_type>::lowest());
+      std::numeric_limits<value_type>::lowest(),
+      std::numeric_limits<value_type>::lowest());
   }
 
   // todo decltype
@@ -370,7 +338,8 @@ template<class value_type> struct TypeTraits<compound_type<value_type, 4>>
   {
     return poutre::compound_type<value_type, 4>(std::numeric_limits<value_type>::min(),
       std::numeric_limits<value_type>::min(),
-      std::numeric_limits<value_type>::min(),std::numeric_limits<value_type>::min());
+      std::numeric_limits<value_type>::min(),
+      std::numeric_limits<value_type>::min());
   }
 
   // todo decltype
@@ -378,7 +347,8 @@ template<class value_type> struct TypeTraits<compound_type<value_type, 4>>
   {
     return poutre::compound_type<value_type, 4>(std::numeric_limits<value_type>::max(),
       std::numeric_limits<value_type>::max(),
-      std::numeric_limits<value_type>::max(),std::numeric_limits<value_type>::max());
+      std::numeric_limits<value_type>::max(),
+      std::numeric_limits<value_type>::max());
   }
   POUTRE_ALWAYS_INLINE POUTRE_STATIC_CONSTEXPR storage_type inf() { return min(); }
   POUTRE_ALWAYS_INLINE POUTRE_STATIC_CONSTEXPR storage_type sup() { return max(); }

@@ -22,18 +22,17 @@
 #include <memory>
 #include <string>
 
-#if defined(POUTRE_IS_MSVC)
-	#pragma warning(push)
-	#pragma warning(disable : 4251)// needs to have dll-interface to be used by clients of class
+#ifdef POUTRE_IS_MSVC
+#pragma warning(push)
+#pragma warning(disable : 4251)// needs to have dll-interface to be used by clients of class
 #endif
 
-namespace poutre::io
-{
+namespace poutre::io {
 /**
-   * @addtogroup image_processing_io_group Image Processing IO API
-   * @ingroup image_processing_group
-   *@{
-   */
+ * @addtogroup image_processing_io_group Image Processing IO API
+ * @ingroup image_processing_group
+ *@{
+ */
 
 /**
  * @brief Concrete ImageWritter
@@ -45,7 +44,7 @@ class IO_API ImageWriter
 private:
   std::string m_imgPath;
   std::string m_i_name;
-  bool        m_isready;
+  bool m_isready;
 
 public:
   /**
@@ -63,18 +62,18 @@ public:
    */
   ImageWriter &SetPath(const std::string &i_imgpath);
 
- /**
- * @brief Set the name (id) to the image to load. Only make sense for container like hdf5,npz
- *
- * @param i_name  name to the image to load
- * @return ImageWriter& return reference to object to chain call
- */
+  /**
+   * @brief Set the name (id) to the image to load. Only make sense for container like hdf5,npz
+   *
+   * @param i_name  name to the image to load
+   * @return ImageWriter& return reference to object to chain call
+   */
   ImageWriter &SetName(const std::string &i_name);
-  void       Write(const IInterface &i_img) const;
+  void Write(const IInterface &i_img) const;
 };
 
 //! @} doxygroup: image_processing_io_group
 }// namespace poutre::io
-#if defined(POUTRE_IS_MSVC)
-	#pragma warning(pop)
+#ifdef POUTRE_IS_MSVC
+#pragma warning(pop)
 #endif

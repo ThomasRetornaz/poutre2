@@ -24,12 +24,12 @@
 #define PP_API MODULE_EXPORT
 #else
 #define PP_API MODULE_IMPORT
-#endif// POUTRE_DLL_EXPORTS
+#endif// poutre_pixel_processing_EXPORTS
 #define PP_LOCAL MODULE_LOCAL
 #else// POUTRE_DLL is not defined: this means POUTRE is a static lib.
 #define PP_API
 #define PP_LOCAL
-#endif// POUTRE_DLL
+#endif// POUTRE_DYNAMIC
 
 namespace poutre {
 /**

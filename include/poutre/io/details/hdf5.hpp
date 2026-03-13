@@ -19,7 +19,6 @@
 
 #include <poutre/base/config.hpp>
 #include <poutre/base/details/data_structures/image_t.hpp>
-#include <poutre/base/trace.hpp>
 
 // NOLINTBEGIN
 #include <H5Cpp.h>

@@ -17,7 +17,6 @@
  */
 
 #include <algorithm>
-#include <memory>
 #include <numeric>
 #include <poutre/base/config.hpp>
 #include <poutre/base/details/data_structures/array_view.hpp>
@@ -168,8 +167,10 @@ struct t_ErodeDilateXOpLineDispatcher<T, T, 2, poutre::details::av::array_view, 
     ptrdiff_t size_line = xsize;
     // need auxiliary buffer
     using tmpBuffer = std::vector<T>;
-    const size_t padded_size = static_cast<size_t>(size_line + 2 * size_line_segment);
-    tmpBuffer f(padded_size), g(padded_size), h(padded_size);
+    const auto padded_size = static_cast<size_t>(size_line + 2 * size_line_segment);
+    tmpBuffer f(padded_size);
+    tmpBuffer g(padded_size);
+    tmpBuffer h(padded_size);
     // NOLINTBEGIN
     for (scoord y = 0; y < ysize; y++) {
       const_lineView bufInputCurrentLine = i_vin.data() + y * xsize;

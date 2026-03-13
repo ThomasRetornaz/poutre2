@@ -18,20 +18,21 @@
 #include <poutre/base/trace.hpp>
 #include <poutre/base/types.hpp>
 #include <poutre/base/types_traits.hpp>
+#include <poutre/geodesy/details/leveling_t.hpp>
+#include <poutre/geodesy/leveling.hpp>
 #include <poutre/pixel_processing/copy_convert.hpp>
 #include <poutre/structuring_element/se_types_and_tags.hpp>
-#include <poutre/geodesy/leveling.hpp>
-#include <poutre/geodesy/details/leveling_t.hpp>
 
 namespace {
-template<ptrdiff_t NumDims, poutre::PType P> void lowLevelingImageDispatch(
-  const poutre::IInterface &i_ref, // NOLINT
-  const poutre::IInterface &i_marker,   // NOLINT
+template<std::ptrdiff_t NumDims, poutre::PType P>
+void lowLevelingImageDispatch(const poutre::IInterface &i_ref,// NOLINT
+  const poutre::IInterface &i_marker,// NOLINT
   poutre::se::Common_NL_SE nl_static,
-  poutre::IInterface &o_img
-  )
+  poutre::IInterface &o_img)
 {
-  using ImgType = poutre::details::image_t<typename poutre::enum_to_type<poutre::CompoundType::CompoundType_Scalar, P>::type, NumDims>;
+  using ImgType =
+    poutre::details::image_t<typename poutre::enum_to_type<poutre::CompoundType::CompoundType_Scalar, P>::type,
+      NumDims>;
   const auto *imgmarker_t = dynamic_cast<const ImgType *>(&i_marker);
   if (!imgmarker_t) { POUTRE_RUNTIME_ERROR("lowLevelingImageDispatch i_marker downcast fail"); }
   const auto *imgref_t = dynamic_cast<const ImgType *>(&i_ref);
@@ -42,14 +43,15 @@ template<ptrdiff_t NumDims, poutre::PType P> void lowLevelingImageDispatch(
   poutre::geo::details::t_low_leveling(*imgref_t, *imgmarker_t, nl_static, *imgout_t);
 }
 
-template<ptrdiff_t NumDims, poutre::PType P> void highLevelingImageDispatch(
-  const poutre::IInterface &i_ref, // NOLINT
-  const poutre::IInterface &i_marker,   // NOLINT
+template<std::ptrdiff_t NumDims, poutre::PType P>
+void highLevelingImageDispatch(const poutre::IInterface &i_ref,// NOLINT
+  const poutre::IInterface &i_marker,// NOLINT
   poutre::se::Common_NL_SE nl_static,
-  poutre::IInterface &o_img
-  )
+  poutre::IInterface &o_img)
 {
-  using ImgType = poutre::details::image_t<typename poutre::enum_to_type<poutre::CompoundType::CompoundType_Scalar, P>::type, NumDims>;
+  using ImgType =
+    poutre::details::image_t<typename poutre::enum_to_type<poutre::CompoundType::CompoundType_Scalar, P>::type,
+      NumDims>;
   const auto *imgmarker_t = dynamic_cast<const ImgType *>(&i_marker);
   if (!imgmarker_t) { POUTRE_RUNTIME_ERROR("highLevelingImageDispatch i_marker downcast fail"); }
   const auto *imgref_t = dynamic_cast<const ImgType *>(&i_ref);
@@ -59,7 +61,7 @@ template<ptrdiff_t NumDims, poutre::PType P> void highLevelingImageDispatch(
 
   poutre::geo::details::t_high_leveling(*imgref_t, *imgmarker_t, nl_static, *imgout_t);
 }
-}
+}// namespace
 
 namespace poutre::geo {
 void low_leveling(const IInterface &i_ref, const IInterface &i_marker, se::Common_NL_SE nl_static, IInterface &o_img)
@@ -81,7 +83,7 @@ void low_leveling(const IInterface &i_ref, const IInterface &i_marker, se::Commo
       lowLevelingImageDispatch<1, poutre::PType::PType_GrayINT64>(i_ref, i_marker, nl_static, o_img);
     } break;
     case poutre::PType::PType_F32: {
-      lowLevelingImageDispatch<1, poutre::PType::PType_F32>(i_ref, i_marker,nl_static, o_img);
+      lowLevelingImageDispatch<1, poutre::PType::PType_F32>(i_ref, i_marker, nl_static, o_img);
     } break;
     case poutre::PType::PType_D64: {
       lowLevelingImageDispatch<1, poutre::PType::PType_D64>(i_ref, i_marker, nl_static, o_img);
@@ -163,7 +165,7 @@ void high_leveling(const IInterface &i_ref, const IInterface &i_marker, se::Comm
       highLevelingImageDispatch<1, poutre::PType::PType_GrayINT64>(i_ref, i_marker, nl_static, o_img);
     } break;
     case poutre::PType::PType_F32: {
-      highLevelingImageDispatch<1, poutre::PType::PType_F32>(i_ref, i_marker,nl_static, o_img);
+      highLevelingImageDispatch<1, poutre::PType::PType_F32>(i_ref, i_marker, nl_static, o_img);
     } break;
     case poutre::PType::PType_D64: {
       highLevelingImageDispatch<1, poutre::PType::PType_D64>(i_ref, i_marker, nl_static, o_img);
@@ -229,9 +231,9 @@ void high_leveling(const IInterface &i_ref, const IInterface &i_marker, se::Comm
 void leveling(const IInterface &i_ref, const IInterface &i_marker, se::Common_NL_SE nl_static, IInterface &o_img)
 {
   POUTRE_ENTERING("leveling");
-  auto img_tmp = poutre::CloneGeometry(i_ref); // NOLINT
-  high_leveling(i_ref,i_marker,nl_static,*img_tmp);
-  low_leveling(*img_tmp,i_marker,nl_static,o_img);
+  auto img_tmp = poutre::CloneGeometry(i_ref);// NOLINT
+  high_leveling(i_ref, i_marker, nl_static, *img_tmp);
+  low_leveling(*img_tmp, i_marker, nl_static, o_img);
 }
 
-}
+}// namespace poutre::geo

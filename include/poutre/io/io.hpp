@@ -26,12 +26,12 @@
 #else
 #define IO_API MODULE_IMPORT
 #define IO_TEMPLATE extern
-#endif// POUTRE_DLL_EXPORTS
+#endif// poutre_io_EXPORTS
 #define IO_LOCAL MODULE_LOCAL
 #else// POUTRE_DLL is not defined: this means POUTRE is a static lib.
 #define IO_API
 #define IO_LOCAL
-#endif// POUTRE_DLL
+#endif// POUTRE_DYNAMIC
 
 namespace poutre::io {
 /**
@@ -41,13 +41,13 @@ namespace poutre::io {
 
 #ifdef POUTRE_BUILD_WITH_OIIO
 /**
-  * @brief Read 2D Image from path powered by OpenImageIO
-  *
-  * @param[in] image_path
-  * @throw runtime_error in case of errors
-  * @return std::unique_ptr<IInterface> fresh image instance
-  * @warning Doesn't support Image with more than 2 dimensions use @c LoadFromHDF5
-  */
+ * @brief Read 2D Image from path powered by OpenImageIO
+ *
+ * @param[in] image_path
+ * @throw runtime_error in case of errors
+ * @return std::unique_ptr<IInterface> fresh image instance
+ * @warning Doesn't support Image with more than 2 dimensions use @c LoadFromHDF5
+ */
 IO_API std::unique_ptr<IInterface> LoadOIIO(const std::string &image_path);
 
 /**
@@ -65,12 +65,12 @@ IO_API void DumpOIIO(const std::string &path, const IInterface &i_img);
 #endif
 
 /*!@brief Load from HDF5 file.
-  * @param[in]  path absolute path
-  * @param[in]  image_name the image name to read within the file.
-  * @return fresh new image
-  * @throw runtime_error in case of failure
-  * @see StoreWithHDF5
-  */
+ * @param[in]  path absolute path
+ * @param[in]  image_name the image name to read within the file.
+ * @return fresh new image
+ * @throw runtime_error in case of failure
+ * @see StoreWithHDF5
+ */
 IO_API std::unique_ptr<IInterface> LoadHDF5(const std::string &path, const std::string &image_name = "poutre_img_1");
 
 /**

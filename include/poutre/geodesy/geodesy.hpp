@@ -24,12 +24,12 @@
 #define GEO_API MODULE_EXPORT
 #else
 #define GEO_API MODULE_IMPORT
-#endif// POUTRE_DLL_EXPORTS
+#endif// poutre_geodesy_EXPORTS
 #define GEO_LOCAL MODULE_LOCAL
 #else// POUTRE_DLL is not defined: this means POUTRE is a static lib.
 #define GEO_API
 #define GEO_LOCAL
-#endif// POUTRE_DLL
+#endif// POUTRE_DYNAMIC
 
 namespace poutre::geo {
 /**
@@ -39,5 +39,4 @@ namespace poutre::geo {
  */
 
 //! @} doxygroup: poutre_geodesy_group
-}// namespace poutre
-
+}// namespace poutre::geo

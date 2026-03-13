@@ -19,10 +19,6 @@
 
 #include <poutre/base/base.hpp>
 
-// #ifndef POUTRE_TRACE__HPP__
-// #include <poutreBase/poutreTrace.hpp>
-// #endif
-
 #include <functional>
 #include <string>
 #include <unordered_map>

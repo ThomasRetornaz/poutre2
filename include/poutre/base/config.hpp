@@ -12,8 +12,8 @@
 #ifndef FMT_HEADER_ONLY
 #define FMT_HEADER_ONLY
 #endif
+#include <cinttypes>
 #include <format>
-#include <inttypes.h>
 /**
  * @file   config.hpp
  * @author Thomas Retornaz
@@ -28,9 +28,9 @@
   /* ------------------------------------------------------------------------- */
   /* Compiler detection (order matters https://stackoverflow.com/a/28166605)   */
 
-#  if defined(_MSC_VER)
+#  ifdef _MSC_VER
 #    define POUTRE_IS_MSVC
-#  elif defined(__HIPCC__)
+#  elifdef __HIPCC__
 #    define POUTRE_IS_HIPCC
 #  elif defined(__INTEL_CLANG_COMPILER) || defined(__INTEL_LLVM_COMPILER)
 #    define POUTRE_IS_DPCPP

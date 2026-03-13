@@ -18,29 +18,33 @@
 #include <poutre/base/trace.hpp>
 #include <poutre/base/types.hpp>
 #include <poutre/base/types_traits.hpp>
-#include <poutre/structuring_element/se_types_and_tags.hpp>
-#include <poutre/label/label_binary.hpp>
 #include <poutre/label/details/label_t.hpp>
+#include <poutre/label/label_binary.hpp>
+#include <poutre/structuring_element/se_types_and_tags.hpp>
 
 namespace {
-template<ptrdiff_t NumDims, poutre::PType P> size_t label_binaryImageDispatch(
-    const poutre::IInterface &i_img,
-    poutre::se::Common_NL_SE nl_static,
-    poutre::IInterface &o_img)
+template<std::ptrdiff_t NumDims, poutre::PType P>
+size_t label_binaryImageDispatch(const poutre::IInterface &i_img,
+  poutre::se::Common_NL_SE nl_static,
+  poutre::IInterface &o_img)
 {
-  using ImgType = poutre::details::image_t<typename poutre::enum_to_type<poutre::CompoundType::CompoundType_Scalar, P>::type, NumDims>;
+  using ImgType =
+    poutre::details::image_t<typename poutre::enum_to_type<poutre::CompoundType::CompoundType_Scalar, P>::type,
+      NumDims>;
   const auto *imgin_t = dynamic_cast<const ImgType *>(&i_img);
   if (!imgin_t) { POUTRE_RUNTIME_ERROR("label_binaryImageDispatch i_ref downcast fail"); }
-  using OImgType = poutre::details::image_t<typename poutre::enum_to_type<poutre::CompoundType::CompoundType_Scalar, poutre::PType::PType_GrayINT64>::type, NumDims>;
+  using OImgType = poutre::details::image_t<
+    typename poutre::enum_to_type<poutre::CompoundType::CompoundType_Scalar, poutre::PType::PType_GrayINT64>::type,
+    NumDims>;
   auto *imgout_t = dynamic_cast<OImgType *>(&o_img);
   if (!imgout_t) { POUTRE_RUNTIME_ERROR("label_binaryImageDispatch o_img downcast fail"); }
 
   return poutre::label::details::t_label_binary(*imgin_t, nl_static, *imgout_t);
 }
-}
+}// namespace
 namespace poutre::label {
 
-size_t label_binary(const IInterface &i_img,  se::Common_NL_SE nl_static, IInterface &o_img)
+size_t label_binary(const IInterface &i_img, se::Common_NL_SE nl_static, IInterface &o_img)
 {
   POUTRE_ENTERING("label_binary");
   switch (i_img.GetRank()) {
@@ -121,4 +125,4 @@ size_t label_binary(const IInterface &i_img,  se::Common_NL_SE nl_static, IInter
   }
   }
 }
-}
+}// namespace poutre::label

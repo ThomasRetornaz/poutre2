@@ -18,8 +18,6 @@
 
 #include <poutre/base/image_interface.hpp>
 #include <poutre/low_level_morpho/low_level_morpho.hpp>
-#include <poutre/structuring_element/se_types_and_tags.hpp>
-#include <poutre/structuring_element/se_interface.hpp>
 
 namespace poutre {
 /**

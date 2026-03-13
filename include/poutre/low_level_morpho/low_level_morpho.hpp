@@ -26,12 +26,12 @@
 #else
 #define LLM_API MODULE_IMPORT
 #define LLM_TEMPLATE extern
-#endif// POUTRE_DLL_EXPORTS
+#endif// poutre_low_level_morpho_EXPORTS
 #define LLM_LOCAL MODULE_LOCAL
 #else// POUTRE_DLL is not defined: this means POUTRE is a static lib.
 #define LLM_API
 #define LLM_LOCAL
-#endif// POUTRE_DLL
+#endif// POUTRE_DYNAMIC
 
 namespace poutre {
 /**
@@ -40,4 +40,3 @@ namespace poutre {
  */
 //! @} doxygroup: poutre_llm_group
 }// namespace poutre
-
