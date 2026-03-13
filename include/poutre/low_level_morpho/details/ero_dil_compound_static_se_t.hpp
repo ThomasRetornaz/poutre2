@@ -16,6 +16,7 @@
  *
  */
 
+#include <numbers>
 #include <poutre/base/config.hpp>
 #include <poutre/base/details/data_structures/image_t.hpp>
 #include <poutre/base/trace.hpp>
