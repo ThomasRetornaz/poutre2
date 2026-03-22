@@ -21,7 +21,8 @@ function(poutre2_setup_dependencies)
                 OPTIONS "BENCHMARK_ENABLE_GTEST_TESTS OFF" "BENCHMARK_ENABLE_TESTING OFF"
 
                 # "BUILD_SHARED_LIBS OFF"
-                EXCLUDE_FROM_ALL YES SYSTEM TRUE
+                EXCLUDE_FROM_ALL YES
+                SYSTEM YES
         )
     endif ()
 
@@ -83,11 +84,12 @@ function(poutre2_setup_dependencies)
                 "CMAKE_POSITION_INDEPENDENT_CODE ON"
                 "ZLIB_BUILD_EXAMPLES OFF"
                 "ZLIB_BUILD_TESTING OFF"
+                "ZLIB_INSTALL OFF"
         )
     endif ()
 
     find_package(OpenImageIO QUIET)
-    if (0)
+    if (0) #OpenImageIO_FOUND)
         message(STATUS "OpenImageIO ${OpenImageIO_VERSION} found, image file support enabled")
         set(POUTRE_BUILD_WITH_OIIO ON PARENT_SCOPE)
     else ()
@@ -158,7 +160,7 @@ function(poutre2_setup_dependencies)
     #    endif()
 
     if (NOT TARGET hdf5::hdf5)
-        cpmaddpackage(
+        cpmaddpackage( # see https://github.com/HDFGroup/hdf5/blob/develop/release_docs/INSTALL_CMake.md
                 NAME
                 hdf5
                 GIT_TAG
@@ -181,7 +183,8 @@ function(poutre2_setup_dependencies)
                 "HDF5_BUILD_JAVA OFF"
                 "HDF5_BUILD_EXAMPLES OFF"
                 "ZLIB_USE_EXTERNAL ON" # BUG dependencies on zlib not found
-                EXCLUDE_FROM_ALL YES SYSTEM TRUE
+                EXCLUDE_FROM_ALL YES
+                SYSTEM YES
         )
         if (hdf5_ADDED)
             add_library(hdf5::hdf5 INTERFACE IMPORTED)
@@ -198,7 +201,7 @@ function(poutre2_setup_dependencies)
     if (NOT TARGET xsimd::xsimd)
         CPMAddPackage(
                 NAME xsimd
-                GIT_TAG 14.0.0
+                GIT_TAG 14.1.0
                 GITHUB_REPOSITORY
                 "QuantStack/xsimd"
                 #DOWNLOAD_ONLY True
@@ -239,7 +242,7 @@ function(poutre2_setup_dependencies)
                 GITHUB_REPOSITORY bshoshany/thread-pool
                 VERSION 5.1.0
                 EXCLUDE_FROM_ALL
-                SYSTEM
+                SYSTEM YES
         )
         add_library(BS_thread_pool INTERFACE)
         target_include_directories(BS_thread_pool INTERFACE ${BS_thread_pool_SOURCE_DIR}/include)
@@ -252,7 +255,7 @@ function(poutre2_setup_dependencies)
                 GITHUB_REPOSITORY bobluppes/graaf
                 VERSION 1.1.1
                 EXCLUDE_FROM_ALL
-                SYSTEM
+                SYSTEM YES
                 OPTIONS
                 "SKIP_EXAMPLES ON"
                 "SKIP_TESTS ON"
