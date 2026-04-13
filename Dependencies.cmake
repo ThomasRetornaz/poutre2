@@ -51,7 +51,7 @@ function(poutre2_setup_dependencies)
 
     # ### Catch2
     if (NOT TARGET Catch2::Catch2WithMain)
-        cpmaddpackage("gh:catchorg/Catch2@3.13.0")
+        cpmaddpackage("gh:catchorg/Catch2@3.14.0")
     endif ()
 
     # ### CLI
@@ -59,18 +59,6 @@ function(poutre2_setup_dependencies)
         cpmaddpackage("gh:CLIUtils/CLI11@2.6.2")
     endif ()
 
-    # ### ftxui
-    #if (NOT TARGET ftxui::screen)
-    #   cpmaddpackage("gh:ArthurSonzogni/FTXUI@6.1.9")
-    #endif ()
-
-    # ### tools
-    #if (NOT TARGET lefticus::tools)
-    # cpmaddpackage("gh:lefticus/tools")
-    #endif ()
-
-
-    #set(SYSROOT ${CMAKE_CURRENT_BINARY_DIR}/EXTERNAL_PROJECT_INSTALLED_FILES)
     # ### ZLIB
     if (NOT TARGET ZLIB::ZLIB)
         cpmaddpackage(
@@ -85,6 +73,8 @@ function(poutre2_setup_dependencies)
                 "ZLIB_BUILD_EXAMPLES OFF"
                 "ZLIB_BUILD_TESTING OFF"
                 "ZLIB_INSTALL OFF"
+                EXCLUDE_FROM_ALL YES
+                SYSTEM YES
         )
     endif ()
 
@@ -172,6 +162,8 @@ function(poutre2_setup_dependencies)
                 "HDF5_EXTERNALLY_CONFIGURED ON"
                 "HDF5_GENERATE_HEADERS OFF"
                 "HDF5_DISABLE_COMPILER_WARNINGS ON"
+                "HDF5_ENABLE_DEVELOPER_MODE OFF"
+                "HDF5_ENABLE_DEV_WARNINGS OFF"
                 "HDF5_BUILD_DOC OFF"
                 "BUILD_TESTING OFF"
                 "HDF5_BUILD_TOOLS OFF"
@@ -244,8 +236,10 @@ function(poutre2_setup_dependencies)
                 EXCLUDE_FROM_ALL
                 SYSTEM YES
         )
-        add_library(BS_thread_pool INTERFACE)
-        target_include_directories(BS_thread_pool INTERFACE ${BS_thread_pool_SOURCE_DIR}/include)
+        if (BS_thread_pool_ADDED)
+            add_library(BS_thread_pool INTERFACE)
+            target_include_directories(BS_thread_pool INTERFACE ${BS_thread_pool_SOURCE_DIR}/include)
+        endif ()
     endif ()
 
     # generic graff library
@@ -261,8 +255,10 @@ function(poutre2_setup_dependencies)
                 "SKIP_TESTS ON"
                 "SKIP_BENCHMARKS ON"
         )
-        add_library(graaf INTERFACE)
-        target_include_directories(graaf INTERFACE ${graaf_SOURCE_DIR}/include)
+        if (graaf_ADDED)
+            add_library(graaf INTERFACE)
+            target_include_directories(graaf INTERFACE ${graaf_SOURCE_DIR}/include)
+        endif ()
     endif ()
 
     #list(POP_BACK CMAKE_MESSAGE_INDENT)
