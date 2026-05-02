@@ -9,6 +9,22 @@ function(poutre2_setup_dependencies)
 
     include(ExternalProject)
 
+    # ### XSIMD
+    if (NOT TARGET xsimd::xsimd)
+        CPMAddPackage(
+                NAME xsimd
+                GIT_TAG 14.2.0
+                GITHUB_REPOSITORY
+                "QuantStack/xsimd"
+                #DOWNLOAD_ONLY True
+        )
+        if (xsimd_ADDED)
+            # Define the header-only xsimd target
+            #add_library(xsimd::xsimd INTERFACE IMPORTED GLOBAL)
+            #target_include_directories(xsimd::xsimd SYSTEM BEFORE INTERFACE ${xsimd_SOURCE_DIR}/include)
+        endif ()
+    endif ()
+
     # ### GoogleBenchmark
     if (NOT TARGET googlebenchmark::googlebenchmark)
         cpmaddpackage(
@@ -186,22 +202,6 @@ function(poutre2_setup_dependencies)
                     ${hdf5_SOURCE_DIR}/src ${hdf5_SOURCE_DIR}/c++/src ${hdf5_BINARY_DIR}/src
                     ${hdf5_SOURCE_DIR}/src/H5FDsubfiling
             )
-        endif ()
-    endif ()
-
-    # ### XSIMD
-    if (NOT TARGET xsimd::xsimd)
-        CPMAddPackage(
-                NAME xsimd
-                GIT_TAG 14.1.0
-                GITHUB_REPOSITORY
-                "QuantStack/xsimd"
-                #DOWNLOAD_ONLY True
-        )
-        if (xsimd_ADDED)
-            # Define the header-only xsimd target
-            add_library(xsimd::xsimd INTERFACE IMPORTED GLOBAL)
-            target_include_directories(xsimd::xsimd SYSTEM BEFORE INTERFACE ${xsimd_SOURCE_DIR}/include)
         endif ()
     endif ()
 
