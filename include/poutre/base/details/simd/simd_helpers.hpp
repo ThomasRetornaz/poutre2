@@ -27,9 +27,10 @@
 #pragma GCC diagnostic ignored "-Wold-style-cast"
 #pragma GCC diagnostic ignored "-Wsign-conversion"
 #pragma GCC diagnostic ignored "-Wfloat-conversion"
-#if defined(POUTRE_IS_CLANG)
+#ifdef POUTRE_IS_CLANG
 #pragma clang diagnostic ignored "-Wshorten-64-to-32"
-#elif defined(POUTRE_IS_GCC)
+#pragma clang diagnostic ignored "-Wimplicit-int-conversion"
+#elifdef POUTRE_IS_GCC
 #pragma GCC diagnostic ignored "-Wuseless-cast"
 #endif
 #pragma GCC diagnostic ignored "-Wcast-align"
