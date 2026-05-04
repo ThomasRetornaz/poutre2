@@ -151,7 +151,7 @@ jobs:
           compiler: ${{ matrix.compiler }}
           vcvarsall: ${{ contains(matrix.os, 'windows' )}}
 
-          cmake: true
+          cmake: 4.2.5 # for visual 18 2026 need at least 4.2
           ninja: true
           vcpkg: false
           ccache: true
