@@ -52,7 +52,7 @@ struct op_Invert<T1,
 public:
   op_Invert() = default;
 
-  POUTRE_ALWAYS_INLINE T1 operator()(T1 const &a0) const POUTRE_NOEXCEPT { return -a0; }
+  POUTRE_ALWAYS_INLINE T2 operator()(T1 const &a0) const POUTRE_NOEXCEPT { return static_cast<T2>(-a0); }
 
   template<typename U> POUTRE_ALWAYS_INLINE U operator()(U const &a0) const POUTRE_NOEXCEPT { return -a0; }
 };

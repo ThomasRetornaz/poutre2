@@ -13,22 +13,22 @@
 #include <poutre/base/config.hpp>
 #include <poutre/base/image_interface.hpp>
 #include <poutre/base/trace.hpp>
-#include <poutre/io/writer.hpp>
 #include <poutre/io/io.hpp>
+#include <poutre/io/writer.hpp>
 
 #include <algorithm>
+#include <cctype>
 #include <filesystem>
 #include <format>
-#include <cctype>
 #include <string>
 
 namespace poutre::io {
 namespace fs = std::filesystem;
 
-ImageWriter::ImageWriter()://m_imgPath(""),
-                           m_i_name("poutre_img_1"),m_isready(false)
-{
-}
+ImageWriter::ImageWriter()
+  :// m_imgPath(""),
+    m_i_name("poutre_img_1"), m_isready(false)
+{}
 
 ImageWriter &ImageWriter::SetName(const std::string &i_name)
 {
@@ -46,30 +46,28 @@ void ImageWriter::Write(const IInterface &i_img) const
 {
   POUTRE_ENTERING("ImageWriter::Write()");
 
-  if( !m_isready ) {
-    POUTRE_RUNTIME_ERROR("ImageWritter:  you must set path through SetPath");
-}
+  if (!m_isready) { POUTRE_RUNTIME_ERROR("ImageWritter:  you must set path through SetPath"); }
   fs::path const localPath(m_imgPath);
 
   fs::path const dir = localPath.parent_path();
-  if( !(fs::exists(dir)) )
-  {
+  if (!(fs::exists(dir))) {
     POUTRE_RUNTIME_ERROR((std::format("ImageWriter: provided path {} doesn't exists", dir.string())));
   }
 
   // switch on extension
   auto extension = localPath.extension().string();
-  std::ranges::transform(extension, extension.begin(),
-     [](unsigned char charac){ return static_cast<unsigned char>(std::tolower(charac)); });
+  std::ranges::transform(extension, extension.begin(), [](unsigned char charac) {
+    return static_cast<unsigned char>(std::tolower(charac));
+  });
 
-  if( extension == ".h5" ) {
+  if (extension == ".h5") {
     DumpHDF5(localPath.string(), i_img, m_i_name);
     return;
-    }
-#if defined POUTRE_BUILD_WITH_OIIO
-    DumpOIIO(localPath.string(), i_img);
+  }
+#ifdef POUTRE_BUILD_WITH_OIIO
+  DumpOIIO(localPath.string(), i_img);
 #else
-    POUTRE_RUNTIME_ERROR("Not supported file type. May you need to build with OpenImageIO");
+  POUTRE_RUNTIME_ERROR("Not supported file type. May you need to build with OpenImageIO");
 #endif
 }
-}
+}// namespace poutre::io

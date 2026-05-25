@@ -14,22 +14,22 @@
 #include <poutre/base/config.hpp>
 #include <poutre/base/image_interface.hpp>
 #include <poutre/base/trace.hpp>
-#include <poutre/io/loader.hpp>
 #include <poutre/io/io.hpp>
+#include <poutre/io/loader.hpp>
 
 #include <algorithm>
-#include <filesystem>
 #include <cctype>
+#include <filesystem>
 #include <memory>
 #include <string>
 
 namespace poutre::io {
 namespace fs = std::filesystem;
 
-ImageLoader::ImageLoader()://m_imgPath(""),
-                             m_i_name("poutre_img_1"),m_isready(false)
-{
-}
+ImageLoader::ImageLoader()
+  :// m_imgPath(""),
+    m_i_name("poutre_img_1"), m_isready(false)
+{}
 
 ImageLoader &ImageLoader::SetName(const std::string &i_name)
 {
@@ -46,28 +46,21 @@ ImageLoader &ImageLoader::SetPath(const std::string &i_imgpath)
 std::unique_ptr<IInterface> ImageLoader::Load() const
 {
   POUTRE_ENTERING("ImageLoader::Load()");
-  if( !m_isready )
-    {
-    POUTRE_RUNTIME_ERROR("ImageLoader:  you must set path through SetPath");
-    }
+  if (!m_isready) { POUTRE_RUNTIME_ERROR("ImageLoader:  you must set path through SetPath"); }
   const fs::path localPath(m_imgPath);
-  if( !fs::exists(localPath) )
-  {
-    POUTRE_RUNTIME_ERROR("ImageLoader:: path doesn't exist ");
-  }
+  if (!fs::exists(localPath)) { POUTRE_RUNTIME_ERROR("ImageLoader:: path doesn't exist "); }
   // switch on extension
   auto extension = localPath.extension().string();
 
-  std::ranges::transform(extension, extension.begin(), [](unsigned char charac) { return static_cast<unsigned char>(std::tolower(charac)); });
+  std::ranges::transform(extension, extension.begin(), [](unsigned char charac) {
+    return static_cast<unsigned char>(std::tolower(charac));
+  });
 
-  if( extension == ".h5" )
-  {
-    return LoadHDF5(localPath.string(),m_i_name);
-  }
-#if defined POUTRE_BUILD_WITH_OIIO
+  if (extension == ".h5") { return LoadHDF5(localPath.string(), m_i_name); }
+#ifdef POUTRE_BUILD_WITH_OIIO
   return LoadOIIO(localPath.string());
 #else
   POUTRE_RUNTIME_ERROR("Not supported file type. May you need to build with OpenImageIO");
 #endif
 }
-}
+}// namespace poutre::io
