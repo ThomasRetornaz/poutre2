@@ -134,6 +134,9 @@ template<> struct TypeTraits<pUINT8>
   { return std::numeric_limits<storage_type>::max(); }
   POUTRE_ALWAYS_INLINE POUTRE_STATIC_CONSTEXPR storage_type inf() { return min(); }
   POUTRE_ALWAYS_INLINE POUTRE_STATIC_CONSTEXPR storage_type sup() { return max(); }
+
+  POUTRE_ALWAYS_INLINE POUTRE_STATIC_CONSTEXPR storage_type background() POUTRE_NOEXCEPT
+  { return static_cast<storage_type>(0); }
 };
 
 template<> struct TypeTraits<const pUINT8> : public TypeTraits<pUINT8>
@@ -165,6 +168,7 @@ template<> struct TypeTraits<pINT32>
   { return std::numeric_limits<storage_type>::max(); }
   POUTRE_ALWAYS_INLINE POUTRE_STATIC_CONSTEXPR storage_type inf() { return min(); }
   POUTRE_ALWAYS_INLINE POUTRE_STATIC_CONSTEXPR storage_type sup() { return max(); }
+  POUTRE_ALWAYS_INLINE POUTRE_STATIC_CONSTEXPR storage_type background() POUTRE_NOEXCEPT { return 0; }
 };
 
 template<> struct TypeTraits<const pINT32> : public TypeTraits<pINT32>
@@ -197,6 +201,8 @@ template<> struct TypeTraits<pFLOAT>
   { return std::numeric_limits<storage_type>::max(); }
   POUTRE_ALWAYS_INLINE POUTRE_STATIC_CONSTEXPR storage_type inf() { return min(); }
   POUTRE_ALWAYS_INLINE POUTRE_STATIC_CONSTEXPR storage_type sup() { return max(); }
+  POUTRE_ALWAYS_INLINE POUTRE_STATIC_CONSTEXPR storage_type background() POUTRE_NOEXCEPT
+  { return static_cast<storage_type>(0); }
 };
 
 template<> struct TypeTraits<const pFLOAT> : public TypeTraits<pFLOAT>
@@ -229,6 +235,8 @@ template<> struct TypeTraits<pDOUBLE>
   { return std::numeric_limits<storage_type>::max(); }
   POUTRE_ALWAYS_INLINE POUTRE_STATIC_CONSTEXPR storage_type inf() { return min(); }
   POUTRE_ALWAYS_INLINE POUTRE_STATIC_CONSTEXPR storage_type sup() { return max(); }
+  POUTRE_ALWAYS_INLINE POUTRE_STATIC_CONSTEXPR storage_type background() POUTRE_NOEXCEPT
+  { return static_cast<storage_type>(0); }
 };
 
 template<> struct TypeTraits<const pDOUBLE> : public TypeTraits<pDOUBLE>
@@ -260,6 +268,8 @@ template<> struct TypeTraits<pINT64>
   { return std::numeric_limits<storage_type>::max(); }
   POUTRE_ALWAYS_INLINE POUTRE_STATIC_CONSTEXPR storage_type inf() { return min(); }
   POUTRE_ALWAYS_INLINE POUTRE_STATIC_CONSTEXPR storage_type sup() { return max(); }
+  POUTRE_ALWAYS_INLINE POUTRE_STATIC_CONSTEXPR storage_type background() POUTRE_NOEXCEPT
+  { return static_cast<storage_type>(0); }
 };
 
 template<> struct TypeTraits<const pINT64> : public TypeTraits<pINT64>

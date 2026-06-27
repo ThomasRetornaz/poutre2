@@ -9,13 +9,14 @@ Poutre2
 
 __Poutre2__ is an open-source image processing framework, with a focus on Mathematical Morphology.  
 It provides a modern c++ interface, genericity, with trying to not compromise speed.
-It uses cpu intrinsics (SIMD) for low level code optimizations (thanks to [XSIMD](https://github.com/xtensor-stack/xsimd))
+It uses cpu intrinsics (SIMD) for low level code optimizations (thanks
+to [XSIMD](https://github.com/xtensor-stack/xsimd))
 
-The core of __Poutre2__ is entirely written in C++, mainly using templatized code and metaprogramming.  
+The core of __Poutre2__ is entirely written in C++, mainly using templatized code and metaprogramming.
 
 It provided generic code for 1d(signal),2d(Image) and higher level tensor.
 
-Python bindings is provided (WIP)
+Python bindings is provided
 
 ## Features Targeted
 
@@ -30,7 +31,7 @@ Python bindings is provided (WIP)
         * connected filters
             * attributes filters, grain filters
         * segmentation algorithms (watersheds and co)
-      
+
 ## Licence ##
 
 It is released under the very permissive **Boost license**.
@@ -55,9 +56,9 @@ Except optional OpenImageIO used to load store 2D images in various format.
 
 ## More Details
 
- * [Dependency Setup](README_dependencies.md)
- * [Building Details](README_building.md)
- * [Docker](README_docker.md)
+* [Dependency Setup](README_dependencies.md)
+* [Building Details](README_building.md)
+* [Docker](README_docker.md)
 
 ## TODO HOT TOPICS
 
@@ -66,20 +67,20 @@ Except optional OpenImageIO used to load store 2D images in various format.
 * More CI configuration to relax constrains on compiler
 * Make the library (almost) features complete
 
-| Modules                            | Status      |
-|------------------------------------|-------------|
-| Fast arithmetic (Sup, Compare ...) | done        |
-| Low level (aka erode,dilate, ...)  | almost done |
-| Geodesy (h-extrema, leveling, ...) | done        |
-| Distance (morpho, euclidian, ...)  | WIP         |
-| Label                              | TBD         |
-| Measures (perimeter, ...)          | TBD         |
-| Segmentation (watershed, ...)      | TBD         |
-| Morphology on graphs               | Dropped     |
+| Modules                            | Status  |
+|------------------------------------|---------|
+| Fast arithmetic (Sup, Compare ...) | done    |
+| Low level (aka erode,dilate, ...)  | done    |
+| Geodesy (h-extrema, leveling, ...) | done    |
+| Distance (morpho, euclidian, ...)  | WIP     |
+| Label (blob,flat_zones)            | done    |
+| Measures (perimeter, ...)          | TBD     |
+| Segmentation (watershed, ...)      | TBD     |
+| Morphology on graphs               | Dropped |
 
 ## TODO
 
- * Introduce multi threading when it makes sens
+* Introduce multi threading when it makes sens
 
 ## TODO far far away
 

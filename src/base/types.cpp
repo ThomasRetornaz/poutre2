@@ -344,4 +344,73 @@ std::istream &operator>>(std::istream &ist, PType &ptype)// NOLINT(misc-unused-p
   }
   return ist;
 }
+
+std::ostream &operator<<(std::ostream &ost, LabelType ltype)// NOLINT(misc-unused-parameters)
+{
+  switch (ltype) {
+  case LabelType::Candidate:
+    ost << "CANDIDATE";
+    break;
+  case LabelType::Done:
+    ost << "DONE";
+    break;
+  case LabelType::Outside:
+    ost << "OUTSIDE";
+    break;
+  case LabelType::Queued:
+    ost << "QUEUED";
+    break;
+  // case LabelType::Queued1:
+  //   ost << "QUEUED1";
+  //   break;
+  case LabelType::Queued2:
+    ost << "QUEUED2";
+    break;
+  case LabelType::Queued12:
+    ost << "QUEUED12";
+    break;
+  case LabelType::Watershed:
+    ost << "WATERSHED";
+    break;
+  default:
+    ost << "Unknown label Type";
+    break;
+  }
+
+  return ost;
+}
+
+std::istream &operator>>(std::istream &ist, LabelType &ltype)// NOLINT(misc-unused-parameters)
+{
+  ltype = LabelType::Candidate;
+
+  if (!ist.good()) { return ist; }
+
+  std::string strType;
+  ist >> strType;
+  if (ist.bad()) {
+    return ist;
+  } else if (strType == "CANDIDATE") {
+    ltype = LabelType::Candidate;
+  } else if (strType == "DONE") {
+    ltype = LabelType::Done;
+  } else if (strType == "OUTSIDE") {
+    ltype = LabelType::Outside;
+  } else if (strType == "QUEUED") {
+    ltype = LabelType::Queued;
+    // } else if (strType == "QUEUED1") {
+    //   ltype = LabelType::Queued1;
+  } else if (strType == "QUEUED2") {
+    ltype = LabelType::Queued2;
+  } else if (strType == "QUEUED12") {
+    ltype = LabelType::Queued12;
+  } else if (strType == "WATERSHED") {
+    ltype = LabelType::Watershed;
+  } else {
+    POUTRE_RUNTIME_ERROR("Unable to read LabelType from stream");
+  }
+  return ist;
+}
+
+
 }// namespace poutre

@@ -24,6 +24,8 @@ void init_geodesy(nb::module_ &);
 
 void init_label(nb::module_ &);
 
+void init_distance(nb::module_ &);
+
 NB_MODULE(pypoutre, mod)
 {
   mod.doc() = "This is poutre python bindings";
@@ -39,4 +41,5 @@ NB_MODULE(pypoutre, mod)
   init_llm_ero_dil(mod);
   init_geodesy(mod);
   init_label(mod);
+  init_distance(mod);
 }

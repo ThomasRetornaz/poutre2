@@ -52,6 +52,7 @@ nanobind_add_module(
         low_level_morpho/ero_dil.cpp
         geodesy/geodesy.cpp
         label/label.cpp
+        distance/distance.cpp
 )
 
 target_link_libraries(
@@ -65,6 +66,7 @@ target_link_libraries(
         PRIVATE poutre_low_level_morpho::poutre_low_level_morpho
         PRIVATE poutre_geodesy::poutre_geodesy
         PRIVATE poutre_label::poutre_label
+        PRIVATE poutre_distance::poutre_distance
 )
 # target_compile_options(pypoutre PUBLIC -Wno-old-style-cast) # overload resolution
 # target_compile_options(pypoutre PUBLIC -Wno-error=old-style-cast) # overload resolution

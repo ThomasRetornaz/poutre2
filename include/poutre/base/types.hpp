@@ -603,6 +603,28 @@ BASE_API std::ostream &operator<<(std::ostream &, PType);
 //! operator>> for PType
 BASE_API std::istream &operator>>(std::istream &, PType &);
 
+
+/*!
+ * @brief Label type
+ */
+enum class LabelType : uint8_t {
+
+  Candidate = 0,//! Pixel has not yet been visited
+  Queued = 1,//! Pixel is being processed
+  Queued1 = 1,//!  labelQueued1 & labelQueued2 = 0
+  Queued2 = 2,//! Pixel is being processed (2nd step)
+  Queued12 = 3,//! Pixel is being processes (3rd step)
+  Done = 4,//! Pixel has been processed
+  Watershed = 8,//! Pixel belong to ws line
+  Outside = 9//! Pixel is outside the view
+};
+
+//! operator<< for LabelType
+BASE_API std::ostream &operator<<(std::ostream &, LabelType);
+
+//! operator>> for LabelType
+BASE_API std::istream &operator>>(std::istream &, LabelType &);
+
 #if defined(POUTRE_IS_GCC) || defined(POUTRE_IS_CLANG)
 extern template class BASE_API compound_type<pUINT8, 3>;
 extern template class BASE_API compound_type<pINT32, 3>;
