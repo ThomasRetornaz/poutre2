@@ -3,6 +3,7 @@ set(subdirsource ${PROJECT_SOURCE_DIR}/distance)
 # Test project
 set(PoutreDISTTestSRC
         ${subdirsource}/mdistance.cpp
+        ${subdirsource}/geodesic_distance.cpp
 )
 
 add_executable(poutre_distance_tests ${PoutreDISTTestSRC})

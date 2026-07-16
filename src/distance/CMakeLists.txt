@@ -3,15 +3,18 @@ set(subdirsource ${PROJECT_SOURCE_DIR}/src/distance)
 
 set(PoutreDISTSRC_DETAILS
         ${subdirheader}/details/mdistance_t.hpp
+        ${subdirheader}/details/geodesic_distance_t.hpp
 )
 
 set(PoutreDISTSRC_PUBLICHEADERS
         ${subdirheader}/distance.hpp
         ${subdirheader}/mdistance.hpp
+        ${subdirheader}/geodesic_distance.hpp
 )
 
 set(PoutreDISTSRC_CPP
         ${subdirsource}/mdistance.cpp
+        ${subdirsource}/geodesic_distance.cpp
 )
 
 source_group(details FILES ${PoutreDISTSRC_DETAILS})

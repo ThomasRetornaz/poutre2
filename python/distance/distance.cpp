@@ -2,14 +2,18 @@
 // Created by thomas on 17/12/2025.
 //
 // NOLINTBEGIN
-#include "../../include/poutre/distance/mdistance.hpp"
 
 
 #include <nanobind/nanobind.h>
+#include <poutre/distance/geodesic_distance.hpp>
 #include <poutre/distance/mdistance.hpp>
 
 namespace nb = nanobind;
 
-void init_distance(nb::module_ &mod) { mod.def("mdistance", &poutre::dist::mdistance); }
+void init_distance(nb::module_ &mod)
+{
+  mod.def("mdistance", &poutre::dist::mdistance);
+  mod.def("geodesic_distance", &poutre::dist::geodesic_distance);
+}
 
 // NOLINTEND

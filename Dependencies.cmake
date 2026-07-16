@@ -13,7 +13,7 @@ function(poutre2_setup_dependencies)
     if (NOT TARGET xsimd::xsimd)
         CPMAddPackage(
                 NAME xsimd
-                GIT_TAG 14.2.0
+                GIT_TAG 14.3.0
                 GITHUB_REPOSITORY
                 "QuantStack/xsimd"
                 #DOWNLOAD_ONLY True
@@ -67,7 +67,7 @@ function(poutre2_setup_dependencies)
 
     # ### Catch2
     if (NOT TARGET Catch2::Catch2WithMain)
-        cpmaddpackage("gh:catchorg/Catch2@3.15.0")
+        cpmaddpackage("gh:catchorg/Catch2@3.15.2")
     endif ()
 
     # ### CLI
