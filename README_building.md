@@ -151,7 +151,7 @@ Choose "Visual Studio 16 2019" as the generator:
 
 You should have already set `C` and `CXX` to `clang.exe` and `clang++.exe`.
 
-Choose "Visual Studio 16 2019" as the generator. To tell Visual studio to use `clang-cl.exe`:
+Choose "Visual Studio 16 2019" as the generator. To tell Visual Studio to use `clang-cl.exe`:
 - If you use the LLVM that is shipped with Visual Studio: write `ClangCl` under "optional toolset to use".
 
 <img src="https://user-images.githubusercontent.com/16418197/82781142-ae60ac00-9e1e-11ea-8c77-222b005a8f7e.png" alt="visual_studio">
