@@ -28,7 +28,7 @@
  *@{
  */
 namespace poutre::simd {
-template<typename T, typename U, typename UnOp>
+template< typename T, typename U, typename UnOp >
 U *transform(const T *__restrict first, const T *__restrict last, U *__restrict out, UnOp func)
   POUTRE_NOEXCEPTONLYNDEBUG
 {
@@ -36,8 +36,8 @@ U *transform(const T *__restrict first, const T *__restrict last, U *__restrict 
   POUTRE_ASSERTCHECK(last, "null ptr");
   POUTRE_ASSERTCHECK(out, "null ptr");
 
-  using simd_type_T = typename TypeTraits<T>::simd_type;
-  using simd_type_U = typename TypeTraits<U>::simd_type;
+  using simd_type_T = TypeTraits< T >::simd_type;
+  using simd_type_U = TypeTraits< U >::simd_type;
 
   static_assert(simd_type_T::size == simd_type_U::size, "mismatch length between T and U");
 
@@ -48,7 +48,7 @@ U *transform(const T *__restrict first, const T *__restrict last, U *__restrict 
   const auto alignment = SIMD_IDEAL_MAX_ALIGN_BYTES;
 
   // Define loop counter
-  const auto simd_size = TypeTraits<T>::simd_loop_step;
+  const auto simd_size = TypeTraits< T >::simd_loop_step;
   const auto size = std::distance(first, last);
   // note enforce that input is aligned when we start the main simd loop
   const auto range = simd::t_SIMDInputRange(first, last);
@@ -61,18 +61,20 @@ U *transform(const T *__restrict first, const T *__restrict last, U *__restrict 
   size_t i = 0;
 
   //---prologue
-  for (; i < static_cast<size_t>(size_prologue_loop); ++i) { *out++ = func(*first++); }
+  for (; i < static_cast< size_t >(size_prologue_loop); ++i) {
+    *out++ = func(*first++);
+  }
 
   //---main simd loop
   if (simd::IsAligned(out, alignment)) {
-    for (; i < static_cast<size_t>(size_simd_loop); i += simd_size) {
+    for (; i < static_cast< size_t >(size_simd_loop); i += simd_size) {
       auto element = xs::load_aligned(first);
       xs::store_aligned(out, func(element));
       first += simd_size;
       out += simd_size;
     }
   } else {
-    for (; i < static_cast<size_t>(size_simd_loop); i += simd_size) {
+    for (; i < static_cast< size_t >(size_simd_loop); i += simd_size) {
       auto element = xs::load_aligned(first);
       xs::store_unaligned(out, func(element));
       first += simd_size;
@@ -80,25 +82,27 @@ U *transform(const T *__restrict first, const T *__restrict last, U *__restrict 
     }
   }
   //---epilogue
-  for (; i < static_cast<size_t>(size); ++i) { *out++ = func(*first++); }
+  for (; i < static_cast< size_t >(size); ++i) {
+    *out++ = func(*first++);
+  }
   return out;
 }
 
-template<typename T1, typename T2, typename U, typename BinOp>
+template< typename T1, typename T2, typename U, typename BinOp >
 U *transform(T1 const *__restrict first1,
-  T1 const *__restrict last1,
-  T2 const *__restrict first2,
-  U *__restrict out,
-  BinOp func) POUTRE_NOEXCEPTONLYNDEBUG
+             T1 const *__restrict last1,
+             T2 const *__restrict first2,
+             U *__restrict out,
+             BinOp func) POUTRE_NOEXCEPTONLYNDEBUG
 {
   POUTRE_ASSERTCHECK(first1, "null ptr");
   POUTRE_ASSERTCHECK(last1, "null ptr");
   POUTRE_ASSERTCHECK(first2, "null ptr");
   POUTRE_ASSERTCHECK(out, "null ptr");
 
-  using simd_type_T1 = typename TypeTraits<T1>::simd_type;
-  using simd_type_T2 = typename TypeTraits<T2>::simd_type;
-  using simd_type_U = typename TypeTraits<U>::simd_type;
+  using simd_type_T1 = TypeTraits< T1 >::simd_type;
+  using simd_type_T2 = TypeTraits< T2 >::simd_type;
+  using simd_type_U = TypeTraits< U >::simd_type;
 
   static_assert(simd_type_T1::size == simd_type_T2::size, "mismatch length between T1 and T2");
   static_assert(simd_type_T1::size == simd_type_U::size, "mismatch length between T1 and U");
@@ -109,7 +113,7 @@ U *transform(T1 const *__restrict first1,
   auto alignment = SIMD_IDEAL_MAX_ALIGN_BYTES;
 
   // Define loop counter
-  const auto simd_size = TypeTraits<T1>::simd_loop_step;
+  const auto simd_size = TypeTraits< T1 >::simd_loop_step;
   const auto size = std::distance(first1, last1);
   const auto range = simd::t_SIMDInputRange(first1, last1);
   const auto size_prologue_loop = range.first;
@@ -121,11 +125,13 @@ U *transform(T1 const *__restrict first1,
   // <<"size_simd_loop: "<<size_simd_loop<< " "<<std::endl;
 
   //---prologue
-  for (; i < static_cast<size_t>(size_prologue_loop); ++i) { *out++ = func(*first1++, *first2++); }
+  for (; i < static_cast< size_t >(size_prologue_loop); ++i) {
+    *out++ = func(*first1++, *first2++);
+  }
 
   //---main simd loop
   if (simd::IsAligned(first2, alignment) && simd::IsAligned(out, alignment)) {
-    for (; i < static_cast<size_t>(size_simd_loop); i += simd_size) {
+    for (; i < static_cast< size_t >(size_simd_loop); i += simd_size) {
       simd_type_T1 element1 = xs::load_aligned(first1);
       simd_type_T2 element2 = xs::load_aligned(first2);
       xs::store_aligned(out, func(element1, element2));
@@ -134,7 +140,7 @@ U *transform(T1 const *__restrict first1,
       out += simd_size;
     }
   } else {
-    for (; i < static_cast<size_t>(size_simd_loop); i += simd_size) {
+    for (; i < static_cast< size_t >(size_simd_loop); i += simd_size) {
       simd_type_T1 element1 = xs::load_aligned(first1);
       simd_type_T2 element2 = xs::load_unaligned(first2);
       xs::store_unaligned(out, func(element1, element2));
@@ -144,17 +150,19 @@ U *transform(T1 const *__restrict first1,
     }
   }
   //---epilogue
-  for (; i < static_cast<size_t>(size); ++i) { *out++ = func(*first1++, *first2++); }
+  for (; i < static_cast< size_t >(size); ++i) {
+    *out++ = func(*first1++, *first2++);
+  }
   return out;
 }
 
-template<typename T1, typename T2, typename T3, typename U, typename TerOp>
+template< typename T1, typename T2, typename T3, typename U, typename TerOp >
 U *transform(T1 const *__restrict first1,
-  T1 const *__restrict last1,
-  T2 const *__restrict first2,
-  T3 const *__restrict first3,
-  U *__restrict out,
-  TerOp func) POUTRE_NOEXCEPTONLYNDEBUG
+             T1 const *__restrict last1,
+             T2 const *__restrict first2,
+             T3 const *__restrict first3,
+             U *__restrict out,
+             TerOp func) POUTRE_NOEXCEPTONLYNDEBUG
 {
   POUTRE_ASSERTCHECK(first1, "null ptr");
   POUTRE_ASSERTCHECK(last1, "null ptr");
@@ -162,10 +170,10 @@ U *transform(T1 const *__restrict first1,
   POUTRE_ASSERTCHECK(first3, "null ptr");
   POUTRE_ASSERTCHECK(out, "null ptr");
 
-  using simd_type_T1 = typename TypeTraits<T1>::simd_type;
-  using simd_type_T2 = typename TypeTraits<T2>::simd_type;
-  using simd_type_T3 = typename TypeTraits<T3>::simd_type;
-  using simd_type_U = typename TypeTraits<U>::simd_type;
+  using simd_type_T1 = TypeTraits< T1 >::simd_type;
+  using simd_type_T2 = TypeTraits< T2 >::simd_type;
+  using simd_type_T3 = TypeTraits< T3 >::simd_type;
+  using simd_type_U = TypeTraits< U >::simd_type;
 
   static_assert(simd_type_T1::size == simd_type_T2::size, "mismatch length between T1 and T2");
   static_assert(simd_type_T2::size == simd_type_T3::size, "mismatch length between T2 and T3");
@@ -179,7 +187,7 @@ U *transform(T1 const *__restrict first1,
   auto alignment = SIMD_IDEAL_MAX_ALIGN_BYTES;
 
   // Define loop counter
-  const auto simd_size = TypeTraits<T1>::simd_loop_step;
+  const auto simd_size = TypeTraits< T1 >::simd_loop_step;
   const auto size = std::distance(first1, last1);
   const auto range = simd::t_SIMDInputRange(first1, last1);
   const auto size_prologue_loop = range.first;
@@ -188,11 +196,13 @@ U *transform(T1 const *__restrict first1,
   size_t i = 0;
 
   //---prologue
-  for (; i < static_cast<size_t>(size_prologue_loop); ++i) { *out++ = func(*first1++, *first2++, *first3++); }
+  for (; i < static_cast< size_t >(size_prologue_loop); ++i) {
+    *out++ = func(*first1++, *first2++, *first3++);
+  }
 
   //---main simd loop
   if (simd::IsAligned(first2, alignment) && simd::IsAligned(first3, alignment) && simd::IsAligned(out, alignment)) {
-    for (; i < static_cast<size_t>(size_simd_loop); i += simd_size) {
+    for (; i < static_cast< size_t >(size_simd_loop); i += simd_size) {
       simd_type_T1 element1 = xs::load_aligned(first1);
       simd_type_T2 element2 = xs::load_aligned(first2);
       simd_type_T3 element3 = xs::load_aligned(first3);
@@ -204,7 +214,7 @@ U *transform(T1 const *__restrict first1,
       out += simd_size;
     }
   } else {
-    for (; i < static_cast<size_t>(size_simd_loop); i += simd_size) {
+    for (; i < static_cast< size_t >(size_simd_loop); i += simd_size) {
       simd_type_T1 element1 = xs::load_aligned(first1);
       simd_type_T2 element2 = xs::load_unaligned(first2);
       simd_type_T3 element3 = xs::load_unaligned(first3);
@@ -216,18 +226,20 @@ U *transform(T1 const *__restrict first1,
     }
   }
   //---epilogue
-  for (; i < static_cast<size_t>(size); ++i) { *out++ = func(*first1++, *first2++, *first3++); }
+  for (; i < static_cast< size_t >(size); ++i) {
+    *out++ = func(*first1++, *first2++, *first3++);
+  }
   return out;
 }
 
-template<typename T1, typename T2, typename T3, typename T4, typename U, typename QuaterOp>
+template< typename T1, typename T2, typename T3, typename T4, typename U, typename QuaterOp >
 U *transform(T1 const *__restrict first1,
-  T1 const *__restrict last1,
-  T2 const *__restrict first2,
-  T3 const *__restrict first3,
-  T4 const *__restrict first4,
-  U *__restrict out,
-  QuaterOp func) POUTRE_NOEXCEPTONLYNDEBUG
+             T1 const *__restrict last1,
+             T2 const *__restrict first2,
+             T3 const *__restrict first3,
+             T4 const *__restrict first4,
+             U *__restrict out,
+             QuaterOp func) POUTRE_NOEXCEPTONLYNDEBUG
 {
   POUTRE_ASSERTCHECK(first1, "null ptr");
   POUTRE_ASSERTCHECK(last1, "null ptr");
@@ -236,11 +248,11 @@ U *transform(T1 const *__restrict first1,
   POUTRE_ASSERTCHECK(first4, "null ptr");
   POUTRE_ASSERTCHECK(out, "null ptr");
 
-  using simd_type_T1 = typename TypeTraits<T1>::simd_type;
-  using simd_type_T2 = typename TypeTraits<T2>::simd_type;
-  using simd_type_T3 = typename TypeTraits<T3>::simd_type;
-  using simd_type_T4 = typename TypeTraits<T4>::simd_type;
-  using simd_type_U = typename TypeTraits<U>::simd_type;
+  using simd_type_T1 = TypeTraits< T1 >::simd_type;
+  using simd_type_T2 = TypeTraits< T2 >::simd_type;
+  using simd_type_T3 = TypeTraits< T3 >::simd_type;
+  using simd_type_T4 = TypeTraits< T4 >::simd_type;
+  using simd_type_U = TypeTraits< U >::simd_type;
 
   static_assert(simd_type_T1::size == simd_type_T2::size, "mismatch length between T1 and T2");
   static_assert(simd_type_T2::size == simd_type_T3::size, "mismatch length between T1 and T3");
@@ -257,7 +269,7 @@ U *transform(T1 const *__restrict first1,
   auto alignment = SIMD_IDEAL_MAX_ALIGN_BYTES;
 
   // Define loop counter
-  const auto simd_size = TypeTraits<T1>::simd_loop_step;
+  const auto simd_size = TypeTraits< T1 >::simd_loop_step;
   const auto size = std::distance(first1, last1);
   const auto range = simd::t_SIMDInputRange(first1, last1);
   const auto size_prologue_loop = range.first;
@@ -266,14 +278,14 @@ U *transform(T1 const *__restrict first1,
   size_t i = 0;
 
   //---prologue
-  for (; i < static_cast<size_t>(size_prologue_loop); ++i) {
+  for (; i < static_cast< size_t >(size_prologue_loop); ++i) {
     *out++ = func(*first1++, *first2++, *first3++, *first4++);
   }
 
   //---main simd loop
   if (simd::IsAligned(first2, alignment) && simd::IsAligned(first3, alignment) && simd::IsAligned(first4, alignment)
       && simd::IsAligned(out, alignment)) {
-    for (; i < static_cast<size_t>(size_simd_loop); i += simd_size) {
+    for (; i < static_cast< size_t >(size_simd_loop); i += simd_size) {
       simd_type_T1 element1 = xs::load_aligned(first1);
       simd_type_T2 element2 = xs::load_aligned(first2);
       simd_type_T3 element3 = xs::load_aligned(first3);
@@ -287,7 +299,7 @@ U *transform(T1 const *__restrict first1,
       out += simd_size;
     }
   } else {
-    for (; i < static_cast<size_t>(size_simd_loop); i += simd_size) {
+    for (; i < static_cast< size_t >(size_simd_loop); i += simd_size) {
       simd_type_T1 element1 = xs::load_aligned(first1);
       simd_type_T2 element2 = xs::load_unaligned(first2);
       simd_type_T3 element3 = xs::load_unaligned(first3);
@@ -301,8 +313,10 @@ U *transform(T1 const *__restrict first1,
     }
   }
   //---epilogue
-  for (; i < static_cast<size_t>(size); ++i) { *out++ = func(*first1++, *first2++, *first3++, *first4++); }
+  for (; i < static_cast< size_t >(size); ++i) {
+    *out++ = func(*first1++, *first2++, *first3++, *first4++);
+  }
   return out;
 }
 }// namespace poutre::simd
- //! @} doxygroup: simd_group
+//! @} doxygroup: simd_group

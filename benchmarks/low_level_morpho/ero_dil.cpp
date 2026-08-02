@@ -11,13 +11,13 @@
 //==============================================================================
 
 #include "benchmark/benchmark.h"
-#include <poutre/base/types.hpp>
 #include <poutre/base/details/data_structures/array_view.hpp>
-#include <poutre/low_level_morpho/details/ero_dil_static_se_t.hpp>
-#include <poutre/low_level_morpho/details/ero_dil_runtime_nl_se_t.hpp>
+#include <poutre/base/types.hpp>
 #include <poutre/low_level_morpho/details/ero_dil_line_se_t.hpp>
+#include <poutre/low_level_morpho/details/ero_dil_runtime_nl_se_t.hpp>
+#include <poutre/low_level_morpho/details/ero_dil_static_se_t.hpp>
 #include <poutre/structuring_element/predefined_nl_se.hpp>
-#include <cstdlib>
+
 #include <vector>
 // #include <iostream>
 #include <cmath>
@@ -57,7 +57,7 @@ BENCHMARK_DEFINE_F(EroDilFixture, DilateSquare2DStatic)(benchmark::State &state)
   const auto size = state.range(0);
   std::ptrdiff_t sizeextent = static_cast<std::ptrdiff_t>(std::sqrt(size));
   for (auto _ : state) {
-    auto view2din = poutre::details::av::array_view<const poutre::pINT32, 2>(m_vect_in, { sizeextent, sizeextent});
+    auto view2din = poutre::details::av::array_view<const poutre::pINT32, 2>(m_vect_in, { sizeextent, sizeextent });
     auto view2dout = poutre::details::av::array_view<poutre::pINT32, 2>(m_vect_out, { sizeextent, sizeextent });
     poutre::llm::details::t_Dilate(view2din, poutre::se::Common_NL_SE::SESquare2D, view2dout);
   }
@@ -69,8 +69,10 @@ BENCHMARK_DEFINE_F(EroDilFixture, DilateSquare3DStatic)(benchmark::State &state)
   const auto size = state.range(0);
   std::ptrdiff_t sizeextent = static_cast<std::ptrdiff_t>(std::sqrt(std::sqrt(size)));
   for (auto _ : state) {
-    auto view2din = poutre::details::av::array_view<const poutre::pINT32, 3>(m_vect_in, { sizeextent, sizeextent, sizeextent});
-    auto view2dout = poutre::details::av::array_view<poutre::pINT32, 3>(m_vect_out, { sizeextent, sizeextent, sizeextent});
+    auto view2din =
+      poutre::details::av::array_view<const poutre::pINT32, 3>(m_vect_in, { sizeextent, sizeextent, sizeextent });
+    auto view2dout =
+      poutre::details::av::array_view<poutre::pINT32, 3>(m_vect_out, { sizeextent, sizeextent, sizeextent });
     poutre::llm::details::t_Dilate(view2din, poutre::se::Common_NL_SE::SESquare3D, view2dout);
   }
   state.SetItemsProcessed(state.iterations() * size);
@@ -82,7 +84,7 @@ BENCHMARK_DEFINE_F(EroDilFixture, DilateSquare2DRuntime)(benchmark::State &state
   const auto size = state.range(0);
   std::ptrdiff_t sizeextent = static_cast<std::ptrdiff_t>(std::sqrt(size));
   for (auto _ : state) {
-    auto view2din = poutre::details::av::array_view<const poutre::pINT32, 2>(m_vect_in, { sizeextent, sizeextent});
+    auto view2din = poutre::details::av::array_view<const poutre::pINT32, 2>(m_vect_in, { sizeextent, sizeextent });
     auto view2dout = poutre::details::av::array_view<poutre::pINT32, 2>(m_vect_out, { sizeextent, sizeextent });
     poutre::llm::details::t_Dilate(view2din, poutre::se::SESquare2D, view2dout);
   }
@@ -94,8 +96,10 @@ BENCHMARK_DEFINE_F(EroDilFixture, DilateSquare3DRuntime)(benchmark::State &state
   const auto size = state.range(0);
   std::ptrdiff_t sizeextent = static_cast<std::ptrdiff_t>(std::sqrt(std::sqrt(size)));
   for (auto _ : state) {
-    auto view2din = poutre::details::av::array_view<const poutre::pINT32, 3>(m_vect_in, { sizeextent, sizeextent, sizeextent});
-    auto view2dout = poutre::details::av::array_view<poutre::pINT32, 3>(m_vect_out, { sizeextent, sizeextent, sizeextent});
+    auto view2din =
+      poutre::details::av::array_view<const poutre::pINT32, 3>(m_vect_in, { sizeextent, sizeextent, sizeextent });
+    auto view2dout =
+      poutre::details::av::array_view<poutre::pINT32, 3>(m_vect_out, { sizeextent, sizeextent, sizeextent });
     poutre::llm::details::t_Dilate(view2din, poutre::se::SESquare3D, view2dout);
   }
   state.SetItemsProcessed(state.iterations() * size);
@@ -107,7 +111,7 @@ BENCHMARK_DEFINE_F(EroDilFixture, DilateX2D)(benchmark::State &state)
   const auto size = state.range(0);
   std::ptrdiff_t sizeextent = static_cast<std::ptrdiff_t>(std::sqrt(size));
   for (auto _ : state) {
-    auto view2din = poutre::details::av::array_view<const poutre::pINT32, 2>(m_vect_in, { sizeextent, sizeextent});
+    auto view2din = poutre::details::av::array_view<const poutre::pINT32, 2>(m_vect_in, { sizeextent, sizeextent });
     auto view2dout = poutre::details::av::array_view<poutre::pINT32, 2>(m_vect_out, { sizeextent, sizeextent });
     poutre::llm::details::t_DilateX(view2din, 15, view2dout);
   }
@@ -120,8 +124,10 @@ BENCHMARK_DEFINE_F(EroDilFixture, DilateY2D)(benchmark::State &state)
   const auto size = state.range(0);
   std::ptrdiff_t sizeextent = static_cast<std::ptrdiff_t>(std::sqrt(size));
   for (auto _ : state) {
-    poutre::details::image_t<poutre::pINT32, 2> img_in{ static_cast<std::size_t>(sizeextent), static_cast<std::size_t>(sizeextent)};
-    poutre::details::image_t<poutre::pINT32, 2> img_out{ static_cast<std::size_t>(sizeextent), static_cast<std::size_t>(sizeextent)};
+    poutre::details::image_t<poutre::pINT32, 2> img_in{ static_cast<std::size_t>(sizeextent),
+      static_cast<std::size_t>(sizeextent) };
+    poutre::details::image_t<poutre::pINT32, 2> img_out{ static_cast<std::size_t>(sizeextent),
+      static_cast<std::size_t>(sizeextent) };
     poutre::llm::details::t_DilateY(img_in, 15, img_out);
   }
   state.SetItemsProcessed(state.iterations() * size);
@@ -134,13 +140,15 @@ BENCHMARK_REGISTER_F(EroDilFixture, DilateSquare2DStatic)
   ->Arg(128 * 128)
   ->Arg(256 * 256)
   ->Arg(512 * 512)
-  ->Arg(1024 * 1024)->Unit(benchmark::kMillisecond); //-V112
+  ->Arg(1024 * 1024)
+  ->Unit(benchmark::kMillisecond);//-V112
 
 // cppcheck-suppress unknownMacro
 BENCHMARK_REGISTER_F(EroDilFixture, DilateSquare3DStatic)
-  ->Arg(64 * 64 * 64 )
+  ->Arg(64 * 64 * 64)
   ->Arg(128 * 128 * 128)
-  ->Arg(256 * 256 * 256 )->Unit(benchmark::kMillisecond); //-V112
+  ->Arg(256 * 256 * 256)
+  ->Unit(benchmark::kMillisecond);//-V112
 
 
 // cppcheck-suppress unknownMacro
@@ -151,7 +159,8 @@ BENCHMARK_REGISTER_F(EroDilFixture, DilateSquare2DRuntime)
   ->Arg(128 * 128)
   ->Arg(256 * 256)
   ->Arg(512 * 512)
-  ->Arg(1024 * 1024)->Unit(benchmark::kMillisecond); //-V112
+  ->Arg(1024 * 1024)
+  ->Unit(benchmark::kMillisecond);//-V112
 
 // cppcheck-suppress unknownMacro
 BENCHMARK_REGISTER_F(EroDilFixture, DilateX2D)
@@ -161,7 +170,8 @@ BENCHMARK_REGISTER_F(EroDilFixture, DilateX2D)
   ->Arg(128 * 128)
   ->Arg(256 * 256)
   ->Arg(512 * 512)
-  ->Arg(1024 * 1024)->Unit(benchmark::kMillisecond); //-V112
+  ->Arg(1024 * 1024)
+  ->Unit(benchmark::kMillisecond);//-V112
 
 // cppcheck-suppress unknownMacro
 BENCHMARK_REGISTER_F(EroDilFixture, DilateY2D)
@@ -171,14 +181,15 @@ BENCHMARK_REGISTER_F(EroDilFixture, DilateY2D)
   ->Arg(128 * 128)
   ->Arg(256 * 256)
   ->Arg(512 * 512)
-  ->Arg(1024 * 1024)->Unit(benchmark::kMillisecond); //-V112
+  ->Arg(1024 * 1024)
+  ->Unit(benchmark::kMillisecond);//-V112
 
 // cppcheck-suppress unknownMacro
 BENCHMARK_REGISTER_F(EroDilFixture, DilateSquare3DRuntime)
-  ->Arg(64 * 64 * 64 )
+  ->Arg(64 * 64 * 64)
   ->Arg(128 * 128 * 128)
-  ->Arg(256 * 256 * 256 )->Unit(benchmark::kMillisecond); //-V112
-
+  ->Arg(256 * 256 * 256)
+  ->Unit(benchmark::kMillisecond);//-V112
 
 
 // NOLINTEND

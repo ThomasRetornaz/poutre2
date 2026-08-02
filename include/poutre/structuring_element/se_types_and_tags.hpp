@@ -59,7 +59,7 @@ enum class Common_NL_SE : std::uint8_t {
 enum class Compound_NL_SE : std::uint8_t {
   Undef,
   Octagon,//!< alternate 2D Cross and Square SE
-  Rhombicuboctahedron//!< alternate 3D Cross and Square SE
+  Rhombicuboctahedron,//!< alternate 3D Cross and Square SE
 };
 
 //! @} doxygroup: poutre_se_interface_group

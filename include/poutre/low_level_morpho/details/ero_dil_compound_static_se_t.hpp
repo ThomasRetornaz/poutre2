@@ -30,10 +30,10 @@ namespace poutre::llm::details {
  *@{
  */
 
-template<typename TIn, typename TOut>
-void t_DilateOctagon(const poutre::details::image_t<TIn, 2> &i_img,
-  const int size,
-  poutre::details::image_t<TOut, 2> &o_img)
+template< typename TIn, typename TOut >
+void t_DilateOctagon(const poutre::details::image_t< TIn, 2 > &i_img,
+                     const int size,
+                     poutre::details::image_t< TOut, 2 > &o_img)
 {
   if (size == 0) {
     poutre::details::t_Copy(i_img, o_img);
@@ -44,10 +44,10 @@ void t_DilateOctagon(const poutre::details::image_t<TIn, 2> &i_img,
     t_Dilate(i_img, se::Common_NL_SE::SECross2D, o_img);
     return;
   }
-  const double nb_square_dbl = ((static_cast<double>(size)) / (1 + sqrt(2)));
+  const double nb_square_dbl = ((static_cast< double >(size)) / (1 + std::numbers::sqrt2));
   const double nb_square_floor = floor(nb_square_dbl);
   int nb_square = 0;
-  nb_square = static_cast<int>(((nb_square_dbl - nb_square_floor) < 0.5) ? (nb_square_floor) : (nb_square_floor + 1));
+  nb_square = static_cast< int >(((nb_square_dbl - nb_square_floor) < 0.5) ? nb_square_floor : (nb_square_floor + 1));
 
   auto tmpImg_t = poutre::details::t_CloneGeometry(i_img);// NOLINT
 
@@ -64,10 +64,10 @@ void t_DilateOctagon(const poutre::details::image_t<TIn, 2> &i_img,
   }
 }
 
-template<typename TIn, typename TOut>
-void t_DilateRhombicuboctahedron(const poutre::details::image_t<TIn, 3> &i_img,
-  const int size,
-  poutre::details::image_t<TOut, 3> &o_img)
+template< typename TIn, typename TOut >
+void t_DilateRhombicuboctahedron(const poutre::details::image_t< TIn, 3 > &i_img,
+                                 const int size,
+                                 poutre::details::image_t< TOut, 3 > &o_img)
 {
   if (size == 0) {
     poutre::details::t_Copy(i_img, o_img);
@@ -78,10 +78,10 @@ void t_DilateRhombicuboctahedron(const poutre::details::image_t<TIn, 3> &i_img,
     t_Dilate(i_img, se::Common_NL_SE::SECross2D, o_img);
     return;
   }
-  const double nb_square_dbl = ((static_cast<double>(size)) / (1 + std::numbers::sqrt2));
+  const double nb_square_dbl = ((static_cast< double >(size)) / (1 + std::numbers::sqrt2));
   const double nb_square_floor = floor(nb_square_dbl);
   int nb_square = 0;
-  nb_square = static_cast<int>(((nb_square_dbl - nb_square_floor) < 0.5) ? (nb_square_floor) : (nb_square_floor + 1));
+  nb_square = static_cast< int >(((nb_square_dbl - nb_square_floor) < 0.5) ? nb_square_floor : (nb_square_floor + 1));
 
   auto tmpImg_t = poutre::details::t_CloneGeometry(i_img);// NOLINT
 
@@ -98,10 +98,10 @@ void t_DilateRhombicuboctahedron(const poutre::details::image_t<TIn, 3> &i_img,
   }
 }
 
-template<typename TIn, typename TOut>
-void t_ErodeOctagon(const poutre::details::image_t<TIn, 2> &i_img,
-  const int size,
-  poutre::details::image_t<TOut, 2> &o_img)
+template< typename TIn, typename TOut >
+void t_ErodeOctagon(const poutre::details::image_t< TIn, 2 > &i_img,
+                    const int size,
+                    poutre::details::image_t< TOut, 2 > &o_img)
 {
   if (size == 0) {
     poutre::details::t_Copy(i_img, o_img);
@@ -112,10 +112,10 @@ void t_ErodeOctagon(const poutre::details::image_t<TIn, 2> &i_img,
     t_Erode(i_img, se::Common_NL_SE::SECross2D, o_img);
     return;
   }
-  const double nb_square_dbl = ((static_cast<double>(size)) / (1 + std::numbers::sqrt2));
+  const double nb_square_dbl = ((static_cast< double >(size)) / (1 + std::numbers::sqrt2));
   const double nb_square_floor = floor(nb_square_dbl);
   int nb_square = 0;
-  nb_square = static_cast<int>(((nb_square_dbl - nb_square_floor) < 0.5) ? (nb_square_floor) : (nb_square_floor + 1));
+  nb_square = static_cast< int >(((nb_square_dbl - nb_square_floor) < 0.5) ? nb_square_floor : (nb_square_floor + 1));
 
   auto tmpImg_t = poutre::details::t_CloneGeometry(i_img);// NOLINT
 
@@ -132,10 +132,10 @@ void t_ErodeOctagon(const poutre::details::image_t<TIn, 2> &i_img,
   }
 }
 
-template<typename TIn, typename TOut>
-void t_ErodeRhombicuboctahedron(const poutre::details::image_t<TIn, 3> &i_img,
-  const int size,
-  poutre::details::image_t<TOut, 3> &o_img)
+template< typename TIn, typename TOut >
+void t_ErodeRhombicuboctahedron(const poutre::details::image_t< TIn, 3 > &i_img,
+                                const int size,
+                                poutre::details::image_t< TOut, 3 > &o_img)
 {
   if (size == 0) {
     poutre::details::t_Copy(i_img, o_img);
@@ -146,10 +146,10 @@ void t_ErodeRhombicuboctahedron(const poutre::details::image_t<TIn, 3> &i_img,
     t_Erode(i_img, se::Common_NL_SE::SECross2D, o_img);
     return;
   }
-  const double nb_square_dbl = ((static_cast<double>(size)) / (1 + std::numbers::sqrt2));
+  const double nb_square_dbl = ((static_cast< double >(size)) / (1 + std::numbers::sqrt2));
   const double nb_square_floor = floor(nb_square_dbl);
   int nb_square = 0;
-  nb_square = static_cast<int>(((nb_square_dbl - nb_square_floor) < 0.5) ? (nb_square_floor) : (nb_square_floor + 1));
+  nb_square = static_cast< int >(((nb_square_dbl - nb_square_floor) < 0.5) ? nb_square_floor : (nb_square_floor + 1));
 
   auto tmpImg_t = poutre::details::t_CloneGeometry(i_img);// NOLINT
 
@@ -167,11 +167,11 @@ void t_ErodeRhombicuboctahedron(const poutre::details::image_t<TIn, 3> &i_img,
 }
 
 
-template<typename TIn, typename TOut, ptrdiff_t Rank>
-void t_Dilate(const poutre::details::image_t<TIn, Rank> &i_img,
-  const poutre::se::Compound_NL_SE compound_nl,
-  const int size,
-  poutre::details::image_t<TOut, Rank> &o_img)
+template< typename TIn, typename TOut, ptrdiff_t Rank >
+void t_Dilate(const poutre::details::image_t< TIn, Rank > &i_img,
+              const poutre::se::Compound_NL_SE compound_nl,
+              const int size,
+              poutre::details::image_t< TOut, Rank > &o_img)
 {
   AssertSizesCompatible(i_img, o_img, "t_Dilate incompatible size");
   AssertAsTypesCompatible(i_img, o_img, "t_Dilate incompatible types");
@@ -199,11 +199,11 @@ void t_Dilate(const poutre::details::image_t<TIn, Rank> &i_img,
   // POUTRE_RUNTIME_ERROR("t_Dilate unsupported compound_nl");
 }
 
-template<typename TIn, typename TOut, ptrdiff_t Rank>
-void t_Erode(const poutre::details::image_t<TIn, Rank> &i_img,
-  const poutre::se::Compound_NL_SE compound_nl,
-  const int size,
-  poutre::details::image_t<TOut, Rank> &o_img)
+template< typename TIn, typename TOut, ptrdiff_t Rank >
+void t_Erode(const poutre::details::image_t< TIn, Rank > &i_img,
+             const poutre::se::Compound_NL_SE compound_nl,
+             const int size,
+             poutre::details::image_t< TOut, Rank > &o_img)
 {
   AssertSizesCompatible(i_img, o_img, "t_Erode incompatible size");
   AssertAsTypesCompatible(i_img, o_img, "t_Erode incompatible types");

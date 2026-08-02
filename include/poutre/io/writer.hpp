@@ -19,7 +19,6 @@
 #include <poutre/base/image_interface.hpp>
 #include <poutre/io/io.hpp>
 
-#include <memory>
 #include <string>
 
 #ifdef POUTRE_IS_MSVC
@@ -41,7 +40,6 @@ namespace poutre::io {
  */
 class IO_API ImageWriter
 {
-private:
   std::string m_imgPath;
   std::string m_i_name;
   bool m_isready;

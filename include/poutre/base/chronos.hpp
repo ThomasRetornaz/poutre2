@@ -93,7 +93,6 @@ BASE_API std::ostream &operator<<(std::ostream &ost, const Timer &timer);
  */
 class BASE_API ScopedTimer
 {
-private:
   std::shared_ptr<Timer> m_timer;//! Inner timer
 
 public:

@@ -23,21 +23,25 @@
 #include <poutre/structuring_element/se_types_and_tags.hpp>
 
 namespace {
-template<std::ptrdiff_t NumDims, poutre::PType P>
+template< std::ptrdiff_t NumDims, poutre::PType P >
 std::size_t label_flat_zonesImageDispatch(const poutre::IInterface &i_img,
-  poutre::se::Common_NL_SE nl_static,
-  poutre::IInterface &o_img)
+                                          poutre::se::Common_NL_SE nl_static,
+                                          poutre::IInterface &o_img)
 {
   using ImgType =
-    poutre::details::image_t<typename poutre::enum_to_type<poutre::CompoundType::CompoundType_Scalar, P>::type,
-      NumDims>;
-  const auto *imgin_t = dynamic_cast<const ImgType *>(&i_img);
-  if (!imgin_t) { POUTRE_RUNTIME_ERROR("label_flat_zonesImageDispatch i_ref downcast fail"); }
+    poutre::details::image_t< typename poutre::enum_to_type< poutre::CompoundType::CompoundType_Scalar, P >::type,
+                              NumDims >;
+  const auto *imgin_t = dynamic_cast< const ImgType * >(&i_img);
+  if (!imgin_t) {
+    POUTRE_RUNTIME_ERROR("label_flat_zonesImageDispatch i_ref downcast fail");
+  }
   using OImgType = poutre::details::image_t<
-    typename poutre::enum_to_type<poutre::CompoundType::CompoundType_Scalar, poutre::PType::PType_GrayINT64>::type,
-    NumDims>;
-  auto *imgout_t = dynamic_cast<OImgType *>(&o_img);
-  if (!imgout_t) { POUTRE_RUNTIME_ERROR("label_flat_zonesImageDispatch o_img downcast fail"); }
+    typename poutre::enum_to_type< poutre::CompoundType::CompoundType_Scalar, poutre::PType::PType_GrayINT64 >::type,
+    NumDims >;
+  auto *imgout_t = dynamic_cast< OImgType * >(&o_img);
+  if (!imgout_t) {
+    POUTRE_RUNTIME_ERROR("label_flat_zonesImageDispatch o_img downcast fail");
+  }
 
   return poutre::label::details::t_label_flat_zones(*imgin_t, nl_static, *imgout_t);
 }
@@ -54,19 +58,19 @@ std::size_t label_flat_zones(const IInterface &i_img, se::Common_NL_SE nl_static
   case 1: {
     switch (i_img.GetPType()) {
     case poutre::PType::PType_GrayUINT8: {
-      return label_flat_zonesImageDispatch<1, poutre::PType::PType_GrayUINT8>(i_img, nl_static, o_img);
+      return label_flat_zonesImageDispatch< 1, poutre::PType::PType_GrayUINT8 >(i_img, nl_static, o_img);
     }
     case poutre::PType::PType_GrayINT32: {
-      return label_flat_zonesImageDispatch<1, poutre::PType::PType_GrayINT32>(i_img, nl_static, o_img);
+      return label_flat_zonesImageDispatch< 1, poutre::PType::PType_GrayINT32 >(i_img, nl_static, o_img);
     }
     case poutre::PType::PType_GrayINT64: {
-      return label_flat_zonesImageDispatch<1, poutre::PType::PType_GrayINT64>(i_img, nl_static, o_img);
+      return label_flat_zonesImageDispatch< 1, poutre::PType::PType_GrayINT64 >(i_img, nl_static, o_img);
     }
     case poutre::PType::PType_F32: {
-      return label_flat_zonesImageDispatch<1, poutre::PType::PType_F32>(i_img, nl_static, o_img);
+      return label_flat_zonesImageDispatch< 1, poutre::PType::PType_F32 >(i_img, nl_static, o_img);
     }
     case poutre::PType::PType_D64: {
-      return label_flat_zonesImageDispatch<1, poutre::PType::PType_D64>(i_img, nl_static, o_img);
+      return label_flat_zonesImageDispatch< 1, poutre::PType::PType_D64 >(i_img, nl_static, o_img);
     }
     default: {
       POUTRE_RUNTIME_ERROR("label_flat_zones unsupported PTYPE");
@@ -76,19 +80,19 @@ std::size_t label_flat_zones(const IInterface &i_img, se::Common_NL_SE nl_static
   case 2: {
     switch (i_img.GetPType()) {
     case poutre::PType::PType_GrayUINT8: {
-      return label_flat_zonesImageDispatch<2, poutre::PType::PType_GrayUINT8>(i_img, nl_static, o_img);
+      return label_flat_zonesImageDispatch< 2, poutre::PType::PType_GrayUINT8 >(i_img, nl_static, o_img);
     }
     case poutre::PType::PType_GrayINT32: {
-      return label_flat_zonesImageDispatch<2, poutre::PType::PType_GrayINT32>(i_img, nl_static, o_img);
+      return label_flat_zonesImageDispatch< 2, poutre::PType::PType_GrayINT32 >(i_img, nl_static, o_img);
     }
     case poutre::PType::PType_GrayINT64: {
-      return label_flat_zonesImageDispatch<2, poutre::PType::PType_GrayINT64>(i_img, nl_static, o_img);
+      return label_flat_zonesImageDispatch< 2, poutre::PType::PType_GrayINT64 >(i_img, nl_static, o_img);
     }
     case poutre::PType::PType_F32: {
-      return label_flat_zonesImageDispatch<2, poutre::PType::PType_F32>(i_img, nl_static, o_img);
+      return label_flat_zonesImageDispatch< 2, poutre::PType::PType_F32 >(i_img, nl_static, o_img);
     }
     case poutre::PType::PType_D64: {
-      return label_flat_zonesImageDispatch<2, poutre::PType::PType_D64>(i_img, nl_static, o_img);
+      return label_flat_zonesImageDispatch< 2, poutre::PType::PType_D64 >(i_img, nl_static, o_img);
     }
     default: {
       POUTRE_RUNTIME_ERROR("label_flat_zones unsupported PTYPE");
@@ -98,19 +102,19 @@ std::size_t label_flat_zones(const IInterface &i_img, se::Common_NL_SE nl_static
   case 3: {
     switch (i_img.GetPType()) {
     case poutre::PType::PType_GrayUINT8: {
-      return label_flat_zonesImageDispatch<3, poutre::PType::PType_GrayUINT8>(i_img, nl_static, o_img);
+      return label_flat_zonesImageDispatch< 3, poutre::PType::PType_GrayUINT8 >(i_img, nl_static, o_img);
     }
     case poutre::PType::PType_GrayINT32: {
-      return label_flat_zonesImageDispatch<3, poutre::PType::PType_GrayINT32>(i_img, nl_static, o_img);
+      return label_flat_zonesImageDispatch< 3, poutre::PType::PType_GrayINT32 >(i_img, nl_static, o_img);
     }
     case poutre::PType::PType_GrayINT64: {
-      return label_flat_zonesImageDispatch<3, poutre::PType::PType_GrayINT64>(i_img, nl_static, o_img);
+      return label_flat_zonesImageDispatch< 3, poutre::PType::PType_GrayINT64 >(i_img, nl_static, o_img);
     }
     case poutre::PType::PType_F32: {
-      return label_flat_zonesImageDispatch<3, poutre::PType::PType_F32>(i_img, nl_static, o_img);
+      return label_flat_zonesImageDispatch< 3, poutre::PType::PType_F32 >(i_img, nl_static, o_img);
     }
     case poutre::PType::PType_D64: {
-      return label_flat_zonesImageDispatch<3, poutre::PType::PType_D64>(i_img, nl_static, o_img);
+      return label_flat_zonesImageDispatch< 3, poutre::PType::PType_D64 >(i_img, nl_static, o_img);
     }
     default: {
       POUTRE_RUNTIME_ERROR("label_flat_zones unsupported PTYPE");

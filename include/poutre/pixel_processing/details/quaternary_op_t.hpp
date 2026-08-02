@@ -18,11 +18,10 @@
  * @copyright Copyright (c) 2020
  *
  */
-#include <algorithm>//transform
 #include <poutre/base/config.hpp>
-#include <poutre/base/details/simd/simd_algorithm.hpp> //simd transform
 #include <poutre/base/details/data_structures/array_view.hpp>
 #include <poutre/base/details/data_structures/image_t.hpp>
+#include <poutre/base/details/simd/simd_algorithm.hpp>//simd transform
 
 namespace poutre::details {
 /**
@@ -35,43 +34,38 @@ namespace poutre::details {
 /****************************************************************************************/
 
 // primary use strided view
-template<typename T1,
-  typename T2,
-  typename T3,
-  typename T4,
-  typename Tout,
-  ptrdiff_t Rank,
-  template<typename, ptrdiff_t>
-  class View1,
-  template<typename, ptrdiff_t>
-  class View2,
-  template<typename, ptrdiff_t>
-  class View3,
-  template<typename, ptrdiff_t>
-  class View4,
-  template<typename, ptrdiff_t>
-  class ViewOut,
-  class QuaterOp,
-  typename = void>
+template< typename T1,
+          typename T2,
+          typename T3,
+          typename T4,
+          typename Tout,
+          ptrdiff_t Rank,
+          template< typename, ptrdiff_t > class View1,
+          template< typename, ptrdiff_t > class View2,
+          template< typename, ptrdiff_t > class View3,
+          template< typename, ptrdiff_t > class View4,
+          template< typename, ptrdiff_t > class ViewOut,
+          class QuaterOp,
+          typename = void >
 struct PixelWiseQuaternaryOpDispatcher
 {
-  static_assert((std::is_same_v<View1<T1, Rank>, av::strided_array_view<T1, Rank>>
-                  || std::is_same_v<View1<T1, Rank>, av::strided_array_view<const T1, Rank>>
-                  || std::is_same_v<View2<T2, Rank>, av::strided_array_view<T2, Rank>>
-                  || std::is_same_v<View2<T2, Rank>, av::strided_array_view<const T2, Rank>>
-                  || std::is_same_v<View2<T3, Rank>, av::strided_array_view<T3, Rank>>
-                  || std::is_same_v<View2<T3, Rank>, av::strided_array_view<const T3, Rank>>
-                  || std::is_same_v<View2<T4, Rank>, av::strided_array_view<T4, Rank>>
-                  || std::is_same_v<View2<T4, Rank>, av::strided_array_view<const T4, Rank>>
-                  || std::is_same_v<ViewOut<Tout, Rank>, av::strided_array_view<Tout, Rank>>),
-    "strided view only specialization fail for array view");
+  static_assert((std::is_same_v< View1< T1, Rank >, av::strided_array_view< T1, Rank > >
+                 || std::is_same_v< View1< T1, Rank >, av::strided_array_view< const T1, Rank > >
+                 || std::is_same_v< View2< T2, Rank >, av::strided_array_view< T2, Rank > >
+                 || std::is_same_v< View2< T2, Rank >, av::strided_array_view< const T2, Rank > >
+                 || std::is_same_v< View2< T3, Rank >, av::strided_array_view< T3, Rank > >
+                 || std::is_same_v< View2< T3, Rank >, av::strided_array_view< const T3, Rank > >
+                 || std::is_same_v< View2< T4, Rank >, av::strided_array_view< T4, Rank > >
+                 || std::is_same_v< View2< T4, Rank >, av::strided_array_view< const T4, Rank > >
+                 || std::is_same_v< ViewOut< Tout, Rank >, av::strided_array_view< Tout, Rank > >),
+                "strided view only specialization fail for array view");
 
-  void operator()(const View1<T1, Rank> &i_vin1,
-    const QuaterOp &op,
-    const View2<T2, Rank> &i_vin2,
-    const View3<T3, Rank> &i_vin3,
-    const View4<T4, Rank> &i_vin4,
-    const ViewOut<Tout, Rank> &o_vout) const
+  void operator()(const View1< T1, Rank > &i_vin1,
+                  const QuaterOp &oper,
+                  const View2< T2, Rank > &i_vin2,
+                  const View3< T3, Rank > &i_vin3,
+                  const View4< T4, Rank > &i_vin4,
+                  const ViewOut< Tout, Rank > &o_vout) const
   {
     POUTRE_ENTERING("PixelWiseQuaternaryOpDispatcher generic case");
     // More runtime dispatch
@@ -93,7 +87,7 @@ struct PixelWiseQuaternaryOpDispatcher
       auto beg1 = begin(vInbound1);
       auto end1 = end(vInbound1);
       for (; beg1 != end1; ++beg1) {
-        o_vout[*beg1] = static_cast<Tout>(op(i_vin1[*beg1], i_vin2[*beg1], i_vin3[*beg1], i_vin4[*beg1]));
+        o_vout[*beg1] = static_cast< Tout >(oper(i_vin1[*beg1], i_vin2[*beg1], i_vin3[*beg1], i_vin4[*beg1]));
       }
 
       // TODO stride==1 in least significant dimension
@@ -108,15 +102,16 @@ struct PixelWiseQuaternaryOpDispatcher
       auto begout = begin(vOutbound);
 
       for (; beg1 != end1; ++beg1, ++beg2, ++beg3, ++begout) {
-        o_vout[*begout] = static_cast<Tout>(op(i_vin1[*beg1], i_vin2[*beg2], i_vin3[*beg3], i_vin4[*beg4]));
+        o_vout[*begout] = static_cast< Tout >(oper(i_vin1[*beg1], i_vin2[*beg2], i_vin3[*beg3], i_vin4[*beg4]));
       }
     }
   }
 };
 
 // template specialization both array_view but different type
-template<typename T1, typename T2, typename T3, typename T4, typename Tout, ptrdiff_t Rank, class QuaterOp>
-struct PixelWiseQuaternaryOpDispatcher<T1,
+template< typename T1, typename T2, typename T3, typename T4, typename Tout, ptrdiff_t Rank, class QuaterOp >
+struct PixelWiseQuaternaryOpDispatcher<
+  T1,
   T2,
   T3,
   T4,
@@ -128,17 +123,17 @@ struct PixelWiseQuaternaryOpDispatcher<T1,
   av::array_view,
   av::array_view,
   QuaterOp,
-  std::enable_if_t<!std::is_same_v<std::remove_const_t<T1>, std::remove_const_t<T2>>
-                   || !std::is_same_v<std::remove_const_t<T2>, std::remove_const_t<Tout>>
-                   || !std::is_same_v<std::remove_const_t<T3>, std::remove_const_t<Tout>>
-                   || !std::is_same_v<std::remove_const_t<T4>, std::remove_const_t<Tout>>>>
+  std::enable_if_t< !std::is_same_v< std::remove_const_t< T1 >, std::remove_const_t< T2 > >
+                    || !std::is_same_v< std::remove_const_t< T2 >, std::remove_const_t< Tout > >
+                    || !std::is_same_v< std::remove_const_t< T3 >, std::remove_const_t< Tout > >
+                    || !std::is_same_v< std::remove_const_t< T4 >, std::remove_const_t< Tout > > > >
 {
-  void operator()(const av::array_view<T1, Rank> &i_vin1,
-    const QuaterOp &op,
-    const av::array_view<T2, Rank> &i_vin2,
-    const av::array_view<T3, Rank> &i_vin3,
-    const av::array_view<T4, Rank> &i_vin4,
-    const av::array_view<Tout, Rank> &o_vout) const
+  void operator()(const av::array_view< T1, Rank > &i_vin1,
+                  const QuaterOp &oper,
+                  const av::array_view< T2, Rank > &i_vin2,
+                  const av::array_view< T3, Rank > &i_vin3,
+                  const av::array_view< T4, Rank > &i_vin4,
+                  const av::array_view< Tout, Rank > &o_vout) const
   {
     POUTRE_ENTERING("PixelWiseQuaternaryOpDispatcher both array view");
     auto i_vinbeg1 = i_vin1.data();
@@ -148,13 +143,14 @@ struct PixelWiseQuaternaryOpDispatcher<T1,
     auto i_vinbeg4 = i_vin4.data();
     auto i_voutbeg = o_vout.data();
     for (; i_vinbeg1 != i_vinend1; ++i_vinbeg1, ++i_vinbeg2, ++i_vinbeg3, ++i_vinbeg4, ++i_voutbeg) {
-      *i_voutbeg = static_cast<Tout>(op(*i_vinbeg1, *i_vinbeg2, *i_vinbeg3, *i_vinbeg4));
+      *i_voutbeg = static_cast< Tout >(oper(*i_vinbeg1, *i_vinbeg2, *i_vinbeg3, *i_vinbeg4));
     }
   }
 };
 
-template<typename T1, typename T2, typename T3, typename T4, typename Tout, ptrdiff_t Rank, class QuaterOp>
-struct PixelWiseQuaternaryOpDispatcher<T1,
+template< typename T1, typename T2, typename T3, typename T4, typename Tout, ptrdiff_t Rank, class QuaterOp >
+struct PixelWiseQuaternaryOpDispatcher<
+  T1,
   T2,
   T3,
   T4,
@@ -166,17 +162,18 @@ struct PixelWiseQuaternaryOpDispatcher<T1,
   av::array_view,
   av::array_view,
   QuaterOp,
-  std::enable_if_t<std::is_same_v<std::remove_const_t<T1>, std::remove_const_t<T2>>
-                   && std::is_same_v<std::remove_const_t<T2>, std::remove_const_t<Tout>>
-                   && std::is_same_v<std::remove_const_t<T3>, std::remove_const_t<Tout>>
-                   && std::is_same_v<std::remove_const_t<T4>, std::remove_const_t<Tout>> && std::is_arithmetic_v<T1>>>
+  std::enable_if_t< std::is_same_v< std::remove_const_t< T1 >, std::remove_const_t< T2 > >
+                    && std::is_same_v< std::remove_const_t< T2 >, std::remove_const_t< Tout > >
+                    && std::is_same_v< std::remove_const_t< T3 >, std::remove_const_t< Tout > >
+                    && std::is_same_v< std::remove_const_t< T4 >, std::remove_const_t< Tout > >
+                    && std::is_arithmetic_v< T1 > > >
 {
-  void operator()(const av::array_view<T1, Rank> &i_vin1,
-    const QuaterOp &op,
-    const av::array_view<T2, Rank> &i_vin2,
-    const av::array_view<T3, Rank> &i_vin3,
-    const av::array_view<T4, Rank> &i_vin4,
-    const av::array_view<Tout, Rank> &o_vout) const
+  void operator()(const av::array_view< T1, Rank > &i_vin1,
+                  const QuaterOp &oper,
+                  const av::array_view< T2, Rank > &i_vin2,
+                  const av::array_view< T3, Rank > &i_vin3,
+                  const av::array_view< T4, Rank > &i_vin4,
+                  const av::array_view< Tout, Rank > &o_vout) const
   {
     POUTRE_ENTERING("PixelWiseQuaternaryOpDispatcher both array view");
     auto i_vinbeg1 = i_vin1.data();
@@ -185,40 +182,36 @@ struct PixelWiseQuaternaryOpDispatcher<T1,
     auto i_vinbeg3 = i_vin3.data();
     auto i_vinbeg4 = i_vin4.data();
     auto i_voutbeg = o_vout.data();
-    simd::transform(i_vinbeg1, i_vinend1, i_vinbeg2, i_vinbeg3, i_vinbeg4, i_voutbeg, op);
+    simd::transform(i_vinbeg1, i_vinend1, i_vinbeg2, i_vinbeg3, i_vinbeg4, i_voutbeg, oper);
   }
 };
 
-template<typename T1,
-  typename T2,
-  typename T3,
-  typename T4,
-  typename Tout,
-  ptrdiff_t Rank,
-  template<typename, ptrdiff_t>
-  class View1,
-  template<typename, ptrdiff_t>
-  class View2,
-  template<typename, ptrdiff_t>
-  class View3,
-  template<typename, ptrdiff_t>
-  class View4,
-  template<typename, ptrdiff_t>
-  class ViewOut,
-  class QuaterOp>
-void t_quaternary_op(const View1<T1, Rank> &i_vin1,
-  const QuaterOp &op,
-  const View2<T2, Rank> &i_vin2,
-  const View3<T3, Rank> &i_vin3,
-  const View4<T4, Rank> &i_vin4,
-  const ViewOut<Tout, Rank> &o_vout) POUTRE_NOEXCEPTONLYNDEBUG
+template< typename T1,
+          typename T2,
+          typename T3,
+          typename T4,
+          typename Tout,
+          ptrdiff_t Rank,
+          template< typename, ptrdiff_t > class View1,
+          template< typename, ptrdiff_t > class View2,
+          template< typename, ptrdiff_t > class View3,
+          template< typename, ptrdiff_t > class View4,
+          template< typename, ptrdiff_t > class ViewOut,
+          class QuaterOp >
+void t_quaternary_op(const View1< T1, Rank > &i_vin1,
+                     const QuaterOp &oper,
+                     const View2< T2, Rank > &i_vin2,
+                     const View3< T3, Rank > &i_vin3,
+                     const View4< T4, Rank > &i_vin4,
+                     const ViewOut< Tout, Rank > &o_vout) POUTRE_NOEXCEPTONLYNDEBUG
 {
   POUTRE_ASSERTCHECK(i_vin1.size() == i_vin2.size(), "Incompatible views size");
   POUTRE_ASSERTCHECK(i_vin2.size() == i_vin3.size(), "Incompatible views size");
   POUTRE_ASSERTCHECK(i_vin3.size() == i_vin4.size(), "Incompatible views size");
   POUTRE_ASSERTCHECK(o_vout.size() == i_vin4.size(), "Incompatible views size");
-  PixelWiseQuaternaryOpDispatcher<T1, T2, T3, T4, Tout, Rank, View1, View2, View3, View4, ViewOut, QuaterOp> dispatcher;
-  dispatcher(i_vin1, op, i_vin2, i_vin3, i_vin4, o_vout);
+  PixelWiseQuaternaryOpDispatcher< T1, T2, T3, T4, Tout, Rank, View1, View2, View3, View4, ViewOut, QuaterOp >
+    dispatcher;
+  dispatcher(i_vin1, oper, i_vin2, i_vin3, i_vin4, o_vout);
 }
 //! @} doxygroup: image_processing_linear_group
 

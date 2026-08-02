@@ -24,40 +24,52 @@
 #include <poutre/structuring_element/se_types_and_tags.hpp>
 
 namespace {
-template<std::ptrdiff_t NumDims, poutre::PType P>
+template< std::ptrdiff_t NumDims, poutre::PType P >
 void lowLevelingImageDispatch(const poutre::IInterface &i_ref,// NOLINT
-  const poutre::IInterface &i_marker,// NOLINT
-  poutre::se::Common_NL_SE nl_static,
-  poutre::IInterface &o_img)
+                              const poutre::IInterface &i_marker,// NOLINT
+                              poutre::se::Common_NL_SE nl_static,
+                              poutre::IInterface &o_img)
 {
   using ImgType =
-    poutre::details::image_t<typename poutre::enum_to_type<poutre::CompoundType::CompoundType_Scalar, P>::type,
-      NumDims>;
-  const auto *imgmarker_t = dynamic_cast<const ImgType *>(&i_marker);
-  if (!imgmarker_t) { POUTRE_RUNTIME_ERROR("lowLevelingImageDispatch i_marker downcast fail"); }
-  const auto *imgref_t = dynamic_cast<const ImgType *>(&i_ref);
-  if (!imgref_t) { POUTRE_RUNTIME_ERROR("lowLevelingImageDispatch i_ref downcast fail"); }
-  auto *imgout_t = dynamic_cast<ImgType *>(&o_img);
-  if (!imgout_t) { POUTRE_RUNTIME_ERROR("lowLevelingImageDispatch o_img downcast fail"); }
+    poutre::details::image_t< typename poutre::enum_to_type< poutre::CompoundType::CompoundType_Scalar, P >::type,
+                              NumDims >;
+  const auto *imgmarker_t = dynamic_cast< const ImgType * >(&i_marker);
+  if (!imgmarker_t) {
+    POUTRE_RUNTIME_ERROR("lowLevelingImageDispatch i_marker downcast fail");
+  }
+  const auto *imgref_t = dynamic_cast< const ImgType * >(&i_ref);
+  if (!imgref_t) {
+    POUTRE_RUNTIME_ERROR("lowLevelingImageDispatch i_ref downcast fail");
+  }
+  auto *imgout_t = dynamic_cast< ImgType * >(&o_img);
+  if (!imgout_t) {
+    POUTRE_RUNTIME_ERROR("lowLevelingImageDispatch o_img downcast fail");
+  }
 
   poutre::geo::details::t_low_leveling(*imgref_t, *imgmarker_t, nl_static, *imgout_t);
 }
 
-template<std::ptrdiff_t NumDims, poutre::PType P>
+template< std::ptrdiff_t NumDims, poutre::PType P >
 void highLevelingImageDispatch(const poutre::IInterface &i_ref,// NOLINT
-  const poutre::IInterface &i_marker,// NOLINT
-  poutre::se::Common_NL_SE nl_static,
-  poutre::IInterface &o_img)
+                               const poutre::IInterface &i_marker,// NOLINT
+                               poutre::se::Common_NL_SE nl_static,
+                               poutre::IInterface &o_img)
 {
   using ImgType =
-    poutre::details::image_t<typename poutre::enum_to_type<poutre::CompoundType::CompoundType_Scalar, P>::type,
-      NumDims>;
-  const auto *imgmarker_t = dynamic_cast<const ImgType *>(&i_marker);
-  if (!imgmarker_t) { POUTRE_RUNTIME_ERROR("highLevelingImageDispatch i_marker downcast fail"); }
-  const auto *imgref_t = dynamic_cast<const ImgType *>(&i_ref);
-  if (!imgref_t) { POUTRE_RUNTIME_ERROR("highLevelingImageDispatch i_ref downcast fail"); }
-  auto *imgout_t = dynamic_cast<ImgType *>(&o_img);
-  if (!imgout_t) { POUTRE_RUNTIME_ERROR("highLevelingImageDispatch o_img downcast fail"); }
+    poutre::details::image_t< typename poutre::enum_to_type< poutre::CompoundType::CompoundType_Scalar, P >::type,
+                              NumDims >;
+  const auto *imgmarker_t = dynamic_cast< const ImgType * >(&i_marker);
+  if (!imgmarker_t) {
+    POUTRE_RUNTIME_ERROR("highLevelingImageDispatch i_marker downcast fail");
+  }
+  const auto *imgref_t = dynamic_cast< const ImgType * >(&i_ref);
+  if (!imgref_t) {
+    POUTRE_RUNTIME_ERROR("highLevelingImageDispatch i_ref downcast fail");
+  }
+  auto *imgout_t = dynamic_cast< ImgType * >(&o_img);
+  if (!imgout_t) {
+    POUTRE_RUNTIME_ERROR("highLevelingImageDispatch o_img downcast fail");
+  }
 
   poutre::geo::details::t_high_leveling(*imgref_t, *imgmarker_t, nl_static, *imgout_t);
 }
@@ -74,19 +86,19 @@ void low_leveling(const IInterface &i_ref, const IInterface &i_marker, se::Commo
   case 1: {
     switch (i_marker.GetPType()) {
     case poutre::PType::PType_GrayUINT8: {
-      lowLevelingImageDispatch<1, poutre::PType::PType_GrayUINT8>(i_ref, i_marker, nl_static, o_img);
+      lowLevelingImageDispatch< 1, poutre::PType::PType_GrayUINT8 >(i_ref, i_marker, nl_static, o_img);
     } break;
     case poutre::PType::PType_GrayINT32: {
-      lowLevelingImageDispatch<1, poutre::PType::PType_GrayINT32>(i_ref, i_marker, nl_static, o_img);
+      lowLevelingImageDispatch< 1, poutre::PType::PType_GrayINT32 >(i_ref, i_marker, nl_static, o_img);
     } break;
     case poutre::PType::PType_GrayINT64: {
-      lowLevelingImageDispatch<1, poutre::PType::PType_GrayINT64>(i_ref, i_marker, nl_static, o_img);
+      lowLevelingImageDispatch< 1, poutre::PType::PType_GrayINT64 >(i_ref, i_marker, nl_static, o_img);
     } break;
     case poutre::PType::PType_F32: {
-      lowLevelingImageDispatch<1, poutre::PType::PType_F32>(i_ref, i_marker, nl_static, o_img);
+      lowLevelingImageDispatch< 1, poutre::PType::PType_F32 >(i_ref, i_marker, nl_static, o_img);
     } break;
     case poutre::PType::PType_D64: {
-      lowLevelingImageDispatch<1, poutre::PType::PType_D64>(i_ref, i_marker, nl_static, o_img);
+      lowLevelingImageDispatch< 1, poutre::PType::PType_D64 >(i_ref, i_marker, nl_static, o_img);
     } break;
     default: {
       POUTRE_RUNTIME_ERROR("low_leveling unsupported PTYPE");
@@ -96,19 +108,19 @@ void low_leveling(const IInterface &i_ref, const IInterface &i_marker, se::Commo
   case 2: {
     switch (i_marker.GetPType()) {
     case poutre::PType::PType_GrayUINT8: {
-      lowLevelingImageDispatch<2, poutre::PType::PType_GrayUINT8>(i_ref, i_marker, nl_static, o_img);
+      lowLevelingImageDispatch< 2, poutre::PType::PType_GrayUINT8 >(i_ref, i_marker, nl_static, o_img);
     } break;
     case poutre::PType::PType_GrayINT32: {
-      lowLevelingImageDispatch<2, poutre::PType::PType_GrayINT32>(i_ref, i_marker, nl_static, o_img);
+      lowLevelingImageDispatch< 2, poutre::PType::PType_GrayINT32 >(i_ref, i_marker, nl_static, o_img);
     } break;
     case poutre::PType::PType_GrayINT64: {
-      lowLevelingImageDispatch<2, poutre::PType::PType_GrayINT64>(i_ref, i_marker, nl_static, o_img);
+      lowLevelingImageDispatch< 2, poutre::PType::PType_GrayINT64 >(i_ref, i_marker, nl_static, o_img);
     } break;
     case poutre::PType::PType_F32: {
-      lowLevelingImageDispatch<2, poutre::PType::PType_F32>(i_ref, i_marker, nl_static, o_img);
+      lowLevelingImageDispatch< 2, poutre::PType::PType_F32 >(i_ref, i_marker, nl_static, o_img);
     } break;
     case poutre::PType::PType_D64: {
-      lowLevelingImageDispatch<2, poutre::PType::PType_D64>(i_ref, i_marker, nl_static, o_img);
+      lowLevelingImageDispatch< 2, poutre::PType::PType_D64 >(i_ref, i_marker, nl_static, o_img);
     } break;
     default: {
       POUTRE_RUNTIME_ERROR("low_leveling unsupported PTYPE");
@@ -118,19 +130,19 @@ void low_leveling(const IInterface &i_ref, const IInterface &i_marker, se::Commo
   case 3: {
     switch (i_marker.GetPType()) {
     case poutre::PType::PType_GrayUINT8: {
-      lowLevelingImageDispatch<3, poutre::PType::PType_GrayUINT8>(i_ref, i_marker, nl_static, o_img);
+      lowLevelingImageDispatch< 3, poutre::PType::PType_GrayUINT8 >(i_ref, i_marker, nl_static, o_img);
     } break;
     case poutre::PType::PType_GrayINT32: {
-      lowLevelingImageDispatch<3, poutre::PType::PType_GrayINT32>(i_ref, i_marker, nl_static, o_img);
+      lowLevelingImageDispatch< 3, poutre::PType::PType_GrayINT32 >(i_ref, i_marker, nl_static, o_img);
     } break;
     case poutre::PType::PType_GrayINT64: {
-      lowLevelingImageDispatch<3, poutre::PType::PType_GrayINT64>(i_ref, i_marker, nl_static, o_img);
+      lowLevelingImageDispatch< 3, poutre::PType::PType_GrayINT64 >(i_ref, i_marker, nl_static, o_img);
     } break;
     case poutre::PType::PType_F32: {
-      lowLevelingImageDispatch<3, poutre::PType::PType_F32>(i_ref, i_marker, nl_static, o_img);
+      lowLevelingImageDispatch< 3, poutre::PType::PType_F32 >(i_ref, i_marker, nl_static, o_img);
     } break;
     case poutre::PType::PType_D64: {
-      lowLevelingImageDispatch<3, poutre::PType::PType_D64>(i_ref, i_marker, nl_static, o_img);
+      lowLevelingImageDispatch< 3, poutre::PType::PType_D64 >(i_ref, i_marker, nl_static, o_img);
     } break;
     default: {
       POUTRE_RUNTIME_ERROR("low_leveling unsupported PTYPE");
@@ -156,19 +168,19 @@ void high_leveling(const IInterface &i_ref, const IInterface &i_marker, se::Comm
   case 1: {
     switch (i_marker.GetPType()) {
     case poutre::PType::PType_GrayUINT8: {
-      highLevelingImageDispatch<1, poutre::PType::PType_GrayUINT8>(i_ref, i_marker, nl_static, o_img);
+      highLevelingImageDispatch< 1, poutre::PType::PType_GrayUINT8 >(i_ref, i_marker, nl_static, o_img);
     } break;
     case poutre::PType::PType_GrayINT32: {
-      highLevelingImageDispatch<1, poutre::PType::PType_GrayINT32>(i_ref, i_marker, nl_static, o_img);
+      highLevelingImageDispatch< 1, poutre::PType::PType_GrayINT32 >(i_ref, i_marker, nl_static, o_img);
     } break;
     case poutre::PType::PType_GrayINT64: {
-      highLevelingImageDispatch<1, poutre::PType::PType_GrayINT64>(i_ref, i_marker, nl_static, o_img);
+      highLevelingImageDispatch< 1, poutre::PType::PType_GrayINT64 >(i_ref, i_marker, nl_static, o_img);
     } break;
     case poutre::PType::PType_F32: {
-      highLevelingImageDispatch<1, poutre::PType::PType_F32>(i_ref, i_marker, nl_static, o_img);
+      highLevelingImageDispatch< 1, poutre::PType::PType_F32 >(i_ref, i_marker, nl_static, o_img);
     } break;
     case poutre::PType::PType_D64: {
-      highLevelingImageDispatch<1, poutre::PType::PType_D64>(i_ref, i_marker, nl_static, o_img);
+      highLevelingImageDispatch< 1, poutre::PType::PType_D64 >(i_ref, i_marker, nl_static, o_img);
     } break;
     default: {
       POUTRE_RUNTIME_ERROR("high_leveling unsupported PTYPE");
@@ -178,19 +190,19 @@ void high_leveling(const IInterface &i_ref, const IInterface &i_marker, se::Comm
   case 2: {
     switch (i_marker.GetPType()) {
     case poutre::PType::PType_GrayUINT8: {
-      highLevelingImageDispatch<2, poutre::PType::PType_GrayUINT8>(i_ref, i_marker, nl_static, o_img);
+      highLevelingImageDispatch< 2, poutre::PType::PType_GrayUINT8 >(i_ref, i_marker, nl_static, o_img);
     } break;
     case poutre::PType::PType_GrayINT32: {
-      highLevelingImageDispatch<2, poutre::PType::PType_GrayINT32>(i_ref, i_marker, nl_static, o_img);
+      highLevelingImageDispatch< 2, poutre::PType::PType_GrayINT32 >(i_ref, i_marker, nl_static, o_img);
     } break;
     case poutre::PType::PType_GrayINT64: {
-      highLevelingImageDispatch<2, poutre::PType::PType_GrayINT64>(i_ref, i_marker, nl_static, o_img);
+      highLevelingImageDispatch< 2, poutre::PType::PType_GrayINT64 >(i_ref, i_marker, nl_static, o_img);
     } break;
     case poutre::PType::PType_F32: {
-      highLevelingImageDispatch<2, poutre::PType::PType_F32>(i_ref, i_marker, nl_static, o_img);
+      highLevelingImageDispatch< 2, poutre::PType::PType_F32 >(i_ref, i_marker, nl_static, o_img);
     } break;
     case poutre::PType::PType_D64: {
-      highLevelingImageDispatch<2, poutre::PType::PType_D64>(i_ref, i_marker, nl_static, o_img);
+      highLevelingImageDispatch< 2, poutre::PType::PType_D64 >(i_ref, i_marker, nl_static, o_img);
     } break;
     default: {
       POUTRE_RUNTIME_ERROR("high_leveling unsupported PTYPE");
@@ -200,19 +212,19 @@ void high_leveling(const IInterface &i_ref, const IInterface &i_marker, se::Comm
   case 3: {
     switch (i_marker.GetPType()) {
     case poutre::PType::PType_GrayUINT8: {
-      highLevelingImageDispatch<3, poutre::PType::PType_GrayUINT8>(i_ref, i_marker, nl_static, o_img);
+      highLevelingImageDispatch< 3, poutre::PType::PType_GrayUINT8 >(i_ref, i_marker, nl_static, o_img);
     } break;
     case poutre::PType::PType_GrayINT32: {
-      highLevelingImageDispatch<3, poutre::PType::PType_GrayINT32>(i_ref, i_marker, nl_static, o_img);
+      highLevelingImageDispatch< 3, poutre::PType::PType_GrayINT32 >(i_ref, i_marker, nl_static, o_img);
     } break;
     case poutre::PType::PType_GrayINT64: {
-      highLevelingImageDispatch<3, poutre::PType::PType_GrayINT64>(i_ref, i_marker, nl_static, o_img);
+      highLevelingImageDispatch< 3, poutre::PType::PType_GrayINT64 >(i_ref, i_marker, nl_static, o_img);
     } break;
     case poutre::PType::PType_F32: {
-      highLevelingImageDispatch<3, poutre::PType::PType_F32>(i_ref, i_marker, nl_static, o_img);
+      highLevelingImageDispatch< 3, poutre::PType::PType_F32 >(i_ref, i_marker, nl_static, o_img);
     } break;
     case poutre::PType::PType_D64: {
-      highLevelingImageDispatch<3, poutre::PType::PType_D64>(i_ref, i_marker, nl_static, o_img);
+      highLevelingImageDispatch< 3, poutre::PType::PType_D64 >(i_ref, i_marker, nl_static, o_img);
     } break;
     default: {
       POUTRE_RUNTIME_ERROR("high_leveling unsupported PTYPE");

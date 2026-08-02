@@ -10,7 +10,6 @@
 //                     http://www.boost.org/LICENSE_1_0.txt                   //
 //==============================================================================
 
-#include <cstdint>
 #include <poutre/base/details/data_structures/pq.hpp>
 #include <poutre/base/types.hpp>
 #include <utility>
@@ -48,7 +47,7 @@
 
 TEST_CASE("increase stable", "[pqueue]")
 {
-  poutre::details::poutre_pq_stable<poutre::pINT32, uint64_t> pqueue;
+  poutre::details::poutre_pq_stable< poutre::pINT32, poutre::pINT64 > pqueue;
   // NOLINTBEGIN
   pqueue.emplace(0, 1);//-V525
   pqueue.emplace(50, 1);
@@ -59,11 +58,10 @@ TEST_CASE("increase stable", "[pqueue]")
   pqueue.emplace(80, 3);
   pqueue.emplace(0, 3);
 
-  const std::vector<std::pair<poutre::pINT32, uint64_t>> expected = {
-    { 80, 1 }, { 80, 2 }, { 80, 3 }, { 50, 1 }, { 50, 2 }, { 0, 1 }, { 0, 2 }, { 0, 3 }
-  };
+  const std::vector< std::pair< poutre::pINT32, poutre::pINT64 > > expected = {
+    {80, 1}, {80, 2}, {80, 3}, {50, 1}, {50, 2}, {0, 1}, {0, 2}, {0, 3}};
   // NOLINTEND
-  std::vector<std::pair<poutre::pINT32, uint64_t>> results;
+  std::vector< std::pair< poutre::pINT32, poutre::pINT64 > > results;
   while (!pqueue.empty()) {
     results.push_back(pqueue.top());
     pqueue.pop();
@@ -71,7 +69,10 @@ TEST_CASE("increase stable", "[pqueue]")
   REQUIRE(results.size() == expected.size());
   auto iterres = results.cbegin();
   auto iterexpected = expected.cbegin();
-  for (; iterres != results.cend(); ++iterres, ++iterexpected) { REQUIRE(*iterexpected == *iterres); }
+  for (; iterres != results.cend(); ++iterres, ++iterexpected) {
+    REQUIRE((*iterexpected).first == (*iterres).first);
+    REQUIRE((*iterexpected).second == (*iterres).second);
+  }
 }
 
 // TEST_CASE("decrease no stable", "[pqueue]")
@@ -104,7 +105,7 @@ TEST_CASE("increase stable", "[pqueue]")
 
 TEST_CASE("decrease stable", "[pqueue]")
 {
-  poutre::details::poutre_rpq_stable<poutre::pINT32, uint64_t> pqueue;
+  poutre::details::poutre_rpq_stable< poutre::pINT32, poutre::pINT64 > pqueue;
   // NOLINTBEGIN
   pqueue.emplace(0, 1);//-V525
   pqueue.emplace(50, 1);
@@ -114,11 +115,10 @@ TEST_CASE("decrease stable", "[pqueue]")
   pqueue.emplace(80, 2);
   pqueue.emplace(80, 3);
   pqueue.emplace(0, 3);
-  const std::vector<std::pair<poutre::pINT32, uint64_t>> expected = {
-    { 0, 1 }, { 0, 2 }, { 0, 3 }, { 50, 1 }, { 50, 2 }, { 80, 1 }, { 80, 2 }, { 80, 3 }
-  };
+  const std::vector< std::pair< poutre::pINT32, poutre::pINT64 > > expected = {
+    {0, 1}, {0, 2}, {0, 3}, {50, 1}, {50, 2}, {80, 1}, {80, 2}, {80, 3}};
   // NOLINTEND
-  std::vector<std::pair<poutre::pINT32, uint64_t>> results;
+  std::vector< std::pair< poutre::pINT32, poutre::pINT64 > > results;
   while (!pqueue.empty()) {
     results.push_back(pqueue.top());
     pqueue.pop();
@@ -126,5 +126,8 @@ TEST_CASE("decrease stable", "[pqueue]")
   REQUIRE(results.size() == expected.size());
   auto iterres = results.cbegin();
   auto iterexpected = expected.cbegin();
-  for (; iterres != results.cend(); ++iterres, ++iterexpected) { REQUIRE(*iterexpected == *iterres); }
+  for (; iterres != results.cend(); ++iterres, ++iterexpected) {
+    REQUIRE((*iterexpected).first == (*iterres).first);
+    REQUIRE((*iterexpected).second == (*iterres).second);
+  }
 }

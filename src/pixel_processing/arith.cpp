@@ -24,101 +24,137 @@
 
 namespace poutre {
 
-template<std::ptrdiff_t NumDims, PType P>
+template< std::ptrdiff_t NumDims, PType P >
 void ArithSaturatedAddConstantDispatch(const IInterface &i_img, const ScalarTypeVariant &vscalar, IInterface &o_img)
 {
-  using pType = typename enum_to_type<CompoundType::CompoundType_Scalar, P>::type;
-  using ImgType = details::image_t<pType, NumDims>;
-  const auto *img1_t = dynamic_cast<const ImgType *>(&i_img);
-  if (!img1_t) { POUTRE_RUNTIME_ERROR("ArithSaturatedAddConstantDispatch img1_t downcast fail"); }
-  auto *img2_t = dynamic_cast<ImgType *>(&o_img);
-  if (!img2_t) { POUTRE_RUNTIME_ERROR("ArithSaturatedAddConstantDispatch img2_t downcast fail"); }
+  using pType = typename enum_to_type< CompoundType::CompoundType_Scalar, P >::type;
+  using ImgType = details::image_t< pType, NumDims >;
+  const auto *img1_t = dynamic_cast< const ImgType * >(&i_img);
+  if (!img1_t) {
+    POUTRE_RUNTIME_ERROR("ArithSaturatedAddConstantDispatch img1_t downcast fail");
+  }
+  auto *img2_t = dynamic_cast< ImgType * >(&o_img);
+  if (!img2_t) {
+    POUTRE_RUNTIME_ERROR("ArithSaturatedAddConstantDispatch img2_t downcast fail");
+  }
 
   try {
-    const pType pix_val = std::get<pType>(vscalar);
+    const pType pix_val = std::get< pType >(vscalar);
     details::t_ArithSaturatedAddConstant(*img1_t, pix_val, *img2_t);
   } catch (std::bad_variant_access &) {
     POUTRE_RUNTIME_ERROR("ArithSaturatedAddConstantDispatch unable to extract suitable type from pvalue");
   }
 }
 
-template<std::ptrdiff_t NumDims, PType P>
+template< std::ptrdiff_t NumDims, PType P >
 void ArithSaturatedSubConstantDispatch(const IInterface &i_img, const ScalarTypeVariant &vscalar, IInterface &o_img)
 {
-  using pType = typename enum_to_type<CompoundType::CompoundType_Scalar, P>::type;
-  using ImgType = details::image_t<pType, NumDims>;
-  const auto *img1_t = dynamic_cast<const ImgType *>(&i_img);
-  if (!img1_t) { POUTRE_RUNTIME_ERROR("ArithSaturatedASubConstantDispatch img1_t downcast fail"); }
-  auto *img2_t = dynamic_cast<ImgType *>(&o_img);
-  if (!img2_t) { POUTRE_RUNTIME_ERROR("ArithSaturatedASubConstantDispatch img2_t downcast fail"); }
+  using pType = typename enum_to_type< CompoundType::CompoundType_Scalar, P >::type;
+  using ImgType = details::image_t< pType, NumDims >;
+  const auto *img1_t = dynamic_cast< const ImgType * >(&i_img);
+  if (!img1_t) {
+    POUTRE_RUNTIME_ERROR("ArithSaturatedASubConstantDispatch img1_t downcast fail");
+  }
+  auto *img2_t = dynamic_cast< ImgType * >(&o_img);
+  if (!img2_t) {
+    POUTRE_RUNTIME_ERROR("ArithSaturatedASubConstantDispatch img2_t downcast fail");
+  }
   try {
-    const pType pix_val = std::get<pType>(vscalar);
+    const pType pix_val = std::get< pType >(vscalar);
     details::t_ArithSaturatedSubConstant(*img1_t, pix_val, *img2_t);
   } catch (std::bad_variant_access &) {
     POUTRE_RUNTIME_ERROR("ArithSaturatedAddConstantDispatch unable to extract suitable type from pvalue");
   }
 }
 
-template<std::ptrdiff_t NumDims, PType P>
+template< std::ptrdiff_t NumDims, PType P >
 void ArithSaturatedAddImageDispatch(const IInterface &i_img1, const IInterface &i_img2, IInterface &o_img)
 {
-  using ImgType = details::image_t<typename enum_to_type<CompoundType::CompoundType_Scalar, P>::type, NumDims>;
-  const auto *img1_t = dynamic_cast<const ImgType *>(&i_img1);
-  if (!img1_t) { POUTRE_RUNTIME_ERROR("ArithSaddImageDispatch img1_t downcast fail"); }
-  auto *img2_t = dynamic_cast<const ImgType *>(&i_img2);
-  if (!img2_t) { POUTRE_RUNTIME_ERROR("ArithSaddImageDispatch img2_t downcast fail"); }
-  auto *img3_t = dynamic_cast<ImgType *>(&o_img);
-  if (!img3_t) { POUTRE_RUNTIME_ERROR("ArithSaddImageDispatch img3_t downcast fail"); }
+  using ImgType = details::image_t< typename enum_to_type< CompoundType::CompoundType_Scalar, P >::type, NumDims >;
+  const auto *img1_t = dynamic_cast< const ImgType * >(&i_img1);
+  if (!img1_t) {
+    POUTRE_RUNTIME_ERROR("ArithSaddImageDispatch img1_t downcast fail");
+  }
+  auto *img2_t = dynamic_cast< const ImgType * >(&i_img2);
+  if (!img2_t) {
+    POUTRE_RUNTIME_ERROR("ArithSaddImageDispatch img2_t downcast fail");
+  }
+  auto *img3_t = dynamic_cast< ImgType * >(&o_img);
+  if (!img3_t) {
+    POUTRE_RUNTIME_ERROR("ArithSaddImageDispatch img3_t downcast fail");
+  }
   details::t_ArithSaturatedAdd(*img1_t, *img2_t, *img3_t);
 }
 
 
-template<std::ptrdiff_t NumDims, PType P>
+template< std::ptrdiff_t NumDims, PType P >
 void ArithSaturatedSubImageDispatch(const IInterface &i_img1, const IInterface &i_img2, IInterface &o_img)
 {
-  using ImgType = details::image_t<typename enum_to_type<CompoundType::CompoundType_Scalar, P>::type, NumDims>;
-  const auto *img1_t = dynamic_cast<const ImgType *>(&i_img1);
-  if (!img1_t) { POUTRE_RUNTIME_ERROR("ArithSsubImageDispatch img1_t downcast fail"); }
-  auto *img2_t = dynamic_cast<const ImgType *>(&i_img2);
-  if (!img2_t) { POUTRE_RUNTIME_ERROR("ArithSsubImageDispatch img2_t downcast fail"); }
-  auto *img3_t = dynamic_cast<ImgType *>(&o_img);
-  if (!img3_t) { POUTRE_RUNTIME_ERROR("ArithSsubImageDispatch img3_t downcast fail"); }
+  using ImgType = details::image_t< typename enum_to_type< CompoundType::CompoundType_Scalar, P >::type, NumDims >;
+  const auto *img1_t = dynamic_cast< const ImgType * >(&i_img1);
+  if (!img1_t) {
+    POUTRE_RUNTIME_ERROR("ArithSsubImageDispatch img1_t downcast fail");
+  }
+  auto *img2_t = dynamic_cast< const ImgType * >(&i_img2);
+  if (!img2_t) {
+    POUTRE_RUNTIME_ERROR("ArithSsubImageDispatch img2_t downcast fail");
+  }
+  auto *img3_t = dynamic_cast< ImgType * >(&o_img);
+  if (!img3_t) {
+    POUTRE_RUNTIME_ERROR("ArithSsubImageDispatch img3_t downcast fail");
+  }
   details::t_ArithSaturatedSub(*img1_t, *img2_t, *img3_t);
 }
 
-template<std::ptrdiff_t NumDims, PType P>
+template< std::ptrdiff_t NumDims, PType P >
 void ArithSupImageDispatch(const IInterface &i_img1, const IInterface &i_img2, IInterface &o_img)
 {
-  using ImgType = details::image_t<typename enum_to_type<CompoundType::CompoundType_Scalar, P>::type, NumDims>;
-  const auto *img1_t = dynamic_cast<const ImgType *>(&i_img1);
-  if (!img1_t) { POUTRE_RUNTIME_ERROR("ArithSupImageDispatch img1_t downcast fail"); }
-  auto *img2_t = dynamic_cast<const ImgType *>(&i_img2);
-  if (!img2_t) { POUTRE_RUNTIME_ERROR("ArithSupImageDispatch img2_t downcast fail"); }
-  auto *img3_t = dynamic_cast<ImgType *>(&o_img);
-  if (!img3_t) { POUTRE_RUNTIME_ERROR("ArithSupImageDispatch img3_t downcast fail"); }
+  using ImgType = details::image_t< typename enum_to_type< CompoundType::CompoundType_Scalar, P >::type, NumDims >;
+  const auto *img1_t = dynamic_cast< const ImgType * >(&i_img1);
+  if (!img1_t) {
+    POUTRE_RUNTIME_ERROR("ArithSupImageDispatch img1_t downcast fail");
+  }
+  auto *img2_t = dynamic_cast< const ImgType * >(&i_img2);
+  if (!img2_t) {
+    POUTRE_RUNTIME_ERROR("ArithSupImageDispatch img2_t downcast fail");
+  }
+  auto *img3_t = dynamic_cast< ImgType * >(&o_img);
+  if (!img3_t) {
+    POUTRE_RUNTIME_ERROR("ArithSupImageDispatch img3_t downcast fail");
+  }
   details::t_ArithSup(*img1_t, *img2_t, *img3_t);
 }
 
-template<std::ptrdiff_t NumDims, PType P>
+template< std::ptrdiff_t NumDims, PType P >
 void ArithInfImageDispatch(const IInterface &i_img1, const IInterface &i_img2, IInterface &o_img)
 {
-  using ImgType = details::image_t<typename enum_to_type<CompoundType::CompoundType_Scalar, P>::type, NumDims>;
-  const auto *img1_t = dynamic_cast<const ImgType *>(&i_img1);
-  if (!img1_t) { POUTRE_RUNTIME_ERROR("ArithInfImageDispatch img1_t downcast fail"); }
-  auto *img2_t = dynamic_cast<const ImgType *>(&i_img2);
-  if (!img2_t) { POUTRE_RUNTIME_ERROR("ArithInfImageDispatch img2_t downcast fail"); }
-  auto *img3_t = dynamic_cast<ImgType *>(&o_img);
-  if (!img3_t) { POUTRE_RUNTIME_ERROR("ArithInfImageDispatch img3_t downcast fail"); }
+  using ImgType = details::image_t< typename enum_to_type< CompoundType::CompoundType_Scalar, P >::type, NumDims >;
+  const auto *img1_t = dynamic_cast< const ImgType * >(&i_img1);
+  if (!img1_t) {
+    POUTRE_RUNTIME_ERROR("ArithInfImageDispatch img1_t downcast fail");
+  }
+  auto *img2_t = dynamic_cast< const ImgType * >(&i_img2);
+  if (!img2_t) {
+    POUTRE_RUNTIME_ERROR("ArithInfImageDispatch img2_t downcast fail");
+  }
+  auto *img3_t = dynamic_cast< ImgType * >(&o_img);
+  if (!img3_t) {
+    POUTRE_RUNTIME_ERROR("ArithInfImageDispatch img3_t downcast fail");
+  }
   details::t_ArithInf(*img1_t, *img2_t, *img3_t);
 }
 
-template<std::ptrdiff_t NumDims, PType P> void ArithInvertImageDispatch(const IInterface &i_img, IInterface &o_img)
+template< std::ptrdiff_t NumDims, PType P > void ArithInvertImageDispatch(const IInterface &i_img, IInterface &o_img)
 {
-  using ImgType = details::image_t<typename enum_to_type<CompoundType::CompoundType_Scalar, P>::type, NumDims>;
-  const auto *img1_t = dynamic_cast<const ImgType *>(&i_img);
-  if (!img1_t) { POUTRE_RUNTIME_ERROR("ArithInvertImageDispatch img1_t downcast fail"); }
-  auto *img2_t = dynamic_cast<ImgType *>(&o_img);
-  if (!img2_t) { POUTRE_RUNTIME_ERROR("ArithInvertImageDispatch img2_t downcast fail"); }
+  using ImgType = details::image_t< typename enum_to_type< CompoundType::CompoundType_Scalar, P >::type, NumDims >;
+  const auto *img1_t = dynamic_cast< const ImgType * >(&i_img);
+  if (!img1_t) {
+    POUTRE_RUNTIME_ERROR("ArithInvertImageDispatch img1_t downcast fail");
+  }
+  auto *img2_t = dynamic_cast< ImgType * >(&o_img);
+  if (!img2_t) {
+    POUTRE_RUNTIME_ERROR("ArithInvertImageDispatch img2_t downcast fail");
+  }
   details::t_ArithInvert(*img1_t, *img2_t);
 }
 
@@ -142,19 +178,19 @@ void ArithSaturatedAddImage(const IInterface &i_img1, const IInterface &i_img2, 
   case 2: {
     switch (i_img1.GetPType()) {
     case PType::PType_GrayUINT8: {
-      ArithSaturatedAddImageDispatch<2, PType::PType_GrayUINT8>(i_img1, i_img2, o_img);
+      ArithSaturatedAddImageDispatch< 2, PType::PType_GrayUINT8 >(i_img1, i_img2, o_img);
     } break;
     case PType::PType_GrayINT32: {
-      ArithSaturatedAddImageDispatch<2, PType::PType_GrayINT32>(i_img1, i_img2, o_img);
+      ArithSaturatedAddImageDispatch< 2, PType::PType_GrayINT32 >(i_img1, i_img2, o_img);
     } break;
     case PType::PType_GrayINT64: {
-      ArithSaturatedAddImageDispatch<2, PType::PType_GrayINT64>(i_img1, i_img2, o_img);
+      ArithSaturatedAddImageDispatch< 2, PType::PType_GrayINT64 >(i_img1, i_img2, o_img);
     } break;
     case PType::PType_F32: {
-      ArithSaturatedAddImageDispatch<2, PType::PType_F32>(i_img1, i_img2, o_img);
+      ArithSaturatedAddImageDispatch< 2, PType::PType_F32 >(i_img1, i_img2, o_img);
     } break;
     case PType::PType_D64: {
-      ArithSaturatedAddImageDispatch<2, PType::PType_D64>(i_img1, i_img2, o_img);
+      ArithSaturatedAddImageDispatch< 2, PType::PType_D64 >(i_img1, i_img2, o_img);
     } break;
     default: {
       POUTRE_RUNTIME_ERROR("ArithSaturatedAddImage unsupported PTYPE");
@@ -164,19 +200,19 @@ void ArithSaturatedAddImage(const IInterface &i_img1, const IInterface &i_img2, 
   case 3: {
     switch (i_img1.GetPType()) {
     case PType::PType_GrayUINT8: {
-      ArithSaturatedAddImageDispatch<3, PType::PType_GrayUINT8>(i_img1, i_img2, o_img);
+      ArithSaturatedAddImageDispatch< 3, PType::PType_GrayUINT8 >(i_img1, i_img2, o_img);
     } break;
     case PType::PType_GrayINT32: {
-      ArithSaturatedAddImageDispatch<3, PType::PType_GrayINT32>(i_img1, i_img2, o_img);
+      ArithSaturatedAddImageDispatch< 3, PType::PType_GrayINT32 >(i_img1, i_img2, o_img);
     } break;
     case PType::PType_GrayINT64: {
-      ArithSaturatedAddImageDispatch<3, PType::PType_GrayINT64>(i_img1, i_img2, o_img);
+      ArithSaturatedAddImageDispatch< 3, PType::PType_GrayINT64 >(i_img1, i_img2, o_img);
     } break;
     case PType::PType_F32: {
-      ArithSaturatedAddImageDispatch<3, PType::PType_F32>(i_img1, i_img2, o_img);
+      ArithSaturatedAddImageDispatch< 3, PType::PType_F32 >(i_img1, i_img2, o_img);
     } break;
     case PType::PType_D64: {
-      ArithSaturatedAddImageDispatch<3, PType::PType_D64>(i_img1, i_img2, o_img);
+      ArithSaturatedAddImageDispatch< 3, PType::PType_D64 >(i_img1, i_img2, o_img);
     } break;
     default: {
       POUTRE_RUNTIME_ERROR("ArithSaturatedAddImage unsupported PTYPE");
@@ -212,19 +248,19 @@ void ArithSaturatedSubImage(const IInterface &i_img1, const IInterface &i_img2, 
   case 2: {
     switch (i_img1.GetPType()) {
     case PType::PType_GrayUINT8: {
-      ArithSaturatedSubImageDispatch<2, PType::PType_GrayUINT8>(i_img1, i_img2, o_img);
+      ArithSaturatedSubImageDispatch< 2, PType::PType_GrayUINT8 >(i_img1, i_img2, o_img);
     } break;
     case PType::PType_GrayINT32: {
-      ArithSaturatedSubImageDispatch<2, PType::PType_GrayINT32>(i_img1, i_img2, o_img);
+      ArithSaturatedSubImageDispatch< 2, PType::PType_GrayINT32 >(i_img1, i_img2, o_img);
     } break;
     case PType::PType_GrayINT64: {
-      ArithSaturatedSubImageDispatch<2, PType::PType_GrayINT64>(i_img1, i_img2, o_img);
+      ArithSaturatedSubImageDispatch< 2, PType::PType_GrayINT64 >(i_img1, i_img2, o_img);
     } break;
     case PType::PType_F32: {
-      ArithSaturatedSubImageDispatch<2, PType::PType_F32>(i_img1, i_img2, o_img);
+      ArithSaturatedSubImageDispatch< 2, PType::PType_F32 >(i_img1, i_img2, o_img);
     } break;
     case PType::PType_D64: {
-      ArithSaturatedSubImageDispatch<2, PType::PType_D64>(i_img1, i_img2, o_img);
+      ArithSaturatedSubImageDispatch< 2, PType::PType_D64 >(i_img1, i_img2, o_img);
     } break;
     default: {
       POUTRE_RUNTIME_ERROR("ArithSaturatedSubImage unsupported PTYPE");
@@ -234,19 +270,19 @@ void ArithSaturatedSubImage(const IInterface &i_img1, const IInterface &i_img2, 
   case 3: {
     switch (i_img1.GetPType()) {
     case PType::PType_GrayUINT8: {
-      ArithSaturatedSubImageDispatch<3, PType::PType_GrayUINT8>(i_img1, i_img2, o_img);
+      ArithSaturatedSubImageDispatch< 3, PType::PType_GrayUINT8 >(i_img1, i_img2, o_img);
     } break;
     case PType::PType_GrayINT32: {
-      ArithSaturatedSubImageDispatch<3, PType::PType_GrayINT32>(i_img1, i_img2, o_img);
+      ArithSaturatedSubImageDispatch< 3, PType::PType_GrayINT32 >(i_img1, i_img2, o_img);
     } break;
     case PType::PType_GrayINT64: {
-      ArithSaturatedSubImageDispatch<3, PType::PType_GrayINT64>(i_img1, i_img2, o_img);
+      ArithSaturatedSubImageDispatch< 3, PType::PType_GrayINT64 >(i_img1, i_img2, o_img);
     } break;
     case PType::PType_F32: {
-      ArithSaturatedSubImageDispatch<3, PType::PType_F32>(i_img1, i_img2, o_img);
+      ArithSaturatedSubImageDispatch< 3, PType::PType_F32 >(i_img1, i_img2, o_img);
     } break;
     case PType::PType_D64: {
-      ArithSaturatedSubImageDispatch<3, PType::PType_D64>(i_img1, i_img2, o_img);
+      ArithSaturatedSubImageDispatch< 3, PType::PType_D64 >(i_img1, i_img2, o_img);
     } break;
     default: {
       POUTRE_RUNTIME_ERROR("ArithSaturatedSubImage unsupported PTYPE");
@@ -281,19 +317,19 @@ void ArithSupImage(const IInterface &i_img1, const IInterface &i_img2, IInterfac
   case 2: {
     switch (i_img1.GetPType()) {
     case PType::PType_GrayUINT8: {
-      ArithSupImageDispatch<2, PType::PType_GrayUINT8>(i_img1, i_img2, o_img);
+      ArithSupImageDispatch< 2, PType::PType_GrayUINT8 >(i_img1, i_img2, o_img);
     } break;
     case PType::PType_GrayINT32: {
-      ArithSupImageDispatch<2, PType::PType_GrayINT32>(i_img1, i_img2, o_img);
+      ArithSupImageDispatch< 2, PType::PType_GrayINT32 >(i_img1, i_img2, o_img);
     } break;
     case PType::PType_GrayINT64: {
-      ArithSupImageDispatch<2, PType::PType_GrayINT64>(i_img1, i_img2, o_img);
+      ArithSupImageDispatch< 2, PType::PType_GrayINT64 >(i_img1, i_img2, o_img);
     } break;
     case PType::PType_F32: {
-      ArithSupImageDispatch<2, PType::PType_F32>(i_img1, i_img2, o_img);
+      ArithSupImageDispatch< 2, PType::PType_F32 >(i_img1, i_img2, o_img);
     } break;
     case PType::PType_D64: {
-      ArithSupImageDispatch<2, PType::PType_D64>(i_img1, i_img2, o_img);
+      ArithSupImageDispatch< 2, PType::PType_D64 >(i_img1, i_img2, o_img);
     } break;
     default: {
       POUTRE_RUNTIME_ERROR("ArithSupImage unsupported PTYPE");
@@ -303,19 +339,19 @@ void ArithSupImage(const IInterface &i_img1, const IInterface &i_img2, IInterfac
   case 3: {
     switch (i_img1.GetPType()) {
     case PType::PType_GrayUINT8: {
-      ArithSupImageDispatch<3, PType::PType_GrayUINT8>(i_img1, i_img2, o_img);
+      ArithSupImageDispatch< 3, PType::PType_GrayUINT8 >(i_img1, i_img2, o_img);
     } break;
     case PType::PType_GrayINT32: {
-      ArithSupImageDispatch<3, PType::PType_GrayINT32>(i_img1, i_img2, o_img);
+      ArithSupImageDispatch< 3, PType::PType_GrayINT32 >(i_img1, i_img2, o_img);
     } break;
     case PType::PType_GrayINT64: {
-      ArithSupImageDispatch<3, PType::PType_GrayINT64>(i_img1, i_img2, o_img);
+      ArithSupImageDispatch< 3, PType::PType_GrayINT64 >(i_img1, i_img2, o_img);
     } break;
     case PType::PType_F32: {
-      ArithSupImageDispatch<3, PType::PType_F32>(i_img1, i_img2, o_img);
+      ArithSupImageDispatch< 3, PType::PType_F32 >(i_img1, i_img2, o_img);
     } break;
     case PType::PType_D64: {
-      ArithSupImageDispatch<3, PType::PType_D64>(i_img1, i_img2, o_img);
+      ArithSupImageDispatch< 3, PType::PType_D64 >(i_img1, i_img2, o_img);
     } break;
     default: {
       POUTRE_RUNTIME_ERROR("ArithSupImage unsupported PTYPE");
@@ -351,19 +387,19 @@ void ArithInfImage(const IInterface &i_img1, const IInterface &i_img2, IInterfac
   case 2: {
     switch (i_img1.GetPType()) {
     case PType::PType_GrayUINT8: {
-      ArithInfImageDispatch<2, PType::PType_GrayUINT8>(i_img1, i_img2, o_img);
+      ArithInfImageDispatch< 2, PType::PType_GrayUINT8 >(i_img1, i_img2, o_img);
     } break;
     case PType::PType_GrayINT32: {
-      ArithInfImageDispatch<2, PType::PType_GrayINT32>(i_img1, i_img2, o_img);
+      ArithInfImageDispatch< 2, PType::PType_GrayINT32 >(i_img1, i_img2, o_img);
     } break;
     case PType::PType_GrayINT64: {
-      ArithInfImageDispatch<2, PType::PType_GrayINT64>(i_img1, i_img2, o_img);
+      ArithInfImageDispatch< 2, PType::PType_GrayINT64 >(i_img1, i_img2, o_img);
     } break;
     case PType::PType_F32: {
-      ArithInfImageDispatch<2, PType::PType_F32>(i_img1, i_img2, o_img);
+      ArithInfImageDispatch< 2, PType::PType_F32 >(i_img1, i_img2, o_img);
     } break;
     case PType::PType_D64: {
-      ArithInfImageDispatch<2, PType::PType_D64>(i_img1, i_img2, o_img);
+      ArithInfImageDispatch< 2, PType::PType_D64 >(i_img1, i_img2, o_img);
     } break;
     default: {
       POUTRE_RUNTIME_ERROR("ArithInfImage unsupported PTYPE");
@@ -373,19 +409,19 @@ void ArithInfImage(const IInterface &i_img1, const IInterface &i_img2, IInterfac
   case 3: {
     switch (i_img1.GetPType()) {
     case PType::PType_GrayUINT8: {
-      ArithInfImageDispatch<3, PType::PType_GrayUINT8>(i_img1, i_img2, o_img);
+      ArithInfImageDispatch< 3, PType::PType_GrayUINT8 >(i_img1, i_img2, o_img);
     } break;
     case PType::PType_GrayINT32: {
-      ArithInfImageDispatch<3, PType::PType_GrayINT32>(i_img1, i_img2, o_img);
+      ArithInfImageDispatch< 3, PType::PType_GrayINT32 >(i_img1, i_img2, o_img);
     } break;
     case PType::PType_GrayINT64: {
-      ArithInfImageDispatch<3, PType::PType_GrayINT64>(i_img1, i_img2, o_img);
+      ArithInfImageDispatch< 3, PType::PType_GrayINT64 >(i_img1, i_img2, o_img);
     } break;
     case PType::PType_F32: {
-      ArithInfImageDispatch<3, PType::PType_F32>(i_img1, i_img2, o_img);
+      ArithInfImageDispatch< 3, PType::PType_F32 >(i_img1, i_img2, o_img);
     } break;
     case PType::PType_D64: {
-      ArithInfImageDispatch<3, PType::PType_D64>(i_img1, i_img2, o_img);
+      ArithInfImageDispatch< 3, PType::PType_D64 >(i_img1, i_img2, o_img);
     } break;
     default: {
       POUTRE_RUNTIME_ERROR("ArithInfImage unsupported PTYPE");
@@ -418,19 +454,19 @@ void ArithSaturatedAddConstant(const IInterface &i_img, const ScalarTypeVariant 
   case 2: {
     switch (i_img.GetPType()) {
     case PType::PType_GrayUINT8: {
-      ArithSaturatedAddConstantDispatch<2, PType::PType_GrayUINT8>(i_img, pvalue, o_img);
+      ArithSaturatedAddConstantDispatch< 2, PType::PType_GrayUINT8 >(i_img, pvalue, o_img);
     } break;
     case PType::PType_GrayINT32: {
-      ArithSaturatedAddConstantDispatch<2, PType::PType_GrayINT32>(i_img, pvalue, o_img);
+      ArithSaturatedAddConstantDispatch< 2, PType::PType_GrayINT32 >(i_img, pvalue, o_img);
     } break;
     case PType::PType_GrayINT64: {
-      ArithSaturatedAddConstantDispatch<2, PType::PType_GrayINT64>(i_img, pvalue, o_img);
+      ArithSaturatedAddConstantDispatch< 2, PType::PType_GrayINT64 >(i_img, pvalue, o_img);
     } break;
     case PType::PType_F32: {
-      ArithSaturatedAddConstantDispatch<2, PType::PType_F32>(i_img, pvalue, o_img);
+      ArithSaturatedAddConstantDispatch< 2, PType::PType_F32 >(i_img, pvalue, o_img);
     } break;
     case PType::PType_D64: {
-      ArithSaturatedAddConstantDispatch<2, PType::PType_D64>(i_img, pvalue, o_img);
+      ArithSaturatedAddConstantDispatch< 2, PType::PType_D64 >(i_img, pvalue, o_img);
     } break;
     default: {
       POUTRE_RUNTIME_ERROR("ArithSaturatedAddConstant unsupported PTYPE");
@@ -440,19 +476,19 @@ void ArithSaturatedAddConstant(const IInterface &i_img, const ScalarTypeVariant 
   case 3: {
     switch (i_img.GetPType()) {
     case PType::PType_GrayUINT8: {
-      ArithSaturatedAddConstantDispatch<3, PType::PType_GrayUINT8>(i_img, pvalue, o_img);
+      ArithSaturatedAddConstantDispatch< 3, PType::PType_GrayUINT8 >(i_img, pvalue, o_img);
     } break;
     case PType::PType_GrayINT32: {
-      ArithSaturatedAddConstantDispatch<3, PType::PType_GrayINT32>(i_img, pvalue, o_img);
+      ArithSaturatedAddConstantDispatch< 3, PType::PType_GrayINT32 >(i_img, pvalue, o_img);
     } break;
     case PType::PType_GrayINT64: {
-      ArithSaturatedAddConstantDispatch<3, PType::PType_GrayINT64>(i_img, pvalue, o_img);
+      ArithSaturatedAddConstantDispatch< 3, PType::PType_GrayINT64 >(i_img, pvalue, o_img);
     } break;
     case PType::PType_F32: {
-      ArithSaturatedAddConstantDispatch<3, PType::PType_F32>(i_img, pvalue, o_img);
+      ArithSaturatedAddConstantDispatch< 3, PType::PType_F32 >(i_img, pvalue, o_img);
     } break;
     case PType::PType_D64: {
-      ArithSaturatedAddConstantDispatch<3, PType::PType_D64>(i_img, pvalue, o_img);
+      ArithSaturatedAddConstantDispatch< 3, PType::PType_D64 >(i_img, pvalue, o_img);
     } break;
     default: {
       POUTRE_RUNTIME_ERROR("ArithSaturatedAddConstant unsupported PTYPE");
@@ -485,19 +521,19 @@ void ArithSaturatedSubConstant(const IInterface &i_img, const ScalarTypeVariant 
   case 2: {
     switch (i_img.GetPType()) {
     case PType::PType_GrayUINT8: {
-      ArithSaturatedSubConstantDispatch<2, PType::PType_GrayUINT8>(i_img, pvalue, o_img);
+      ArithSaturatedSubConstantDispatch< 2, PType::PType_GrayUINT8 >(i_img, pvalue, o_img);
     } break;
     case PType::PType_GrayINT32: {
-      ArithSaturatedSubConstantDispatch<2, PType::PType_GrayINT32>(i_img, pvalue, o_img);
+      ArithSaturatedSubConstantDispatch< 2, PType::PType_GrayINT32 >(i_img, pvalue, o_img);
     } break;
     case PType::PType_GrayINT64: {
-      ArithSaturatedSubConstantDispatch<2, PType::PType_GrayINT64>(i_img, pvalue, o_img);
+      ArithSaturatedSubConstantDispatch< 2, PType::PType_GrayINT64 >(i_img, pvalue, o_img);
     } break;
     case PType::PType_F32: {
-      ArithSaturatedSubConstantDispatch<2, PType::PType_F32>(i_img, pvalue, o_img);
+      ArithSaturatedSubConstantDispatch< 2, PType::PType_F32 >(i_img, pvalue, o_img);
     } break;
     case PType::PType_D64: {
-      ArithSaturatedSubConstantDispatch<2, PType::PType_D64>(i_img, pvalue, o_img);
+      ArithSaturatedSubConstantDispatch< 2, PType::PType_D64 >(i_img, pvalue, o_img);
     } break;
     default: {
       POUTRE_RUNTIME_ERROR("ArithSaturatedSubConstant unsupported PTYPE");
@@ -507,19 +543,19 @@ void ArithSaturatedSubConstant(const IInterface &i_img, const ScalarTypeVariant 
   case 3: {
     switch (i_img.GetPType()) {
     case PType::PType_GrayUINT8: {
-      ArithSaturatedSubConstantDispatch<3, PType::PType_GrayUINT8>(i_img, pvalue, o_img);
+      ArithSaturatedSubConstantDispatch< 3, PType::PType_GrayUINT8 >(i_img, pvalue, o_img);
     } break;
     case PType::PType_GrayINT32: {
-      ArithSaturatedSubConstantDispatch<3, PType::PType_GrayINT32>(i_img, pvalue, o_img);
+      ArithSaturatedSubConstantDispatch< 3, PType::PType_GrayINT32 >(i_img, pvalue, o_img);
     } break;
     case PType::PType_GrayINT64: {
-      ArithSaturatedSubConstantDispatch<3, PType::PType_GrayINT64>(i_img, pvalue, o_img);
+      ArithSaturatedSubConstantDispatch< 3, PType::PType_GrayINT64 >(i_img, pvalue, o_img);
     } break;
     case PType::PType_F32: {
-      ArithSaturatedSubConstantDispatch<3, PType::PType_F32>(i_img, pvalue, o_img);
+      ArithSaturatedSubConstantDispatch< 3, PType::PType_F32 >(i_img, pvalue, o_img);
     } break;
     case PType::PType_D64: {
-      ArithSaturatedSubConstantDispatch<3, PType::PType_D64>(i_img, pvalue, o_img);
+      ArithSaturatedSubConstantDispatch< 3, PType::PType_D64 >(i_img, pvalue, o_img);
     } break;
     default: {
       POUTRE_RUNTIME_ERROR("ArithSaturatedSubConstant unsupported PTYPE");
@@ -552,19 +588,19 @@ void ArithInvertImage(const IInterface &i_img, IInterface &o_img)
   case 2: {
     switch (i_img.GetPType()) {
     case PType::PType_GrayUINT8: {
-      ArithInvertImageDispatch<2, PType::PType_GrayUINT8>(i_img, o_img);
+      ArithInvertImageDispatch< 2, PType::PType_GrayUINT8 >(i_img, o_img);
     } break;
     case PType::PType_GrayINT32: {
-      ArithInvertImageDispatch<2, PType::PType_GrayINT32>(i_img, o_img);
+      ArithInvertImageDispatch< 2, PType::PType_GrayINT32 >(i_img, o_img);
     } break;
     case PType::PType_GrayINT64: {
-      ArithInvertImageDispatch<2, PType::PType_GrayINT64>(i_img, o_img);
+      ArithInvertImageDispatch< 2, PType::PType_GrayINT64 >(i_img, o_img);
     } break;
     case PType::PType_F32: {
-      ArithInvertImageDispatch<2, PType::PType_F32>(i_img, o_img);
+      ArithInvertImageDispatch< 2, PType::PType_F32 >(i_img, o_img);
     } break;
     case PType::PType_D64: {
-      ArithInvertImageDispatch<2, PType::PType_D64>(i_img, o_img);
+      ArithInvertImageDispatch< 2, PType::PType_D64 >(i_img, o_img);
     } break;
     default: {
       POUTRE_RUNTIME_ERROR("ArithInvertImage unsupported PTYPE");
@@ -574,19 +610,19 @@ void ArithInvertImage(const IInterface &i_img, IInterface &o_img)
   case 3: {
     switch (i_img.GetPType()) {
     case PType::PType_GrayUINT8: {
-      ArithInvertImageDispatch<3, PType::PType_GrayUINT8>(i_img, o_img);
+      ArithInvertImageDispatch< 3, PType::PType_GrayUINT8 >(i_img, o_img);
     } break;
     case PType::PType_GrayINT32: {
-      ArithInvertImageDispatch<3, PType::PType_GrayINT32>(i_img, o_img);
+      ArithInvertImageDispatch< 3, PType::PType_GrayINT32 >(i_img, o_img);
     } break;
     case PType::PType_GrayINT64: {
-      ArithInvertImageDispatch<3, PType::PType_GrayINT64>(i_img, o_img);
+      ArithInvertImageDispatch< 3, PType::PType_GrayINT64 >(i_img, o_img);
     } break;
     case PType::PType_F32: {
-      ArithInvertImageDispatch<3, PType::PType_F32>(i_img, o_img);
+      ArithInvertImageDispatch< 3, PType::PType_F32 >(i_img, o_img);
     } break;
     case PType::PType_D64: {
-      ArithInvertImageDispatch<3, PType::PType_D64>(i_img, o_img);
+      ArithInvertImageDispatch< 3, PType::PType_D64 >(i_img, o_img);
     } break;
     default: {
       POUTRE_RUNTIME_ERROR("ArithInvertImage unsupported PTYPE");

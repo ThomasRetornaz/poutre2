@@ -10,7 +10,7 @@
 #pragma once
 
 /**
- * @file   geodesicdistance.hpp
+ * @file   geodesic_distance.hpp
  * @author Thomas Retornaz
  * @brief  Morphological geodesic distance transform
  *

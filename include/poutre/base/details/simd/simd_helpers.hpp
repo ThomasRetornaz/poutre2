@@ -45,7 +45,7 @@
 
 namespace xs = xsimd;
 
-const POUTRE_CONSTEXPR size_t SIMD_IDEAL_MAX_ALIGN_BYTES = xsimd::default_arch::alignment();
+POUTRE_CONSTEXPR size_t SIMD_IDEAL_MAX_ALIGN_BYTES = xsimd::default_arch::alignment();
 
 namespace poutre::simd {
 /**
@@ -57,29 +57,29 @@ POUTRE_ALWAYS_INLINE bool IsAligned(const void *ptr, std::size_t alignment = SIM
 {
   // NOLINTBEGIN
   POUTRE_ASSERTCHECK(((alignment & (alignment - 1)) == 0), "bad alignment value");
-  return (reinterpret_cast<std::size_t>(ptr) & (alignment - 1)) == 0;// from boost\align\detail\is_aligned.hpp
+  return (reinterpret_cast< std::size_t >(ptr) & (alignment - 1)) == 0;// from boost\align\detail\is_aligned.hpp
   // NOLINTEND
 }
 
 POUTRE_ALWAYS_INLINE bool IsAligned(std::size_t val,
-  std::size_t alignment = SIMD_IDEAL_MAX_ALIGN_BYTES) POUTRE_NOEXCEPTONLYNDEBUG
+                                    std::size_t alignment = SIMD_IDEAL_MAX_ALIGN_BYTES) POUTRE_NOEXCEPTONLYNDEBUG
 {
   POUTRE_ASSERTCHECK(((alignment & (alignment - 1)) == 0), "bad alignment value");
   return (val & (alignment - 1)) == 0;// from boost\align\detail\is_aligned.hpp
 }
 
-template<typename T>
+template< typename T >
 POUTRE_ALWAYS_INLINE T *t_ReachNextAligned(T *ptr,
-  std::size_t alignment = SIMD_IDEAL_MAX_ALIGN_BYTES) POUTRE_NOEXCEPTONLYNDEBUG
+                                           std::size_t alignment = SIMD_IDEAL_MAX_ALIGN_BYTES) POUTRE_NOEXCEPTONLYNDEBUG
 {
   POUTRE_ASSERTCHECK(((alignment & (alignment - 1)) == 0), "bad alignment value");
   // NOLINTBEGIN
-  return reinterpret_cast<T *>(
-    (reinterpret_cast<std::size_t>(ptr) + alignment - 1) & ~(alignment - 1));// from boost\align\detail\align_up.hpp
+  return reinterpret_cast< T * >((reinterpret_cast< std::size_t >(ptr) + alignment - 1)
+                                 & ~(alignment - 1));// from boost\align\detail\align_up.hpp
   // NOLINTEND
 }
 
-template<typename T> size_t t_ReachNextAlignedSize(size_t size)
+template< typename T > size_t t_ReachNextAlignedSize(size_t size)
 {
   // compute required padding, reach the next multiple aligned
   size_t padd = SIMD_IDEAL_MAX_ALIGN_BYTES / sizeof(T);
@@ -99,13 +99,14 @@ through simd operators
 where we could apply simd operators
 - Note epilogue equals [size_simd_loop,stop[
 */
-template<typename T>
-std::pair<ptrdiff_t, ptrdiff_t> POUTRE_ALWAYS_INLINE t_SIMDInputRange(const T *first,
-  const T *last) POUTRE_NOEXCEPTONLYNDEBUG// TODO bench this tricks with erode/dilate
+template< typename T >
+std::pair< ptrdiff_t, ptrdiff_t > POUTRE_ALWAYS_INLINE t_SIMDInputRange(const T *first,
+                                                                        const T *last)
+  POUTRE_NOEXCEPTONLYNDEBUG// TODO bench this tricks with erode/dilate
 {
   POUTRE_ASSERTCHECK(first, "null ptr");
   POUTRE_ASSERTCHECK(last, "null ptr");
-  const ptrdiff_t simd_size = xs::simd_type<T>::size;
+  const ptrdiff_t simd_size = xs::simd_type< T >::size;
   const ptrdiff_t size = last - first;
   // get aligned address from first
   const T *ptr_aligned_first = t_ReachNextAligned(first, SIMD_IDEAL_MAX_ALIGN_BYTES);
@@ -118,9 +119,10 @@ std::pair<ptrdiff_t, ptrdiff_t> POUTRE_ALWAYS_INLINE t_SIMDInputRange(const T *f
   return std::make_pair(size_prologue_loop, size_simd_loop);
 }
 
-template<typename T> decltype(auto) t_ExpandAligned(scoord ySize, scoord xSize) POUTRE_NOEXCEPT
+template< typename T > decltype(auto) t_ExpandAligned(scoord ySize, scoord xSize) POUTRE_NOEXCEPT
 {
-  return std::vector<T, xs::aligned_allocator<T, SIMD_IDEAL_MAX_ALIGN_BYTES>>(ySize * t_ReachNextAlignedSize<T>(xSize));
+  return std::vector< T, xs::aligned_allocator< T, SIMD_IDEAL_MAX_ALIGN_BYTES > >(ySize
+                                                                                  * t_ReachNextAlignedSize< T >(xSize));
 }
 //! @} doxygroup: simd_group
 }// namespace poutre::simd

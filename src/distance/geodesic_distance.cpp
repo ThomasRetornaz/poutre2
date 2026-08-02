@@ -23,21 +23,27 @@
 #include <poutre/structuring_element/se_types_and_tags.hpp>
 
 namespace {
-template<std::ptrdiff_t NumDims, poutre::PType P>
+template< std::ptrdiff_t NumDims, poutre::PType P >
 void GeodesicDistanceImageDispatch(const poutre::IInterface &i_marker,// NOLINT
-  const poutre::IInterface &i_mask,// NOLINT
-  poutre::se::Common_NL_SE nl_static,
-  poutre::IInterface &o_img)
+                                   const poutre::IInterface &i_mask,// NOLINT
+                                   poutre::se::Common_NL_SE nl_static,
+                                   poutre::IInterface &o_img)
 {
   using ImgType =
-    poutre::details::image_t<typename poutre::enum_to_type<poutre::CompoundType::CompoundType_Scalar, P>::type,
-      NumDims>;
-  const auto *imgmarker_t = dynamic_cast<const ImgType *>(&i_marker);
-  if (!imgmarker_t) { POUTRE_RUNTIME_ERROR("GeodesicDistanceImageDispatch i_marker downcast fail"); }
-  const auto *imgmask_t = dynamic_cast<const ImgType *>(&i_mask);
-  if (!imgmask_t) { POUTRE_RUNTIME_ERROR("GeodesicDistanceImageDispatch i_mask downcast fail"); }
-  auto *imgout_t = dynamic_cast<ImgType *>(&o_img);
-  if (!imgout_t) { POUTRE_RUNTIME_ERROR("GeodesicDistanceImageDispatch o_img downcast fail"); }
+    poutre::details::image_t< typename poutre::enum_to_type< poutre::CompoundType::CompoundType_Scalar, P >::type,
+                              NumDims >;
+  const auto *imgmarker_t = dynamic_cast< const ImgType * >(&i_marker);
+  if (!imgmarker_t) {
+    POUTRE_RUNTIME_ERROR("GeodesicDistanceImageDispatch i_marker downcast fail");
+  }
+  const auto *imgmask_t = dynamic_cast< const ImgType * >(&i_mask);
+  if (!imgmask_t) {
+    POUTRE_RUNTIME_ERROR("GeodesicDistanceImageDispatch i_mask downcast fail");
+  }
+  auto *imgout_t = dynamic_cast< ImgType * >(&o_img);
+  if (!imgout_t) {
+    POUTRE_RUNTIME_ERROR("GeodesicDistanceImageDispatch o_img downcast fail");
+  }
 
   poutre::dist::details::t_geodesic_distance(*imgmarker_t, *imgmask_t, nl_static, *imgout_t);
 }
@@ -45,9 +51,9 @@ void GeodesicDistanceImageDispatch(const poutre::IInterface &i_marker,// NOLINT
 
 namespace poutre::dist {
 void geodesic_distance(const IInterface &i_marker,
-  const IInterface &i_mask,
-  se::Common_NL_SE nl_static,
-  IInterface &o_img)
+                       const IInterface &i_mask,
+                       se::Common_NL_SE nl_static,
+                       IInterface &o_img)
 {
   POUTRE_ENTERING("geodesic_distance");
   switch (i_marker.GetRank()) {
@@ -57,13 +63,13 @@ void geodesic_distance(const IInterface &i_marker,
   case 1: {
     switch (i_marker.GetPType()) {
     case poutre::PType::PType_GrayUINT8: {
-      GeodesicDistanceImageDispatch<1, poutre::PType::PType_GrayUINT8>(i_marker, i_mask, nl_static, o_img);
+      GeodesicDistanceImageDispatch< 1, poutre::PType::PType_GrayUINT8 >(i_marker, i_mask, nl_static, o_img);
     } break;
     case poutre::PType::PType_GrayINT32: {
-      GeodesicDistanceImageDispatch<1, poutre::PType::PType_GrayINT32>(i_marker, i_mask, nl_static, o_img);
+      GeodesicDistanceImageDispatch< 1, poutre::PType::PType_GrayINT32 >(i_marker, i_mask, nl_static, o_img);
     } break;
     case poutre::PType::PType_GrayINT64: {
-      GeodesicDistanceImageDispatch<1, poutre::PType::PType_GrayINT64>(i_marker, i_mask, nl_static, o_img);
+      GeodesicDistanceImageDispatch< 1, poutre::PType::PType_GrayINT64 >(i_marker, i_mask, nl_static, o_img);
     } break;
     // case poutre::PType::PType_F32: {
     //   ReconstructionImageDispatch<1, poutre::PType::PType_F32>(rect_type,i_marker, i_mask, nl_static, o_img);
@@ -79,13 +85,13 @@ void geodesic_distance(const IInterface &i_marker,
   case 2: {
     switch (i_marker.GetPType()) {
     case poutre::PType::PType_GrayUINT8: {
-      GeodesicDistanceImageDispatch<2, poutre::PType::PType_GrayUINT8>(i_marker, i_mask, nl_static, o_img);
+      GeodesicDistanceImageDispatch< 2, poutre::PType::PType_GrayUINT8 >(i_marker, i_mask, nl_static, o_img);
     } break;
     case poutre::PType::PType_GrayINT32: {
-      GeodesicDistanceImageDispatch<2, poutre::PType::PType_GrayINT32>(i_marker, i_mask, nl_static, o_img);
+      GeodesicDistanceImageDispatch< 2, poutre::PType::PType_GrayINT32 >(i_marker, i_mask, nl_static, o_img);
     } break;
     case poutre::PType::PType_GrayINT64: {
-      GeodesicDistanceImageDispatch<2, poutre::PType::PType_GrayINT64>(i_marker, i_mask, nl_static, o_img);
+      GeodesicDistanceImageDispatch< 2, poutre::PType::PType_GrayINT64 >(i_marker, i_mask, nl_static, o_img);
     } break;
     // case poutre::PType::PType_F32: {
     //   ReconstructionImageDispatch<2, poutre::PType::PType_F32>(rect_type,i_marker, i_mask, nl_static, o_img);
@@ -101,13 +107,13 @@ void geodesic_distance(const IInterface &i_marker,
   case 3: {
     switch (i_marker.GetPType()) {
     case poutre::PType::PType_GrayUINT8: {
-      GeodesicDistanceImageDispatch<3, poutre::PType::PType_GrayUINT8>(i_marker, i_mask, nl_static, o_img);
+      GeodesicDistanceImageDispatch< 3, poutre::PType::PType_GrayUINT8 >(i_marker, i_mask, nl_static, o_img);
     } break;
     case poutre::PType::PType_GrayINT32: {
-      GeodesicDistanceImageDispatch<3, poutre::PType::PType_GrayINT32>(i_marker, i_mask, nl_static, o_img);
+      GeodesicDistanceImageDispatch< 3, poutre::PType::PType_GrayINT32 >(i_marker, i_mask, nl_static, o_img);
     } break;
     case poutre::PType::PType_GrayINT64: {
-      GeodesicDistanceImageDispatch<3, poutre::PType::PType_GrayINT64>(i_marker, i_mask, nl_static, o_img);
+      GeodesicDistanceImageDispatch< 3, poutre::PType::PType_GrayINT64 >(i_marker, i_mask, nl_static, o_img);
     } break;
     // case poutre::PType::PType_F32: {
     //   ReconstructionImageDispatch<3, poutre::PType::PType_F32>(rect_type,i_marker, i_mask, nl_static, o_img);

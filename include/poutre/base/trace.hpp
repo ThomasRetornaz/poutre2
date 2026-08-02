@@ -35,7 +35,6 @@ namespace poutre {
  */
 class BASE_API GlobalLogger
 {
-private:
   static GlobalLogger *m_instance;
   static std::once_flag m_initFlag;
 
@@ -52,7 +51,7 @@ public:
   };
   static GlobalLogger &get()
   {
-    std::call_once(m_initFlag, []() { m_instance = new GlobalLogger(); });
+    std::call_once(m_initFlag, [] { m_instance = new GlobalLogger(); });
     return *m_instance;
   }
 

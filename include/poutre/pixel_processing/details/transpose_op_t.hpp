@@ -32,19 +32,17 @@ namespace poutre::details {
  */
 
 
-template<typename T,
-  ptrdiff_t Rank,
-  template<typename, ptrdiff_t> class View1,
-  template<typename, ptrdiff_t> class View2>
+template< typename T, ptrdiff_t Rank, template< typename, ptrdiff_t > class View1,
+          template< typename, ptrdiff_t > class View2 >
 struct t_transposeDispatcher
 {
   // generic case not supported yet
   static_assert(false, "To be implemented for generic views");
 };
 
-template<typename T> struct t_transposeDispatcher<T, 2, av::array_view, av::array_view>
+template< typename T > struct t_transposeDispatcher< T, 2, av::array_view, av::array_view >
 {
-  void operator()(const av::array_view<const T, 2> &i_vin, const av::array_view<T, 2> &o_vout) const
+  void operator()(const av::array_view< const T, 2 > &i_vin, const av::array_view< T, 2 > &o_vout) const
   {
     POUTRE_CHECK(i_vin.size() == o_vout.size(), "Incompatible views size");
     // check bound compatibility
@@ -63,7 +61,9 @@ template<typename T> struct t_transposeDispatcher<T, 2, av::array_view, av::arra
     auto o_voutbeg = o_vout.data();
 
     for (scoord y = 0; y < oysize; y++) {
-      for (scoord x = 0; x < oxsize; x++) { o_voutbeg[y * oxsize + x] = i_vinbeg[x * oysize + y]; }
+      for (scoord x = 0; x < oxsize; x++) {
+        o_voutbeg[y * oxsize + x] = i_vinbeg[x * oysize + y];
+      }
     }
   }
 };
@@ -71,17 +71,15 @@ template<typename T> struct t_transposeDispatcher<T, 2, av::array_view, av::arra
 
 // todo SIMD ?
 
-template<typename T,
-  ptrdiff_t Rank,
-  template<typename, ptrdiff_t> class ViewIn,
-  template<typename, ptrdiff_t> class ViewOut>
-void t_transpose(const ViewIn<const T, Rank> &i_vin, ViewOut<T, Rank> &o_vout)
+template< typename T, ptrdiff_t Rank, template< typename, ptrdiff_t > class ViewIn,
+          template< typename, ptrdiff_t > class ViewOut >
+void t_transpose(const ViewIn< const T, Rank > &i_vin, ViewOut< T, Rank > &o_vout)
 {
-  t_transposeDispatcher<T, Rank, ViewIn, ViewOut> dispatcher;
+  t_transposeDispatcher< T, Rank, ViewIn, ViewOut > dispatcher;
   dispatcher(i_vin, o_vout);
 }
 
-template<typename T, ptrdiff_t Rank> void t_transpose(const image_t<T, Rank> &i_img, image_t<T, Rank> &o_img)
+template< typename T, ptrdiff_t Rank > void t_transpose(const image_t< T, Rank > &i_img, image_t< T, Rank > &o_img)
 {
   POUTRE_ENTERING("t_transpose");
   AssertAsTypesCompatible(i_img, o_img, "t_transpose incompatible types");

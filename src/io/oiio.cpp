@@ -36,21 +36,27 @@ void LoadFromOIIOScalarDispatch(OIIO::ImageInput &in_oiio, poutre::IInterface &i
   switch (ptype) {
     // todo think about bool/binary here
   case PType::PType_GrayUINT8: {
-    using ImageType_t = poutre::details::image_t<pUINT8, 2>;
-    auto *img_t = dynamic_cast<ImageType_t *>(&img);
-    if (img_t == nullptr) { POUTRE_RUNTIME_ERROR("Dynamic cast fail"); }
+    using ImageType_t = poutre::details::image_t< pUINT8, 2 >;
+    auto *img_t = dynamic_cast< ImageType_t * >(&img);
+    if (img_t == nullptr) {
+      POUTRE_RUNTIME_ERROR("Dynamic cast fail");
+    }
     details::FillImageFromOIIOScalar(in_oiio, *img_t);
   } break;
   case PType::PType_GrayINT32: {
-    using ImageType_t = poutre::details::image_t<pINT32, 2>;
-    auto *img_t = dynamic_cast<ImageType_t *>(&img);
-    if (img_t == nullptr) { POUTRE_RUNTIME_ERROR("Dynamic cast fail"); }
+    using ImageType_t = poutre::details::image_t< pINT32, 2 >;
+    auto *img_t = dynamic_cast< ImageType_t * >(&img);
+    if (img_t == nullptr) {
+      POUTRE_RUNTIME_ERROR("Dynamic cast fail");
+    }
     details::FillImageFromOIIOScalar(in_oiio, *img_t);
   } break;
   case PType::PType_F32: {
-    using ImageType_t = poutre::details::image_t<pFLOAT, 2>;
-    auto *img_t = dynamic_cast<ImageType_t *>(&img);
-    if (img_t == nullptr) { POUTRE_RUNTIME_ERROR("Dynamic cast fail"); }
+    using ImageType_t = poutre::details::image_t< pFLOAT, 2 >;
+    auto *img_t = dynamic_cast< ImageType_t * >(&img);
+    if (img_t == nullptr) {
+      POUTRE_RUNTIME_ERROR("Dynamic cast fail");
+    }
     details::FillImageFromOIIOScalar(in_oiio, *img_t);
   } break;
   // case PType::PType_GrayINT64: {
@@ -64,9 +70,11 @@ void LoadFromOIIOScalarDispatch(OIIO::ImageInput &in_oiio, poutre::IInterface &i
   // }
   //   break;
   case PType::PType_D64: {
-    using ImageType_t = poutre::details::image_t<pDOUBLE, 2>;
-    auto *img_t = dynamic_cast<ImageType_t *>(&img);
-    if (img_t == nullptr) { POUTRE_RUNTIME_ERROR("Dynamic cast fail"); }
+    using ImageType_t = poutre::details::image_t< pDOUBLE, 2 >;
+    auto *img_t = dynamic_cast< ImageType_t * >(&img);
+    if (img_t == nullptr) {
+      POUTRE_RUNTIME_ERROR("Dynamic cast fail");
+    }
     details::FillImageFromOIIOScalar(in_oiio, *img_t);
   } break;
   default: {
@@ -79,21 +87,27 @@ void LoadFromOIIO3ChannelsDispatch(OIIO::ImageInput &in_oiio, poutre::IInterface
   switch (ptype) {
     // todo think about bool/binary here
   case PType::PType_GrayUINT8: {
-    using ImageType_t = poutre::details::image_t<compound_type<pUINT8, 3>, 2>;
-    auto *img_t = dynamic_cast<ImageType_t *>(&img);
-    if (img_t == nullptr) { POUTRE_RUNTIME_ERROR("Dynamic cast fail"); }
+    using ImageType_t = poutre::details::image_t< compound_type< pUINT8, 3 >, 2 >;
+    auto *img_t = dynamic_cast< ImageType_t * >(&img);
+    if (img_t == nullptr) {
+      POUTRE_RUNTIME_ERROR("Dynamic cast fail");
+    }
     details::FillImageFromOIIOCompound3(in_oiio, *img_t);
   } break;
   case PType::PType_GrayINT32: {
-    using ImageType_t = poutre::details::image_t<compound_type<pINT32, 3>, 2>;
-    auto *img_t = dynamic_cast<ImageType_t *>(&img);
-    if (img_t == nullptr) { POUTRE_RUNTIME_ERROR("Dynamic cast fail"); }
+    using ImageType_t = poutre::details::image_t< compound_type< pINT32, 3 >, 2 >;
+    auto *img_t = dynamic_cast< ImageType_t * >(&img);
+    if (img_t == nullptr) {
+      POUTRE_RUNTIME_ERROR("Dynamic cast fail");
+    }
     details::FillImageFromOIIOCompound3(in_oiio, *img_t);
   } break;
   case PType::PType_F32: {
-    using ImageType_t = poutre::details::image_t<compound_type<pFLOAT, 3>, 2>;
-    auto *img_t = dynamic_cast<ImageType_t *>(&img);
-    if (img_t == nullptr) { POUTRE_RUNTIME_ERROR("Dynamic cast fail"); }
+    using ImageType_t = poutre::details::image_t< compound_type< pFLOAT, 3 >, 2 >;
+    auto *img_t = dynamic_cast< ImageType_t * >(&img);
+    if (img_t == nullptr) {
+      POUTRE_RUNTIME_ERROR("Dynamic cast fail");
+    }
     details::FillImageFromOIIOCompound3(in_oiio, *img_t);
   } break;
   // case PType::PType_GrayINT64: {
@@ -107,9 +121,11 @@ void LoadFromOIIO3ChannelsDispatch(OIIO::ImageInput &in_oiio, poutre::IInterface
   // }
   //   break;
   case PType::PType_D64: {
-    using ImageType_t = poutre::details::image_t<compound_type<pDOUBLE, 3>, 2>;
-    auto *img_t = dynamic_cast<ImageType_t *>(&img);
-    if (img_t == nullptr) { POUTRE_RUNTIME_ERROR("Dynamic cast fail"); }
+    using ImageType_t = poutre::details::image_t< compound_type< pDOUBLE, 3 >, 2 >;
+    auto *img_t = dynamic_cast< ImageType_t * >(&img);
+    if (img_t == nullptr) {
+      POUTRE_RUNTIME_ERROR("Dynamic cast fail");
+    }
     details::FillImageFromOIIOCompound3(in_oiio, *img_t);
   } break;
   default: {
@@ -122,21 +138,27 @@ void LoadFromOIIO4ChannelsDispatch(OIIO::ImageInput &in_oiio, poutre::IInterface
   switch (ptype) {
     // todo think about bool/binary here
   case PType::PType_GrayUINT8: {
-    using ImageType_t = poutre::details::image_t<compound_type<pUINT8, 4>, 2>;
-    auto *img_t = dynamic_cast<ImageType_t *>(&img);
-    if (img_t == nullptr) { POUTRE_RUNTIME_ERROR("Dynamic cast fail"); }
+    using ImageType_t = poutre::details::image_t< compound_type< pUINT8, 4 >, 2 >;
+    auto *img_t = dynamic_cast< ImageType_t * >(&img);
+    if (img_t == nullptr) {
+      POUTRE_RUNTIME_ERROR("Dynamic cast fail");
+    }
     details::FillImageFromOIIOCompound4(in_oiio, *img_t);
   } break;
   case PType::PType_GrayINT32: {
-    using ImageType_t = poutre::details::image_t<compound_type<pINT32, 4>, 2>;
-    auto *img_t = dynamic_cast<ImageType_t *>(&img);
-    if (img_t == nullptr) { POUTRE_RUNTIME_ERROR("Dynamic cast fail"); }
+    using ImageType_t = poutre::details::image_t< compound_type< pINT32, 4 >, 2 >;
+    auto *img_t = dynamic_cast< ImageType_t * >(&img);
+    if (img_t == nullptr) {
+      POUTRE_RUNTIME_ERROR("Dynamic cast fail");
+    }
     details::FillImageFromOIIOCompound4(in_oiio, *img_t);
   } break;
   case PType::PType_F32: {
-    using ImageType_t = poutre::details::image_t<compound_type<pFLOAT, 4>, 2>;
-    auto *img_t = dynamic_cast<ImageType_t *>(&img);
-    if (img_t == nullptr) { POUTRE_RUNTIME_ERROR("Dynamic cast fail"); }
+    using ImageType_t = poutre::details::image_t< compound_type< pFLOAT, 4 >, 2 >;
+    auto *img_t = dynamic_cast< ImageType_t * >(&img);
+    if (img_t == nullptr) {
+      POUTRE_RUNTIME_ERROR("Dynamic cast fail");
+    }
     details::FillImageFromOIIOCompound4(in_oiio, *img_t);
   } break;
   // case PType::PType_GrayINT64: {
@@ -150,9 +172,11 @@ void LoadFromOIIO4ChannelsDispatch(OIIO::ImageInput &in_oiio, poutre::IInterface
   // }
   //   break;
   case PType::PType_D64: {
-    using ImageType_t = poutre::details::image_t<compound_type<pDOUBLE, 4>, 2>;
-    auto *img_t = dynamic_cast<ImageType_t *>(&img);
-    if (img_t == nullptr) { POUTRE_RUNTIME_ERROR("Dynamic cast fail"); }
+    using ImageType_t = poutre::details::image_t< compound_type< pDOUBLE, 4 >, 2 >;
+    auto *img_t = dynamic_cast< ImageType_t * >(&img);
+    if (img_t == nullptr) {
+      POUTRE_RUNTIME_ERROR("Dynamic cast fail");
+    }
     details::FillImageFromOIIOCompound4(in_oiio, *img_t);
   } break;
   default: {
@@ -162,28 +186,34 @@ void LoadFromOIIO4ChannelsDispatch(OIIO::ImageInput &in_oiio, poutre::IInterface
 }
 
 void StoreWithOIIOScalarDispatch(const IInterface &img,
-  const std::string &path,
-  details::StoreWithOIIOOptions const &options,
-  PType ptype)
+                                 const std::string &path,
+                                 details::StoreWithOIIOOptions const &options,
+                                 PType ptype)
 {
   switch (ptype) {
     // todo think about bool/binary here
   case PType::PType_GrayUINT8: {
-    using ImageType_t = poutre::details::image_t<pUINT8, 2>;
-    const auto *img_t = dynamic_cast<const ImageType_t *>(&img);
-    if (img_t == nullptr) { POUTRE_RUNTIME_ERROR("Dynamic cast fail"); }
+    using ImageType_t = poutre::details::image_t< pUINT8, 2 >;
+    const auto *img_t = dynamic_cast< const ImageType_t * >(&img);
+    if (img_t == nullptr) {
+      POUTRE_RUNTIME_ERROR("Dynamic cast fail");
+    }
     details::StoreWithOIIOScalar(*img_t, path, options);
   } break;
   case PType::PType_GrayINT32: {
-    using ImageType_t = poutre::details::image_t<pINT32, 2>;
-    const auto *img_t = dynamic_cast<const ImageType_t *>(&img);
-    if (img_t == nullptr) { POUTRE_RUNTIME_ERROR("Dynamic cast fail"); }
+    using ImageType_t = poutre::details::image_t< pINT32, 2 >;
+    const auto *img_t = dynamic_cast< const ImageType_t * >(&img);
+    if (img_t == nullptr) {
+      POUTRE_RUNTIME_ERROR("Dynamic cast fail");
+    }
     details::StoreWithOIIOScalar(*img_t, path, options);
   } break;
   case PType::PType_F32: {
-    using ImageType_t = poutre::details::image_t<pFLOAT, 2>;
-    const auto *img_t = dynamic_cast<const ImageType_t *>(&img);
-    if (img_t == nullptr) { POUTRE_RUNTIME_ERROR("Dynamic cast fail"); }
+    using ImageType_t = poutre::details::image_t< pFLOAT, 2 >;
+    const auto *img_t = dynamic_cast< const ImageType_t * >(&img);
+    if (img_t == nullptr) {
+      POUTRE_RUNTIME_ERROR("Dynamic cast fail");
+    }
     details::StoreWithOIIOScalar(*img_t, path, options);
   } break;
   // case PType::PType_GrayINT64: {
@@ -197,9 +227,11 @@ void StoreWithOIIOScalarDispatch(const IInterface &img,
   // }
   //   break;
   case PType::PType_D64: {
-    using ImageType_t = poutre::details::image_t<pDOUBLE, 2>;
-    const auto *img_t = dynamic_cast<const ImageType_t *>(&img);
-    if (img_t == nullptr) { POUTRE_RUNTIME_ERROR("Dynamic cast fail"); }
+    using ImageType_t = poutre::details::image_t< pDOUBLE, 2 >;
+    const auto *img_t = dynamic_cast< const ImageType_t * >(&img);
+    if (img_t == nullptr) {
+      POUTRE_RUNTIME_ERROR("Dynamic cast fail");
+    }
     details::StoreWithOIIOScalar(*img_t, path, options);
   } break;
   default: {
@@ -209,28 +241,34 @@ void StoreWithOIIOScalarDispatch(const IInterface &img,
 }
 
 void StoreWithOIIO3PlanesDispatch(const IInterface &img,
-  const std::string &path,
-  details::StoreWithOIIOOptions const &options,
-  PType ptype)
+                                  const std::string &path,
+                                  details::StoreWithOIIOOptions const &options,
+                                  PType ptype)
 {
   switch (ptype) {
     // todo think about bool/binary here
   case PType::PType_GrayUINT8: {
-    using ImageType_t = poutre::details::image_t<compound_type<pUINT8, 3>, 2>;
-    const auto *img_t = dynamic_cast<const ImageType_t *>(&img);
-    if (img_t == nullptr) { POUTRE_RUNTIME_ERROR("Dynamic cast fail"); }
+    using ImageType_t = poutre::details::image_t< compound_type< pUINT8, 3 >, 2 >;
+    const auto *img_t = dynamic_cast< const ImageType_t * >(&img);
+    if (img_t == nullptr) {
+      POUTRE_RUNTIME_ERROR("Dynamic cast fail");
+    }
     details::StoreWithOIIOCompound3(*img_t, path, options);
   } break;
   case PType::PType_GrayINT32: {
-    using ImageType_t = poutre::details::image_t<compound_type<pINT32, 3>, 2>;
-    const auto *img_t = dynamic_cast<const ImageType_t *>(&img);
-    if (img_t == nullptr) { POUTRE_RUNTIME_ERROR("Dynamic cast fail"); }
+    using ImageType_t = poutre::details::image_t< compound_type< pINT32, 3 >, 2 >;
+    const auto *img_t = dynamic_cast< const ImageType_t * >(&img);
+    if (img_t == nullptr) {
+      POUTRE_RUNTIME_ERROR("Dynamic cast fail");
+    }
     details::StoreWithOIIOCompound3(*img_t, path, options);
   } break;
   case PType::PType_F32: {
-    using ImageType_t = poutre::details::image_t<compound_type<pFLOAT, 3>, 2>;
-    const auto *img_t = dynamic_cast<const ImageType_t *>(&img);
-    if (img_t == nullptr) { POUTRE_RUNTIME_ERROR("Dynamic cast fail"); }
+    using ImageType_t = poutre::details::image_t< compound_type< pFLOAT, 3 >, 2 >;
+    const auto *img_t = dynamic_cast< const ImageType_t * >(&img);
+    if (img_t == nullptr) {
+      POUTRE_RUNTIME_ERROR("Dynamic cast fail");
+    }
     details::StoreWithOIIOCompound3(*img_t, path, options);
   } break;
   // case PType::PType_GrayINT64: {
@@ -244,9 +282,11 @@ void StoreWithOIIO3PlanesDispatch(const IInterface &img,
   // }
   //   break;
   case PType::PType_D64: {
-    using ImageType_t = poutre::details::image_t<compound_type<pDOUBLE, 3>, 2>;
-    const auto *img_t = dynamic_cast<const ImageType_t *>(&img);
-    if (img_t == nullptr) { POUTRE_RUNTIME_ERROR("Dynamic cast fail"); }
+    using ImageType_t = poutre::details::image_t< compound_type< pDOUBLE, 3 >, 2 >;
+    const auto *img_t = dynamic_cast< const ImageType_t * >(&img);
+    if (img_t == nullptr) {
+      POUTRE_RUNTIME_ERROR("Dynamic cast fail");
+    }
     details::StoreWithOIIOCompound3(*img_t, path, options);
   } break;
   default: {
@@ -256,28 +296,34 @@ void StoreWithOIIO3PlanesDispatch(const IInterface &img,
 }
 
 void StoreWithOIIO4PlanesDispatch(const IInterface &img,
-  const std::string &path,
-  details::StoreWithOIIOOptions const &options,
-  PType ptype)
+                                  const std::string &path,
+                                  details::StoreWithOIIOOptions const &options,
+                                  PType ptype)
 {
   switch (ptype) {
     // todo think about bool/binary here
   case PType::PType_GrayUINT8: {
-    using ImageType_t = poutre::details::image_t<compound_type<pUINT8, 4>, 2>;
-    const auto *img_t = dynamic_cast<const ImageType_t *>(&img);
-    if (img_t == nullptr) { POUTRE_RUNTIME_ERROR("Dynamic cast fail"); }
+    using ImageType_t = poutre::details::image_t< compound_type< pUINT8, 4 >, 2 >;
+    const auto *img_t = dynamic_cast< const ImageType_t * >(&img);
+    if (img_t == nullptr) {
+      POUTRE_RUNTIME_ERROR("Dynamic cast fail");
+    }
     details::StoreWithOIIOCompound4(*img_t, path, options);
   } break;
   case PType::PType_GrayINT32: {
-    using ImageType_t = poutre::details::image_t<compound_type<pINT32, 4>, 2>;
-    const auto *img_t = dynamic_cast<const ImageType_t *>(&img);
-    if (img_t == nullptr) { POUTRE_RUNTIME_ERROR("Dynamic cast fail"); }
+    using ImageType_t = poutre::details::image_t< compound_type< pINT32, 4 >, 2 >;
+    const auto *img_t = dynamic_cast< const ImageType_t * >(&img);
+    if (img_t == nullptr) {
+      POUTRE_RUNTIME_ERROR("Dynamic cast fail");
+    }
     details::StoreWithOIIOCompound4(*img_t, path, options);
   } break;
   case PType::PType_F32: {
-    using ImageType_t = poutre::details::image_t<compound_type<pFLOAT, 4>, 2>;
-    const auto *img_t = dynamic_cast<const ImageType_t *>(&img);
-    if (img_t == nullptr) { POUTRE_RUNTIME_ERROR("Dynamic cast fail"); }
+    using ImageType_t = poutre::details::image_t< compound_type< pFLOAT, 4 >, 2 >;
+    const auto *img_t = dynamic_cast< const ImageType_t * >(&img);
+    if (img_t == nullptr) {
+      POUTRE_RUNTIME_ERROR("Dynamic cast fail");
+    }
     details::StoreWithOIIOCompound4(*img_t, path, options);
   } break;
   // case PType::PType_GrayINT64: {
@@ -291,9 +337,11 @@ void StoreWithOIIO4PlanesDispatch(const IInterface &img,
   // }
   //   break;
   case PType::PType_D64: {
-    using ImageType_t = poutre::details::image_t<compound_type<pDOUBLE, 4>, 2>;
-    const auto *img_t = dynamic_cast<const ImageType_t *>(&img);
-    if (img_t == nullptr) { POUTRE_RUNTIME_ERROR("Dynamic cast fail"); }
+    using ImageType_t = poutre::details::image_t< compound_type< pDOUBLE, 4 >, 2 >;
+    const auto *img_t = dynamic_cast< const ImageType_t * >(&img);
+    if (img_t == nullptr) {
+      POUTRE_RUNTIME_ERROR("Dynamic cast fail");
+    }
     details::StoreWithOIIOCompound4(*img_t, path, options);
   } break;
   default: {
@@ -304,7 +352,7 @@ void StoreWithOIIO4PlanesDispatch(const IInterface &img,
 
 namespace fs = std::filesystem;
 
-std::unique_ptr<IInterface> LoadOIIO(const std::string &image_path)
+std::unique_ptr< IInterface > LoadOIIO(const std::string &image_path)
 {
   POUTRE_ENTERING("LoadFromOIIO");
   fs::path const localPath(image_path);
@@ -321,9 +369,13 @@ std::unique_ptr<IInterface> LoadOIIO(const std::string &image_path)
   }
 
   const OIIO::ImageSpec &spec = in_oiio->spec();
-  std::vector<std::size_t> dims;
-  if (spec.height > 1) { dims.push_back(static_cast<std::size_t>(spec.height)); }
-  if (spec.width > 1) { dims.push_back(static_cast<std::size_t>(spec.width)); }
+  std::vector< std::size_t > dims;
+  if (spec.height > 1) {
+    dims.push_back(static_cast< std::size_t >(spec.height));
+  }
+  if (spec.width > 1) {
+    dims.push_back(static_cast< std::size_t >(spec.width));
+  }
   if (spec.depth > 1) {
     POUTRE_RUNTIME_ERROR(std::format("LoadFromOIIO: nD with n >2  format require hdf5 ext, use LoadFromHDF5"));
   }
@@ -372,7 +424,7 @@ std::unique_ptr<IInterface> LoadOIIO(const std::string &image_path)
     error_stream << " load_image(): Error reading image '";
     error_stream << image_path;
     error_stream << " unsupported type ";
-    error_stream << static_cast<unsigned int>(spec.format.basetype);
+    error_stream << static_cast< unsigned int >(spec.format.basetype);
     error_stream << " see desc \n" << spec.to_xml();
     POUTRE_RUNTIME_ERROR(error_stream.str());
   };
@@ -407,7 +459,9 @@ void DumpOIIO(const std::string &path, const IInterface &i_img)// NOLINT(misc-un
   if (!(fs::exists(dir))) {
     POUTRE_RUNTIME_ERROR(std::format("StoreFromOIIO: provided path {} doesn't exists", dir.string()));
   }
-  if (i_img.GetRank() > 2) { POUTRE_RUNTIME_ERROR(std::format("For nd images with n>2 use StoreWithHDF5")); }
+  if (i_img.GetRank() > 2) {
+    POUTRE_RUNTIME_ERROR(std::format("For nd images with n>2 use StoreWithHDF5"));
+  }
 
   auto ptype = i_img.GetPType();
   auto ctype = i_img.GetCType();

@@ -13,7 +13,6 @@
 #include "benchmark/benchmark.h"
 #include <poutre/base/details/data_structures/array_view.hpp>
 #include <poutre/pixel_processing/details/arith_op_t.hpp>
-#include <cstdlib>
 #include <vector>
 // #include <iostream>
 #include <cmath>
@@ -54,7 +53,7 @@ BENCHMARK_DEFINE_F(ArithmeticsFixture, Sup)(benchmark::State &state)
   const auto size = state.range(0);
   std::ptrdiff_t sizeextent = static_cast<std::ptrdiff_t>(std::sqrt(size));
   for (auto _ : state) {
-    auto view2din = poutre::details::av::array_view<poutre::pINT32, 2>(m_vect_in, { sizeextent, sizeextent});
+    auto view2din = poutre::details::av::array_view<poutre::pINT32, 2>(m_vect_in, { sizeextent, sizeextent });
     auto view2dout = poutre::details::av::array_view<poutre::pINT32, 2>(m_vect_out, { sizeextent, sizeextent });
     poutre::details::t_ArithSup(view2din, view2din, view2dout);
   }
@@ -67,8 +66,8 @@ BENCHMARK_DEFINE_F(ArithmeticsFixture, SupSection)(benchmark::State &state)
   const auto size = state.range(0);
   std::ptrdiff_t sizeextent = static_cast<std::ptrdiff_t>(std::sqrt(size));
   for (auto _ : state) {
-    auto view2din = poutre::details::av::array_view<poutre::pINT32, 2>(m_vect_in,{ sizeextent, sizeextent});
-    auto view2dout = poutre::details::av::array_view<poutre::pINT32, 2>(m_vect_out,{ sizeextent, sizeextent});
+    auto view2din = poutre::details::av::array_view<poutre::pINT32, 2>(m_vect_in, { sizeextent, sizeextent });
+    auto view2dout = poutre::details::av::array_view<poutre::pINT32, 2>(m_vect_out, { sizeextent, sizeextent });
     auto stridedview2dout = view2dout.section({ 0, 0 });
     poutre::details::t_ArithSup(view2din, view2din, stridedview2dout);
   }
@@ -81,8 +80,8 @@ BENCHMARK_DEFINE_F(ArithmeticsFixture, AddConst)(benchmark::State &state)
   const auto size = state.range(0);
   std::ptrdiff_t sizeextent = static_cast<std::ptrdiff_t>(std::sqrt(size));
   for (auto _ : state) {
-    auto view2din = poutre::details::av::array_view<poutre::pINT32, 2>(m_vect_in, { sizeextent, sizeextent});
-    auto view2dout = poutre::details::av::array_view<poutre::pINT32, 2>(m_vect_out, { sizeextent, sizeextent});
+    auto view2din = poutre::details::av::array_view<poutre::pINT32, 2>(m_vect_in, { sizeextent, sizeextent });
+    auto view2dout = poutre::details::av::array_view<poutre::pINT32, 2>(m_vect_out, { sizeextent, sizeextent });
     poutre::details::t_ArithSaturatedAddConstant(view2din, 10, view2dout);
   }
   state.SetItemsProcessed(state.iterations() * size);

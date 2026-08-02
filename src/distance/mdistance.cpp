@@ -23,21 +23,25 @@
 #include <poutre/structuring_element/se_types_and_tags.hpp>
 
 namespace {
-template<std::ptrdiff_t NumDims, poutre::PType P>
+template< std::ptrdiff_t NumDims, poutre::PType P >
 void MDistanceImageDispatch(const poutre::IInterface &i_marker,// NOLINT
-  poutre::se::Common_NL_SE nl_static,
-  poutre::IInterface &o_img)
+                            poutre::se::Common_NL_SE nl_static,
+                            poutre::IInterface &o_img)
 {
   using ImgType =
-    poutre::details::image_t<typename poutre::enum_to_type<poutre::CompoundType::CompoundType_Scalar, P>::type,
-      NumDims>;
-  const auto *imgin_t = dynamic_cast<const ImgType *>(&i_marker);
-  if (!imgin_t) { POUTRE_RUNTIME_ERROR("MDistanceImageDispatch i_marker downcast fail"); }
+    poutre::details::image_t< typename poutre::enum_to_type< poutre::CompoundType::CompoundType_Scalar, P >::type,
+                              NumDims >;
+  const auto *imgin_t = dynamic_cast< const ImgType * >(&i_marker);
+  if (!imgin_t) {
+    POUTRE_RUNTIME_ERROR("MDistanceImageDispatch i_marker downcast fail");
+  }
   using OImgType = poutre::details::image_t<
-    typename poutre::enum_to_type<poutre::CompoundType::CompoundType_Scalar, poutre::PType::PType_GrayINT64>::type,
-    NumDims>;
-  auto *imgout_t = dynamic_cast<OImgType *>(&o_img);
-  if (!imgout_t) { POUTRE_RUNTIME_ERROR("MDistanceImageDispatch o_img downcast fail, we expect PType_GrayINT64"); }
+    poutre::enum_to_type< poutre::CompoundType::CompoundType_Scalar, poutre::PType::PType_GrayINT64 >::type,
+    NumDims >;
+  auto *imgout_t = dynamic_cast< OImgType * >(&o_img);
+  if (!imgout_t) {
+    POUTRE_RUNTIME_ERROR("MDistanceImageDispatch o_img downcast fail, we expect PType_GrayINT64");
+  }
 
   poutre::dist::details::t_mdistance(*imgin_t, nl_static, *imgout_t);
 }
@@ -55,23 +59,23 @@ void mdistance(const IInterface &i_img, se::Common_NL_SE nl_static, IInterface &
   case 1: {
     switch (i_img.GetPType()) {
     case poutre::PType::PType_GrayUINT8: {
-      MDistanceImageDispatch<1, poutre::PType::PType_GrayUINT8>(i_img, nl_static, o_img);
+      MDistanceImageDispatch< 1, poutre::PType::PType_GrayUINT8 >(i_img, nl_static, o_img);
       break;
     }
     case poutre::PType::PType_GrayINT32: {
-      MDistanceImageDispatch<1, poutre::PType::PType_GrayINT32>(i_img, nl_static, o_img);
+      MDistanceImageDispatch< 1, poutre::PType::PType_GrayINT32 >(i_img, nl_static, o_img);
       break;
     }
     case poutre::PType::PType_GrayINT64: {
-      MDistanceImageDispatch<1, poutre::PType::PType_GrayINT64>(i_img, nl_static, o_img);
+      MDistanceImageDispatch< 1, poutre::PType::PType_GrayINT64 >(i_img, nl_static, o_img);
       break;
     }
     case poutre::PType::PType_F32: {
-      MDistanceImageDispatch<1, poutre::PType::PType_F32>(i_img, nl_static, o_img);
+      MDistanceImageDispatch< 1, poutre::PType::PType_F32 >(i_img, nl_static, o_img);
       break;
     }
     case poutre::PType::PType_D64: {
-      MDistanceImageDispatch<1, poutre::PType::PType_D64>(i_img, nl_static, o_img);
+      MDistanceImageDispatch< 1, poutre::PType::PType_D64 >(i_img, nl_static, o_img);
       break;
     }
     default: {
@@ -82,23 +86,23 @@ void mdistance(const IInterface &i_img, se::Common_NL_SE nl_static, IInterface &
   case 2: {
     switch (i_img.GetPType()) {
     case poutre::PType::PType_GrayUINT8: {
-      MDistanceImageDispatch<2, poutre::PType::PType_GrayUINT8>(i_img, nl_static, o_img);
+      MDistanceImageDispatch< 2, poutre::PType::PType_GrayUINT8 >(i_img, nl_static, o_img);
       break;
     }
     case poutre::PType::PType_GrayINT32: {
-      MDistanceImageDispatch<2, poutre::PType::PType_GrayINT32>(i_img, nl_static, o_img);
+      MDistanceImageDispatch< 2, poutre::PType::PType_GrayINT32 >(i_img, nl_static, o_img);
       break;
     }
     case poutre::PType::PType_GrayINT64: {
-      MDistanceImageDispatch<2, poutre::PType::PType_GrayINT64>(i_img, nl_static, o_img);
+      MDistanceImageDispatch< 2, poutre::PType::PType_GrayINT64 >(i_img, nl_static, o_img);
       break;
     }
     case poutre::PType::PType_F32: {
-      MDistanceImageDispatch<2, poutre::PType::PType_F32>(i_img, nl_static, o_img);
+      MDistanceImageDispatch< 2, poutre::PType::PType_F32 >(i_img, nl_static, o_img);
       break;
     }
     case poutre::PType::PType_D64: {
-      MDistanceImageDispatch<2, poutre::PType::PType_D64>(i_img, nl_static, o_img);
+      MDistanceImageDispatch< 2, poutre::PType::PType_D64 >(i_img, nl_static, o_img);
       break;
     }
     default: {
@@ -109,23 +113,23 @@ void mdistance(const IInterface &i_img, se::Common_NL_SE nl_static, IInterface &
   case 3: {
     switch (i_img.GetPType()) {
     case poutre::PType::PType_GrayUINT8: {
-      MDistanceImageDispatch<3, poutre::PType::PType_GrayUINT8>(i_img, nl_static, o_img);
+      MDistanceImageDispatch< 3, poutre::PType::PType_GrayUINT8 >(i_img, nl_static, o_img);
       break;
     }
     case poutre::PType::PType_GrayINT32: {
-      MDistanceImageDispatch<3, poutre::PType::PType_GrayINT32>(i_img, nl_static, o_img);
+      MDistanceImageDispatch< 3, poutre::PType::PType_GrayINT32 >(i_img, nl_static, o_img);
       break;
     }
     case poutre::PType::PType_GrayINT64: {
-      MDistanceImageDispatch<3, poutre::PType::PType_GrayINT64>(i_img, nl_static, o_img);
+      MDistanceImageDispatch< 3, poutre::PType::PType_GrayINT64 >(i_img, nl_static, o_img);
       break;
     }
     case poutre::PType::PType_F32: {
-      MDistanceImageDispatch<3, poutre::PType::PType_F32>(i_img, nl_static, o_img);
+      MDistanceImageDispatch< 3, poutre::PType::PType_F32 >(i_img, nl_static, o_img);
       break;
     }
     case poutre::PType::PType_D64: {
-      MDistanceImageDispatch<3, poutre::PType::PType_D64>(i_img, nl_static, o_img);
+      MDistanceImageDispatch< 3, poutre::PType::PType_D64 >(i_img, nl_static, o_img);
       break;
     }
     default: {

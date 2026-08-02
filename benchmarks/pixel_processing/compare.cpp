@@ -11,12 +11,12 @@
 //==============================================================================
 
 #include "benchmark/benchmark.h"
-#include <poutre/base/types.hpp>
 #include <poutre/base/details/data_structures/array_view.hpp>
+#include <poutre/base/types.hpp>
 #include <poutre/pixel_processing/details/compare_op_t.hpp>
-#include <cstdlib>
-#include <vector>
+
 #include <cmath>
+#include <vector>
 
 // NOLINTBEGIN
 
@@ -54,7 +54,7 @@ BENCHMARK_DEFINE_F(ComparesFixture, Compare_sss)(benchmark::State &state)
   const auto size = state.range(0);
   std::ptrdiff_t sizeextent = static_cast<std::ptrdiff_t>(std::sqrt(size));
   for (auto _ : state) {
-    auto view2din = poutre::details::av::array_view<const poutre::pINT32, 2>(m_vect_in, { sizeextent, sizeextent});
+    auto view2din = poutre::details::av::array_view<const poutre::pINT32, 2>(m_vect_in, { sizeextent, sizeextent });
     auto view2dout = poutre::details::av::array_view<poutre::pINT32, 2>(m_vect_out, { sizeextent, sizeextent });
     poutre::details::ViewCompare_sss_func_helper(view2din, poutre::CompOpType::CompOpEqual, 127, 1, 0, view2dout);
   }
@@ -67,8 +67,8 @@ BENCHMARK_DEFINE_F(ComparesFixture, Compare_iii)(benchmark::State &state)
   const auto size = state.range(0);
   std::ptrdiff_t sizeextent = static_cast<std::ptrdiff_t>(std::sqrt(size));
   for (auto _ : state) {
-    auto view2din = poutre::details::av::array_view<const poutre::pINT32, 2>(m_vect_in,{ sizeextent, sizeextent});
-    auto view2dout = poutre::details::av::array_view<poutre::pINT32, 2>(m_vect_out,{ sizeextent, sizeextent});
+    auto view2din = poutre::details::av::array_view<const poutre::pINT32, 2>(m_vect_in, { sizeextent, sizeextent });
+    auto view2dout = poutre::details::av::array_view<poutre::pINT32, 2>(m_vect_out, { sizeextent, sizeextent });
     poutre::details::ViewCompare_iii_dispatch(
       view2din, poutre::CompOpType::CompOpEqual, view2din, view2din, view2din, view2dout);
   }

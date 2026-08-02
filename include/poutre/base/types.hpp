@@ -58,31 +58,31 @@ using str_type = std::string;//! string type
 using prealtype = pFLOAT;//! real type @see @c pFLOAT
 
 
-template<class valuetype, std::size_t Rank> class compound_type;
+template< class valuetype, std::size_t Rank > class compound_type;
 // template<class valuetype> class compound_type<valuetype, 3>;
 
 
-template<class valuetype, std::size_t Rank> class compound_type// NOLINT
+template< class valuetype, std::size_t Rank > class compound_type// NOLINT
 {
   // Static assertion
   static_assert(Rank > 0, "compound_type requires a Rank>0");
-  static_assert(std::is_arithmetic_v<valuetype>, "compound_type only support arithmetic type");// or use concept ?
+  static_assert(std::is_arithmetic_v< valuetype >, "compound_type only support arithmetic type");// or use concept ?
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 
   using size_type = size_t;
   using value_type = valuetype;
-  using const_value_type = std::add_const_t<value_type>;
-  using pointer = std::add_pointer_t<value_type>;
-  using reference = std::add_lvalue_reference_t<value_type>;
-  using const_pointer = std::add_pointer_t<const_value_type>;
-  using const_reference = std::add_lvalue_reference_t<const_value_type>;
+  using const_value_type = std::add_const_t< value_type >;
+  using pointer = std::add_pointer_t< value_type >;
+  using reference = std::add_lvalue_reference_t< value_type >;
+  using const_pointer = std::add_pointer_t< const_value_type >;
+  using const_reference = std::add_lvalue_reference_t< const_value_type >;
   using difference_type = std::ptrdiff_t;
-  using self_type = compound_type<valuetype, Rank>;
+  using self_type = compound_type< valuetype, Rank >;
 #endif
 
 public:
   static constexpr std::size_t rank = Rank;
-  constexpr compound_type() : m_array{ 0 } {}
+  constexpr compound_type() : m_array{0} {}
 
   // template<size_t R = Rank, typename = std::enable_if_t<R == 2>>
   // constexpr explicit compound_type(value_type a) noexcept : m_array()
@@ -109,7 +109,7 @@ public:
   //   m_array[2] = a2;
   // }
 
-  template<size_t R = Rank>
+  template< size_t R = Rank >
   constexpr explicit compound_type(valuetype a0, valuetype a1, valuetype a2, valuetype a3) POUTRE_NOEXCEPT
     requires(R == 4)
     : m_array()
@@ -119,12 +119,14 @@ public:
     m_array[2] = a2;
     m_array[3] = a3;
   }
-  constexpr compound_type(std::initializer_list<valuetype> rhs) : m_array()
+  constexpr compound_type(std::initializer_list< valuetype > rhs) : m_array()
   {
     POUTRE_CHECK(rhs.size() == rank, "Ill formed initializer list: rhs.size() must equal Rank");
     auto it = std::cbegin(rhs);
     auto itend = std::cend(rhs);
-    for (size_t i = 0; i < Rank && it != itend; i++, ++it) { m_array[i] = *it; }
+    for (size_t i = 0; i < Rank && it != itend; i++, ++it) {
+      m_array[i] = *it;
+    }
     // safe but silly behavior if no static assertion
     // std::copy_n(rhs.begin( ), std::min<ptrdiff_t>((ptrdiff_t)rank, rhs.size(
     // )), m_size_list.begin( ));
@@ -133,7 +135,9 @@ public:
 
   constexpr explicit compound_type(const valuetype (&rhs)[Rank]) noexcept : m_array()
   {
-    for (size_t i = 0; i < Rank; i++) { m_array[i] = rhs[i]; }
+    for (size_t i = 0; i < Rank; i++) {
+      m_array[i] = rhs[i];
+    }
   }
 
   constexpr compound_type(const compound_type &rhs) = default;
@@ -162,13 +166,15 @@ public:
   void fill(const valuetype &value) POUTRE_NOEXCEPT { std::fill(begin(m_array), end(m_array), value); }
 
   //! swap
-  void swap(self_type &rhs) POUTRE_NOEXCEPT { std::swap<value_type, rank>(m_array, rhs.m_array); }
+  void swap(self_type &rhs) POUTRE_NOEXCEPT { std::swap< value_type, rank >(m_array, rhs.m_array); }
 
   //! Strict equality operator
   bool operator==(const self_type &other) const noexcept
   {
     for (std::size_t i = 0; i < rank; ++i) {
-      if (m_array[i] != other.m_array[i]) { return false; }
+      if (m_array[i] != other.m_array[i]) {
+        return false;
+      }
     }
     return true;
   }
@@ -176,7 +182,9 @@ public:
   bool operator!=(const self_type &other) const noexcept
   {
     for (std::size_t i = 0; i < rank; ++i) {
-      if (m_array[i] != other.m_array[i]) { return true; }
+      if (m_array[i] != other.m_array[i]) {
+        return true;
+      }
     }
     return false;
   }
@@ -186,10 +194,10 @@ public:
 
   /**@{*/
   //! Access element
-  valuetype &operator[](difference_type n) noexcept { return m_array[static_cast<size_t>(n)]; }
+  valuetype &operator[](difference_type n) noexcept { return m_array[static_cast< size_t >(n)]; }
 
   //! Access element
-  const_reference operator[](difference_type n) const noexcept { return m_array[static_cast<size_t>(n)]; }
+  const_reference operator[](difference_type n) const noexcept { return m_array[static_cast< size_t >(n)]; }
 
   [[nodiscard]] std::string to_string() const
   {
@@ -207,39 +215,43 @@ public:
   }
 
 private:
-  std::array<valuetype, Rank> m_array;
+  std::array< valuetype, Rank > m_array;
 };
 
-template<typename value_type, std::size_t size>
-constexpr bool operator==(const compound_type<value_type, size> &lhs,
-  const compound_type<value_type, size> &rhs) noexcept
-{ return lhs.operator==(rhs); }
+template< typename value_type, std::size_t size >
+constexpr bool operator==(const compound_type< value_type, size > &lhs,
+                          const compound_type< value_type, size > &rhs) noexcept
+{
+  return lhs.operator==(rhs);
+}
 
-template<typename value_type, std::size_t size>
-constexpr bool operator!=(const compound_type<value_type, size> &lhs,
-  const compound_type<value_type, size> &rhs) noexcept
-{ return lhs.operator!=(rhs); }
+template< typename value_type, std::size_t size >
+constexpr bool operator!=(const compound_type< value_type, size > &lhs,
+                          const compound_type< value_type, size > &rhs) noexcept
+{
+  return lhs.operator!=(rhs);
+}
 
 
 //! Helper to retrieve dim off pixel storage type
-template<class value_type> struct get_dim
+template< class value_type > struct get_dim
 {
   static constexpr size_t dim = 1;
 };
 
 //! Helper to retrieve dim off compound
-template<class value_type, std::size_t Rank> struct get_dim<compound_type<value_type, Rank>>
+template< class value_type, std::size_t Rank > struct get_dim< compound_type< value_type, Rank > >
 {
   static constexpr size_t dim = Rank;
 };
 
 // specialization compound 3
 
-template<class valuetype> class BASE_API compound_type<valuetype, 3>
+template< class valuetype > class BASE_API compound_type< valuetype, 3 >
 {
 public:
   static constexpr std::ptrdiff_t rank = 3;
-  using self_type = compound_type<valuetype, 3>;
+  using self_type = compound_type< valuetype, 3 >;
   using value_type = valuetype;
 
 
@@ -255,11 +267,11 @@ public:
   //! Constant assignment constructor
   constexpr explicit compound_type(const value_type &value) : m_pix1(value), m_pix2(value), m_pix3(value) {}
 
-  template<class U>
-  constexpr explicit compound_type(const compound_type<U, rank> &other)
-    requires(std::is_convertible_v<valuetype, U>)
-    : m_pix1(static_cast<valuetype>(other.m_pix1)), m_pix2(static_cast<valuetype>(other.m_pix2)),
-      m_pix3(static_cast<valuetype>(other.m_pix3))
+  template< class U >
+  constexpr explicit compound_type(const compound_type< U, rank > &other)
+    requires(std::is_convertible_v< valuetype, U >)
+    : m_pix1(static_cast< valuetype >(other.m_pix1)), m_pix2(static_cast< valuetype >(other.m_pix2)),
+      m_pix3(static_cast< valuetype >(other.m_pix3))
   {}
 
   constexpr compound_type(const compound_type &rhs) = default;
@@ -296,10 +308,14 @@ public:
 
   //! Strict equality operator
   bool operator==(const self_type &other) const noexcept
-  { return (m_pix1 == other.m_pix1) && (m_pix2 == other.m_pix2) && (m_pix3 == other.m_pix3); }
+  {
+    return (m_pix1 == other.m_pix1) && (m_pix2 == other.m_pix2) && (m_pix3 == other.m_pix3);
+  }
   //! Inequality operator
   bool operator!=(const self_type &other) const noexcept
-  { return (m_pix1 != other.m_pix1) || (m_pix2 != other.m_pix2) || (m_pix3 != other.m_pix3); }
+  {
+    return (m_pix1 != other.m_pix1) || (m_pix2 != other.m_pix2) || (m_pix3 != other.m_pix3);
+  }
 
   [[nodiscard]] std::string to_string() const
   {
@@ -326,11 +342,11 @@ public:
 
 // specialization compound 4
 
-template<class valuetype> class BASE_API compound_type<valuetype, 4>
+template< class valuetype > class BASE_API compound_type< valuetype, 4 >
 {
 public:
   static constexpr std::ptrdiff_t rank = 4;
-  using self_type = compound_type<valuetype, 4>;
+  using self_type = compound_type< valuetype, 4 >;
   using value_type = valuetype;
 
   value_type m_pix1, m_pix2, m_pix3, m_pix4;
@@ -345,21 +361,21 @@ public:
   constexpr explicit compound_type(const value_type &value) : m_pix1(value), m_pix2(value), m_pix3(value), m_pix4(value)
   {}
 
-  template<class U>
+  template< class U >
   // cppcheck-suppress missingMemberCopy
-  constexpr explicit compound_type(const compound_type<U, 4> &other)
-    requires(std::is_convertible_v<valuetype, U>)
-    : m_pix1(static_cast<valuetype>(other.m_pix1)), m_pix2(static_cast<valuetype>(other.m_pix2)),
-      m_pix3(static_cast<valuetype>(other.m_pix3)), m_pix4(static_cast<valuetype>(other.m_pix4))
+  constexpr explicit compound_type(const compound_type< U, 4 > &other)
+    requires(std::is_convertible_v< valuetype, U >)
+    : m_pix1(static_cast< valuetype >(other.m_pix1)), m_pix2(static_cast< valuetype >(other.m_pix2)),
+      m_pix3(static_cast< valuetype >(other.m_pix3)), m_pix4(static_cast< valuetype >(other.m_pix4))
   {}
 
-  constexpr compound_type(const compound_type<valuetype, 4> &rhs) = default;
+  constexpr compound_type(const compound_type< valuetype, 4 > &rhs) = default;
 
-  constexpr compound_type<valuetype, 4> &operator=(const compound_type<valuetype, 4> &rhs) = default;
+  constexpr compound_type< valuetype, 4 > &operator=(const compound_type< valuetype, 4 > &rhs) = default;
 
-  constexpr compound_type(compound_type<valuetype, 4> &&rhs) = default;
+  constexpr compound_type(compound_type< valuetype, 4 > &&rhs) = default;
 
-  constexpr compound_type<valuetype, 4> &operator=(compound_type<valuetype, 4> &&rhs) = default;
+  constexpr compound_type< valuetype, 4 > &operator=(compound_type< valuetype, 4 > &&rhs) = default;
 
   valuetype &operator[](ptrdiff_t idx) POUTRE_NOEXCEPTONLYNDEBUG
   {
@@ -425,17 +441,17 @@ public:
   }
 };
 
-using c3pUINT8 = compound_type<pUINT8, 3>;
-using c3pINT32 = compound_type<pINT32, 3>;
-using c3pFLOAT = compound_type<pFLOAT, 3>;
-using c3pINT64 = compound_type<pINT64, 3>;
-using c3pDOUBLE = compound_type<pDOUBLE, 3>;
+using c3pUINT8 = compound_type< pUINT8, 3 >;
+using c3pINT32 = compound_type< pINT32, 3 >;
+using c3pFLOAT = compound_type< pFLOAT, 3 >;
+using c3pINT64 = compound_type< pINT64, 3 >;
+using c3pDOUBLE = compound_type< pDOUBLE, 3 >;
 
-using c4pUINT8 = compound_type<pUINT8, 4>;
-using c4pINT32 = compound_type<pINT32, 4>;
-using c4pFLOAT = compound_type<pFLOAT, 4>;
-using c4pINT64 = compound_type<pINT64, 4>;
-using c4pDOUBLE = compound_type<pDOUBLE, 4>;
+using c4pUINT8 = compound_type< pUINT8, 4 >;
+using c4pINT32 = compound_type< pINT32, 4 >;
+using c4pFLOAT = compound_type< pFLOAT, 4 >;
+using c4pINT64 = compound_type< pINT64, 4 >;
+using c4pDOUBLE = compound_type< pDOUBLE, 4 >;
 
 /*!
  * @brief Compare Operator
@@ -505,7 +521,7 @@ enum class CompoundType {
   CompoundType_Scalar = 1 << 0,//!< scalar
   CompoundType_3Planes = 1 << 1,//!< 3 channels
   CompoundType_4Planes = 1 << 2,//!< 4 channels
-                                // CompoundType_Container, //!< generic container //LATER
+  // CompoundType_Container, //!< generic container //LATER
 };
 
 //! operator<< for CompoundType
@@ -526,25 +542,25 @@ enum class PType {
   _PixelType_Max = 1 << 6// keep sync with the max value
 };
 
-using ScalarTypeVariant = std::variant<pUINT8, pINT32, pINT64, pFLOAT, pDOUBLE>;
+using ScalarTypeVariant = std::variant< pUINT8, pINT32, pINT64, pFLOAT, pDOUBLE >;
 
-template<typename T> ScalarTypeVariant CreatePixelValue(T value, const PType ptype)
+template< typename T > ScalarTypeVariant CreatePixelValue(T value, const PType ptype)
 {
   switch (ptype) {
   case PType::PType_GrayUINT8: {
-    return static_cast<pUINT8>(value);
+    return static_cast< pUINT8 >(value);
   }
   case PType::PType_GrayINT32: {
-    return static_cast<pINT32>(value);
+    return static_cast< pINT32 >(value);
   }
   case PType::PType_GrayINT64: {
-    return static_cast<pINT64>(value);
+    return static_cast< pINT64 >(value);
   }
   case PType::PType_F32: {
-    return static_cast<pFLOAT>(value);
+    return static_cast< pFLOAT >(value);
   }
   case PType::PType_D64: {
-    return static_cast<pDOUBLE>(value);
+    return static_cast< pDOUBLE >(value);
   }
   default://  Undef;
     POUTRE_RUNTIME_ERROR("unsupported ptype");
@@ -555,19 +571,19 @@ inline ScalarTypeVariant get_lowest(const PType ptype)
 {
   switch (ptype) {
   case PType::PType_GrayUINT8: {
-    return std::numeric_limits<pUINT8>::lowest();
+    return std::numeric_limits< pUINT8 >::lowest();
   }
   case PType::PType_GrayINT32: {
-    return std::numeric_limits<pINT32>::lowest();
+    return std::numeric_limits< pINT32 >::lowest();
   }
   case PType::PType_GrayINT64: {
-    return std::numeric_limits<pINT64>::lowest();
+    return std::numeric_limits< pINT64 >::lowest();
   }
   case PType::PType_F32: {
-    return std::numeric_limits<pFLOAT>::lowest();
+    return std::numeric_limits< pFLOAT >::lowest();
   }
   case PType::PType_D64: {
-    return std::numeric_limits<pDOUBLE>::lowest();
+    return std::numeric_limits< pDOUBLE >::lowest();
   }
   default://  Undef;
     POUTRE_RUNTIME_ERROR("unsupported ptype");
@@ -578,19 +594,19 @@ inline ScalarTypeVariant get_highest(const PType ptype)
 {
   switch (ptype) {
   case PType::PType_GrayUINT8: {
-    return std::numeric_limits<pUINT8>::max();
+    return std::numeric_limits< pUINT8 >::max();
   }
   case PType::PType_GrayINT32: {
-    return std::numeric_limits<pINT32>::max();
+    return std::numeric_limits< pINT32 >::max();
   }
   case PType::PType_GrayINT64: {
-    return std::numeric_limits<pINT64>::max();
+    return std::numeric_limits< pINT64 >::max();
   }
   case PType::PType_F32: {
-    return std::numeric_limits<pFLOAT>::max();
+    return std::numeric_limits< pFLOAT >::max();
   }
   case PType::PType_D64: {
-    return std::numeric_limits<pDOUBLE>::max();
+    return std::numeric_limits< pDOUBLE >::max();
   }
   default://  Undef;
     POUTRE_RUNTIME_ERROR("unsupported ptype");
@@ -626,29 +642,29 @@ BASE_API std::ostream &operator<<(std::ostream &, LabelType);
 BASE_API std::istream &operator>>(std::istream &, LabelType &);
 
 #if defined(POUTRE_IS_GCC) || defined(POUTRE_IS_CLANG)
-extern template class BASE_API compound_type<pUINT8, 3>;
-extern template class BASE_API compound_type<pINT32, 3>;
-extern template class BASE_API compound_type<pFLOAT, 3>;
-extern template class BASE_API compound_type<pINT64, 3>;
-extern template class BASE_API compound_type<pDOUBLE, 3>;
+extern template class BASE_API compound_type< pUINT8, 3 >;
+extern template class BASE_API compound_type< pINT32, 3 >;
+extern template class BASE_API compound_type< pFLOAT, 3 >;
+extern template class BASE_API compound_type< pINT64, 3 >;
+extern template class BASE_API compound_type< pDOUBLE, 3 >;
 
-extern template class BASE_API compound_type<pUINT8, 4>;
-extern template class BASE_API compound_type<pINT32, 4>;
-extern template class BASE_API compound_type<pFLOAT, 4>;
-extern template class BASE_API compound_type<pINT64, 4>;
-extern template class BASE_API compound_type<pDOUBLE, 4>;
+extern template class BASE_API compound_type< pUINT8, 4 >;
+extern template class BASE_API compound_type< pINT32, 4 >;
+extern template class BASE_API compound_type< pFLOAT, 4 >;
+extern template class BASE_API compound_type< pINT64, 4 >;
+extern template class BASE_API compound_type< pDOUBLE, 4 >;
 #else
-template class BASE_API compound_type<pUINT8, 3>;
-template class BASE_API compound_type<pINT32, 3>;
-template class BASE_API compound_type<pFLOAT, 3>;
-template class BASE_API compound_type<pINT64, 3>;
-template class BASE_API compound_type<pDOUBLE, 3>;
+template class BASE_API compound_type< pUINT8, 3 >;
+template class BASE_API compound_type< pINT32, 3 >;
+template class BASE_API compound_type< pFLOAT, 3 >;
+template class BASE_API compound_type< pINT64, 3 >;
+template class BASE_API compound_type< pDOUBLE, 3 >;
 
-template class BASE_API compound_type<pUINT8, 4>;
-template class BASE_API compound_type<pINT32, 4>;
-template class BASE_API compound_type<pFLOAT, 4>;
-template class BASE_API compound_type<pINT64, 4>;
-template class BASE_API compound_type<pDOUBLE, 4>;
+template class BASE_API compound_type< pUINT8, 4 >;
+template class BASE_API compound_type< pINT32, 4 >;
+template class BASE_API compound_type< pFLOAT, 4 >;
+template class BASE_API compound_type< pINT64, 4 >;
+template class BASE_API compound_type< pDOUBLE, 4 >;
 #endif
 
 }// namespace poutre
@@ -659,43 +675,43 @@ template class BASE_API compound_type<pDOUBLE, 4>;
 #endif
 namespace std {
 
-template<> struct formatter<poutre::CompoundType> : std::formatter<const char *>
+template<> struct formatter< poutre::CompoundType > : std::formatter< const char * >
 {
-  template<typename Context> auto format(const poutre::CompoundType state, Context &context) const
+  template< typename Context > auto format(const poutre::CompoundType state, Context &context) const
   {
     switch (state) {
     case poutre::CompoundType::CompoundType_Scalar:
-      return formatter<const char *>::format("Scalar", context);
+      return formatter< const char * >::format("Scalar", context);
     case poutre::CompoundType::CompoundType_3Planes:
-      return formatter<const char *>::format("3Planes", context);
+      return formatter< const char * >::format("3Planes", context);
     case poutre::CompoundType::CompoundType_4Planes:
-      return formatter<const char *>::format("4Planes", context);
+      return formatter< const char * >::format("4Planes", context);
     default:
-      return formatter<const char *>::format("Unknown", context);
+      return formatter< const char * >::format("Unknown", context);
     }
     // unreachable
     return context.out();
   }
 };
-template<> struct formatter<poutre::CompOpType> : std::formatter<const char *>
+template<> struct formatter< poutre::CompOpType > : std::formatter< const char * >
 {
-  template<typename Context> auto format(const poutre::CompOpType state, Context &context) const
+  template< typename Context > auto format(const poutre::CompOpType state, Context &context) const
   {
     switch (state) {
     case poutre::CompOpType::CompOpDiff:
-      return formatter<const char *>::format("!=", context);
+      return formatter< const char * >::format("!=", context);
     case poutre::CompOpType::CompOpEqual:
-      return formatter<const char *>::format("==", context);
+      return formatter< const char * >::format("==", context);
     case poutre::CompOpType::CompOpInf:
-      return formatter<const char *>::format("<", context);
+      return formatter< const char * >::format("<", context);
     case poutre::CompOpType::CompOpInfEqual:
-      return formatter<const char *>::format("<=", context);
+      return formatter< const char * >::format("<=", context);
     case poutre::CompOpType::CompOpSup:
-      return formatter<const char *>::format(">", context);
+      return formatter< const char * >::format(">", context);
     case poutre::CompOpType::CompOpSupEqual:
-      return formatter<const char *>::format(">=", context);
+      return formatter< const char * >::format(">=", context);
     default:
-      return formatter<const char *>::format("Unknown", context);
+      return formatter< const char * >::format("Unknown", context);
     }
 
     // unreachable
@@ -703,23 +719,23 @@ template<> struct formatter<poutre::CompOpType> : std::formatter<const char *>
   }
 };
 
-template<> struct formatter<poutre::PType> : std::formatter<const char *>
+template<> struct formatter< poutre::PType > : std::formatter< const char * >
 {
-  template<typename Context> auto format(const poutre::PType state, Context &context) const
+  template< typename Context > auto format(const poutre::PType state, Context &context) const
   {
     switch (state) {
     case poutre::PType::PType_GrayUINT8:
-      return formatter<const char *>::format("GUINT8", context);
+      return formatter< const char * >::format("GUINT8", context);
     case poutre::PType::PType_GrayINT32:
-      return formatter<const char *>::format("GINT32", context);
+      return formatter< const char * >::format("GINT32", context);
     case poutre::PType::PType_F32:
-      return formatter<const char *>::format("F32", context);
+      return formatter< const char * >::format("F32", context);
     case poutre::PType::PType_GrayINT64:
-      return formatter<const char *>::format("GINT64", context);
+      return formatter< const char * >::format("GINT64", context);
     case poutre::PType::PType_D64:
-      return formatter<const char *>::format("D64", context);
+      return formatter< const char * >::format("D64", context);
     default:
-      return formatter<const char *>::format("Unknown", context);
+      return formatter< const char * >::format("Unknown", context);
     }
     // unreachable
     return context.out();

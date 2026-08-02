@@ -33,14 +33,12 @@ namespace poutre::llm::details {
 
 template<typename T> struct BinOpInfLine
 {
-public:
   static constexpr T neutral = std::numeric_limits<T>::max();
   static T operator()(const T &A0, const T &A1) { return std::min<T>(A0, A1); }
 };
 
 template<typename T> struct BinOpSupLine
 {
-public:
   static constexpr T neutral = std::numeric_limits<T>::lowest();
   static T operator()(const T &A0, const T &A1) { return std::max<T>(A0, A1); }
 };

@@ -18,8 +18,8 @@
  */
 
 #include <poutre/base/config.hpp>
-#include <poutre/structuring_element/structuring_element.hpp>
 #include <poutre/structuring_element/details/neighbor_list_se_t.hpp>
+#include <poutre/structuring_element/structuring_element.hpp>
 
 namespace poutre::se {
 /**
@@ -99,4 +99,4 @@ SE_API extern const details::neighbor_list_t< 3 > SESquare3D;
 SE_API extern const details::neighbor_list_t< 3 > SECross3D;
 
 //! @} doxygroup: poutre_se_nl_predefine_group
-}// namespace poutre
+}// namespace poutre::se

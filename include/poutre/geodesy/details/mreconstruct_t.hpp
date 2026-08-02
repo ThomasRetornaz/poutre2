@@ -36,57 +36,61 @@ namespace poutre::geo::details {
  *@{
  */
 
-template<typename Tmarker,
-  typename Tmask,
-  typename Tout,
-  ptrdiff_t Rank,
-  template<typename, ptrdiff_t> class ViewMarker,
-  template<typename, ptrdiff_t> class ViewMask,
-  template<typename, ptrdiff_t> class ViewOut>
+template< typename Tmarker,
+          typename Tmask,
+          typename Tout,
+          ptrdiff_t Rank,
+          template< typename, ptrdiff_t > class ViewMarker,
+          template< typename, ptrdiff_t > class ViewMask,
+          template< typename, ptrdiff_t > class ViewOut >
 struct OpRecDilate
 {
-  static void select_marker(const ViewMarker<const Tmarker, Rank> &i_vmarker,
-    const ViewMask<const Tmask, Rank> &i_vmask,
-    const ViewOut<Tout, Rank> &o_vout)
-  { poutre::details::t_ArithInf(i_vmarker, i_vmask, o_vout); }
-  static Tout select_marker(Tout val_out, Tmask val_mask) { return std::min<Tout>(val_out, val_mask); }
-  static Tout select_se(Tout val_out, Tmask val_mask) { return std::max<Tout>(val_out, val_mask); }
+  static void select_marker(const ViewMarker< const Tmarker, Rank > &i_vmarker,
+                            const ViewMask< const Tmask, Rank > &i_vmask,
+                            const ViewOut< Tout, Rank > &o_vout)
+  {
+    poutre::details::t_ArithInf(i_vmarker, i_vmask, o_vout);
+  }
+  static Tout select_marker(Tout val_out, Tmask val_mask) { return std::min< Tout >(val_out, val_mask); }
+  static Tout select_se(Tout val_out, Tmask val_mask) { return std::max< Tout >(val_out, val_mask); }
   static bool should_enqueue(Tout val_out, Tmask val_mask) { return val_out < val_mask; }
 };
 
-template<typename Tmarker,
-  typename Tmask,
-  typename Tout,
-  ptrdiff_t Rank,
-  template<typename, ptrdiff_t> class ViewMarker,
-  template<typename, ptrdiff_t> class ViewMask,
-  template<typename, ptrdiff_t> class ViewOut>
+template< typename Tmarker,
+          typename Tmask,
+          typename Tout,
+          ptrdiff_t Rank,
+          template< typename, ptrdiff_t > class ViewMarker,
+          template< typename, ptrdiff_t > class ViewMask,
+          template< typename, ptrdiff_t > class ViewOut >
 struct OpRecErode
 {
-  static void select_marker(const ViewMarker<const Tmarker, Rank> &i_vmarker,
-    const ViewMask<const Tmask, Rank> &i_vmask,
-    const ViewOut<Tout, Rank> &o_vout)
-  { poutre::details::t_ArithSup(i_vmarker, i_vmask, o_vout); }
-  static Tout select_marker(Tout val_out, Tmask val_mask) { return std::max<Tout>(val_out, val_mask); }
-  static Tout select_se(Tout val_out, Tmask val_mask) { return std::min<Tout>(val_out, val_mask); }
+  static void select_marker(const ViewMarker< const Tmarker, Rank > &i_vmarker,
+                            const ViewMask< const Tmask, Rank > &i_vmask,
+                            const ViewOut< Tout, Rank > &o_vout)
+  {
+    poutre::details::t_ArithSup(i_vmarker, i_vmask, o_vout);
+  }
+  static Tout select_marker(Tout val_out, Tmask val_mask) { return std::max< Tout >(val_out, val_mask); }
+  static Tout select_se(Tout val_out, Tmask val_mask) { return std::min< Tout >(val_out, val_mask); }
   static bool should_enqueue(Tout val_out, Tmask val_mask) { return val_out > val_mask; }
 };
 
-template<poutre::se::Common_NL_SE nl_static,
-  typename Tmarker,
-  typename Tmask,
-  typename Tout,
-  ptrdiff_t Rank,
-  template<typename, ptrdiff_t> class ViewMarker,
-  template<typename, ptrdiff_t> class ViewMask,
-  template<typename, ptrdiff_t> class ViewOut,
-  class HelperOp>
+template< se::Common_NL_SE nl_static,
+          typename Tmarker,
+          typename Tmask,
+          typename Tout,
+          ptrdiff_t Rank,
+          template< typename, ptrdiff_t > class ViewMarker,
+          template< typename, ptrdiff_t > class ViewMask,
+          template< typename, ptrdiff_t > class ViewOut,
+          class HelperOp >
 struct t_ReconstructionViewDispatcher
 {
-  static_assert(Rank == poutre::se::details::static_se_traits<nl_static>::rank, "SE and view have not the same Rank");
-  void operator()(const ViewMarker<const Tmarker, Rank> &i_vmarker,
-    const ViewMask<const Tmask, Rank> &i_vmask,
-    ViewOut<Tout, Rank> &o_vout) const
+  static_assert(Rank == poutre::se::details::static_se_traits< nl_static >::rank, "SE and view have not the same Rank");
+  void operator()(const ViewMarker< const Tmarker, Rank > &i_vmarker,
+                  const ViewMask< const Tmask, Rank > &i_vmask,
+                  ViewOut< Tout, Rank > &o_vout) const
   {
     POUTRE_CHECK(i_vmarker.size() == i_vmask.size(), "Incompatible views size");
     POUTRE_CHECK(i_vmask.size() == o_vout.size(), "Incompatible views size");
@@ -104,9 +108,9 @@ struct t_ReconstructionViewDispatcher
     POUTRE_CHECK(stridevMarker == stridevMask, "Incompatible stride");
     POUTRE_CHECK(stridevMask == stridevOut, "Incompatible stride");
 
-    constexpr auto nl_coord = poutre::se::details::static_se_traits<nl_static>::coordinates_no_center;
-    auto [nl_upper, nl_lower] = poutre::se::details::static_se_traits<nl_static>::split_coordinates_upper_lower();
-    std::queue<poutre::details::av::index<Rank>> queue;
+    constexpr auto nl_coord = poutre::se::details::static_se_traits< nl_static >::coordinates_no_center;
+    auto [nl_upper, nl_lower] = poutre::se::details::static_se_traits< nl_static >::split_coordinates_upper_lower();
+    std::queue< poutre::details::av::index< Rank > > queue;
 
     HelperOp::select_marker(i_vmarker, i_vmask, o_vout);
 
@@ -118,7 +122,9 @@ struct t_ReconstructionViewDispatcher
         auto curr_val = o_vout[*beg1];
         for (const auto &idx_nl_upper : nl_upper) {
           const auto delta_nl_idx = *beg1 + idx_nl_upper;
-          if (!vMarkerbound.contains(delta_nl_idx)) { continue; }
+          if (!vMarkerbound.contains(delta_nl_idx)) {
+            continue;
+          }
           curr_val = HelperOp::select_se(curr_val, o_vout[delta_nl_idx]);
         }
         o_vout[*beg1] = HelperOp::select_marker(curr_val, i_vmask[*beg1]);
@@ -133,14 +139,18 @@ struct t_ReconstructionViewDispatcher
         auto curr_val = o_vout[*rbeg1];
         for (const auto &idx_nl_lower : nl_lower) {
           auto delta_nl_idx = *rbeg1 + idx_nl_lower;
-          if (!vMarkerbound.contains(delta_nl_idx)) { continue; }
+          if (!vMarkerbound.contains(delta_nl_idx)) {
+            continue;
+          }
           curr_val = HelperOp::select_se(curr_val, o_vout[delta_nl_idx]);
         }
         o_vout[*rbeg1] = HelperOp::select_marker(curr_val, i_vmask[*rbeg1]);
 
         for (const auto &idx_nl_lower : nl_lower) {
           auto delta_nl_idx = *rbeg1 + idx_nl_lower;
-          if (!vMarkerbound.contains(delta_nl_idx)) { continue; }
+          if (!vMarkerbound.contains(delta_nl_idx)) {
+            continue;
+          }
           if (HelperOp::should_enqueue(o_vout[delta_nl_idx], o_vout[*rbeg1])
               && HelperOp::should_enqueue(o_vout[delta_nl_idx], i_vmask[delta_nl_idx])) {
             queue.push(*rbeg1);
@@ -180,7 +190,9 @@ struct t_ReconstructionViewDispatcher
       // std::cout <<"vout[center]="<<o_vout[idx]<< "\n";
       for (const auto &idx_nl : nl_coord) {
         const auto delta_nl_idx = idx + idx_nl;
-        if (!vMarkerbound.contains(delta_nl_idx)) { continue; }
+        if (!vMarkerbound.contains(delta_nl_idx)) {
+          continue;
+        }
         if (i_vmask[delta_nl_idx] != o_vout[delta_nl_idx]
             && HelperOp::should_enqueue(o_vout[delta_nl_idx], o_vout[idx])) {
           o_vout[delta_nl_idx] = HelperOp::select_marker(o_vout[idx], i_vmask[delta_nl_idx]);
@@ -371,29 +383,29 @@ currentx])) { queue.push(center);
 };
 */
 
-template<poutre::se::Common_NL_SE nl_static,
-  typename Tmarker,
-  typename Tmask,
-  typename Tout,
-  ptrdiff_t Rank,
-  template<typename, ptrdiff_t> class ViewMarker,
-  template<typename, ptrdiff_t> class ViewMask,
-  template<typename, ptrdiff_t> class ViewOut>
+template< poutre::se::Common_NL_SE nl_static,
+          typename Tmarker,
+          typename Tmask,
+          typename Tout,
+          ptrdiff_t Rank,
+          template< typename, ptrdiff_t > class ViewMarker,
+          template< typename, ptrdiff_t > class ViewMask,
+          template< typename, ptrdiff_t > class ViewOut >
 void t_ReconstructionDispatchRectType(poutre::geo::reconstruction_type rect_type,
-  const ViewMarker<const Tmarker, Rank> &i_vmarker,
-  const ViewMask<const Tmask, Rank> &i_vmask,
-  ViewOut<Tout, Rank> &o_vout)
+                                      const ViewMarker< const Tmarker, Rank > &i_vmarker,
+                                      const ViewMask< const Tmask, Rank > &i_vmask,
+                                      ViewOut< Tout, Rank > &o_vout)
 {
   switch (rect_type) {
   case reconstruction_type::erode: {
-    using HelperOp = OpRecErode<Tmarker, Tmask, Tout, Rank, ViewMarker, ViewMask, ViewOut>;
-    t_ReconstructionViewDispatcher<nl_static, Tmarker, Tmask, Tout, Rank, ViewMarker, ViewMask, ViewOut, HelperOp>
+    using HelperOp = OpRecErode< Tmarker, Tmask, Tout, Rank, ViewMarker, ViewMask, ViewOut >;
+    t_ReconstructionViewDispatcher< nl_static, Tmarker, Tmask, Tout, Rank, ViewMarker, ViewMask, ViewOut, HelperOp >
       dispatcher;
     dispatcher(i_vmarker, i_vmask, o_vout);
   } break;
   case reconstruction_type::dilate: {
-    using HelperOp = OpRecDilate<Tmarker, Tmask, Tout, Rank, ViewMarker, ViewMask, ViewOut>;
-    t_ReconstructionViewDispatcher<nl_static, Tmarker, Tmask, Tout, Rank, ViewMarker, ViewMask, ViewOut, HelperOp>
+    using HelperOp = OpRecDilate< Tmarker, Tmask, Tout, Rank, ViewMarker, ViewMask, ViewOut >;
+    t_ReconstructionViewDispatcher< nl_static, Tmarker, Tmask, Tout, Rank, ViewMarker, ViewMask, ViewOut, HelperOp >
       dispatcher;
     dispatcher(i_vmarker, i_vmask, o_vout);
   } break;
@@ -409,18 +421,18 @@ void t_ReconstructionDispatchRectType(poutre::geo::reconstruction_type rect_type
 }
 
 
-template<typename Tmarker,
-  typename Tmask,
-  typename Tout,
-  ptrdiff_t Rank,
-  template<typename, ptrdiff_t> class ViewMarker,
-  template<typename, ptrdiff_t> class ViewMask,
-  template<typename, ptrdiff_t> class ViewOut>
+template< typename Tmarker,
+          typename Tmask,
+          typename Tout,
+          ptrdiff_t Rank,
+          template< typename, ptrdiff_t > class ViewMarker,
+          template< typename, ptrdiff_t > class ViewMask,
+          template< typename, ptrdiff_t > class ViewOut >
 void t_ReconstructionDispatch(poutre::geo::reconstruction_type rect_type,
-  const ViewMarker<const Tmarker, Rank> &i_vmarker,
-  const ViewMask<const Tmask, Rank> &i_vmask,
-  const poutre::se::Common_NL_SE nl_static,
-  ViewOut<Tout, Rank> &o_vout)
+                              const ViewMarker< const Tmarker, Rank > &i_vmarker,
+                              const ViewMask< const Tmask, Rank > &i_vmask,
+                              const poutre::se::Common_NL_SE nl_static,
+                              ViewOut< Tout, Rank > &o_vout)
 {
   POUTRE_CHECK(i_vmarker.size() == i_vmask.size(), "t_ReconstructionDispatchNl Incompatible views size");
   POUTRE_CHECK(i_vmask.size() == o_vout.size(), "t_ReconstructionDispatchNl Incompatible views size");
@@ -430,7 +442,7 @@ void t_ReconstructionDispatch(poutre::geo::reconstruction_type rect_type,
     switch (nl_static) {
     case poutre::se::Common_NL_SE::SESegmentX1D: {
       //<poutre::se::Common_NL_SE::SESegmentX1D, Tmarker,Tmask,Tout, Rank, ViewMarker,ViewMask, ViewOut> dispatcher;
-      t_ReconstructionDispatchRectType<poutre::se::Common_NL_SE::SESegmentX1D>(rect_type, i_vmarker, i_vmask, o_vout);
+      t_ReconstructionDispatchRectType< poutre::se::Common_NL_SE::SESegmentX1D >(rect_type, i_vmarker, i_vmask, o_vout);
     } break;
     default: {
       POUTRE_RUNTIME_ERROR("t_ReconstructionDispatchNl unsupported nl_static");
@@ -453,10 +465,10 @@ void t_ReconstructionDispatch(poutre::geo::reconstruction_type rect_type,
     case poutre::se::Common_NL_SE::SESquare2D: {
       // t_ReconstructionDispatchRectType<poutre::se::Common_NL_SE::SESquare2D, Tmarker,Tmask,Tout, Rank,
       // ViewMarker,ViewMask, ViewOut> dispatcher;
-      t_ReconstructionDispatchRectType<poutre::se::Common_NL_SE::SESquare2D>(rect_type, i_vmarker, i_vmask, o_vout);
+      t_ReconstructionDispatchRectType< poutre::se::Common_NL_SE::SESquare2D >(rect_type, i_vmarker, i_vmask, o_vout);
     } break;
     case poutre::se::Common_NL_SE::SECross2D: {
-      t_ReconstructionDispatchRectType<poutre::se::Common_NL_SE::SECross2D>(rect_type, i_vmarker, i_vmask, o_vout);
+      t_ReconstructionDispatchRectType< poutre::se::Common_NL_SE::SECross2D >(rect_type, i_vmarker, i_vmask, o_vout);
     } break;
     default: {
       POUTRE_RUNTIME_ERROR("t_ReconstructionDispatchNl unsupported nl_static");
@@ -467,10 +479,10 @@ void t_ReconstructionDispatch(poutre::geo::reconstruction_type rect_type,
   if constexpr (Rank == 3) {
     switch (nl_static) {
     case poutre::se::Common_NL_SE::SECross3D: {
-      t_ReconstructionDispatchRectType<poutre::se::Common_NL_SE::SECross3D>(rect_type, i_vmarker, i_vmask, o_vout);
+      t_ReconstructionDispatchRectType< poutre::se::Common_NL_SE::SECross3D >(rect_type, i_vmarker, i_vmask, o_vout);
     } break;
     case poutre::se::Common_NL_SE::SESquare3D: {
-      t_ReconstructionDispatchRectType<poutre::se::Common_NL_SE::SESquare3D>(rect_type, i_vmarker, i_vmask, o_vout);
+      t_ReconstructionDispatchRectType< poutre::se::Common_NL_SE::SESquare3D >(rect_type, i_vmarker, i_vmask, o_vout);
     } break;
     // case poutre::se::Common_NL_SE::SESegmentX3D: {
     //   t_ReconstructionDispatchRectType<poutre::se::Common_NL_SE::SESegmentX3D>(rect_type, i_vmarker,i_vmask, o_vout);
@@ -489,12 +501,12 @@ void t_ReconstructionDispatch(poutre::geo::reconstruction_type rect_type,
   }
 }
 
-template<typename Tmarker, typename Tmask, typename Tout, ptrdiff_t Rank>
+template< typename Tmarker, typename Tmask, typename Tout, ptrdiff_t Rank >
 void t_Reconstruct(reconstruction_type rect_type,
-  const poutre::details::image_t<Tmarker, Rank> &i_marker,
-  const poutre::details::image_t<Tmask, Rank> &i_mask,
-  poutre::se::Common_NL_SE nl_static,
-  poutre::details::image_t<Tout, Rank> &o_img)
+                   const poutre::details::image_t< Tmarker, Rank > &i_marker,
+                   const poutre::details::image_t< Tmask, Rank > &i_mask,
+                   poutre::se::Common_NL_SE nl_static,
+                   poutre::details::image_t< Tout, Rank > &o_img)
 {
   AssertSizesCompatible(i_marker, o_img, "t_Reconstruct incompatible size");
   AssertSizesCompatible(i_mask, o_img, "t_Reconstruct incompatible size");

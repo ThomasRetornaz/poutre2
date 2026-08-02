@@ -22,7 +22,6 @@
 #include <poutre/base/details/data_structures/image_t.hpp>
 #include <poutre/base/trace.hpp>
 #include <poutre/structuring_element/details/neighbor_list_se_t.hpp>
-#include <poutre/structuring_element/se_types_and_tags.hpp>
 
 namespace poutre::llm::details {
 /**
@@ -30,32 +29,30 @@ namespace poutre::llm::details {
  *@{
  */
 
-template<typename T1, typename T2> struct BinOpInfRuntime
+template< typename T1, typename T2 > struct BinOpInfRuntime
 {
-public:
-  static constexpr T1 neutral = std::numeric_limits<T1>::max();
-  static T2 process(const T1 &A0, const T1 &A1) { return static_cast<T2>(std::min<T1>(A0, A1)); }
+  static constexpr T1 neutral = std::numeric_limits< T1 >::max();
+  static T2 process(const T1 &val1, const T1 &val2) { return static_cast< T2 >(std::min< T1 >(val1, val2)); }
 };
 
-template<typename T1, typename T2> struct BinOpSupRuntime
+template< typename T1, typename T2 > struct BinOpSupRuntime
 {
-public:
-  static constexpr T1 neutral = std::numeric_limits<T1>::lowest();
-  static T2 process(const T1 &A0, const T1 &A1) { return static_cast<T2>(std::max<T1>(A0, A1)); }
+  static constexpr T1 neutral = std::numeric_limits< T1 >::lowest();
+  static T2 process(const T1 &val1, const T1 &val2) { return static_cast< T2 >(std::max< T1 >(val1, val2)); }
 };
 
 //-----STRIDED VIEW OR Image_t generic with static SE
-template<typename T1,
-  typename T2,
-  ptrdiff_t Rank,
-  template<typename, ptrdiff_t> class View1,
-  template<typename, ptrdiff_t> class View2,
-  class BinOp>
+template< typename T1,
+          typename T2,
+          ptrdiff_t Rank,
+          template< typename, ptrdiff_t > class View1,
+          template< typename, ptrdiff_t > class View2,
+          class BinOp >
 struct t_ErodeDilateDispatcherRuntime
 {
-  void operator()(const View1<const T1, Rank> &i_vin,
-    const poutre::se::details::neighbor_list_t<Rank> &nl_runtime,
-    const View2<T2, Rank> &o_vout) const
+  void operator()(const View1< const T1, Rank > &i_vin,
+                  const poutre::se::details::neighbor_list_t< Rank > &nl_runtime,
+                  const View2< T2, Rank > &o_vout) const
   {
     POUTRE_CHECK(i_vin.size() == o_vout.size(), "Incompatible views size");
 
@@ -72,10 +69,12 @@ struct t_ErodeDilateDispatcherRuntime
         auto val = BinOp::neutral;
         for (const auto &idxnl : nl_runtime) {
           auto currentidx = *beg1 + idxnl;
-          if (!vInbound.contains(currentidx)) { continue; }
+          if (!vInbound.contains(currentidx)) {
+            continue;
+          }
           val = BinOp::process(val, i_vin[currentidx]);
         }
-        o_vout[*beg1] = static_cast<T2>(val);
+        o_vout[*beg1] = static_cast< T2 >(val);
       }
       // TODO stride==1 in least significant dimension
     } else// default two idx
@@ -87,10 +86,12 @@ struct t_ErodeDilateDispatcherRuntime
         auto val = BinOp::neutral;
         for (const auto &idxnl : nl_runtime) {
           auto currentidx = *beg1 + idxnl;
-          if (!vInbound.contains(currentidx)) { continue; }
+          if (!vInbound.contains(currentidx)) {
+            continue;
+          }
           val = BinOp::process(val, i_vin[currentidx]);
         }
-        o_vout[*beg2] = static_cast<T2>(val);
+        o_vout[*beg2] = static_cast< T2 >(val);
       }
     }
   }
@@ -99,44 +100,52 @@ struct t_ErodeDilateDispatcherRuntime
 
 // specialisation array_view 2d
 //----2D array_view/DenseImage<T,2>
-template<typename T1, typename T2, class BinOp>
+template< typename T1, typename T2, class BinOp >
 void t_ErodeDilateIterateBorderArrayView2DRuntimeHelper(const T1 *&i_vin,
-  const poutre::se::details::neighbor_list_t<2> &nl_runtime,
-  T2 *&o_vout,
-  scoord xsize,// NOLINT
-  scoord ysize,// NOLINT
-  scoord stride,
-  ptrdiff_t i_XCenter,
-  ptrdiff_t i_YCenter)
+                                                        const poutre::se::details::neighbor_list_t< 2 > &nl_runtime,
+                                                        T2 *&o_vout,
+                                                        scoord xsize,// NOLINT
+                                                        scoord ysize,// NOLINT
+                                                        scoord stride,
+                                                        ptrdiff_t i_XCenter,
+                                                        ptrdiff_t i_YCenter)
 {
   auto i_vinbeg = i_vin;
   auto o_voutbeg = o_vout;
   auto val = BinOp::neutral;
-  poutre::details::av::idx2d center{ i_YCenter, i_XCenter };
+  poutre::details::av::idx2d center{i_YCenter, i_XCenter};
   for (const auto &idxnl : nl_runtime) {
     scoord const currentx = center[1] + idxnl[1];
     scoord const currenty = center[0] + idxnl[0];
-    if (currentx < 0) { continue; }
-    if (currenty < 0) { continue; }
-    if (currentx >= xsize) { continue; }
-    if (currenty >= ysize) { continue; }
+    if (currentx < 0) {
+      continue;
+    }
+    if (currenty < 0) {
+      continue;
+    }
+    if (currentx >= xsize) {
+      continue;
+    }
+    if (currenty >= ysize) {
+      continue;
+    }
     val = BinOp::process(val, i_vinbeg[(stride * currenty) + currentx]);
   }
-  o_voutbeg[(stride * i_YCenter) + i_XCenter] = static_cast<T2>(val);
+  o_voutbeg[(stride * i_YCenter) + i_XCenter] = static_cast< T2 >(val);
 }
 
-template<typename T1, typename T2, class BinOp>
-struct t_ErodeDilateDispatcherRuntime<T1,
-  T2,
-  2,
-  poutre::details::av::array_view,
-  poutre::details::av::array_view,
-  BinOp>
+template< typename T1, typename T2, class BinOp >
+struct t_ErodeDilateDispatcherRuntime< T1,
+                                       T2,
+                                       2,
+                                       poutre::details::av::array_view,
+                                       poutre::details::av::array_view,
+                                       BinOp >
 {
   // cppcheck-suppress constParameterReference
-  void operator()(const poutre::details::av::array_view<const T1, 2> &i_vin,
-    const poutre::se::details::neighbor_list_t<2> &nl_runtime,
-    const poutre::details::av::array_view<T2, 2> &o_vout)
+  void operator()(const poutre::details::av::array_view< const T1, 2 > &i_vin,
+                  const poutre::se::details::neighbor_list_t< 2 > &nl_runtime,
+                  const poutre::details::av::array_view< T2, 2 > &o_vout)
   {
     POUTRE_CHECK(i_vin.size() == o_vout.size(), "Incompatible views size");
     auto ibd = i_vin.bound();
@@ -155,14 +164,14 @@ struct t_ErodeDilateDispatcherRuntime<T1,
     // handling the upper lines
     for (ptrdiff_t y = 0; y < half_size; ++y) {
       for (ptrdiff_t x = 0; x < xsize; ++x) {
-        t_ErodeDilateIterateBorderArrayView2DRuntimeHelper<T1, T2, BinOp>(
+        t_ErodeDilateIterateBorderArrayView2DRuntimeHelper< T1, T2, BinOp >(
           i_vinbeg, nl_runtime, o_voutbeg, xsize, ysize, istride[0], x, y);
       }
     }
     // handling the lower lines
     for (ptrdiff_t y = ysize - half_size; y < ysize; ++y) {
       for (ptrdiff_t x = 0; x < xsize; ++x) {
-        t_ErodeDilateIterateBorderArrayView2DRuntimeHelper<T1, T2, BinOp>(
+        t_ErodeDilateIterateBorderArrayView2DRuntimeHelper< T1, T2, BinOp >(
           i_vinbeg, nl_runtime, o_voutbeg, xsize, ysize, istride[0], x, y);
       }
     }
@@ -170,49 +179,49 @@ struct t_ErodeDilateDispatcherRuntime<T1,
     for (ptrdiff_t y = half_size; y < ysize - half_size; ++y) {
       // handling the first columns
       for (ptrdiff_t x = 0; x < half_size; ++x) {
-        t_ErodeDilateIterateBorderArrayView2DRuntimeHelper<T1, T2, BinOp>(
+        t_ErodeDilateIterateBorderArrayView2DRuntimeHelper< T1, T2, BinOp >(
           i_vinbeg, nl_runtime, o_voutbeg, xsize, ysize, istride[0], x, y);
       }
       for (ptrdiff_t x = half_size; x < xsize - half_size; ++x) {
         auto val = BinOp::neutral;
-        poutre::details::av::idx2d center{ y, x };
+        poutre::details::av::idx2d center{y, x};
 
         for (const auto &idxnl : nl_runtime) {
           scoord const currentx = center[1] + idxnl[1];
           scoord const currenty = center[0] + idxnl[0];
           val = BinOp::process(val, i_vinbeg[(xsize * currenty) + currentx]);
         }
-        o_voutbeg[(xsize * y) + x] = static_cast<T2>(val);
+        o_voutbeg[(xsize * y) + x] = static_cast< T2 >(val);
       }
       // handling the last columns
       for (ptrdiff_t x = xsize - half_size; x < xsize; ++x) {
-        t_ErodeDilateIterateBorderArrayView2DRuntimeHelper<T1, T2, BinOp>(
+        t_ErodeDilateIterateBorderArrayView2DRuntimeHelper< T1, T2, BinOp >(
           i_vinbeg, nl_runtime, o_voutbeg, xsize, ysize, istride[0], x, y);
       }
     }
   }
 };
 
-template<typename TIn,
-  typename TOut,
-  ptrdiff_t Rank,
-  template<typename, ptrdiff_t> class ViewIn,
-  template<typename, ptrdiff_t> class ViewOut>
-void t_Dilate(const ViewIn<const TIn, Rank> &i_vin,
-  const poutre::se::details::neighbor_list_t<Rank> &nl,
-  ViewOut<TOut, Rank> &o_vout)
+template< typename TIn,
+          typename TOut,
+          ptrdiff_t Rank,
+          template< typename, ptrdiff_t > class ViewIn,
+          template< typename, ptrdiff_t > class ViewOut >
+void t_Dilate(const ViewIn< const TIn, Rank > &i_vin,
+              const poutre::se::details::neighbor_list_t< Rank > &nl,
+              ViewOut< TOut, Rank > &o_vout)
 {
   POUTRE_ENTERING("t_Dilate view dispatcher");
   POUTRE_CHECK(i_vin.size() == o_vout.size(), "Incompatible views size");
-  using BinOp = BinOpSupRuntime<TIn, TOut>;
-  t_ErodeDilateDispatcherRuntime<TIn, TOut, Rank, ViewIn, ViewOut, BinOp> dispatcher;
+  using BinOp = BinOpSupRuntime< TIn, TOut >;
+  t_ErodeDilateDispatcherRuntime< TIn, TOut, Rank, ViewIn, ViewOut, BinOp > dispatcher;
   dispatcher(i_vin, nl, o_vout);
 }
 
-template<typename TIn, typename TOut, ptrdiff_t Rank>
-void t_Dilate(const poutre::details::image_t<TIn, Rank> &i_img,
-  const poutre::se::details::neighbor_list_t<Rank> &nl,
-  poutre::details::image_t<TOut, Rank> &o_img)
+template< typename TIn, typename TOut, ptrdiff_t Rank >
+void t_Dilate(const poutre::details::image_t< TIn, Rank > &i_img,
+              const poutre::se::details::neighbor_list_t< Rank > &nl,
+              poutre::details::image_t< TOut, Rank > &o_img)
 {
   AssertSizesCompatible(i_img, o_img, "t_Dilate incompatible size");
   AssertAsTypesCompatible(i_img, o_img, "t_Dilate incompatible types");
@@ -222,26 +231,26 @@ void t_Dilate(const poutre::details::image_t<TIn, Rank> &i_img,
   return t_Dilate(viewIn, nl, viewOut);
 }
 
-template<typename TIn,
-  typename TOut,
-  ptrdiff_t Rank,
-  template<typename, ptrdiff_t> class ViewIn,
-  template<typename, ptrdiff_t> class ViewOut>
-void t_Erode(const ViewIn<const TIn, Rank> &i_vin,
-  const poutre::se::details::neighbor_list_t<Rank> &nl,
-  ViewOut<TOut, Rank> &o_vout)
+template< typename TIn,
+          typename TOut,
+          ptrdiff_t Rank,
+          template< typename, ptrdiff_t > class ViewIn,
+          template< typename, ptrdiff_t > class ViewOut >
+void t_Erode(const ViewIn< const TIn, Rank > &i_vin,
+             const poutre::se::details::neighbor_list_t< Rank > &nl,
+             ViewOut< TOut, Rank > &o_vout)
 {
   POUTRE_ENTERING("t_Erode view dispatcher");
   POUTRE_CHECK(i_vin.size() == o_vout.size(), "Incompatible views size");
-  using BinOp = BinOpInfRuntime<TIn, TOut>;
-  t_ErodeDilateDispatcherRuntime<TIn, TOut, Rank, ViewIn, ViewOut, BinOp> dispatcher;
+  using BinOp = BinOpInfRuntime< TIn, TOut >;
+  t_ErodeDilateDispatcherRuntime< TIn, TOut, Rank, ViewIn, ViewOut, BinOp > dispatcher;
   dispatcher(i_vin, nl, o_vout);
 }
 
-template<typename TIn, typename TOut, ptrdiff_t Rank>
-void t_Erode(const poutre::details::image_t<TIn, Rank> &i_img,
-  const poutre::se::details::neighbor_list_t<Rank> &nl,
-  poutre::details::image_t<TOut, Rank> &o_img)
+template< typename TIn, typename TOut, ptrdiff_t Rank >
+void t_Erode(const poutre::details::image_t< TIn, Rank > &i_img,
+             const poutre::se::details::neighbor_list_t< Rank > &nl,
+             poutre::details::image_t< TOut, Rank > &o_img)
 {
   AssertSizesCompatible(i_img, o_img, "t_Erode incompatible size");
   AssertAsTypesCompatible(i_img, o_img, "t_Erode incompatible types");

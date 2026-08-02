@@ -11,12 +11,12 @@
 //==============================================================================
 
 #include "benchmark/benchmark.h"
-#include <poutre/base/types.hpp>
 #include <poutre/base/details/data_structures/array_view.hpp>
+#include <poutre/base/types.hpp>
 #include <poutre/pixel_processing/details/transpose_op_t.hpp>
-#include <cstdlib>
-#include <vector>
+
 #include <cmath>
+#include <vector>
 
 // NOLINTBEGIN
 namespace {
@@ -53,7 +53,7 @@ BENCHMARK_DEFINE_F(TransposeFixture, Transpose2DAlongX)(benchmark::State &state)
   const auto size = state.range(0);
   std::ptrdiff_t sizeextent = static_cast<std::ptrdiff_t>(std::sqrt(size));
   for (auto _ : state) {
-    auto view2din = poutre::details::av::array_view<const poutre::pINT32, 2>(m_vect_in, { sizeextent, sizeextent});
+    auto view2din = poutre::details::av::array_view<const poutre::pINT32, 2>(m_vect_in, { sizeextent, sizeextent });
     auto view2dout = poutre::details::av::array_view<poutre::pINT32, 2>(m_vect_out, { sizeextent, sizeextent });
     poutre::details::t_transpose(view2din, view2dout);
   }
@@ -65,6 +65,7 @@ BENCHMARK_REGISTER_F(TransposeFixture, Transpose2DAlongX)
   ->Arg(32 * 32)//-V112
   ->Arg(64 * 64)
   ->Arg(128 * 128)
-  ->Arg(256 * 256)->Unit(benchmark::kMillisecond); //-V112
+  ->Arg(256 * 256)
+  ->Unit(benchmark::kMillisecond);//-V112
 
 // NOLINTEND

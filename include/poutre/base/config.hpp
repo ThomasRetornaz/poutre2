@@ -113,8 +113,6 @@
 
 #  define POUTRE_CONSTEXPR constexpr // NOLINT
 
-#  define POUTRE_CONSTEXPR constexpr // NOLINT
-
 // POUTRE_STRONG_INLINE is a stronger version of inline directive mostly to enforce inlining for
 // MSVC compiler:using
 // __forceinline on MSVC/INTEL,but still doesn't use GCC's/clang always_inline.

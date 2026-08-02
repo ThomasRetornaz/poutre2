@@ -19,8 +19,8 @@
 
 #include <poutre/base/config.hpp>
 #include <poutre/base/image_interface.hpp>
-#include <poutre/structuring_element/se_types_and_tags.hpp>
 #include <poutre/label/label.hpp>
+#include <poutre/structuring_element/se_types_and_tags.hpp>
 
 namespace poutre::label {
 /**
@@ -29,14 +29,14 @@ namespace poutre::label {
  */
 
 /*!@brief Label minima with a single "id" per minimum in the output image
-* \warning o_img must be 64 bits (PType_GrayINT64) to avoid overflow
-*/
-LAB_API void label_minima(const IInterface &i_img,  se::Common_NL_SE nl_static, IInterface &o_img);
+ * \warning o_img must be 64 bits (PType_GrayINT64) to avoid overflow
+ */
+LAB_API void label_minima(const IInterface &i_img, se::Common_NL_SE nl_static, IInterface &o_img);
 
 /*!@brief Label maxima with a single "id" per maximum in the output image
-* \warning o_img must be 64 bits (PType_GrayINT64) to avoid overflow
-*/
-LAB_API void label_maxima(const IInterface &i_img,  se::Common_NL_SE nl_static, IInterface &o_img);
+ * \warning o_img must be 64 bits (PType_GrayINT64) to avoid overflow
+ */
+LAB_API void label_maxima(const IInterface &i_img, se::Common_NL_SE nl_static, IInterface &o_img);
 
 //! @} doxygroup: poutre_label_group
-}
+}// namespace poutre::label

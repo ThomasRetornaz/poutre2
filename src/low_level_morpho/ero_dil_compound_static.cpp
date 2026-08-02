@@ -21,35 +21,43 @@
 #include <poutre/structuring_element/se_types_and_tags.hpp>
 
 namespace {
-template<std::ptrdiff_t NumDims, poutre::PType P>
+template< std::ptrdiff_t NumDims, poutre::PType P >
 void ErodeImageDispatch(const poutre::IInterface &i_img,
-  const poutre::se::Compound_NL_SE compound_nl,
-  const int size,
-  poutre::IInterface &o_img)
+                        const poutre::se::Compound_NL_SE compound_nl,
+                        const int size,
+                        poutre::IInterface &o_img)
 {
   using ImgType =
-    poutre::details::image_t<typename poutre::enum_to_type<poutre::CompoundType::CompoundType_Scalar, P>::type,
-      NumDims>;
-  const auto *img1_t = dynamic_cast<const ImgType *>(&i_img);
-  if (!img1_t) { POUTRE_RUNTIME_ERROR("ErodeImageDispatch img1_t downcast fail"); }
-  auto *img2_t = dynamic_cast<ImgType *>(&o_img);
-  if (!img2_t) { POUTRE_RUNTIME_ERROR("ErodeImageDispatch img2_t downcast fail"); }
+    poutre::details::image_t< typename poutre::enum_to_type< poutre::CompoundType::CompoundType_Scalar, P >::type,
+                              NumDims >;
+  const auto *img1_t = dynamic_cast< const ImgType * >(&i_img);
+  if (!img1_t) {
+    POUTRE_RUNTIME_ERROR("ErodeImageDispatch img1_t downcast fail");
+  }
+  auto *img2_t = dynamic_cast< ImgType * >(&o_img);
+  if (!img2_t) {
+    POUTRE_RUNTIME_ERROR("ErodeImageDispatch img2_t downcast fail");
+  }
   poutre::llm::details::t_Erode(*img1_t, compound_nl, size, *img2_t);
 }
 
-template<std::ptrdiff_t NumDims, poutre::PType P>
+template< std::ptrdiff_t NumDims, poutre::PType P >
 void DilateImageDispatch(const poutre::IInterface &i_img,
-  const poutre::se::Compound_NL_SE compound_nl,
-  const int size,
-  poutre::IInterface &o_img)
+                         const poutre::se::Compound_NL_SE compound_nl,
+                         const int size,
+                         poutre::IInterface &o_img)
 {
   using ImgType =
-    poutre::details::image_t<typename poutre::enum_to_type<poutre::CompoundType::CompoundType_Scalar, P>::type,
-      NumDims>;
-  const auto *img1_t = dynamic_cast<const ImgType *>(&i_img);
-  if (!img1_t) { POUTRE_RUNTIME_ERROR("DilateImageDispatch img1_t downcast fail"); }
-  auto *img2_t = dynamic_cast<ImgType *>(&o_img);
-  if (!img2_t) { POUTRE_RUNTIME_ERROR("DilateImageDispatch img2_t downcast fail"); }
+    poutre::details::image_t< typename poutre::enum_to_type< poutre::CompoundType::CompoundType_Scalar, P >::type,
+                              NumDims >;
+  const auto *img1_t = dynamic_cast< const ImgType * >(&i_img);
+  if (!img1_t) {
+    POUTRE_RUNTIME_ERROR("DilateImageDispatch img1_t downcast fail");
+  }
+  auto *img2_t = dynamic_cast< ImgType * >(&o_img);
+  if (!img2_t) {
+    POUTRE_RUNTIME_ERROR("DilateImageDispatch img2_t downcast fail");
+  }
   poutre::llm::details::t_Dilate(*img1_t, compound_nl, size, *img2_t);
 }
 }// namespace
@@ -71,19 +79,19 @@ void Erode(const IInterface &i_img, se::Compound_NL_SE nl_compound, const int si
   case 2: {
     switch (i_img.GetPType()) {
     case poutre::PType::PType_GrayUINT8: {
-      ErodeImageDispatch<2, poutre::PType::PType_GrayUINT8>(i_img, nl_compound, size, o_img);
+      ErodeImageDispatch< 2, poutre::PType::PType_GrayUINT8 >(i_img, nl_compound, size, o_img);
     } break;
     case poutre::PType::PType_GrayINT32: {
-      ErodeImageDispatch<2, poutre::PType::PType_GrayINT32>(i_img, nl_compound, size, o_img);
+      ErodeImageDispatch< 2, poutre::PType::PType_GrayINT32 >(i_img, nl_compound, size, o_img);
     } break;
     case poutre::PType::PType_GrayINT64: {
-      ErodeImageDispatch<2, poutre::PType::PType_GrayINT64>(i_img, nl_compound, size, o_img);
+      ErodeImageDispatch< 2, poutre::PType::PType_GrayINT64 >(i_img, nl_compound, size, o_img);
     } break;
     case poutre::PType::PType_F32: {
-      ErodeImageDispatch<2, poutre::PType::PType_F32>(i_img, nl_compound, size, o_img);
+      ErodeImageDispatch< 2, poutre::PType::PType_F32 >(i_img, nl_compound, size, o_img);
     } break;
     case poutre::PType::PType_D64: {
-      ErodeImageDispatch<2, poutre::PType::PType_D64>(i_img, nl_compound, size, o_img);
+      ErodeImageDispatch< 2, poutre::PType::PType_D64 >(i_img, nl_compound, size, o_img);
     } break;
     default: {
       POUTRE_RUNTIME_ERROR("Erode unsupported PTYPE");
@@ -93,19 +101,19 @@ void Erode(const IInterface &i_img, se::Compound_NL_SE nl_compound, const int si
   case 3: {
     switch (i_img.GetPType()) {
     case poutre::PType::PType_GrayUINT8: {
-      ErodeImageDispatch<3, poutre::PType::PType_GrayUINT8>(i_img, nl_compound, size, o_img);
+      ErodeImageDispatch< 3, poutre::PType::PType_GrayUINT8 >(i_img, nl_compound, size, o_img);
     } break;
     case poutre::PType::PType_GrayINT32: {
-      ErodeImageDispatch<3, poutre::PType::PType_GrayINT32>(i_img, nl_compound, size, o_img);
+      ErodeImageDispatch< 3, poutre::PType::PType_GrayINT32 >(i_img, nl_compound, size, o_img);
     } break;
     case poutre::PType::PType_GrayINT64: {
-      ErodeImageDispatch<3, poutre::PType::PType_GrayINT64>(i_img, nl_compound, size, o_img);
+      ErodeImageDispatch< 3, poutre::PType::PType_GrayINT64 >(i_img, nl_compound, size, o_img);
     } break;
     case poutre::PType::PType_F32: {
-      ErodeImageDispatch<3, poutre::PType::PType_F32>(i_img, nl_compound, size, o_img);
+      ErodeImageDispatch< 3, poutre::PType::PType_F32 >(i_img, nl_compound, size, o_img);
     } break;
     case poutre::PType::PType_D64: {
-      ErodeImageDispatch<3, poutre::PType::PType_D64>(i_img, nl_compound, size, o_img);
+      ErodeImageDispatch< 3, poutre::PType::PType_D64 >(i_img, nl_compound, size, o_img);
     } break;
     default: {
       POUTRE_RUNTIME_ERROR("Erode unsupported PTYPE");
@@ -137,19 +145,19 @@ void Dilate(const IInterface &i_img, se::Compound_NL_SE nl_compound, const int s
   case 2: {
     switch (i_img.GetPType()) {
     case poutre::PType::PType_GrayUINT8: {
-      DilateImageDispatch<2, poutre::PType::PType_GrayUINT8>(i_img, nl_compound, size, o_img);
+      DilateImageDispatch< 2, poutre::PType::PType_GrayUINT8 >(i_img, nl_compound, size, o_img);
     } break;
     case poutre::PType::PType_GrayINT32: {
-      DilateImageDispatch<2, poutre::PType::PType_GrayINT32>(i_img, nl_compound, size, o_img);
+      DilateImageDispatch< 2, poutre::PType::PType_GrayINT32 >(i_img, nl_compound, size, o_img);
     } break;
     case poutre::PType::PType_GrayINT64: {
-      DilateImageDispatch<2, poutre::PType::PType_GrayINT64>(i_img, nl_compound, size, o_img);
+      DilateImageDispatch< 2, poutre::PType::PType_GrayINT64 >(i_img, nl_compound, size, o_img);
     } break;
     case poutre::PType::PType_F32: {
-      DilateImageDispatch<2, poutre::PType::PType_F32>(i_img, nl_compound, size, o_img);
+      DilateImageDispatch< 2, poutre::PType::PType_F32 >(i_img, nl_compound, size, o_img);
     } break;
     case poutre::PType::PType_D64: {
-      DilateImageDispatch<2, poutre::PType::PType_D64>(i_img, nl_compound, size, o_img);
+      DilateImageDispatch< 2, poutre::PType::PType_D64 >(i_img, nl_compound, size, o_img);
     } break;
     default: {
       POUTRE_RUNTIME_ERROR("Dilate unsupported PTYPE");
@@ -159,19 +167,19 @@ void Dilate(const IInterface &i_img, se::Compound_NL_SE nl_compound, const int s
   case 3: {
     switch (i_img.GetPType()) {
     case poutre::PType::PType_GrayUINT8: {
-      DilateImageDispatch<3, poutre::PType::PType_GrayUINT8>(i_img, nl_compound, size, o_img);
+      DilateImageDispatch< 3, poutre::PType::PType_GrayUINT8 >(i_img, nl_compound, size, o_img);
     } break;
     case poutre::PType::PType_GrayINT32: {
-      DilateImageDispatch<3, poutre::PType::PType_GrayINT32>(i_img, nl_compound, size, o_img);
+      DilateImageDispatch< 3, poutre::PType::PType_GrayINT32 >(i_img, nl_compound, size, o_img);
     } break;
     case poutre::PType::PType_GrayINT64: {
-      DilateImageDispatch<3, poutre::PType::PType_GrayINT64>(i_img, nl_compound, size, o_img);
+      DilateImageDispatch< 3, poutre::PType::PType_GrayINT64 >(i_img, nl_compound, size, o_img);
     } break;
     case poutre::PType::PType_F32: {
-      DilateImageDispatch<3, poutre::PType::PType_F32>(i_img, nl_compound, size, o_img);
+      DilateImageDispatch< 3, poutre::PType::PType_F32 >(i_img, nl_compound, size, o_img);
     } break;
     case poutre::PType::PType_D64: {
-      DilateImageDispatch<3, poutre::PType::PType_D64>(i_img, nl_compound, size, o_img);
+      DilateImageDispatch< 3, poutre::PType::PType_D64 >(i_img, nl_compound, size, o_img);
     } break;
     default: {
       POUTRE_RUNTIME_ERROR("Dilate unsupported PTYPE");

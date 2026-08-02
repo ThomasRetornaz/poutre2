@@ -45,7 +45,6 @@ class ImageProvider;
  */
 class IO_API ImageLoader
 {
-private:
   friend class ImageProvider;
   std::string m_imgPath;
   std::string m_i_name;

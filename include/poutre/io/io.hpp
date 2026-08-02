@@ -48,7 +48,7 @@ namespace poutre::io {
  * @return std::unique_ptr<IInterface> fresh image instance
  * @warning Doesn't support Image with more than 2 dimensions use @c LoadFromHDF5
  */
-IO_API std::unique_ptr<IInterface> LoadOIIO(const std::string &image_path);
+IO_API std::unique_ptr< IInterface > LoadOIIO(const std::string &image_path);
 
 /**
  * Store image to disk using OpenImageIO
@@ -71,7 +71,7 @@ IO_API void DumpOIIO(const std::string &path, const IInterface &i_img);
  * @throw runtime_error in case of failure
  * @see StoreWithHDF5
  */
-IO_API std::unique_ptr<IInterface> LoadHDF5(const std::string &path, const std::string &image_name = "poutre_img_1");
+IO_API std::unique_ptr< IInterface > LoadHDF5(const std::string &path, const std::string &image_name = "poutre_img_1");
 
 /**
  * @brief Store image to disk as HDF5 file

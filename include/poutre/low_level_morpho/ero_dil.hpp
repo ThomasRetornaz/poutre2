@@ -29,16 +29,16 @@ namespace poutre {
  */
 
 //! Erode iter times i_img regarding the nl_static SE, put the result in o_img
-LLM_API void Erode(const IInterface &i_img, se::Common_NL_SE nl_static, const int iter, IInterface &o_img);
+LLM_API void Erode(const IInterface &i_img, se::Common_NL_SE nl_static, int iter, IInterface &o_img);
 
 //! Dilate iter times i_img regarding the nl_static SE, put the result in o_img
-LLM_API void Dilate(const IInterface &i_img, se::Common_NL_SE nl_static, const int iter, IInterface &o_img);
+LLM_API void Dilate(const IInterface &i_img, se::Common_NL_SE nl_static, int iter, IInterface &o_img);
 
 //! Erode i_img regarding the compound SE, put the result in o_img
-LLM_API void Erode(const IInterface &i_img, se::Compound_NL_SE nl_compound, const int size, IInterface &o_img);
+LLM_API void Erode(const IInterface &i_img, se::Compound_NL_SE nl_compound, int size, IInterface &o_img);
 
 //! Dilate i_img regarding the compound SE, put the result in o_img
-LLM_API void Dilate(const IInterface &i_img, se::Compound_NL_SE nl_compound, const int size, IInterface &o_img);
+LLM_API void Dilate(const IInterface &i_img, se::Compound_NL_SE nl_compound, int size, IInterface &o_img);
 
 //! Erode i_img regarding the SE, put the result in o_img
 LLM_API void Erode(const IInterface &i_img, const se::IStructuringElement& str_el, IInterface &o_img);

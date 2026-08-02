@@ -33,7 +33,7 @@ void Timer::Start() POUTRE_NOEXCEPT
 //! Stop the timing action
 void Timer::Stop() POUTRE_NOEXCEPT
 {
-  m_accu += std::chrono::duration_cast<double_milliseconds>(high_resolution_clock::now() - m_start).count();
+  m_accu += std::chrono::duration_cast< double_milliseconds >(high_resolution_clock::now() - m_start).count();
   m_accu_cputime += std::clock() - m_start_cputime;
 }
 
@@ -43,21 +43,25 @@ Timer::timerep Timer::GetCumulativeTime() const POUTRE_NOEXCEPT { return m_accu;
 //! Grab wall mean time of iteration in ms
 Timer::timerep Timer::GetMeanTime() const POUTRE_NOEXCEPT
 {
-  if (m_nbiter == 0) { return static_cast<timerep>(0); }
-  return GetCumulativeTime() / static_cast<timerep>(m_nbiter);
+  if (m_nbiter == 0) {
+    return static_cast< timerep >(0);
+  }
+  return GetCumulativeTime() / static_cast< timerep >(m_nbiter);
 }
 
 //! Grab cpu time accumulated in ms
 Timer::timerep Timer::GetCumulativeCPUTime() const POUTRE_NOEXCEPT
 {
-  return static_cast<double>(m_accu_cputime) / CLOCKS_PER_SEC;
+  return static_cast< double >(m_accu_cputime) / CLOCKS_PER_SEC;
 }
 
 //! Grab wall mean time of iteration in ms
 Timer::timerep Timer::GetMeanCpuTime() const POUTRE_NOEXCEPT
 {
-  if (m_nbiter == 0) { return static_cast<timerep>(0); }
-  return GetCumulativeCPUTime() / static_cast<timerep>(m_nbiter);
+  if (m_nbiter == 0) {
+    return static_cast< timerep >(0);
+  }
+  return GetCumulativeCPUTime() / static_cast< timerep >(m_nbiter);
 }
 
 //! Grab number off triggered start
@@ -91,14 +95,18 @@ std::ostream &operator<<(std::ostream &ost, const Timer &timer)
 }
 
 //! ctor
-ScopedTimer::ScopedTimer(std::shared_ptr<Timer> &itimer) : m_timer(itimer)
+ScopedTimer::ScopedTimer(std::shared_ptr< Timer > &itimer) : m_timer(itimer)
 {
-  if (m_timer) { (*m_timer).Start(); }
+  if (m_timer) {
+    m_timer->Start();
+  }
 }
 //! dtor
 ScopedTimer::~ScopedTimer()
 {
-  if (m_timer) { (*m_timer).Stop(); }
+  if (m_timer) {
+    m_timer->Stop();
+  }
 }
 
 }// namespace poutre

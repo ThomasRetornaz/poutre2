@@ -44,9 +44,9 @@ public:
   //! Get @c CompoundType belong to @c IInterface
   [[nodiscard]] virtual CompoundType GetCType() const = 0;
   //! Get size over dimensions
-  [[nodiscard]] virtual std::vector<std::size_t> GetShape() const = 0;//@TODO
-                                                       // may
-                                                       // change this
+  [[nodiscard]] virtual std::vector< std::size_t > GetShape() const = 0;//@TODO
+  // may
+  // change this
   //! Get num of dimensions
   [[nodiscard]] virtual std::size_t GetRank() const = 0;
   //! Dtor
@@ -89,7 +89,7 @@ BASE_API bool AsTypesCompatible(const IInterface &i_img1, const IInterface &i_im
  *
  * @return true if ref not belong to the same image
  */
- BASE_API bool AreImagesDifferent(const IInterface &i_img1, const IInterface &i_img2);
+BASE_API bool AreImagesDifferent(const IInterface &i_img1, const IInterface &i_img2);
 
 
 //! @throw runtime_error if input images  are not compatible @see @c AsSizesCompatible
@@ -103,23 +103,23 @@ BASE_API void AssertImagesAreDifferent(const IInterface &i_img1, const IInterfac
 
 
 //! Factory to build contiguous dense image
-BASE_API std::unique_ptr<IInterface> Create(const std::vector<std::size_t> &dims, CompoundType ctype, PType ptype);
+BASE_API std::unique_ptr< IInterface > Create(const std::vector< std::size_t > &dims, CompoundType ctype, PType ptype);
 
 /**
-* @brief Convert IInterface to human readable string
-*
-* @param i_image
-* @return std::string
-*/
+ * @brief Convert IInterface to human readable string
+ *
+ * @param i_image
+ * @return std::string
+ */
 BASE_API std::string ImageToString(const IInterface &i_image);
 
 /**
-* @brief From human-readable string create an IInterface see @c ImageToString
-*
-* @param i_str
-* @return Image
-*/
-BASE_API std::unique_ptr<IInterface> ImageFromString(const std::string &i_str);
+ * @brief From human-readable string create an IInterface see @c ImageToString
+ *
+ * @param i_str
+ * @return Image
+ */
+BASE_API std::unique_ptr< IInterface > ImageFromString(const std::string &i_str);
 
 //! @} doxygroup: image_processing_interface_group
 

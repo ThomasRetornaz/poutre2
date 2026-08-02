@@ -36,19 +36,19 @@ public:
   virtual ~IStructuringElement() = default;
 
   //! Returns a new structuring element that is a transposed copy
-  [[nodiscard]] virtual std::unique_ptr<IStructuringElement> Transpose() const = 0;
+  [[nodiscard]] virtual std::unique_ptr< IStructuringElement > Transpose() const = 0;
 
   //! Get @c se_type belong to @c IStructuringElement
   [[nodiscard]] virtual se_type GetType() const = 0;
 
   //! Removes the center point from the structuring element
-  [[nodiscard]] virtual std::unique_ptr<IStructuringElement> RemoveCenter() const = 0;
+  [[nodiscard]] virtual std::unique_ptr< IStructuringElement > RemoveCenter() const = 0;
 
   //! Returns the size of the structuring element in number of neighbors (the center, if defined, is included)
   [[nodiscard]] virtual size_t GetSize() const = 0;
 
   //! Returns a deep copy of this structuring element
-  [[nodiscard]] virtual std::unique_ptr<IStructuringElement> Clone() const = 0;
+  [[nodiscard]] virtual std::unique_ptr< IStructuringElement > Clone() const = 0;
 
   //! Checks the equality this structuring element with the provided one
   [[nodiscard]] virtual bool is_equal(const IStructuringElement &) const noexcept = 0;

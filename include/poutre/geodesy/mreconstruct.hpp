@@ -35,10 +35,10 @@ enum class reconstruction_type : std::uint8_t {
 
 //! Reconstruction of i_marker under/over i_mask regarding the nl_static SE, put the result in o_img
 GEO_API void Reconstruction(reconstruction_type rect_type,
-  const IInterface &i_marker,
-  const IInterface &i_mask,
-  se::Common_NL_SE nl_static,
-  IInterface &o_img);
+                            const IInterface &i_marker,
+                            const IInterface &i_mask,
+                            se::Common_NL_SE nl_static,
+                            IInterface &o_img);
 //! @} doxygroup: poutre_geodesy_group
 
 }// namespace poutre::geo

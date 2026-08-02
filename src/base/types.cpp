@@ -20,17 +20,17 @@
 namespace poutre {
 
 #if defined(POUTRE_IS_GCC) || defined(POUTRE_IS_CLANG)
-template class compound_type<pUINT8, 3>;
-template class compound_type<pINT32, 3>;
-template class compound_type<pFLOAT, 3>;
-template class compound_type<pINT64, 3>;
-template class compound_type<pDOUBLE, 3>;
+template class compound_type< pUINT8, 3 >;
+template class compound_type< pINT32, 3 >;
+template class compound_type< pFLOAT, 3 >;
+template class compound_type< pINT64, 3 >;
+template class compound_type< pDOUBLE, 3 >;
 
-template class compound_type<pUINT8, 4>;
-template class compound_type<pINT32, 4>;
-template class compound_type<pFLOAT, 4>;
-template class compound_type<pINT64, 4>;
-template class compound_type<pDOUBLE, 4>;
+template class compound_type< pUINT8, 4 >;
+template class compound_type< pINT32, 4 >;
+template class compound_type< pFLOAT, 4 >;
+template class compound_type< pINT64, 4 >;
+template class compound_type< pDOUBLE, 4 >;
 #endif
 
 // NOTE JUST FOR CONVENIENCE AT INTERFACE LAYER TO USE STRING INSTEAD OF VERBOSE ENUM
@@ -67,11 +67,15 @@ std::istream &operator>>(std::istream &ist, CompOpType &compOpType)// NOLINT(mis
 {
   compOpType = CompOpType::CompOpUndef;
 
-  if (!ist.good()) { return ist; }
+  if (!ist.good()) {
+    return ist;
+  }
 
   std::string strType;
   ist >> strType;
-  if (ist.bad()) { return ist; }
+  if (ist.bad()) {
+    return ist;
+  }
 
   if (strType == "!=") {
     compOpType = CompOpType::CompOpDiff;
@@ -120,11 +124,15 @@ std::istream &operator>>(std::istream &ist, ArithOpType &arithOpType)// NOLINT(m
 {
   arithOpType = ArithOpType::ArithOpUndef;
 
-  if (!ist.good()) { return ist; }
+  if (!ist.good()) {
+    return ist;
+  }
 
   std::string strType;
   ist >> strType;
-  if (ist.bad()) { return ist; }
+  if (ist.bad()) {
+    return ist;
+  }
 
   if (strType == "+") {
     arithOpType = ArithOpType::ArithOpPlus;
@@ -174,11 +182,15 @@ std::istream &operator>>(std::istream &ist, AssignOpType &assignOpType)// NOLINT
 {
   assignOpType = AssignOpType::AssignOpUndef;
 
-  if (!ist.good()) { return ist; }
+  if (!ist.good()) {
+    return ist;
+  }
 
   std::string strType;
   ist >> strType;
-  if (ist.bad()) { return ist; }
+  if (ist.bad()) {
+    return ist;
+  }
 
   if (strType == "+=") {
     assignOpType = AssignOpType::AssignOpAdd;
@@ -223,7 +235,9 @@ std::ostream &operator<<(std::ostream &ost, CompoundType ctype)
 std::istream &operator>>(std::istream &ist, CompoundType &ctype)// NOLINT(misc-unused-parameters)
 {
   ctype = CompoundType::CompoundType_Undef;
-  if (!ist.good()) { return ist; }
+  if (!ist.good()) {
+    return ist;
+  }
 
   std::string strType{};
   ist >> strType;
@@ -318,7 +332,9 @@ std::istream &operator>>(std::istream &ist, PType &ptype)// NOLINT(misc-unused-p
 {
   ptype = PType::PType_Undef;
 
-  if (!ist.good()) { return ist; }
+  if (!ist.good()) {
+    return ist;
+  }
 
   std::string strType;
   ist >> strType;
@@ -384,7 +400,9 @@ std::istream &operator>>(std::istream &ist, LabelType &ltype)// NOLINT(misc-unus
 {
   ltype = LabelType::Candidate;
 
-  if (!ist.good()) { return ist; }
+  if (!ist.good()) {
+    return ist;
+  }
 
   std::string strType;
   ist >> strType;

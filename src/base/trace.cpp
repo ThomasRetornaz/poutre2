@@ -10,16 +10,16 @@
 //                     http://www.boost.org/LICENSE_1_0.txt                   //
 //==============================================================================
 
-#include <poutre/base/trace.hpp>
-#include <spdlog/spdlog.h>
-#include <spdlog/sinks/stdout_color_sinks.h>
-#include <spdlog/common.h>
-#include <ostream>
 #include <mutex>
+#include <ostream>
+#include <poutre/base/trace.hpp>
+#include <spdlog/common.h>
+#include <spdlog/sinks/stdout_color_sinks.h>
+#include <spdlog/spdlog.h>
 
 namespace poutre {
 
-GlobalLogger* GlobalLogger::m_instance;
+GlobalLogger *GlobalLogger::m_instance;
 std::once_flag GlobalLogger::m_initFlag;
 
 //! Private ctor
@@ -28,10 +28,7 @@ GlobalLogger::GlobalLogger() : m_innerlogger(spdlog::stdout_color_st("POUTRE_GLO
   (*m_innerlogger).set_level(::spdlog::level::off);
 }
 
-GlobalLogger::~GlobalLogger()
-{
-  spdlog::shutdown();
-}
+GlobalLogger::~GlobalLogger() { spdlog::shutdown(); }
 
 std::ostream &operator<<(std::ostream &ost, GlobalLogger::LoggerLevel level)// NOLINT(misc-unused-parameters)
 {

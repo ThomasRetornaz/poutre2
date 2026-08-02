@@ -43,20 +43,26 @@ ImageLoader &ImageLoader::SetPath(const std::string &i_imgpath)
   return *this;
 }
 
-std::unique_ptr<IInterface> ImageLoader::Load() const
+std::unique_ptr< IInterface > ImageLoader::Load() const
 {
   POUTRE_ENTERING("ImageLoader::Load()");
-  if (!m_isready) { POUTRE_RUNTIME_ERROR("ImageLoader:  you must set path through SetPath"); }
+  if (!m_isready) {
+    POUTRE_RUNTIME_ERROR("ImageLoader:  you must set path through SetPath");
+  }
   const fs::path localPath(m_imgPath);
-  if (!fs::exists(localPath)) { POUTRE_RUNTIME_ERROR("ImageLoader:: path doesn't exist "); }
+  if (!fs::exists(localPath)) {
+    POUTRE_RUNTIME_ERROR("ImageLoader:: path doesn't exist ");
+  }
   // switch on extension
   auto extension = localPath.extension().string();
 
   std::ranges::transform(extension, extension.begin(), [](unsigned char charac) {
-    return static_cast<unsigned char>(std::tolower(charac));
+    return static_cast< unsigned char >(std::tolower(charac));
   });
 
-  if (extension == ".h5") { return LoadHDF5(localPath.string(), m_i_name); }
+  if (extension == ".h5") {
+    return LoadHDF5(localPath.string(), m_i_name);
+  }
 #ifdef POUTRE_BUILD_WITH_OIIO
   return LoadOIIO(localPath.string());
 #else

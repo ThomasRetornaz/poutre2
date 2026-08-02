@@ -13,7 +13,6 @@
  */
 
 
-#include "poutre/label/label.hpp"
 #include "poutre/pixel_processing/details/compare_op_t.hpp"
 #include <deque>
 #include <poutre/base/config.hpp>
@@ -27,20 +26,20 @@ namespace poutre::dist::details {
  *@{
  */
 
-template<poutre::se::Common_NL_SE nl_static,
-  typename Tmarker,
-  typename Tmask,
-  typename Tout,
-  ptrdiff_t Rank,
-  template<typename, ptrdiff_t> class ViewMarker,
-  template<typename, ptrdiff_t> class ViewMask,
-  template<typename, ptrdiff_t> class ViewOut>
+template< se::Common_NL_SE nl_static,
+          typename Tmarker,
+          typename Tmask,
+          typename Tout,
+          ptrdiff_t Rank,
+          template< typename, ptrdiff_t > class ViewMarker,
+          template< typename, ptrdiff_t > class ViewMask,
+          template< typename, ptrdiff_t > class ViewOut >
 struct t_GeodesicDistanceViewDispatcher
 {
-  static_assert(Rank == poutre::se::details::static_se_traits<nl_static>::rank, "SE and view have not the same Rank");
-  void operator()(const ViewMarker<const Tmarker, Rank> &i_vmarker,
-    const ViewMask<const Tmask, Rank> &i_vmask,
-    const ViewOut<Tout, Rank> &o_vout) const
+  static_assert(Rank == se::details::static_se_traits< nl_static >::rank, "SE and view have not the same Rank");
+  void operator()(const ViewMarker< const Tmarker, Rank > &i_vmarker,
+                  const ViewMask< const Tmask, Rank > &i_vmask,
+                  const ViewOut< Tout, Rank > &o_vout) const
   {
     POUTRE_CHECK(i_vmarker.size() == o_vout.size(), "Incompatible views size");
     POUTRE_CHECK(i_vmask.size() == o_vout.size(), "Incompatible views size");
@@ -56,15 +55,15 @@ struct t_GeodesicDistanceViewDispatcher
     POUTRE_CHECK(stridevMarker == stridevOut, "Incompatible stride");
     POUTRE_CHECK(stridevMask == stridevOut, "Incompatible stride");
 
-    constexpr auto nl_coord = poutre::se::details::static_se_traits<nl_static>::coordinates_no_center;
-    std::deque<poutre::details::av::index<Rank>> current_front;
-    std::deque<poutre::details::av::index<Rank>> next_front;
-    std::vector<poutre::LabelType> work(vMarkerbound.size(), poutre::LabelType::Candidate);
-    poutre::details::av::strided_array_view<poutre::LabelType, Rank> v_work(work.data(), vMarkerbound, stridevMarker);
+    constexpr auto nl_coord = se::details::static_se_traits< nl_static >::coordinates_no_center;
+    std::deque< poutre::details::av::index< Rank > > current_front;
+    std::deque< poutre::details::av::index< Rank > > next_front;
+    std::vector< LabelType > work(vMarkerbound.size(), LabelType::Candidate);
+    poutre::details::av::strided_array_view< LabelType, Rank > v_work(work.data(), vMarkerbound, stridevMarker);
 
-    const auto background = poutre::TypeTraits<Tmarker>::background();
-    const auto backgroundMask = poutre::TypeTraits<Tmask>::background();
-    Tout current_value = static_cast<Tout>(0);
+    const auto background = poutre::TypeTraits< Tmarker >::background();
+    const auto backgroundMask = poutre::TypeTraits< Tmask >::background();
+    Tout current_value = static_cast< Tout >(0);
 
     {
       auto beg1 = begin(vMarkerbound);
@@ -73,7 +72,7 @@ struct t_GeodesicDistanceViewDispatcher
         if (i_vmarker[*beg1] != background) {
           if (i_vmask[*beg1] != backgroundMask) {
             o_vout[*beg1] = current_value;
-            v_work[*beg1] = poutre::LabelType::Done;
+            v_work[*beg1] = LabelType::Done;
             current_front.push_back(*beg1);
           }
         }
@@ -87,7 +86,9 @@ struct t_GeodesicDistanceViewDispatcher
         for (const auto &idx_nl : nl_coord) {
           const auto delta_nl_idx = current_idx + idx_nl;
           {
-            if (!vMarkerbound.contains(delta_nl_idx)) { continue; }
+            if (!vMarkerbound.contains(delta_nl_idx)) {
+              continue;
+            }
             if (i_vmask[delta_nl_idx] != backgroundMask) {
               if (v_work[delta_nl_idx] != LabelType::Done) {
                 next_front.push_back(delta_nl_idx);
@@ -105,23 +106,25 @@ struct t_GeodesicDistanceViewDispatcher
       auto beg1 = begin(vMarkerbound);
       auto end1 = end(vMarkerbound);
       for (; beg1 != end1; ++beg1) {
-        if (v_work[*beg1] == poutre::LabelType::Candidate) { o_vout[*beg1] = static_cast<Tout>(0); }
+        if (v_work[*beg1] == LabelType::Candidate) {
+          o_vout[*beg1] = static_cast< Tout >(0);
+        }
       }
     }
   }
 };
 
-template<typename Tmarker,
-  typename Tmask,
-  typename Tout,
-  ptrdiff_t Rank,
-  template<typename, ptrdiff_t> class ViewMarker,
-  template<typename, ptrdiff_t> class ViewMask,
-  template<typename, ptrdiff_t> class ViewOut>
-void t_geodesic_distanceDispatch(const ViewMarker<const Tmarker, Rank> &i_vmarker,
-  const ViewMask<const Tmask, Rank> &i_vmask,
-  const poutre::se::Common_NL_SE nl_static,
-  const ViewOut<Tout, Rank> &o_vout)
+template< typename Tmarker,
+          typename Tmask,
+          typename Tout,
+          ptrdiff_t Rank,
+          template< typename, ptrdiff_t > class ViewMarker,
+          template< typename, ptrdiff_t > class ViewMask,
+          template< typename, ptrdiff_t > class ViewOut >
+void t_geodesic_distanceDispatch(const ViewMarker< const Tmarker, Rank > &i_vmarker,
+                                 const ViewMask< const Tmask, Rank > &i_vmask,
+                                 const se::Common_NL_SE nl_static,
+                                 const ViewOut< Tout, Rank > &o_vout)
 {
   POUTRE_CHECK(i_vmarker.size() == o_vout.size(), "t_geodesic_distanceDispatch Incompatible views size");
   POUTRE_CHECK(i_vmask.size() == o_vout.size(), "t_geodesic_distanceDispatch Incompatible views size");
@@ -130,16 +133,16 @@ void t_geodesic_distanceDispatch(const ViewMarker<const Tmarker, Rank> &i_vmarke
     switch (nl_static) {
     case poutre::se::Common_NL_SE::SESegmentX1D: {
       // FIXME RLE must be far faster
-      t_GeodesicDistanceViewDispatcher<poutre::se::Common_NL_SE::SESegmentX1D,
-        Tmarker,
-        Tmask,
-        Tout,
-        Rank,
-        ViewMarker,
-        ViewMask,
-        ViewOut>
-        op;
-      op(i_vmarker, i_vmask, o_vout);
+      t_GeodesicDistanceViewDispatcher< se::Common_NL_SE::SESegmentX1D,
+                                        Tmarker,
+                                        Tmask,
+                                        Tout,
+                                        Rank,
+                                        ViewMarker,
+                                        ViewMask,
+                                        ViewOut >
+        oper;
+      oper(i_vmarker, i_vmask, o_vout);
       break;
     }
     default: {
@@ -150,57 +153,57 @@ void t_geodesic_distanceDispatch(const ViewMarker<const Tmarker, Rank> &i_vmarke
   }
   if constexpr (Rank == 2) {
     switch (nl_static) {
-    case poutre::se::Common_NL_SE::SESquare2D: {
-      t_GeodesicDistanceViewDispatcher<poutre::se::Common_NL_SE::SESquare2D,
-        Tmarker,
-        Tmask,
-        Tout,
-        Rank,
-        ViewMarker,
-        ViewMask,
-        ViewOut>
-        op;
-      op(i_vmarker, i_vmask, o_vout);
+    case se::Common_NL_SE::SESquare2D: {
+      t_GeodesicDistanceViewDispatcher< se::Common_NL_SE::SESquare2D,
+                                        Tmarker,
+                                        Tmask,
+                                        Tout,
+                                        Rank,
+                                        ViewMarker,
+                                        ViewMask,
+                                        ViewOut >
+        oper;
+      oper(i_vmarker, i_vmask, o_vout);
 
       break;
     }
-    case poutre::se::Common_NL_SE::SECross2D: {
-      t_GeodesicDistanceViewDispatcher<poutre::se::Common_NL_SE::SECross2D,
-        Tmarker,
-        Tmask,
-        Tout,
-        Rank,
-        ViewMarker,
-        ViewMask,
-        ViewOut>
-        op;
-      op(i_vmarker, i_vmask, o_vout);
+    case se::Common_NL_SE::SECross2D: {
+      t_GeodesicDistanceViewDispatcher< se::Common_NL_SE::SECross2D,
+                                        Tmarker,
+                                        Tmask,
+                                        Tout,
+                                        Rank,
+                                        ViewMarker,
+                                        ViewMask,
+                                        ViewOut >
+        oper;
+      oper(i_vmarker, i_vmask, o_vout);
       break;
     }
-    case poutre::se::Common_NL_SE::SESegmentX2D: {
-      t_GeodesicDistanceViewDispatcher<poutre::se::Common_NL_SE::SESegmentX2D,
-        Tmarker,
-        Tmask,
-        Tout,
-        Rank,
-        ViewMarker,
-        ViewMask,
-        ViewOut>
-        op;
-      op(i_vmarker, i_vmask, o_vout);
+    case se::Common_NL_SE::SESegmentX2D: {
+      t_GeodesicDistanceViewDispatcher< se::Common_NL_SE::SESegmentX2D,
+                                        Tmarker,
+                                        Tmask,
+                                        Tout,
+                                        Rank,
+                                        ViewMarker,
+                                        ViewMask,
+                                        ViewOut >
+        oper;
+      oper(i_vmarker, i_vmask, o_vout);
       break;
     }
-    case poutre::se::Common_NL_SE::SESegmentY2D: {
-      t_GeodesicDistanceViewDispatcher<poutre::se::Common_NL_SE::SESegmentY2D,
-        Tmarker,
-        Tmask,
-        Tout,
-        Rank,
-        ViewMarker,
-        ViewMask,
-        ViewOut>
-        op;
-      op(i_vmarker, i_vmask, o_vout);
+    case se::Common_NL_SE::SESegmentY2D: {
+      t_GeodesicDistanceViewDispatcher< se::Common_NL_SE::SESegmentY2D,
+                                        Tmarker,
+                                        Tmask,
+                                        Tout,
+                                        Rank,
+                                        ViewMarker,
+                                        ViewMask,
+                                        ViewOut >
+        oper;
+      oper(i_vmarker, i_vmask, o_vout);
       break;
     }
     default: {
@@ -211,69 +214,69 @@ void t_geodesic_distanceDispatch(const ViewMarker<const Tmarker, Rank> &i_vmarke
   }
   if constexpr (Rank == 3) {
     switch (nl_static) {
-    case poutre::se::Common_NL_SE::SECross3D: {
-      t_GeodesicDistanceViewDispatcher<poutre::se::Common_NL_SE::SECross3D,
-        Tmarker,
-        Tmask,
-        Tout,
-        Rank,
-        ViewMarker,
-        ViewMask,
-        ViewOut>
-        op;
-      op(i_vmarker, i_vmask, o_vout);
+    case se::Common_NL_SE::SECross3D: {
+      t_GeodesicDistanceViewDispatcher< se::Common_NL_SE::SECross3D,
+                                        Tmarker,
+                                        Tmask,
+                                        Tout,
+                                        Rank,
+                                        ViewMarker,
+                                        ViewMask,
+                                        ViewOut >
+        oper;
+      oper(i_vmarker, i_vmask, o_vout);
       break;
     }
-    case poutre::se::Common_NL_SE::SESquare3D: {
-      t_GeodesicDistanceViewDispatcher<poutre::se::Common_NL_SE::SESquare3D,
-        Tmarker,
-        Tmask,
-        Tout,
-        Rank,
-        ViewMarker,
-        ViewMask,
-        ViewOut>
-        op;
-      op(i_vmarker, i_vmask, o_vout);
+    case se::Common_NL_SE::SESquare3D: {
+      t_GeodesicDistanceViewDispatcher< se::Common_NL_SE::SESquare3D,
+                                        Tmarker,
+                                        Tmask,
+                                        Tout,
+                                        Rank,
+                                        ViewMarker,
+                                        ViewMask,
+                                        ViewOut >
+        oper;
+      oper(i_vmarker, i_vmask, o_vout);
       break;
     }
-    case poutre::se::Common_NL_SE::SESegmentX3D: {
-      t_GeodesicDistanceViewDispatcher<poutre::se::Common_NL_SE::SESegmentX3D,
-        Tmarker,
-        Tmask,
-        Tout,
-        Rank,
-        ViewMarker,
-        ViewMask,
-        ViewOut>
-        op;
-      op(i_vmarker, i_vmask, o_vout);
+    case se::Common_NL_SE::SESegmentX3D: {
+      t_GeodesicDistanceViewDispatcher< se::Common_NL_SE::SESegmentX3D,
+                                        Tmarker,
+                                        Tmask,
+                                        Tout,
+                                        Rank,
+                                        ViewMarker,
+                                        ViewMask,
+                                        ViewOut >
+        oper;
+      oper(i_vmarker, i_vmask, o_vout);
       break;
     }
-    case poutre::se::Common_NL_SE::SESegmentY3D: {
-      t_GeodesicDistanceViewDispatcher<poutre::se::Common_NL_SE::SESegmentY3D,
-        Tmarker,
-        Tmask,
-        Tout,
-        Rank,
-        ViewMarker,
-        ViewMask,
-        ViewOut>
-        op;
-      op(i_vmarker, i_vmask, o_vout);
+    case se::Common_NL_SE::SESegmentY3D: {
+      t_GeodesicDistanceViewDispatcher< se::Common_NL_SE::SESegmentY3D,
+                                        Tmarker,
+                                        Tmask,
+                                        Tout,
+                                        Rank,
+                                        ViewMarker,
+                                        ViewMask,
+                                        ViewOut >
+        oper;
+      oper(i_vmarker, i_vmask, o_vout);
       break;
     }
-    case poutre::se::Common_NL_SE::SESegmentZ3D: {
-      t_GeodesicDistanceViewDispatcher<poutre::se::Common_NL_SE::SESegmentZ3D,
-        Tmarker,
-        Tmask,
-        Tout,
-        Rank,
-        ViewMarker,
-        ViewMask,
-        ViewOut>
-        op;
-      op(i_vmarker, i_vmask, o_vout);
+    case se::Common_NL_SE::SESegmentZ3D: {
+      t_GeodesicDistanceViewDispatcher< se::Common_NL_SE::SESegmentZ3D,
+                                        Tmarker,
+                                        Tmask,
+                                        Tout,
+                                        Rank,
+                                        ViewMarker,
+                                        ViewMask,
+                                        ViewOut >
+        oper;
+      oper(i_vmarker, i_vmask, o_vout);
       break;
     }
     default: {
@@ -287,11 +290,11 @@ void t_geodesic_distanceDispatch(const ViewMarker<const Tmarker, Rank> &i_vmarke
   // return 0; //NOLINT
 }
 
-template<typename Tmarker, typename Tmask, typename Tout, ptrdiff_t Rank>
-void t_geodesic_distance(const poutre::details::image_t<Tmarker, Rank> &i_marker,
-  const poutre::details::image_t<Tmask, Rank> &i_mask,
-  poutre::se::Common_NL_SE nl_static,
-  poutre::details::image_t<Tout, Rank> &o_img)
+template< typename Tmarker, typename Tmask, typename Tout, ptrdiff_t Rank >
+void t_geodesic_distance(const poutre::details::image_t< Tmarker, Rank > &i_marker,
+                         const poutre::details::image_t< Tmask, Rank > &i_mask,
+                         poutre::se::Common_NL_SE nl_static,
+                         poutre::details::image_t< Tout, Rank > &o_img)
 {
   AssertSizesCompatible(i_marker, o_img, "t_geodesic_distance incompatible size");
   AssertSizesCompatible(i_mask, o_img, "t_geodesic_distance incompatible size");

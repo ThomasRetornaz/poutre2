@@ -42,10 +42,10 @@ template<class valuetype, std::ptrdiff_t Rank = 2> class /*BASE_API */ image_t :
   static_assert(Rank > 0, "Rank must be >0");
 
 public:
-  using self_type = image_t<valuetype, Rank>;
+  using self_type = image_t;
   using parent_interface = IInterface;
   using aligned_allocator =
-    xs::aligned_allocator<typename poutre::TypeTraits<valuetype>::storage_type, SIMD_IDEAL_MAX_ALIGN_BYTES>;
+    xs::aligned_allocator<typename TypeTraits<valuetype>::storage_type, SIMD_IDEAL_MAX_ALIGN_BYTES>;
   using value_type = valuetype;// typename
                                // TypeTraits<ptype>::storage_type;
   using const_value_type = std::add_const_t<value_type>;
@@ -62,10 +62,10 @@ public:
   using coordinate_type = av::bounds<Rank>;
   using index_type = av::index<Rank>;
   using storage_type = std::vector<value_type, aligned_allocator>;
-  using iterator = typename storage_type::iterator;
-  using const_iterator = typename storage_type::const_iterator;
-  using reverse_iterator = typename storage_type::reverse_iterator;
-  using const_reverse_iterator = typename storage_type::const_reverse_iterator;
+  using iterator = storage_type::iterator;
+  using const_iterator = storage_type::const_iterator;
+  using reverse_iterator = storage_type::reverse_iterator;
+  using const_reverse_iterator = storage_type::const_reverse_iterator;
 
   // static const std::ptrdiff_t m_numdims = NumDims;
   static const PType m_ptype = TypeTraits<value_type>::p_type;
@@ -136,9 +136,9 @@ public:
     if (dims.size() != m_numdims) {
       POUTRE_RUNTIME_ERROR("Invalid input initializer Mismatch between Rank and dims.size()");
     }
-    for (size_t i = 0; i < this->m_numdims; ++i) { this->m_coordinnates[i] = static_cast<ptrdiff_t>(dims[i]); }
+    for (std::size_t i = 0; i < this->m_numdims; ++i) { this->m_coordinnates[i] = static_cast<ptrdiff_t>(dims[i]); }
     m_numelement = static_cast<std::size_t>(m_coordinnates[0]);
-    for (size_t i = 1; i < static_cast<std::size_t>(m_numdims); i++) {
+    for (std::size_t i = 1; i < static_cast<std::size_t>(m_numdims); i++) {
       m_numelement *= (static_cast<std::size_t>(m_coordinnates[i]));
     }
     m_storage.resize(m_numelement);
@@ -232,7 +232,7 @@ public:
     POUTRE_ASSERTCHECK(x >= 0, "Access out of bound");
     POUTRE_ASSERTCHECK(y < this->m_coordinnates[0], "Access out of bound");
     POUTRE_ASSERTCHECK(y >= 0, "Access out of bound");
-    m_storage[static_cast<std::size_t>(y) * static_cast<std::size_t>(m_coordinnates[0]) + static_cast<std::size_t>(x)] =
+    m_storage[(static_cast<std::size_t>(y) * static_cast<std::size_t>(m_coordinnates[0])) + static_cast<std::size_t>(x)] =
       value;
   }
 

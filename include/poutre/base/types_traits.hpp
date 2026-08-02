@@ -122,8 +122,8 @@ template<> struct TypeTraits<pUINT8>
 
   POUTRE_STATIC_CONSTEXPR size_t alignment = SIMD_IDEAL_MAX_ALIGN_BYTES;
   POUTRE_STATIC_CONSTEXPR size_t simd_loop_step = xsimd::batch<storage_type, xsimd::default_arch>::size;
-  using simd_type = typename xs::batch<storage_type>;
-  using simd_mask_type = typename xs::batch_bool<storage_type>;
+  using simd_type = xs::batch<storage_type>;
+  using simd_mask_type = xs::batch_bool<storage_type>;
   POUTRE_STATIC_CONSTEXPR size_t quant = sizeof(storage_type) * 8;
 
   POUTRE_ALWAYS_INLINE POUTRE_STATIC_CONSTEXPR storage_type lowest() POUTRE_NOEXCEPT
@@ -156,8 +156,8 @@ template<> struct TypeTraits<pINT32>
 
   POUTRE_STATIC_CONSTEXPR size_t alignment = SIMD_IDEAL_MAX_ALIGN_BYTES;
   POUTRE_STATIC_CONSTEXPR size_t simd_loop_step = xsimd::batch<storage_type, xsimd::default_arch>::size;
-  using simd_type = typename xs::batch<storage_type>;
-  using simd_mask_type = typename xs::batch_bool<storage_type>;
+  using simd_type = xs::batch<storage_type>;
+  using simd_mask_type = xs::batch_bool<storage_type>;
   POUTRE_STATIC_CONSTEXPR size_t quant = sizeof(storage_type) * 8;
 
   POUTRE_ALWAYS_INLINE POUTRE_STATIC_CONSTEXPR storage_type lowest() POUTRE_NOEXCEPT
@@ -188,8 +188,8 @@ template<> struct TypeTraits<pFLOAT>
 
   POUTRE_STATIC_CONSTEXPR size_t alignment = SIMD_IDEAL_MAX_ALIGN_BYTES;
   POUTRE_STATIC_CONSTEXPR size_t simd_loop_step = xsimd::batch<storage_type, xsimd::default_arch>::size;
-  using simd_type = typename xs::batch<storage_type>;
-  using simd_mask_type = typename xs::batch_bool<storage_type>;
+  using simd_type = xs::batch<storage_type>;
+  using simd_mask_type = xs::batch_bool<storage_type>;
 
   POUTRE_STATIC_CONSTEXPR size_t quant = sizeof(pFLOAT) * 8;
 
@@ -222,8 +222,8 @@ template<> struct TypeTraits<pDOUBLE>
 
   POUTRE_STATIC_CONSTEXPR size_t alignment = SIMD_IDEAL_MAX_ALIGN_BYTES;
   POUTRE_STATIC_CONSTEXPR size_t simd_loop_step = xsimd::batch<storage_type, xsimd::default_arch>::size;
-  using simd_type = typename xs::batch<storage_type>;
-  using simd_mask_type = typename xs::batch_bool<storage_type>;
+  using simd_type = xs::batch<storage_type>;
+  using simd_mask_type = xs::batch_bool<storage_type>;
 
   POUTRE_STATIC_CONSTEXPR size_t quant = sizeof(pDOUBLE) * 8;
 
@@ -257,8 +257,8 @@ template<> struct TypeTraits<pINT64>
   POUTRE_STATIC_CONSTEXPR size_t alignment = SIMD_IDEAL_MAX_ALIGN_BYTES;
   POUTRE_STATIC_CONSTEXPR size_t simd_loop_step = xsimd::batch<storage_type, xsimd::default_arch>::size;
   POUTRE_STATIC_CONSTEXPR size_t quant = sizeof(pINT64) * 8;
-  using simd_type = typename xs::batch<storage_type>;
-  using simd_mask_type = typename xs::batch_bool<storage_type>;
+  using simd_type = xs::batch<storage_type>;
+  using simd_mask_type = xs::batch_bool<storage_type>;
 
   POUTRE_ALWAYS_INLINE POUTRE_STATIC_CONSTEXPR storage_type lowest() POUTRE_NOEXCEPT
   { return std::numeric_limits<storage_type>::lowest(); }

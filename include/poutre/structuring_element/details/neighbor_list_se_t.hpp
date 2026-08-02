@@ -33,14 +33,14 @@ namespace poutre::se::details {
 // NOLINTBEGIN
 
 // Idea of design stolen from Yayi
-template<ptrdiff_t Rank> struct neighbor_list_t : public IStructuringElement
+template< ptrdiff_t Rank > struct neighbor_list_t : public IStructuringElement
 {
 public:
   static const std::ptrdiff_t rank = Rank;
-  using neighbor_element = poutre::details::av::index<Rank>;
-  using self_type = neighbor_list_t<Rank>;
+  using neighbor_element = poutre::details::av::index< Rank >;
+  using self_type = neighbor_list_t< Rank >;
   using parent_interface = IStructuringElement;
-  using storage_type = std::vector<neighbor_element>;
+  using storage_type = std::vector< neighbor_element >;
   using iterator = typename storage_type::iterator;
   using const_iterator = typename storage_type::const_iterator;
   using reverse_iterator = typename storage_type::reverse_iterator;
@@ -70,20 +70,26 @@ public:
     auto cp_vector_coordinate = vector_coordinate;
     std::sort(cp_vector_coordinate.begin(), cp_vector_coordinate.end());
     for (size_t i = 0; i < cp_vector_coordinate.size() / 2; ++i) {
-      if (cp_vector_coordinate[i] != -cp_vector_coordinate[cp_vector_coordinate.size() - i - 1]) { return false; }
+      if (cp_vector_coordinate[i] != -cp_vector_coordinate[cp_vector_coordinate.size() - i - 1]) {
+        return false;
+      }
     }
     return true;
   }
 
   //! Returns the upper,lower part of the neighbor list @throw runtime_error if the SE is not symmetric
-  std::pair<self_type, self_type> split_upper_lower() const
+  std::pair< self_type, self_type > split_upper_lower() const
   {
-    if (!is_symmetric()) { POUTRE_RUNTIME_ERROR("split_upper_lower the SE is not symmetric"); }
+    if (!is_symmetric()) {
+      POUTRE_RUNTIME_ERROR("split_upper_lower the SE is not symmetric");
+    }
     static const neighbor_element center = vector_coordinate[0];
-    std::vector<neighbor_element> upper, lower;
+    std::vector< neighbor_element > upper, lower;
     for (typename storage_type::const_iterator it(vector_coordinate.begin()), ite(vector_coordinate.end()); it != ite;
-      ++it) {
-      if (*it == center) { continue; }
+         ++it) {
+      if (*it == center) {
+        continue;
+      }
       if (*it < center) {
         upper.push_back(*it);
       } else {
@@ -99,7 +105,9 @@ public:
     storage_type out(vector_coordinate.size());
     static const neighbor_element center = vector_coordinate[0];
     for (size_t i = 0; i < vector_coordinate.size(); ++i) {
-      for (size_t j = 0; j < center.rank; ++j) { out[i][j] = 2 * center[j] - vector_coordinate[i][j]; }
+      for (size_t j = 0; j < center.rank; ++j) {
+        out[i][j] = 2 * center[j] - vector_coordinate[i][j];
+      }
     }
     return self_type(out);
   }
@@ -110,7 +118,7 @@ public:
     static const neighbor_element center = vector_coordinate[0];
     storage_type out;
     for (typename storage_type::const_iterator it(vector_coordinate.begin()), ite(vector_coordinate.end()); it != ite;
-      ++it) {
+         ++it) {
       if (*it == center) continue;
       out.push_back(*it);
     }
@@ -131,10 +139,10 @@ public:
       // for(size_t i = 0; i < vector_coordinate.size(); i++) {
       //   extension = std::max(extension, vector_coordinate[i][dimension]);
       // }
-      extension = std::accumulate(
-        vector_coordinate.begin(), vector_coordinate.end(), extension, [dimension](auto ext, const auto &coord) {
-          return std::max(ext, coord[dimension]);
-        });
+      extension = std::accumulate(vector_coordinate.begin(),
+                                  vector_coordinate.end(),
+                                  extension,
+                                  [dimension](auto ext, const auto &coord) { return std::max(ext, coord[dimension]); });
       return extension;
     } else {
       typename neighbor_element::value_type extension = 0;
@@ -151,10 +159,10 @@ public:
 
 
   /*!Returns the maximal extension of this structuring element on every direction*/
-  std::pair<neighbor_element, neighbor_element> maximum_extension() const
+  std::pair< neighbor_element, neighbor_element > maximum_extension() const
   {
-    neighbor_element min_(std::numeric_limits<typename neighbor_element::value_type>::max());
-    neighbor_element max_(std::numeric_limits<typename neighbor_element::value_type>::min());
+    neighbor_element min_(std::numeric_limits< typename neighbor_element::value_type >::max());
+    neighbor_element max_(std::numeric_limits< typename neighbor_element::value_type >::min());
 
     for (size_t i = 0, j = vector_coordinate.size(); i < j; i++) {
       for (size_t dimension = 0, k = vector_coordinate[i].rank; dimension < k; dimension++) {
@@ -200,24 +208,30 @@ public:
 protected:
   [[nodiscard]] size_t GetSize() const noexcept override { return size(); }
 
-  [[nodiscard]] std::unique_ptr<IStructuringElement> Transpose() const override
-  { return std::make_unique<self_type>(this->transpose()); }
+  [[nodiscard]] std::unique_ptr< IStructuringElement > Transpose() const override
+  {
+    return std::make_unique< self_type >(this->transpose());
+  }
 
-  [[nodiscard]] std::unique_ptr<IStructuringElement> RemoveCenter() const override
-  { return std::make_unique<self_type>(this->remove_center()); }
+  [[nodiscard]] std::unique_ptr< IStructuringElement > RemoveCenter() const override
+  {
+    return std::make_unique< self_type >(this->remove_center());
+  }
 
-  [[nodiscard]] std::unique_ptr<IStructuringElement> Clone() const override
-  { return std::make_unique<self_type>(*this); }
+  [[nodiscard]] std::unique_ptr< IStructuringElement > Clone() const override
+  {
+    return std::make_unique< self_type >(*this);
+  }
 
   [[nodiscard]] bool is_equal(const IStructuringElement &se) const noexcept override
   {
-    const self_type *se_t = dynamic_cast<const self_type *>(&se);
+    const self_type *se_t = dynamic_cast< const self_type * >(&se);
     return (se_t != nullptr) && (*this == *se_t);
   }
 
   [[nodiscard]] bool is_equal_unordered(const IStructuringElement &se) const noexcept override
   {
-    const self_type *se_t = dynamic_cast<const self_type *>(&se);
+    const self_type *se_t = dynamic_cast< const self_type * >(&se);
     return (se_t != nullptr) && this->is_equal_unordered(*se_t);
   }
 

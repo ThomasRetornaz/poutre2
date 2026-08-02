@@ -46,7 +46,9 @@ void ImageWriter::Write(const IInterface &i_img) const
 {
   POUTRE_ENTERING("ImageWriter::Write()");
 
-  if (!m_isready) { POUTRE_RUNTIME_ERROR("ImageWritter:  you must set path through SetPath"); }
+  if (!m_isready) {
+    POUTRE_RUNTIME_ERROR("ImageWritter:  you must set path through SetPath");
+  }
   fs::path const localPath(m_imgPath);
 
   fs::path const dir = localPath.parent_path();
@@ -57,7 +59,7 @@ void ImageWriter::Write(const IInterface &i_img) const
   // switch on extension
   auto extension = localPath.extension().string();
   std::ranges::transform(extension, extension.begin(), [](unsigned char charac) {
-    return static_cast<unsigned char>(std::tolower(charac));
+    return static_cast< unsigned char >(std::tolower(charac));
   });
 
   if (extension == ".h5") {

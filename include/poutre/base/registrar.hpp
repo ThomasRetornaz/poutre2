@@ -36,7 +36,7 @@ namespace poutre {
 template<class Interface> class Registrar
 {
 public:
-  using KeyFactoryMap = std::unordered_map<std::string, std::function<Interface *(void)>>;
+  using KeyFactoryMap = std::unordered_map<std::string, std::function<Interface *()>>;
   // typedef std::unordered_map< std::string,
   // std::function<std::unique_ptr<Interface>(void)>>
   // KeyFactoryMap;
@@ -80,7 +80,7 @@ public:
    * @param ImplFactoryFunction factory has ptr to function
    * @throw runtime_error if key already used
    */
-  void Register(const std::string &key, std::function<Interface *(void)> ImplFactoryFunction)
+  void Register(const std::string &key, std::function<Interface *()> ImplFactoryFunction)
   {
     auto iter = m_keyfactory_map.find(key);
     if (iter != m_keyfactory_map.end()) { POUTRE_RUNTIME_ERROR("Registrar::Add key already used"); }

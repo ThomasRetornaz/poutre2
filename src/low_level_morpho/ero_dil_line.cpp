@@ -22,55 +22,71 @@
 #include <poutre/low_level_morpho/ero_dil_line.hpp>
 
 namespace {
-template<std::ptrdiff_t NumDims, poutre::PType P>
+template< std::ptrdiff_t NumDims, poutre::PType P >
 void ErodeImageLineXDispatch(const poutre::IInterface &i_img, ptrdiff_t size_segment, poutre::IInterface &o_img)
 {
   using ImgType =
-    poutre::details::image_t<typename poutre::enum_to_type<poutre::CompoundType::CompoundType_Scalar, P>::type,
-      NumDims>;
-  const auto *img1_t = dynamic_cast<const ImgType *>(&i_img);
-  if (!img1_t) { POUTRE_RUNTIME_ERROR("ErodeImageLineXDispatch img1_t downcast fail"); }
-  auto *img2_t = dynamic_cast<ImgType *>(&o_img);
-  if (!img2_t) { POUTRE_RUNTIME_ERROR("ErodeImageLineXDispatch img2_t downcast fail"); }
+    poutre::details::image_t< typename poutre::enum_to_type< poutre::CompoundType::CompoundType_Scalar, P >::type,
+                              NumDims >;
+  const auto *img1_t = dynamic_cast< const ImgType * >(&i_img);
+  if (!img1_t) {
+    POUTRE_RUNTIME_ERROR("ErodeImageLineXDispatch img1_t downcast fail");
+  }
+  auto *img2_t = dynamic_cast< ImgType * >(&o_img);
+  if (!img2_t) {
+    POUTRE_RUNTIME_ERROR("ErodeImageLineXDispatch img2_t downcast fail");
+  }
   poutre::llm::details::t_ErodeX(*img1_t, size_segment, *img2_t);
 }
 
-template<std::ptrdiff_t NumDims, poutre::PType P>
+template< std::ptrdiff_t NumDims, poutre::PType P >
 void DilateImageLineXDispatch(const poutre::IInterface &i_img, ptrdiff_t size_segment, poutre::IInterface &o_img)
 {
   using ImgType =
-    poutre::details::image_t<typename poutre::enum_to_type<poutre::CompoundType::CompoundType_Scalar, P>::type,
-      NumDims>;
-  const auto *img1_t = dynamic_cast<const ImgType *>(&i_img);
-  if (!img1_t) { POUTRE_RUNTIME_ERROR("DilateImageLineXDispatch img1_t downcast fail"); }
-  auto *img2_t = dynamic_cast<ImgType *>(&o_img);
-  if (!img2_t) { POUTRE_RUNTIME_ERROR("DilateImageLineXDispatch img2_t downcast fail"); }
+    poutre::details::image_t< typename poutre::enum_to_type< poutre::CompoundType::CompoundType_Scalar, P >::type,
+                              NumDims >;
+  const auto *img1_t = dynamic_cast< const ImgType * >(&i_img);
+  if (!img1_t) {
+    POUTRE_RUNTIME_ERROR("DilateImageLineXDispatch img1_t downcast fail");
+  }
+  auto *img2_t = dynamic_cast< ImgType * >(&o_img);
+  if (!img2_t) {
+    POUTRE_RUNTIME_ERROR("DilateImageLineXDispatch img2_t downcast fail");
+  }
   poutre::llm::details::t_DilateX(*img1_t, size_segment, *img2_t);
 }
 
-template<std::ptrdiff_t NumDims, poutre::PType P>
+template< std::ptrdiff_t NumDims, poutre::PType P >
 void ErodeImageLineYDispatch(const poutre::IInterface &i_img, ptrdiff_t size_segment, poutre::IInterface &o_img)
 {
   using ImgType =
-    poutre::details::image_t<typename poutre::enum_to_type<poutre::CompoundType::CompoundType_Scalar, P>::type,
-      NumDims>;
-  const auto *img1_t = dynamic_cast<const ImgType *>(&i_img);
-  if (!img1_t) { POUTRE_RUNTIME_ERROR("ErodeImageLineYDispatch img1_t downcast fail"); }
-  auto *img2_t = dynamic_cast<ImgType *>(&o_img);
-  if (!img2_t) { POUTRE_RUNTIME_ERROR("ErodeImageLineYDispatch img2_t downcast fail"); }
+    poutre::details::image_t< typename poutre::enum_to_type< poutre::CompoundType::CompoundType_Scalar, P >::type,
+                              NumDims >;
+  const auto *img1_t = dynamic_cast< const ImgType * >(&i_img);
+  if (!img1_t) {
+    POUTRE_RUNTIME_ERROR("ErodeImageLineYDispatch img1_t downcast fail");
+  }
+  auto *img2_t = dynamic_cast< ImgType * >(&o_img);
+  if (!img2_t) {
+    POUTRE_RUNTIME_ERROR("ErodeImageLineYDispatch img2_t downcast fail");
+  }
   poutre::llm::details::t_ErodeY(*img1_t, size_segment, *img2_t);
 }
 
-template<std::ptrdiff_t NumDims, poutre::PType P>
+template< std::ptrdiff_t NumDims, poutre::PType P >
 void DilateImageLineYDispatch(const poutre::IInterface &i_img, ptrdiff_t size_segment, poutre::IInterface &o_img)
 {
   using ImgType =
-    poutre::details::image_t<typename poutre::enum_to_type<poutre::CompoundType::CompoundType_Scalar, P>::type,
-      NumDims>;
-  const auto *img1_t = dynamic_cast<const ImgType *>(&i_img);
-  if (!img1_t) { POUTRE_RUNTIME_ERROR("DilateImageLineYDispatch img1_t downcast fail"); }
-  auto *img2_t = dynamic_cast<ImgType *>(&o_img);
-  if (!img2_t) { POUTRE_RUNTIME_ERROR("DilateImageLineYDispatch img2_t downcast fail"); }
+    poutre::details::image_t< typename poutre::enum_to_type< poutre::CompoundType::CompoundType_Scalar, P >::type,
+                              NumDims >;
+  const auto *img1_t = dynamic_cast< const ImgType * >(&i_img);
+  if (!img1_t) {
+    POUTRE_RUNTIME_ERROR("DilateImageLineYDispatch img1_t downcast fail");
+  }
+  auto *img2_t = dynamic_cast< ImgType * >(&o_img);
+  if (!img2_t) {
+    POUTRE_RUNTIME_ERROR("DilateImageLineYDispatch img2_t downcast fail");
+  }
   poutre::llm::details::t_DilateY(*img1_t, size_segment, *img2_t);
 }
 
@@ -91,19 +107,19 @@ void DilateX(const poutre::IInterface &i_img, const ptrdiff_t size_half_segment,
   case 1: {
     switch (i_img.GetPType()) {
     case poutre::PType::PType_GrayUINT8: {
-      DilateImageLineXDispatch<1, poutre::PType::PType_GrayUINT8>(i_img, size_half_segment, o_img);
+      DilateImageLineXDispatch< 1, poutre::PType::PType_GrayUINT8 >(i_img, size_half_segment, o_img);
     } break;
     case poutre::PType::PType_GrayINT32: {
-      DilateImageLineXDispatch<1, poutre::PType::PType_GrayINT32>(i_img, size_half_segment, o_img);
+      DilateImageLineXDispatch< 1, poutre::PType::PType_GrayINT32 >(i_img, size_half_segment, o_img);
     } break;
     case poutre::PType::PType_GrayINT64: {
-      DilateImageLineXDispatch<1, poutre::PType::PType_GrayINT64>(i_img, size_half_segment, o_img);
+      DilateImageLineXDispatch< 1, poutre::PType::PType_GrayINT64 >(i_img, size_half_segment, o_img);
     } break;
     case poutre::PType::PType_F32: {
-      DilateImageLineXDispatch<1, poutre::PType::PType_F32>(i_img, size_half_segment, o_img);
+      DilateImageLineXDispatch< 1, poutre::PType::PType_F32 >(i_img, size_half_segment, o_img);
     } break;
     case poutre::PType::PType_D64: {
-      DilateImageLineXDispatch<1, poutre::PType::PType_D64>(i_img, size_half_segment, o_img);
+      DilateImageLineXDispatch< 1, poutre::PType::PType_D64 >(i_img, size_half_segment, o_img);
     } break;
     default: {
       POUTRE_RUNTIME_ERROR("DilateX unsupported PTYPE");
@@ -113,19 +129,19 @@ void DilateX(const poutre::IInterface &i_img, const ptrdiff_t size_half_segment,
   case 2: {
     switch (i_img.GetPType()) {
     case poutre::PType::PType_GrayUINT8: {
-      DilateImageLineXDispatch<2, poutre::PType::PType_GrayUINT8>(i_img, size_half_segment, o_img);
+      DilateImageLineXDispatch< 2, poutre::PType::PType_GrayUINT8 >(i_img, size_half_segment, o_img);
     } break;
     case poutre::PType::PType_GrayINT32: {
-      DilateImageLineXDispatch<2, poutre::PType::PType_GrayINT32>(i_img, size_half_segment, o_img);
+      DilateImageLineXDispatch< 2, poutre::PType::PType_GrayINT32 >(i_img, size_half_segment, o_img);
     } break;
     case poutre::PType::PType_GrayINT64: {
-      DilateImageLineXDispatch<2, poutre::PType::PType_GrayINT64>(i_img, size_half_segment, o_img);
+      DilateImageLineXDispatch< 2, poutre::PType::PType_GrayINT64 >(i_img, size_half_segment, o_img);
     } break;
     case poutre::PType::PType_F32: {
-      DilateImageLineXDispatch<2, poutre::PType::PType_F32>(i_img, size_half_segment, o_img);
+      DilateImageLineXDispatch< 2, poutre::PType::PType_F32 >(i_img, size_half_segment, o_img);
     } break;
     case poutre::PType::PType_D64: {
-      DilateImageLineXDispatch<2, poutre::PType::PType_D64>(i_img, size_half_segment, o_img);
+      DilateImageLineXDispatch< 2, poutre::PType::PType_D64 >(i_img, size_half_segment, o_img);
     } break;
     default: {
       POUTRE_RUNTIME_ERROR("DilateX unsupported PTYPE");
@@ -158,19 +174,19 @@ void DilateY(const poutre::IInterface &i_img, const ptrdiff_t size_half_segment,
   case 2: {
     switch (i_img.GetPType()) {
     case poutre::PType::PType_GrayUINT8: {
-      DilateImageLineYDispatch<2, poutre::PType::PType_GrayUINT8>(i_img, size_half_segment, o_img);
+      DilateImageLineYDispatch< 2, poutre::PType::PType_GrayUINT8 >(i_img, size_half_segment, o_img);
     } break;
     case poutre::PType::PType_GrayINT32: {
-      DilateImageLineYDispatch<2, poutre::PType::PType_GrayINT32>(i_img, size_half_segment, o_img);
+      DilateImageLineYDispatch< 2, poutre::PType::PType_GrayINT32 >(i_img, size_half_segment, o_img);
     } break;
     case poutre::PType::PType_GrayINT64: {
-      DilateImageLineYDispatch<2, poutre::PType::PType_GrayINT64>(i_img, size_half_segment, o_img);
+      DilateImageLineYDispatch< 2, poutre::PType::PType_GrayINT64 >(i_img, size_half_segment, o_img);
     } break;
     case poutre::PType::PType_F32: {
-      DilateImageLineYDispatch<2, poutre::PType::PType_F32>(i_img, size_half_segment, o_img);
+      DilateImageLineYDispatch< 2, poutre::PType::PType_F32 >(i_img, size_half_segment, o_img);
     } break;
     case poutre::PType::PType_D64: {
-      DilateImageLineYDispatch<2, poutre::PType::PType_D64>(i_img, size_half_segment, o_img);
+      DilateImageLineYDispatch< 2, poutre::PType::PType_D64 >(i_img, size_half_segment, o_img);
     } break;
     default: {
       POUTRE_RUNTIME_ERROR("DilateY unsupported PTYPE");
@@ -200,19 +216,19 @@ void ErodeX(const poutre::IInterface &i_img, const ptrdiff_t size_half_segment, 
   case 1: {
     switch (i_img.GetPType()) {
     case poutre::PType::PType_GrayUINT8: {
-      ErodeImageLineXDispatch<1, poutre::PType::PType_GrayUINT8>(i_img, size_half_segment, o_img);
+      ErodeImageLineXDispatch< 1, poutre::PType::PType_GrayUINT8 >(i_img, size_half_segment, o_img);
     } break;
     case poutre::PType::PType_GrayINT32: {
-      ErodeImageLineXDispatch<1, poutre::PType::PType_GrayINT32>(i_img, size_half_segment, o_img);
+      ErodeImageLineXDispatch< 1, poutre::PType::PType_GrayINT32 >(i_img, size_half_segment, o_img);
     } break;
     case poutre::PType::PType_GrayINT64: {
-      ErodeImageLineXDispatch<1, poutre::PType::PType_GrayINT64>(i_img, size_half_segment, o_img);
+      ErodeImageLineXDispatch< 1, poutre::PType::PType_GrayINT64 >(i_img, size_half_segment, o_img);
     } break;
     case poutre::PType::PType_F32: {
-      ErodeImageLineXDispatch<1, poutre::PType::PType_F32>(i_img, size_half_segment, o_img);
+      ErodeImageLineXDispatch< 1, poutre::PType::PType_F32 >(i_img, size_half_segment, o_img);
     } break;
     case poutre::PType::PType_D64: {
-      ErodeImageLineXDispatch<1, poutre::PType::PType_D64>(i_img, size_half_segment, o_img);
+      ErodeImageLineXDispatch< 1, poutre::PType::PType_D64 >(i_img, size_half_segment, o_img);
     } break;
     default: {
       POUTRE_RUNTIME_ERROR("ErodeX unsupported PTYPE");
@@ -222,19 +238,19 @@ void ErodeX(const poutre::IInterface &i_img, const ptrdiff_t size_half_segment, 
   case 2: {
     switch (i_img.GetPType()) {
     case poutre::PType::PType_GrayUINT8: {
-      ErodeImageLineXDispatch<2, poutre::PType::PType_GrayUINT8>(i_img, size_half_segment, o_img);
+      ErodeImageLineXDispatch< 2, poutre::PType::PType_GrayUINT8 >(i_img, size_half_segment, o_img);
     } break;
     case poutre::PType::PType_GrayINT32: {
-      ErodeImageLineXDispatch<2, poutre::PType::PType_GrayINT32>(i_img, size_half_segment, o_img);
+      ErodeImageLineXDispatch< 2, poutre::PType::PType_GrayINT32 >(i_img, size_half_segment, o_img);
     } break;
     case poutre::PType::PType_GrayINT64: {
-      ErodeImageLineXDispatch<2, poutre::PType::PType_GrayINT64>(i_img, size_half_segment, o_img);
+      ErodeImageLineXDispatch< 2, poutre::PType::PType_GrayINT64 >(i_img, size_half_segment, o_img);
     } break;
     case poutre::PType::PType_F32: {
-      ErodeImageLineXDispatch<2, poutre::PType::PType_F32>(i_img, size_half_segment, o_img);
+      ErodeImageLineXDispatch< 2, poutre::PType::PType_F32 >(i_img, size_half_segment, o_img);
     } break;
     case poutre::PType::PType_D64: {
-      ErodeImageLineXDispatch<2, poutre::PType::PType_D64>(i_img, size_half_segment, o_img);
+      ErodeImageLineXDispatch< 2, poutre::PType::PType_D64 >(i_img, size_half_segment, o_img);
     } break;
     default: {
       POUTRE_RUNTIME_ERROR("ErodeX unsupported PTYPE");
@@ -266,19 +282,19 @@ void ErodeY(const poutre::IInterface &i_img, const ptrdiff_t size_half_segment, 
   case 2: {
     switch (i_img.GetPType()) {
     case poutre::PType::PType_GrayUINT8: {
-      ErodeImageLineYDispatch<2, poutre::PType::PType_GrayUINT8>(i_img, size_half_segment, o_img);
+      ErodeImageLineYDispatch< 2, poutre::PType::PType_GrayUINT8 >(i_img, size_half_segment, o_img);
     } break;
     case poutre::PType::PType_GrayINT32: {
-      ErodeImageLineYDispatch<2, poutre::PType::PType_GrayINT32>(i_img, size_half_segment, o_img);
+      ErodeImageLineYDispatch< 2, poutre::PType::PType_GrayINT32 >(i_img, size_half_segment, o_img);
     } break;
     case poutre::PType::PType_GrayINT64: {
-      ErodeImageLineYDispatch<2, poutre::PType::PType_GrayINT64>(i_img, size_half_segment, o_img);
+      ErodeImageLineYDispatch< 2, poutre::PType::PType_GrayINT64 >(i_img, size_half_segment, o_img);
     } break;
     case poutre::PType::PType_F32: {
-      ErodeImageLineYDispatch<2, poutre::PType::PType_F32>(i_img, size_half_segment, o_img);
+      ErodeImageLineYDispatch< 2, poutre::PType::PType_F32 >(i_img, size_half_segment, o_img);
     } break;
     case poutre::PType::PType_D64: {
-      ErodeImageLineYDispatch<2, poutre::PType::PType_D64>(i_img, size_half_segment, o_img);
+      ErodeImageLineYDispatch< 2, poutre::PType::PType_D64 >(i_img, size_half_segment, o_img);
     } break;
     default: {
       POUTRE_RUNTIME_ERROR("ErodeY unsupported PTYPE");
