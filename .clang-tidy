@@ -19,6 +19,7 @@ Checks: "*,
         -misc-use-internal-linkage,
         -python*,
         -cppcoreguidelines-cstyle-cast,
+        -cert-err58-cpp,
 "
 WarningsAsErrors: ''
 HeaderFilterRegex: ''
