@@ -130,7 +130,7 @@ jobs:
           script: |
             core.setFailed('There is a mismatch between configured llvm compiler and clang-tidy version chosen')
 
-      - uses: actions/checkout@v6.0.2
+      - uses: actions/checkout@v7.0.1
       - name: Setup Cache
         uses: ./.github/actions/setup_cache
         with:
@@ -164,7 +164,7 @@ jobs:
           opencppcoverage: true
 
       - name: Setup Python
-        uses: actions/setup-python@v6.2.0
+        uses: actions/setup-python@v7.0.0
         with:
           python-version: '3.12'
           cache: "pip"
