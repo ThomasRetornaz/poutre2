@@ -170,7 +170,7 @@ function(poutre2_setup_dependencies)
                 NAME
                 hdf5
                 GIT_TAG
-                "2.1.1"
+                "2.2.0"
                 GITHUB_REPOSITORY
                 "HDFGroup/hdf5"
                 OPTIONS
