@@ -67,12 +67,12 @@ function(poutre2_setup_dependencies)
 
     # ### Catch2
     if (NOT TARGET Catch2::Catch2WithMain)
-        cpmaddpackage("gh:catchorg/Catch2@3.15.2")
+        cpmaddpackage("gh:catchorg/Catch2@3.15.3")
     endif ()
 
     # ### CLI
     if (NOT TARGET CLI11::CLI11)
-        cpmaddpackage("gh:CLIUtils/CLI11@2.6.2")
+        cpmaddpackage("gh:CLIUtils/CLI11@2.7.2")
     endif ()
 
     # ### ZLIB
