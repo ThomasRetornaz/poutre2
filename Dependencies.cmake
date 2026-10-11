@@ -6,9 +6,6 @@ include(cmake/CPM.cmake)
 function(poutre2_setup_dependencies)
     message(STATUS "┌─ Dependencies.cmake")
     #list(APPEND CMAKE_MESSAGE_INDENT "│    ")
-
-    include(ExternalProject)
-
     # ### XSIMD
     if (NOT TARGET xsimd::xsimd)
         CPMAddPackage(
@@ -42,13 +39,35 @@ function(poutre2_setup_dependencies)
         )
     endif ()
 
-    # ### BOOST HISTOGRAM
-    #    if(NOT TARGET boost_histogram)
-    #        cpmaddpackage(
-    #                NAME boost_histogram
-    #                GIT_TAG boost-1.89.0
-    #                GITHUB_REPOSITORY "boostorg/histogram")
-    #    endif()
+    # ### Catch2
+    if (NOT TARGET Catch2::Catch2WithMain)
+        cpmaddpackage("gh:catchorg/Catch2@3.16.1")
+    endif ()
+
+    # ### CLI
+    if (NOT TARGET CLI11::CLI11)
+        cpmaddpackage("gh:CLIUtils/CLI11@2.7.2")
+    endif ()
+
+    #provided through mamba env
+    find_package(OpenImageIO 3 QUIET)
+    if (OpenImageIO_FOUND)
+        message(STATUS "OpenImageIO ${OpenImageIO_VERSION} found, image file support enabled")
+        set(POUTRE_BUILD_WITH_OIIO ON PARENT_SCOPE)
+    else ()
+        set(POUTRE_BUILD_WITH_OIIO OFF PARENT_SCOPE)
+        message(WARNING "OpenImageIO not found: so no image file support")
+    endif ()
+
+    #provided through mamba env
+    find_package(HDF5 QUIET COMPONENTS C CXX)
+    if (HDF5_FOUND)
+        message(STATUS "hdf5 ${HDF5_VERSION} found, hdf5 file support enabled")
+        set(POUTRE_BUILD_WITH_HDF5 ON PARENT_SCOPE)
+    else ()
+        set(POUTRE_BUILD_WITH_HDF5 OFF PARENT_SCOPE)
+        message(WARNING "hdf5 not found: so no hdf5 file support")
+    endif ()
 
     # ### SPDLOG
     if (NOT TARGET spdlog::spdlog)
@@ -63,146 +82,6 @@ function(poutre2_setup_dependencies)
                 "SPDLOG_USE_STD_FORMAT ON"
                 "SPDLOG_FMT_EXTERNAL OFF"
         )
-    endif ()
-
-    # ### Catch2
-    if (NOT TARGET Catch2::Catch2WithMain)
-        cpmaddpackage("gh:catchorg/Catch2@3.15.3")
-    endif ()
-
-    # ### CLI
-    if (NOT TARGET CLI11::CLI11)
-        cpmaddpackage("gh:CLIUtils/CLI11@2.7.2")
-    endif ()
-
-    # ### ZLIB
-    if (NOT TARGET ZLIB::ZLIB)
-        cpmaddpackage(
-                NAME
-                zlib
-                VERSION
-                1.3.2
-                GITHUB_REPOSITORY
-                "madler/zlib"
-                OPTIONS
-                "CMAKE_POSITION_INDEPENDENT_CODE ON"
-                "ZLIB_BUILD_EXAMPLES OFF"
-                "ZLIB_BUILD_TESTING OFF"
-                "ZLIB_INSTALL OFF"
-                EXCLUDE_FROM_ALL YES
-                SYSTEM YES
-        )
-    endif ()
-
-    find_package(OpenImageIO QUIET)
-    if (0) #OpenImageIO_FOUND)
-        message(STATUS "OpenImageIO ${OpenImageIO_VERSION} found, image file support enabled")
-        set(POUTRE_BUILD_WITH_OIIO ON PARENT_SCOPE)
-    else ()
-        message(WARNING "OpenImageIO not found: so no image file support")
-    endif ()
-    # message(FATAL_ERROR ${OpenImageIO_INCLUDE_DIRS})
-
-    #    if (NOT TARGET openimageio::openimageio)
-    #        set(OPENIMAGEIO_REPO "https://github.com/AcademySoftwareFoundation/OpenImageIO"
-    #                CACHE STRING "OPENIMAGEIO repository location."
-    #        )
-    #        cpmaddpackage(
-    #                NAME
-    #                openimageio
-    #                VERSION
-    #                3.0.8.1
-    #                GITHUB_REPOSITORY
-    #                "AcademySoftwareFoundation/OpenImageIO"
-    #                OPTIONS
-    #                "BUILD_TESTING OFF"
-    #                "BUILD_DOCS OFF"
-    #                "INSTALL_DOCS OFF"
-    #                "INSTALL_FONTS OFF"
-    #                "OIIO_BUILD_TOOLS 0"
-    #                "USE_PYTHON 0"
-    #                "OIIO_INTERNALIZE_FMT ON"
-    #                "OpenImageIO_BUILD_MISSING_DEPS all"
-    #                "BUILD_SHARED_LIBS 0"
-    #                "LINKSTATIC 1"
-    #        )#"CMAKE_INSTALL_PREFIX:PATH=${CMAKE_CURRENT_BINARY_DIR}")
-    ##
-    ##        ExternalProject_Add(openimageio
-    ##                GIT_REPOSITORY ${OPENIMAGEIO_REPO}
-    ##                GIT_TAG "v3.0.8.1"
-    ##                EXCLUDE_FROM_ALL
-    ##                # --Update/Patch step----------
-    ##                UPDATE_COMMAND ""
-    ##                PATCH_COMMAND ""
-    ##                # INSTALL_COMMAND ""
-    ##                CMAKE_ARGS
-    ##                -DCMAKE_INSTALL_PREFIX:PATH=${CMAKE_CURRENT_BINARY_DIR}/oiio_install
-    ##                -DCMAKE_POSITION_INDEPENDENT_CODE=TRUE
-    ##                -DBUILD_TESTING=OFF
-    ##                -DBUILD_DOCS=OFF
-    ##                -DINSTALL_DOCS=OFF
-    ##                -DINSTALL_FONTS=OFF
-    ##                -DOIIO_BUILD_TOOLS=0
-    ##                -DUSE_PYTHON=0
-    ##                -DOpenImageIO_BUILD_MISSING_DEPS=all
-    ##                -DBUILD_SHARED_LIBS=0
-    ##                -DLINKSTATIC=1
-    ##        )
-    #
-    ##        ExternalProject_Get_Property(openimageio TMP_DIR STAMP_DIR DOWNLOAD_DIR SOURCE_DIR BINARY_DIR INSTALL_DIR)
-    ##        set (OpenImageIO_ROOT ${BINARY_DIR})
-    ##        set(OIIO_INCLUDE_DIRS ${OpenImageIO_ROOT}/include PARENT_SCOPE)
-    ##        if(WIN32) # OR import static ?
-    ##            set(OIIO_LIBRARIES ${OpenImageIO_ROOT}/lib/OpenImageIO.lib ${OpenImageIO_ROOT}/lib/OpenImageIO_Util.lib)
-    ##            set(OIIO_LIBRARIES ${OIIO_LIBRARIES} PARENT_SCOPE)
-    ##        else()
-    ##            set(OIIO_LIBRARIES
-    ##                    ${OpenImageIO_ROOT}/lib/libOpenImageIO.a
-    ##                    ${OpenImageIO_ROOT}/lib/libOpenImageIO_Util.a
-    ##            )
-    ##            set(OIIO_LIBRARIES ${OIIO_LIBRARIES} PARENT_SCOPE)
-    ##        endif()
-    #
-    #    endif()
-
-    if (NOT TARGET hdf5::hdf5)
-        cpmaddpackage( # see https://github.com/HDFGroup/hdf5/blob/develop/release_docs/INSTALL_CMake.md
-                NAME
-                hdf5
-                GIT_TAG
-                "2.2.0"
-                GITHUB_REPOSITORY
-                "HDFGroup/hdf5"
-                OPTIONS
-                "BUILD_STATIC_LIBS ON"
-                "HDF5_EXTERNALLY_CONFIGURED ON"
-                "HDF5_GENERATE_HEADERS OFF"
-                "HDF5_DISABLE_COMPILER_WARNINGS ON"
-                "HDF5_ENABLE_DEVELOPER_MODE OFF"
-                "HDF5_ENABLE_DEV_WARNINGS OFF"
-                "HDF5_BUILD_DOC OFF"
-                "BUILD_TESTING OFF"
-                "HDF5_BUILD_TOOLS OFF"
-                "HDF5_ENABLE_PLUGIN_SUPPORT OFF"
-                "BUILD_SHARED_LIBS OFF"
-                "HDF5_BUILD_HL_LIB ON"
-                "HDF5_BUILD_FORTRAN OFF"
-                "HDF5_BUILD_CPP_LIB ON"
-                "HDF5_BUILD_JAVA OFF"
-                "HDF5_BUILD_EXAMPLES OFF"
-                "ZLIB_USE_EXTERNAL ON" # BUG dependencies on zlib not found
-                EXCLUDE_FROM_ALL YES
-                SYSTEM YES
-        )
-        if (hdf5_ADDED)
-            add_library(hdf5::hdf5 INTERFACE IMPORTED)
-            target_include_directories(
-                    hdf5::hdf5 SYSTEM
-                    INTERFACE ${hdf5_SOURCE_DIR}/hl/src ${hdf5_SOURCE_DIR}/hl/c++/src
-                    ${hdf5_SOURCE_DIR}/src ${hdf5_SOURCE_DIR}/c++/src ${hdf5_BINARY_DIR}/src
-                    ${hdf5_SOURCE_DIR}/src/H5FDsubfiling
-            )
-        endif ()
     endif ()
 
     if (NOT TARGET json::json)
@@ -260,7 +139,5 @@ function(poutre2_setup_dependencies)
             target_include_directories(graaf INTERFACE ${graaf_SOURCE_DIR}/include)
         endif ()
     endif ()
-
-    #list(POP_BACK CMAKE_MESSAGE_INDENT)
     message(STATUS "└─ End Dependencies.cmake")
 endfunction()

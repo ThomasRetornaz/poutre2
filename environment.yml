@@ -1,0 +1,13 @@
+name: poutre
+channels:
+  - conda-forge
+dependencies:
+  # Build dependencies
+  - cmake
+  - ninja
+  # Host dependencies
+  - openimageio >=3.1,<4
+  - fmt >=12.2,<13
+  - hdf5 >=2.2.0,<3
+
+
