@@ -1,4 +1,4 @@
-set(subdirsource ${PROJECT_SOURCE_DIR}/label)
+set(subdirsource ${PROJECT_SOURCE_DIR}/distance)
 include_directories(${PROJECT_SOURCE_DIR}/include/poutre)
 
 include_directories(${GOOGLE_BENCHMARK_INCLUDE_DIRS})
