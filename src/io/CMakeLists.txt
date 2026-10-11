@@ -5,9 +5,9 @@ set(PoutreIOSRC_DETAILS
         ${subdirheader}/details/hdf5.hpp
 )
 
-if(POUTRE_BUILD_WITH_OIIO)
+if (POUTRE_BUILD_WITH_OIIO)
     LIST(APPEND PoutreIOSRC_DETAILS ${subdirheader}/details/oiio.hpp)
-endif()
+endif ()
 
 set(PoutreIOSRC_PUBLICHEADERS
         ${subdirheader}/io.hpp
@@ -21,9 +21,9 @@ set(PoutreIOSRC_CPP
         ${subdirsource}/hdf5.cpp
 )
 
-if(POUTRE_BUILD_WITH_OIIO)
+if (POUTRE_BUILD_WITH_OIIO)
     LIST(APPEND PoutreIOSRC_CPP ${subdirsource}/oiio.cpp)
-endif()
+endif ()
 
 source_group(details FILES ${PoutreIOSRC_DETAILS})
 source_group(src FILES ${PoutreIOSRC_CPP})
@@ -34,13 +34,12 @@ set(PoutreIOSRC ${PoutreIOSRC_DETAILS}
         ${PoutreIOSRC_PUBLICHEADERS})
 
 
-
 add_library(poutre_io ${PoutreIOSRC})
 add_library(poutre_io::poutre_io ALIAS poutre_io)
 
 # target_include_directories(poutre_io SYSTEM BEFORE PRIVATE ${HDF5_INCLUDE_DIRS})
 
-if(POUTRE_BUILD_WITH_OIIO)
+if (POUTRE_BUILD_WITH_OIIO)
     target_compile_definitions(poutre_io PUBLIC POUTRE_BUILD_WITH_OIIO)
 
     target_include_directories(poutre_io
@@ -50,10 +49,10 @@ if(POUTRE_BUILD_WITH_OIIO)
 
     target_link_libraries(poutre_io
             PUBLIC
-            OpenImageIO::OpenImageIO
-            OpenImageIO::OpenImageIO_Util
+            OpenImageIO
+            OpenImageIO_Util
     )
-endif()
+endif ()
 
 
 target_include_directories(poutre_io
