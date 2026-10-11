@@ -3,7 +3,7 @@ find_package(Python COMPONENTS Development.Module NumPy REQUIRED)
 CPMAddPackage(
         NAME nanobind
         GITHUB_REPOSITORY wjakob/nanobind
-        VERSION 2.13.0
+        VERSION 3.1.0
         EXCLUDE_FROM_ALL
         SYSTEM
 )
