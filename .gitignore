@@ -34,3 +34,6 @@ $RECYCLE.BIN/
 .TemporaryItems
 ehthumbs.db
 Thumbs.db
+
+# cpp-check
+poutre2-cppcheck-build-dir
