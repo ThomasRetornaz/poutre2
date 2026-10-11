@@ -17,10 +17,11 @@ Checks: "*,
         -misc-no-recursion,
         -misc-use-anonymous-namespace,
         -misc-use-internal-linkage,
+        -misc-include-cleaner, 
         -python*,
         -cppcoreguidelines-cstyle-cast,
-        -cert-err58-cpp,
-"
+        -cert-err58-cpp"
+
 WarningsAsErrors: ''
 HeaderFilterRegex: ''
 FormatStyle: none
