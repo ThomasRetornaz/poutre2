@@ -19,8 +19,6 @@
 #include <poutre/io/details/oiio.hpp>
 #include <poutre/io/io.hpp>
 
-#include <OpenImageIO/imageio.h>
-
 #include <cstddef>
 #include <filesystem>
 #include <format>
@@ -31,7 +29,9 @@
 
 namespace poutre::io {
 
-void LoadFromOIIOScalarDispatch(OIIO::ImageInput &in_oiio, poutre::IInterface &img, PType ptype)
+using namespace OIIO;
+
+void LoadFromOIIOScalarDispatch(ImageInput &in_oiio, poutre::IInterface &img, PType ptype)
 {
   switch (ptype) {
     // todo think about bool/binary here
@@ -360,7 +360,7 @@ std::unique_ptr< IInterface > LoadOIIO(const std::string &image_path)
     POUTRE_RUNTIME_ERROR(std::format("LoadFromOIIO: unable to locate provided path {}", localPath.string()));
   }
 
-  auto in_oiio(OIIO::ImageInput::open(image_path));
+  auto in_oiio(ImageInput::open(image_path));
   if (in_oiio == nullptr) {
     std::ostringstream error_stream;
     error_stream << " load_image(): Error reading image '";
@@ -368,7 +368,7 @@ std::unique_ptr< IInterface > LoadOIIO(const std::string &image_path)
     POUTRE_RUNTIME_ERROR(error_stream.str());
   }
 
-  const OIIO::ImageSpec &spec = in_oiio->spec();
+  const ImageSpec &spec = in_oiio->spec();
   std::vector< std::size_t > dims;
   if (spec.height > 1) {
     dims.push_back(static_cast< std::size_t >(spec.height));
@@ -404,19 +404,19 @@ std::unique_ptr< IInterface > LoadOIIO(const std::string &image_path)
   };
   auto ptype = PType::PType_Undef;
   switch (spec.format.basetype) {
-  case OpenImageIO_v2_5::TypeDesc::BASETYPE::UINT8:
+  case TypeDesc::BASETYPE::UINT8:
     ptype = PType::PType_GrayUINT8;
     break;
-  case OpenImageIO_v2_5::TypeDesc::BASETYPE::INT32:
+  case TypeDesc::BASETYPE::INT32:
     ptype = PType::PType_GrayINT32;
     break;
-  case OpenImageIO_v2_5::TypeDesc::BASETYPE::FLOAT:
+  case TypeDesc::BASETYPE::FLOAT:
     ptype = PType::PType_F32;
     break;
-  case OpenImageIO_v2_5::TypeDesc::BASETYPE::INT64:
+  case TypeDesc::BASETYPE::INT64:
     ptype = PType::PType_GrayINT64;
     break;
-  case OpenImageIO_v2_5::TypeDesc::BASETYPE::DOUBLE:
+  case TypeDesc::BASETYPE::DOUBLE:
     ptype = PType::PType_D64;
     break;
   default:

@@ -63,7 +63,12 @@ void ImageWriter::Write(const IInterface &i_img) const
   });
 
   if (extension == ".h5") {
-    DumpHDF5(localPath.string(), i_img, m_i_name);
+
+#ifdef POUTRE_BUILD_WITH_HDF5
+  DumpHDF5(localPath.string(), i_img);
+#else
+  POUTRE_RUNTIME_ERROR("Not supported file type. May you need to build with HDF5");
+#endif
     return;
   }
 #ifdef POUTRE_BUILD_WITH_OIIO

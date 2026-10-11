@@ -86,7 +86,7 @@ template< typename T > void FillImageFromOIIOScalar(const std::string &path, pou
   }
   const OIIO::ImageSpec &spec = in_oiio->spec();
   if (spec.nchannels != 1) {
-    i n_oiio->close();
+    in_oiio->close();
     POUTRE_RUNTIME_ERROR(
       (std::format("FillImageFromOIIOScalar: wrong number of channels expected 1 found {}", spec.nchannels)));
   }

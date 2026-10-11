@@ -61,8 +61,14 @@ std::unique_ptr< IInterface > ImageLoader::Load() const
   });
 
   if (extension == ".h5") {
-    return LoadHDF5(localPath.string(), m_i_name);
+  
+#ifdef POUTRE_BUILD_WITH_HDF5
+   return LoadHDF5(localPath.string(), m_i_name);
+#else
+  POUTRE_RUNTIME_ERROR("Not supported file type. May you need to build with HDF5");
+#endif
   }
+
 #ifdef POUTRE_BUILD_WITH_OIIO
   return LoadOIIO(localPath.string());
 #else

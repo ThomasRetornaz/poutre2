@@ -18,8 +18,12 @@ set(PoutreIOSRC_PUBLICHEADERS
 set(PoutreIOSRC_CPP
         ${subdirsource}/loader.cpp
         ${subdirsource}/writer.cpp
-        ${subdirsource}/hdf5.cpp
+
 )
+
+if (POUTRE_BUILD_WITH_HDF5)
+    LIST(APPEND PoutreIOSRC_CPP ${subdirsource}/hdf5.cpp)
+endif ()
 
 if (POUTRE_BUILD_WITH_OIIO)
     LIST(APPEND PoutreIOSRC_CPP ${subdirsource}/oiio.cpp)
@@ -40,35 +44,32 @@ add_library(poutre_io::poutre_io ALIAS poutre_io)
 # target_include_directories(poutre_io SYSTEM BEFORE PRIVATE ${HDF5_INCLUDE_DIRS})
 
 if (POUTRE_BUILD_WITH_OIIO)
+
     target_compile_definitions(poutre_io PUBLIC POUTRE_BUILD_WITH_OIIO)
-
+    target_compile_features(poutre_io INTERFACE cxx_std_17)
+    # include_directories(${OpenImageIO_INCLUDE_DIRS})
     target_include_directories(poutre_io
-            INTERFACE
-            $<BUILD_INTERFACE:${OpenImageIO_INCLUDE_DIRS}>
+      INTERFACE
+      $<BUILD_INTERFACE:${OpenImageIO_INCLUDE_DIRS}> 
     )
-
     target_link_libraries(poutre_io
-            PUBLIC
-            OpenImageIO
-            OpenImageIO_Util
+      INTERFACE OpenImageIO::OpenImageIO
     )
 endif ()
 
+if (POUTRE_BUILD_WITH_HDF5)
+        target_compile_definitions(poutre_io PUBLIC POUTRE_BUILD_WITH_HDF5)
+        target_include_directories(poutre_io PRIVATE ${HDF5_INCLUDE_DIRS})
 
-target_include_directories(poutre_io
-        INTERFACE
-        $<BUILD_INTERFACE:${hdf5_INCLUDE_DIRS}>
-)
-target_link_libraries(poutre_io
-        PRIVATE poutre2_options
-        PRIVATE poutre2_warnings
-        PUBLIC poutre_base::poutre_base
-        PRIVATE spdlog::spdlog
-        PRIVATE hdf5::hdf5
-        PRIVATE hdf5-static
-        PRIVATE hdf5_cpp-static
-
-)
+        target_link_libraries(poutre_io
+                PRIVATE poutre2_options
+                PRIVATE poutre2_warnings
+                PUBLIC poutre_base::poutre_base
+                PRIVATE spdlog::spdlog
+                PRIVATE hdf5::hdf5 
+                PRIVATE hdf5::hdf5_cpp
+        )
+endif()
 
 
 # force custom target before start
