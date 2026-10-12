@@ -163,12 +163,6 @@ jobs:
           gcovr: true
           opencppcoverage: true
 
-      - name: Set conda environment
-        uses: mamba-org/setup-micromamba@main
-        with:
-          environment-name: env.poutre2
-          environment-file: environment.yml
-
       - name: Setup Python
         uses: actions/setup-python@v7.0.0
         with:
@@ -180,14 +174,12 @@ jobs:
           python -m pip install --upgrade pip
           python -m pip install -e .
 
-      #      - name: setup pyenv
-      #        uses: "gabrielfalcao/pyenv-action@v18"
-      #        with:
-      #          default: 3.12
-      #          command: |
-      #            pip install -U pip setuptools numpy
-      #            pip install .
-
+      - name: Set conda environment
+        uses: mamba-org/setup-micromamba@v3
+        with:
+          environment-name: build_env
+          environment-file: environment.yml
+          cache-environment: true
 
       - name: Configure CMake
         run: |
