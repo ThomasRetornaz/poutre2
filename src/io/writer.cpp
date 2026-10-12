@@ -42,7 +42,7 @@ ImageWriter &ImageWriter::SetPath(const std::string &i_imgpath)
   return *this;
 }
 
-void ImageWriter::Write(const IInterface &i_img) const
+void ImageWriter::Write(POUTRE_MAYBE_UNUSED const IInterface &i_img) const
 {
   POUTRE_ENTERING("ImageWriter::Write()");
 
