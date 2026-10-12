@@ -46,31 +46,32 @@ add_library(poutre_io::poutre_io ALIAS poutre_io)
 if (POUTRE_BUILD_WITH_OIIO)
 
     target_compile_definitions(poutre_io PUBLIC POUTRE_BUILD_WITH_OIIO)
-    target_compile_features(poutre_io INTERFACE cxx_std_17)
     # include_directories(${OpenImageIO_INCLUDE_DIRS})
     target_include_directories(poutre_io
-      INTERFACE
-      $<BUILD_INTERFACE:${OpenImageIO_INCLUDE_DIRS}> 
+            INTERFACE
+            $<BUILD_INTERFACE:${OpenImageIO_INCLUDE_DIRS}>
     )
     target_link_libraries(poutre_io
-      INTERFACE OpenImageIO::OpenImageIO
+            INTERFACE OpenImageIO::OpenImageIO
     )
 endif ()
 
 if (POUTRE_BUILD_WITH_HDF5)
-        target_compile_definitions(poutre_io PUBLIC POUTRE_BUILD_WITH_HDF5)
-        target_include_directories(poutre_io PRIVATE ${HDF5_INCLUDE_DIRS})
+    target_compile_definitions(poutre_io PUBLIC POUTRE_BUILD_WITH_HDF5)
+    target_include_directories(poutre_io PRIVATE ${HDF5_INCLUDE_DIRS})
 
-        target_link_libraries(poutre_io
-                PRIVATE poutre2_options
-                PRIVATE poutre2_warnings
-                PUBLIC poutre_base::poutre_base
-                PRIVATE spdlog::spdlog
-                PRIVATE hdf5::hdf5 
-                PRIVATE hdf5::hdf5_cpp
-        )
-endif()
+    target_link_libraries(poutre_io
+            PRIVATE hdf5::hdf5
+            PRIVATE hdf5::hdf5_cpp
+    )
+endif ()
 
+target_link_libraries(poutre_io
+        PRIVATE poutre2_options
+        PRIVATE poutre2_warnings
+        PUBLIC poutre_base::poutre_base
+        PRIVATE spdlog::spdlog
+)
 
 # force custom target before start
 target_include_directories(poutre_io ${WARNING_GUARD} PUBLIC $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>
