@@ -468,10 +468,10 @@ enum class CompOpType {
 };
 
 //! operator<< for CompOpType
-BASE_API std::ostream &operator<<(std::ostream &, CompOpType);
+BASE_API std::ostream &operator<<(std::ostream &ost, CompOpType compOpType);
 
 //! operator>> for CompOpType
-BASE_API std::istream &operator>>(std::istream &, CompOpType &);
+BASE_API std::istream &operator>>(std::istream &ist, CompOpType &compOpType);
 
 
 /*!
@@ -488,10 +488,10 @@ enum class ArithOpType {
 };
 
 //! operator<< for ArithOpType
-BASE_API std::ostream &operator<<(std::ostream &, ArithOpType);
+BASE_API std::ostream &operator<<(std::ostream &ost, ArithOpType arithOpType);
 
 //! operator>> for ArithOpType
-BASE_API std::istream &operator>>(std::istream &, ArithOpType &);
+BASE_API std::istream &operator>>(std::istream &ist, ArithOpType &arithOpType);
 
 /*!
  * @brief Assignment Operator
@@ -509,10 +509,10 @@ enum class AssignOpType {
 };
 
 //! operator<< for AssignOpType
-BASE_API std::ostream &operator<<(std::ostream &, AssignOpType);
+BASE_API std::ostream &operator<<(std::ostream &ost, AssignOpType assignOpType);
 
 //! operator>> for AssignOpType
-BASE_API std::istream &operator>>(std::istream &, AssignOpType &);
+BASE_API std::istream &operator>>(std::istream &ist, AssignOpType &assignOpType);
 // !@} doxygroup: types_group
 
 
@@ -525,10 +525,10 @@ enum class CompoundType {
 };
 
 //! operator<< for CompoundType
-BASE_API std::ostream &operator<<(std::ostream &, CompoundType);
+BASE_API std::ostream &operator<<(std::ostream &ost, CompoundType ctype);
 
 //! operator>> for CompoundType
-BASE_API std::istream &operator>>(std::istream &, CompoundType &);
+BASE_API std::istream &operator>>(std::istream &ist, CompoundType &ctype);
 
 enum class PType {
   PType_Undef = 0,//!< Undefined type
@@ -614,10 +614,10 @@ inline ScalarTypeVariant get_highest(const PType ptype)
 }
 
 //! operator<< for PType
-BASE_API std::ostream &operator<<(std::ostream &, PType);
+BASE_API std::ostream &operator<<(std::ostream &ost, PType ptype);
 
 //! operator>> for PType
-BASE_API std::istream &operator>>(std::istream &, PType &);
+BASE_API std::istream &operator>>(std::istream &ist, PType &ptype);
 
 
 /*!
@@ -636,10 +636,10 @@ enum class LabelType : uint8_t {
 };
 
 //! operator<< for LabelType
-BASE_API std::ostream &operator<<(std::ostream &, LabelType);
+BASE_API std::ostream &operator<<(std::ostream &ost, LabelType ltype);
 
 //! operator>> for LabelType
-BASE_API std::istream &operator>>(std::istream &, LabelType &);
+BASE_API std::istream &operator>>(std::istream &ist, LabelType &ltype);
 
 #if defined(POUTRE_IS_GCC) || defined(POUTRE_IS_CLANG)
 extern template class BASE_API compound_type< pUINT8, 3 >;
