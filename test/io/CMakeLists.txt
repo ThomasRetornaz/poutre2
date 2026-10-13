@@ -1,7 +1,7 @@
 set(subdirsource ${PROJECT_SOURCE_DIR}/io)
 
 # Test project
-set(PoutreIOTestSRC
+set(PoutreIOTestSRC ${subdirsource}/dummy.cpp
 )
 
 if (POUTRE_BUILD_WITH_HDF5)
