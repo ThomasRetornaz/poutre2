@@ -59,7 +59,7 @@ public:
 //@warning Serialize a description of image. Doesn't serialize data. Use @c
 // ImageFromString,@c
 // ImageToString
-BASE_API std::ostream &operator<<(std::ostream &, const IInterface &img);
+BASE_API std::ostream &operator<<(std::ostream &stream, const IInterface &img);
 
 /**
  * @brief Check if images are compatible regarding sizes

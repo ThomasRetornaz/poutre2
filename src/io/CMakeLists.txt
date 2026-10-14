@@ -52,7 +52,7 @@ if (POUTRE_BUILD_WITH_OIIO)
             $<BUILD_INTERFACE:${OpenImageIO_INCLUDE_DIRS}>
     )
     target_link_libraries(poutre_io
-            INTERFACE OpenImageIO::OpenImageIO
+            PRIVATE OpenImageIO::OpenImageIO
     )
 endif ()
 
