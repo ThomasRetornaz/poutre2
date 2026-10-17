@@ -598,8 +598,8 @@ template< ptrdiff_t Rank > constexpr bounds< Rank >::bounds(const std::initializ
 // observers
 template< ptrdiff_t Rank > constexpr size_t bounds< Rank >::size() const noexcept
 {
-  return static_cast< size_t >(
-    std::accumulate(bounds_.begin(), bounds_.end(), 1, std::multiplies< bounds::value_type >()));
+  return static_cast< size_t >(std::accumulate(
+    bounds_.begin(), bounds_.end(), static_cast< ptrdiff_t >(1), std::multiplies< bounds::value_type >()));
 }
 
 template< ptrdiff_t Rank > struct contains_op

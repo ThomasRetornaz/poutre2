@@ -41,23 +41,23 @@ namespace poutre::io::details {
  */
 
 
-constexpr H5std_string DATASET_NAME("Images");
-constexpr H5std_string CHANNEL1("channel_1");
-constexpr H5std_string CHANNEL2("channel_2");
-constexpr H5std_string CHANNEL3("channel_3");
-constexpr H5std_string CHANNEL4("channel_4");
+static constexpr auto DATASET_NAME = "Images";
+static constexpr auto CHANNEL1 = "channel_1";
+static constexpr auto CHANNEL2 = "channel_2";
+static constexpr auto CHANNEL3 = "channel_3";
+static constexpr auto CHANNEL4 = "channel_4";
 
 // compound_types
-constexpr H5std_string IMAGEScalar("Scalar");
-constexpr H5std_string IMAGE3Planes("3Planes");
-constexpr H5std_string IMAGE4Planes("4Planes");
+static constexpr auto IMAGEScalar = "Scalar";
+static constexpr auto IMAGE3Planes = "3Planes";
+static constexpr auto IMAGE4Planes = "4Planes";
 
 // ptype
-constexpr H5std_string PUINT8("pUINT8");
-constexpr H5std_string PINT32("pINT32");
-constexpr H5std_string PINT64("pINT64");
-constexpr H5std_string PFLOAT("pF32");
-constexpr H5std_string PDOUBLE("pD64");
+static constexpr auto PUINT8 = "pUINT8";
+static constexpr auto PINT32 = "pINT32";
+static constexpr auto PINT64 = "pINT64";
+static constexpr auto PFLOAT = "pF32";
+static constexpr auto PDOUBLE = "pD64";
 
 inline void CreateAttribute(H5::DataSet &dataSet,
                             const std::string &key,
