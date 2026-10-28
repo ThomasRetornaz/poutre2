@@ -57,6 +57,11 @@ if (POUTRE_BUILD_WITH_OIIO)
 endif ()
 
 if (POUTRE_BUILD_WITH_HDF5)
+
+    if (CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
+        target_compile_definitions(poutre_io PUBLIC H5_BUILT_AS_DYNAMIC_LIB) # https://support.hdfgroup.org/documentation/hdf5/latest/_l_b_compiling.html
+    endif ()
+
     target_compile_definitions(poutre_io PUBLIC POUTRE_BUILD_WITH_HDF5)
     target_include_directories(poutre_io PRIVATE ${HDF5_INCLUDE_DIRS})
 
