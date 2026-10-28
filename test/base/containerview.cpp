@@ -98,9 +98,11 @@ TEST_CASE("basic_usage_strided_view_over_vector", "[view]")
   view[idx1d{0}] = 42;// grmmlll idx1d{} to force resolution operator[index] and not slice ....
   REQUIRE(mif[0] == 42);// v == 42
 
+  // NOLINTNEXTLINE
   const auto viewcopy(view);
   REQUIRE(viewcopy[idx1d{0}] == 42);// v == 42
-  const auto viewcopy2 = view;
+  // NOLINTNEXTLINE
+  const auto viewcopy2(view);
   REQUIRE(viewcopy2[idx1d{0}] == 42);// v == 42
 }
 
