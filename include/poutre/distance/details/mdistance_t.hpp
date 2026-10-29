@@ -203,7 +203,8 @@ void t_mdistanceDispatch(const ViewIn< const Tin, Rank > &i_vin,
     }
     return;
   }
-  POUTRE_RUNTIME_ERROR("t_mdistanceDispatch unsupported nb dims");
+  // std::unreachable();
+  // POUTRE_RUNTIME_ERROR("t_mdistanceDispatch unsupported nb dims");
   // cppcheck-suppress missingReturn
   // return 0; //NOLINT
 }

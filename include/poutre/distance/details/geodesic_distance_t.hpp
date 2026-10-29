@@ -285,7 +285,8 @@ void t_geodesic_distanceDispatch(const ViewMarker< const Tmarker, Rank > &i_vmar
     }
     return;
   }
-  POUTRE_RUNTIME_ERROR("t_geodesic_distanceDispatch unsupported nb dims");
+  // std::unreachable();
+  // POUTRE_RUNTIME_ERROR("t_geodesic_distanceDispatch unsupported nb dims");
   // cppcheck-suppress missingReturn
   // return 0; //NOLINT
 }
