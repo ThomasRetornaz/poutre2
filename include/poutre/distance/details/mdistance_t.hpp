@@ -28,6 +28,7 @@ namespace poutre::dist::details {
  *@{
  */
 
+// NOLINTBEGIN
 template< poutre::se::Common_NL_SE nl_static,
           typename Tmarker,
           typename Tout,
@@ -39,6 +40,7 @@ struct t_MDistanceViewDispatcher
   static_assert(Rank == poutre::se::details::static_se_traits< nl_static >::rank, "SE and view have not the same Rank");
   void operator()(const ViewMarker< const Tmarker, Rank > &i_vmarker, const ViewOut< Tout, Rank > &o_vout) const
   {
+    // NOLINTBEGIN
     POUTRE_CHECK(i_vmarker.size() == o_vout.size(), "Incompatible views size");
     // More check
     auto vMarkerbound = i_vmarker.bound();
@@ -113,9 +115,10 @@ struct t_MDistanceViewDispatcher
         }
       }
     }
+    // NOLINTEND
   }
 };
-
+// NOLINTEND
 
 template< typename Tin,
           typename Tout,

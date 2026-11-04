@@ -26,6 +26,7 @@ namespace poutre::dist::details {
  *@{
  */
 
+// NOLINTBEGIN
 template< se::Common_NL_SE nl_static,
           typename Tmarker,
           typename Tmask,
@@ -113,6 +114,7 @@ struct t_GeodesicDistanceViewDispatcher
     }
   }
 };
+// NOLINTEND
 
 template< typename Tmarker,
           typename Tmask,
