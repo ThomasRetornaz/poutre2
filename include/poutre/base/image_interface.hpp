@@ -39,12 +39,13 @@ namespace poutre {
 class BASE_API IInterface
 {
 public:
+
   //! Get @c PType belong to @c IInterface
   [[nodiscard]] virtual PType GetPType() const = 0;
   //! Get @c CompoundType belong to @c IInterface
   [[nodiscard]] virtual CompoundType GetCType() const = 0;
   //! Get size over dimensions
-  [[nodiscard]] virtual std::vector< std::size_t > GetShape() const = 0;//@TODO
+  [[nodiscard]] virtual std::vector< std::size_t > GetShape() const = 0;
   // may
   // change this
   //! Get num of dimensions
@@ -53,6 +54,14 @@ public:
   virtual ~IInterface() = default;
   //! Stringification
   [[nodiscard]] virtual std::string str() const = 0;
+  IInterface() = default;
+  
+  class IInterface &operator=(const class IInterface &) = default;
+  IInterface(const class IInterface &) = default;
+
+  class IInterface &operator=(class IInterface&&) = default;
+  IInterface(class IInterface &&) = default;
+  
 };
 
 //! operator<< for IInterface

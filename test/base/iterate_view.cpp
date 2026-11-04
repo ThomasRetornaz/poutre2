@@ -28,7 +28,7 @@
 #include <utility>
 #include <vector>
 
-
+// NOLINTBEGIN --- IGNORE ---
 TEST_CASE("bound iterator", "[iterator_view]")
 {
   const std::string img_str =
@@ -308,3 +308,4 @@ TEST_CASE("bound iterator and nl boundaries lower", "[iterator_view]")
     }
   }
 }
+// NOLINTEND --- IGNORE ---

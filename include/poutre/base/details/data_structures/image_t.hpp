@@ -37,7 +37,7 @@ namespace poutre::details {
  *@{
  */
 
-template<class valuetype, std::ptrdiff_t Rank = 2> class /*BASE_API */ image_t : public IInterface
+template<class valuetype, std::ptrdiff_t Rank = 2> class /*BASE_API */ image_t : public poutre::IInterface
 {
   static_assert(Rank > 0, "Rank must be >0");
 
@@ -71,12 +71,13 @@ public:
   static const PType m_ptype = TypeTraits<value_type>::p_type;
   static const CompoundType m_ctype = TypeTraits<value_type>::c_type;
   static const std::ptrdiff_t m_numdims = Rank;
+  
+  // NOLINTBEGIN
+  [[nodiscard]]  CompoundType GetCType() const override { return m_ctype; }
 
-  [[nodiscard]] CompoundType GetCType() const noexcept override { return m_ctype; }
+  [[nodiscard]]  PType GetPType() const override { return m_ptype; }
 
-  [[nodiscard]] PType GetPType() const noexcept override { return m_ptype; }
-
-  [[nodiscard]] std::vector<std::size_t> GetShape() const override
+  [[nodiscard]]  std::vector<std::size_t> GetShape() const override
   {
     std::vector<std::size_t> out(this->m_numdims);
     // use normal traversal
@@ -85,6 +86,7 @@ public:
   }
   //! Get num of dimensions
   [[nodiscard]] std::size_t GetRank() const override { return m_numdims; }
+  // NOLINTEND
 
   //! Get total number of elements
   [[nodiscard]] constexpr size_type size() const noexcept { return m_numelement; }
@@ -115,6 +117,7 @@ public:
   //! assign value to all elements
   void fill(const value_type &val) { std::fill(m_storage.begin(), m_storage.end(), val); }
 
+  // NOLINTBEGIN
   [[nodiscard]] std::string str() const noexcept override
   {
     std::ostringstream out;
@@ -125,37 +128,44 @@ public:
     out << "\tNumdim: " << numDims << std::endl;
     const auto &coords = this->GetShape();
     out << "\tcoord: (";
-    for (size_t i = 0; i < numDims - 1; i++) { out << coords[i] << ", "; }
-    if (static_cast<ptrdiff_t>(numDims) - 1 >= 0) { out << coords[numDims - 1]; }
+    // NOLINTNEXTLINE(cppcoreguidelines-pro-bounds-avoid-unchecked-container-access)
+    for (std::ptrdiff_t i = 0; i < static_cast<std::ptrdiff_t>(numDims) - 1; i++) { out << coords[static_cast<size_t>(i)] << ", "; }
+    // NOLINTNEXTLINE(cppcoreguidelines-pro-bounds-avoid-unchecked-container-access)
+    if (static_cast<ptrdiff_t>(numDims) - 1 >= 0) { out << coords[static_cast<size_t>(numDims - 1)]; }
     out << ")" << '\n';
     return out.str();
   }
+  // NOLINTEND
 
-  constexpr explicit image_t(const std::vector<size_t> &dims) : m_storage(), m_coordinnates(), m_numelement(0)
+  constexpr explicit image_t(const std::vector<size_t> &dims) : m_storage(), m_coordinnates(), m_numelement(0) // NOLINT
   {
     if (dims.size() != m_numdims) {
       POUTRE_RUNTIME_ERROR("Invalid input initializer Mismatch between Rank and dims.size()");
     }
-    for (std::size_t i = 0; i < this->m_numdims; ++i) { this->m_coordinnates[i] = static_cast<ptrdiff_t>(dims[i]); }
+    // NOLINTBEGIN(cppcoreguidelines-pro-bounds-avoid-unchecked-container-access)
+    for (auto i = 0; i < this->m_numdims; ++i) { this->m_coordinnates[static_cast<size_t>(i)] = static_cast<ptrdiff_t>(dims[static_cast<size_t>(i)]); }
     m_numelement = static_cast<std::size_t>(m_coordinnates[0]);
-    for (std::size_t i = 1; i < static_cast<std::size_t>(m_numdims); i++) {
-      m_numelement *= (static_cast<std::size_t>(m_coordinnates[i]));
+    for (auto i = 1; i < m_numdims; i++) {
+      m_numelement *= (static_cast<std::size_t>(m_coordinnates[static_cast<size_t>(i)]));
     }
+    // NOLINTEND(cppcoreguidelines-pro-bounds-avoid-unchecked-container-access)
     m_storage.resize(m_numelement);
   }
 
-  constexpr image_t(const std::initializer_list<size_t> &dims) : m_storage(), m_coordinnates(), m_numelement(0)
+  constexpr image_t(const std::initializer_list<size_t> &dims) : m_storage(), m_coordinnates(), m_numelement(0) // NOLINT
   {
     if (dims.size() != m_numdims) {
       POUTRE_RUNTIME_ERROR("Invalid input initializer Mismatch between Rank and dims.size()");
     }
     const auto *it = dims.begin();
-    for (size_t i = 0; i < this->m_numdims; ++i, ++it) { this->m_coordinnates[i] = static_cast<std::ptrdiff_t>(*it); }
+    // NOLINTBEGIN
+    for (std::ptrdiff_t i = 0; i < this->m_numdims; ++i, ++it) { this->m_coordinnates[static_cast<size_t>(i)] = static_cast<std::ptrdiff_t>(*it); }
     // compute full array size
     m_numelement = static_cast<std::size_t>(m_coordinnates[0]);
-    for (size_t i = 1; i < static_cast<std::size_t>(m_numdims); i++) {
-      m_numelement *= (static_cast<std::size_t>(m_coordinnates[i]));
+    for (std::ptrdiff_t i = 1; i < m_numdims; i++) {
+      m_numelement *= (static_cast<std::size_t>(m_coordinnates[static_cast<size_t>(i)]));
     }
+    // NOLINTEND
     m_storage.resize(m_numelement);
   }
 
@@ -163,8 +173,9 @@ public:
   image_t(const image_t &rhs) = default;
   image_t &operator=(const image_t &rhs) = default;
   // see this later
-  image_t(image_t &&other) = default;
-  image_t &operator=(image_t &&other) = default;
+  image_t(image_t &&other) noexcept = default ;
+  image_t &operator=(image_t &&other) noexcept = default ;
+  
   ~image_t() override = default;
 
   [[nodiscard]] constexpr coordinate_type shape() const noexcept { return m_coordinnates; }
@@ -173,36 +184,40 @@ public:
   POUTRE_CONSTEXPR reference operator[](size_type idx) POUTRE_NOEXCEPT
   {
     POUTRE_ASSERTCHECK(idx < m_numelement, "Access out of bound");
+    // NOLINTNEXTLINE(cppcoreguidelines-pro-bounds-avoid-unchecked-container-access) 
     return m_storage[idx];
   }
 
   POUTRE_CONSTEXPR const_reference operator[](size_type idx) const POUTRE_NOEXCEPT
   {
     POUTRE_ASSERTCHECK(idx < m_numelement, "Access out of bound");
+    // NOLINTNEXTLINE(cppcoreguidelines-pro-bounds-avoid-unchecked-container-access)
     return m_storage[idx];
   }
   // cppcheck-suppress functionConst
   POUTRE_CONSTEXPR reference at(size_type idx)
   {
     if (idx >= m_numelement) { POUTRE_RUNTIME_ERROR("Access out of bound"); }
+    // NOLINTNEXTLINE(cppcoreguidelines-pro-bounds-avoid-unchecked-container-access)
     return m_storage[idx];
   }
 
-  POUTRE_CONSTEXPR const_reference at(size_type n) const
+  POUTRE_CONSTEXPR const_reference at(size_type offset) const
   {
-    if (n >= m_numelement) { POUTRE_RUNTIME_ERROR("Access out of bound"); }
-    return m_storage[n];
+    if (offset >= m_numelement) { POUTRE_RUNTIME_ERROR("Access out of bound"); }
+    // NOLINTNEXTLINE(cppcoreguidelines-pro-bounds-avoid-unchecked-container-access)
+    return m_storage[offset];
   }
 
   template<size_t R = Rank>
   [[nodiscard]] constexpr scoord GetXSize() const noexcept
     requires(R == 2)
-  { return this->m_coordinnates[1]; }
+  { return this->m_coordinnates[1]; } // NOLINT(cppcoreguidelines-pro-bounds-avoid-unchecked-container-access)
 
   template<size_t R = Rank>
   [[nodiscard]] constexpr scoord GetYSize() const noexcept
     requires(R == 2)
-  { return this->m_coordinnates[0]; }
+  { return this->m_coordinnates[0]; } // NOLINT(cppcoreguidelines-pro-bounds-avoid-unchecked-container-access)
 
   template<size_t R = Rank>
   [[nodiscard]] constexpr const_pointer GetLineBuffer(scoord y) const POUTRE_NOEXCEPTONLYNDEBUG
@@ -210,6 +225,7 @@ public:
   {
     POUTRE_ASSERTCHECK(y < this->m_coordinnates[0], "Access out of bound");
     POUTRE_ASSERTCHECK(y >= 0, "Access out of bound");
+    // NOLINTNEXTLINE(cppcoreguidelines-pro-bounds-avoid-unchecked-container-access)
     return &m_storage[static_cast<std::size_t>(y) * static_cast<std::size_t>(m_coordinnates[0])];
   }
 
@@ -221,17 +237,19 @@ public:
   {
     POUTRE_ASSERTCHECK(y < this->m_coordinnates[0], "Access out of bound");
     POUTRE_ASSERTCHECK(y >= 0, "Access out of bound");
+    // NOLINTNEXTLINE(cppcoreguidelines-pro-bounds-avoid-unchecked-container-access)
     return &m_storage[static_cast<std::size_t>(y) * static_cast<std::size_t>(m_coordinnates[0])];
   }
 
   template<size_t R = Rank>
-  void SetPixel(scoord x, scoord y, value_type value) POUTRE_NOEXCEPTONLYNDEBUG
+  void SetPixel(scoord x, scoord y, value_type value) POUTRE_NOEXCEPTONLYNDEBUG // NOLINT
     requires(R == 2)
   {
     POUTRE_ASSERTCHECK(x < this->m_coordinnates[1], "Access out of bound");
     POUTRE_ASSERTCHECK(x >= 0, "Access out of bound");
     POUTRE_ASSERTCHECK(y < this->m_coordinnates[0], "Access out of bound");
     POUTRE_ASSERTCHECK(y >= 0, "Access out of bound");
+    // NOLINTNEXTLINE(cppcoreguidelines-pro-bounds-avoid-unchecked-container-access)
     m_storage[(static_cast<std::size_t>(y) * static_cast<std::size_t>(m_coordinnates[0])) + static_cast<std::size_t>(x)] =
       value;
   }
@@ -239,24 +257,30 @@ public:
   template<size_t R = Rank>
   void SetPixel(av::idx2d idx, value_type value) POUTRE_NOEXCEPTONLYNDEBUG
     requires(R == 2)
-  { this->SetPixel(idx[1], idx[0], value); }
+  { 
+    // NOLINTNEXTLINE(cppcoreguidelines-pro-bounds-avoid-unchecked-container-access)
+    this->SetPixel(idx[1], idx[0], value); 
+  }
 
   template<size_t R = Rank>
-  [[nodiscard]] constexpr value_type GetPixel(scoord x, scoord y) const POUTRE_NOEXCEPTONLYNDEBUG
+  [[nodiscard]] constexpr value_type GetPixel(scoord x, scoord y) const POUTRE_NOEXCEPTONLYNDEBUG // NOLINT
     requires(R == 2)
   {
     POUTRE_ASSERTCHECK(x < this->m_coordinnates[1], "Access out of bound");
     POUTRE_ASSERTCHECK(x >= 0, "Access out of bound");
     POUTRE_ASSERTCHECK(y < this->m_coordinnates[0], "Access out of bound");
     POUTRE_ASSERTCHECK(y >= 0, "Access out of bound");
-    return m_storage[static_cast<std::size_t>(y) * static_cast<std::size_t>(m_coordinnates[0])
+    // NOLINTNEXTLINE(cppcoreguidelines-pro-bounds-avoid-unchecked-container-access)
+    return m_storage[(static_cast<std::size_t>(y) * static_cast<std::size_t>(m_coordinnates[0]))
                      + static_cast<std::size_t>(x)];
   }
 
   template<size_t R = Rank>
   [[nodiscard]] constexpr value_type GetPixel(av::idx2d idx) const POUTRE_NOEXCEPTONLYNDEBUG
     requires(R == 2)
-  { return this->GetPixel(idx[1], idx[0]); }
+  { 
+    // NOLINTNEXTLINE(cppcoreguidelines-pro-bounds-avoid-unchecked-container-access)
+    return this->GetPixel(idx[1], idx[0]); }
 
   void swap(self_type &rhs) noexcept
   {

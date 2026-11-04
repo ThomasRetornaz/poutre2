@@ -29,7 +29,7 @@
 namespace poutre::details {
 /**
  * @addtogroup image_processing_pqueue_group Priority queue facilities
- * @ingroup image_processing_group
+ * @ingroup poutre_base_group
  *@{
  */
 

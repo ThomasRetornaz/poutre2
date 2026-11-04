@@ -28,6 +28,7 @@
 namespace poutre {
 std::ostream &operator<<(std::ostream &stream, const IInterface &img)// NOLINT(misc-unused-parameters)
 {
+  // NOLINTNEXTLINE(bugprone-signed-bitwise)
   stream << img.str();
   return stream;
 }
@@ -205,15 +206,14 @@ std::unique_ptr< IInterface >
   case CompoundType::CompoundType_Scalar: {
     return CreateImage1DDispatchPTypeScalar< numDims >(dims, ptype);
   }
-  // case CompoundType::CompoundType_3Planes:
-  //   {
-  //   return  CreateDenseDispatchPType3PLanes<numDims>(dims, ptype);
-  //   }break;
-  // case CompoundType::CompoundType_4Planes:
-  //   {
-  //   return  CreateDenseDispatchPType4PLanes<numDims>(dims, ptype);
-  //   }break;
+  case CompoundType::CompoundType_3Planes: {
+    return CreateDenseDispatchPType3PLanes< numDims >(dims, ptype);
+  }
+  case CompoundType::CompoundType_4Planes: {
+    return CreateDenseDispatchPType4PLanes< numDims >(dims, ptype);
+  }
   default: {
+    // NOLINTNEXTLINE
     POUTRE_RUNTIME_ERROR(std::format("Unsupported compound type:{}", ctype));
   }
   }
@@ -325,6 +325,7 @@ std::unique_ptr< IInterface > CreateImage3DDispatchPTypeScalar(const std::vector
   }
 }
 
+// NOLINTBEGIN
 template< ptrdiff_t numDims >
 std::unique_ptr< IInterface > CreateImage3DDispatchPType3PLanes(const std::vector< std::size_t > &dims, PType ptype)
 {
@@ -345,7 +346,9 @@ std::unique_ptr< IInterface > CreateImage3DDispatchPType3PLanes(const std::vecto
   }
   }
 }
+// NOLINTEND
 
+// NOLINTBEGIN
 template< size_t numDims >
 std::unique_ptr< IInterface > CreateImage3DDispatchPType4PLanes(const std::vector< std::size_t > &dims, PType ptype)
 {
@@ -366,6 +369,8 @@ std::unique_ptr< IInterface > CreateImage3DDispatchPType4PLanes(const std::vecto
   }
   }
 }
+
+// NOLINTEND
 
 template< size_t numDims >
 std::unique_ptr< IInterface >
@@ -441,6 +446,7 @@ void ImageFromStringDenseScalarDispatchPTypeHelper(poutre::IInterface &img, std:
   }
 }// namespace poutre
 
+// NOLINTBEGIN
 template< ptrdiff_t dims, typename ptype >
 void ImageFromStringDense3PlanesDispatchPTypeHelper(poutre::IInterface &img, std::istringstream &istrm)
 {
@@ -484,6 +490,7 @@ void ImageFromStringDense3PlanesDispatchPTypeHelper(poutre::IInterface &img, std
     iter[2] = static_cast< TypeTraits< ptype >::storage_type >(tmp);
   }
 }
+
 
 template< ptrdiff_t dims, typename ptype >
 void ImageFromStringDense4PlanesDispatchPTypeHelper(poutre::IInterface &img, std::istringstream &istrm)
@@ -537,6 +544,7 @@ void ImageFromStringDense4PlanesDispatchPTypeHelper(poutre::IInterface &img, std
     iter[3] = static_cast< TypeTraits< ptype >::storage_type >(tmp);
   }
 }
+// NOLINTEND
 
 template< size_t dims >
 void ImageFromStringDense3PlanesDispatchPType(poutre::IInterface &img, poutre::PType ptype, std::istringstream &istrm)
@@ -649,23 +657,24 @@ std::unique_ptr< IInterface > ImageFromString(const std::string &i_str)
 
   istrm >> cptype;
   if (istrm.fail()) {
-    std::string err = "ImageFromString: unable to read CompoundType from " + i_str;
+    std::string err = std::string("ImageFromString: unable to read CompoundType from ");
     POUTRE_RUNTIME_ERROR(err);
   }
   istrm >> ptype;
   if (istrm.fail()) {
-    std::string err = "ImageFromString: unable to read PType from " + i_str;
+    std::string err = std::string("ImageFromString: unable to read PType from ");
     POUTRE_RUNTIME_ERROR(err);
   }
+  // NOLINTNEXTLINE(bugprone-signed-bitwise)
   istrm >> NumDims;
 
   if (istrm.fail()) {
-    std::string err = "ImageFromString: unable to read NumDims from " + i_str;
+    std::string err = std::string("ImageFromString: unable to read NumDims from ");
     POUTRE_RUNTIME_ERROR(err);
   }
 
   if (!(NumDims > 0)) {
-    std::string err = "ImageFromString: wrong value from NumDims " + i_str;
+    std::string err = std::string("ImageFromString: wrong value from NumDims ");
     POUTRE_RUNTIME_ERROR(err);
   }
 
@@ -675,7 +684,8 @@ std::unique_ptr< IInterface > ImageFromString(const std::string &i_str)
   for (ptrdiff_t i = 0; i < NumDims; i++) {
     istrm >> current_dim;
     if (istrm.fail()) {
-      std::string err = "ImageFromString: unable to read dim from " + i_str;
+      std::string err = std::string("ImageFromString: unable to read dim from ") + std::to_string(current_dim)
+                        + std::string(" in ") + i_str;
       POUTRE_RUNTIME_ERROR(err);
     }
     dims.push_back(static_cast< std::size_t >(current_dim));
@@ -715,6 +725,7 @@ std::unique_ptr< IInterface > ImageFromString(const std::string &i_str)
 /***********************************************************************************************************************/
 
 // IMAGE TO STRING DISPATCH PTYPE
+// NOLINTBEGIN
 template< ptrdiff_t dims, typename ptype >
 void ImageToStringDenseCompoundType_4PlanesDispatchPTypeHelper(const poutre::IInterface &img, std::ostringstream &ostrm)
 {
@@ -758,7 +769,7 @@ void ImageToStringDenseCompoundType_3PlanesDispatchPTypeHelper(const poutre::IIn
   ostrm.str(tmp);
   ostrm.seekp(0, ostrm.end);
 }
-
+// NOLINTEND
 template< ptrdiff_t dims, typename ptype >
 void ImageToStringDenseScalarDispatchPTypeHelper(const poutre::IInterface &img, std::ostringstream &ostrm)
 {
@@ -904,7 +915,7 @@ void ImageToStringDispatchDense(const poutre::IInterface &img,
 std::string ImageToString(const poutre::IInterface &i_image)// NOLINT(misc-unused-parameters)
 {
   POUTRE_ENTERING("ImageToString");
-  std::ostringstream ostrm;
+  std::ostringstream ostrm{};
   if (!ostrm.good()) {
     POUTRE_RUNTIME_ERROR("ImageToString: unable to create ostrm");
   }
@@ -914,6 +925,7 @@ std::string ImageToString(const poutre::IInterface &i_image)// NOLINT(misc-unuse
 
   ostrm << cptype << " ";
   ostrm << ptype << " ";
+  // NOLINTNEXTLINE(bugprone-signed-bitwise)
   ostrm << numdim << " ";
   for (auto dim : i_image.GetShape()) {
     ostrm << dim << " ";

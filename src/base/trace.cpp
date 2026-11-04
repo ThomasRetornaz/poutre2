@@ -10,23 +10,65 @@
 //                     http://www.boost.org/LICENSE_1_0.txt                   //
 //==============================================================================
 
+#include <memory>
 #include <mutex>
+#include <vector>
 #include <ostream>
 #include <poutre/base/trace.hpp>
-#include <spdlog/common.h>
-#include <spdlog/sinks/stdout_color_sinks.h>
+
+// Set default active level if not defined externally by the build system
+#ifndef SPDLOG_ACTIVE_LEVEL
+#define SPDLOG_ACTIVE_LEVEL SPDLOG_LEVEL_ERROR
+#endif
+
 #include <spdlog/spdlog.h>
+#include <spdlog/sinks/stdout_color_sinks.h>
+#include <spdlog/sinks/rotating_file_sink.h>
 
 namespace poutre {
 
-GlobalLogger *GlobalLogger::m_instance;
-std::once_flag GlobalLogger::m_initFlag;
+std::once_flag GlobalLogger::m_initFlag={};
 
 //! Private ctor
-GlobalLogger::GlobalLogger() : m_innerlogger(spdlog::stdout_color_st("POUTRE_GLOBAL_LOGGER"))
-{
-  (*m_innerlogger).set_level(::spdlog::level::off);
-}
+// NOLINTNEXTLINE(modernize-use-equals-default)
+ GlobalLogger::GlobalLogger() {
+        try {
+            std::vector<spdlog::sink_ptr> sinks;
+
+            // 1. Thread-safe Thread-colored Console Sink
+            auto console_sink = std::make_shared<spdlog::sinks::stdout_color_sink_mt>();
+            console_sink->set_level(spdlog::level::trace);
+            // Format: [Timestamp] [Thread ID] [Log Level] Log Message
+            console_sink->set_pattern("%Y-%m-%d %H:%M:%S.%e [%t] [%^%l%$] %v");
+            sinks.push_back(console_sink);
+
+            // 2. Thread-safe Rotating File Sink (Max 5MB per file, max 3 files)
+            auto file_sink = std::make_shared<spdlog::sinks::rotating_file_sink_mt>(
+                "logs/app_log.txt", 1024 * 1024 * 5, 3 // NOLINT
+            );
+            file_sink->set_level(spdlog::level::debug);
+            // Include source information (%s:%#) for the file sink format if desired
+            file_sink->set_pattern("%Y-%m-%d %H:%M:%S.%e [%t] [%l] [%s:%#] %v");
+            sinks.push_back(file_sink);
+
+            // Create the combined master logger
+            m_logger = std::make_shared<spdlog::logger>("global_logger", sinks.begin(), sinks.end());
+            
+            // Set global tracking properties
+            m_logger->set_level(spdlog::level::warn); // Minimum level to log
+            
+            // Flush immediately on Warn or higher to protect critical error tracking
+            m_logger->flush_on(spdlog::level::warn); 
+
+            // Optional: Register globally within spdlog's internal registry
+            spdlog::register_logger(m_logger);
+            
+        } catch (const spdlog::spdlog_ex& ex) {
+            // Fallback strategy if initialization crashes (e.g., directory creation permission errors)
+            std::fprintf(stderr, "Log initialization failed: %s\n", ex.what()); // NOLINT
+            std::abort();
+        }
+    }
 
 GlobalLogger::~GlobalLogger() { spdlog::shutdown(); }
 

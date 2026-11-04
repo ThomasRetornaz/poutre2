@@ -27,6 +27,8 @@
  * @ingroup poutre_base_group
  *@{
  */
+
+ // NOLINTBEGIN(cppcoreguidelines-pro-bounds-pointer-arithmetic)
 namespace poutre::simd {
 template< typename T, typename U, typename UnOp >
 U *transform(const T *__restrict first, const T *__restrict last, U *__restrict out, UnOp func)
@@ -319,4 +321,5 @@ U *transform(T1 const *__restrict first1,
   return out;
 }
 }// namespace poutre::simd
+ // NOLINTEND(cppcoreguidelines-pro-bounds-pointer-arithmetic)
 //! @} doxygroup: simd_group

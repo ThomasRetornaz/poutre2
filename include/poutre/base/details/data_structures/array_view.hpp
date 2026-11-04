@@ -28,9 +28,7 @@
 
 #pragma once
 
-#include "array_view.hpp"
-
-
+// NOLINTBEGIN
 #include <algorithm>// for std::fill on clang macOS
 #include <array>
 #include <cassert>
@@ -295,7 +293,7 @@ public:
 };
 */
 
-// NOLINTBEGIN
+
 namespace poutre::details::av {
 
 using size_t = std::size_t;

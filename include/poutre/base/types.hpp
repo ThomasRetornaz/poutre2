@@ -40,7 +40,7 @@ namespace poutre {
  * @{
  */
 using pbool = bool;//! boolean type
-using pUINT8 = u8;//! UINT8 type
+using pUINT8 = u8;//std::byte;//! UINT8 type
 // using  pINT8 = signed char; //!INT8 type
 using pUINT32 = u32;//! UINT32 type
 using pINT32 = i32;//! INT32 type
@@ -124,8 +124,8 @@ public:
     POUTRE_CHECK(rhs.size() == rank, "Ill formed initializer list: rhs.size() must equal Rank");
     auto it = std::cbegin(rhs);
     auto itend = std::cend(rhs);
-    for (size_t i = 0; i < Rank && it != itend; i++, ++it) {
-      m_array[i] = *it;
+    for (size_t i = 0; i < Rank && it != itend; i++, ++it) { // NOLINT
+      m_array[i] = *it; // NOLINT
     }
     // safe but silly behavior if no static assertion
     // std::copy_n(rhs.begin( ), std::min<ptrdiff_t>((ptrdiff_t)rank, rhs.size(
@@ -133,7 +133,7 @@ public:
     // std::copy(rhs.begin(), rhs.end(), &m_array[0]);
   }
 
-  constexpr explicit compound_type(const valuetype (&rhs)[Rank]) noexcept : m_array()
+  constexpr explicit compound_type(const std::array< valuetype, Rank > &rhs) noexcept : m_array()
   {
     for (size_t i = 0; i < Rank; i++) {
       m_array[i] = rhs[i];
@@ -172,7 +172,7 @@ public:
   bool operator==(const self_type &other) const noexcept
   {
     for (std::size_t i = 0; i < rank; ++i) {
-      if (m_array[i] != other.m_array[i]) {
+      if (m_array[i] != other.m_array[i]) { // NOLINT
         return false;
       }
     }
@@ -182,7 +182,7 @@ public:
   bool operator!=(const self_type &other) const noexcept
   {
     for (std::size_t i = 0; i < rank; ++i) {
-      if (m_array[i] != other.m_array[i]) {
+      if (m_array[i] != other.m_array[i]) { // NOLINT
         return true;
       }
     }
@@ -194,10 +194,10 @@ public:
 
   /**@{*/
   //! Access element
-  valuetype &operator[](difference_type n) noexcept { return m_array[static_cast< size_t >(n)]; }
+  valuetype &operator[](difference_type diff) noexcept { return m_array[static_cast< size_t >(diff)]; } // NOLINT
 
   //! Access element
-  const_reference operator[](difference_type n) const noexcept { return m_array[static_cast< size_t >(n)]; }
+  const_reference operator[](difference_type diff) const noexcept { return m_array[static_cast< size_t >(diff)]; } // NOLINT
 
   [[nodiscard]] std::string to_string() const
   {
@@ -259,7 +259,10 @@ public:
 
   //! Default constructor
   compound_type() = default;
-
+  
+  //! Default destructor
+  ~compound_type() = default;
+  
   //! Constant assignment constructor
   compound_type(const value_type &pix1, const value_type &pix2, const value_type &pix3)
     : m_pix1(pix1), m_pix2(pix2), m_pix3(pix3)
@@ -321,11 +324,11 @@ public:
   {
     std::ostringstream out;
     out << "[";
-    out << m_pix1;
+    out << std::to_string(m_pix1);
     out << ",";
-    out << m_pix2;
+    out << std::to_string(m_pix2);
     out << ",";
-    out << m_pix3;
+    out << std::to_string(m_pix3);
     out << "]";
     return out.str();
   }
@@ -353,6 +356,10 @@ public:
 
   //! Default constructor
   compound_type() = default;
+
+  //! Default destructor
+  ~compound_type() = default;
+
   //! Constant assignment constructor
   compound_type(const value_type &pix1, const value_type &pix2, const value_type &pix3, const value_type &pix4)
     : m_pix1(pix1), m_pix2(pix2), m_pix3(pix3), m_pix4(pix4)
@@ -420,13 +427,13 @@ public:
   {
     std::ostringstream out;
     out << "[";
-    out << m_pix1;
+    out << std::to_string(m_pix1);
     out << ",";
-    out << m_pix2;
+    out << std::to_string(m_pix2);
     out << ",";
-    out << m_pix3;
+    out << std::to_string(m_pix3);
     out << ",";
-    out << m_pix4;
+    out << std::to_string(m_pix4);
     out << "]";
     return out.str();
   }
@@ -456,15 +463,15 @@ using c4pDOUBLE = compound_type< pDOUBLE, 4 >;
 /*!
  * @brief Compare Operator
  */
-enum class CompOpType {
+enum class CompOpType : std::uint8_t {
   CompOpUndef = 0,//!< Undefined type
-  CompOpEqual = 1 << 0,//! p1==p2
-  CompOpDiff = 1 << 1,//! p1!=p2
-  CompOpSup = 1 << 2,//! p1>p2
-  CompOpSupEqual = 1 << 3,//! p1>=p2
-  CompOpInf = 1 << 4,//! p1<p2
-  CompOpInfEqual = 1 << 5,//! p1<=p2
-  CompOp_Max = 1 << 5// sync with the max value
+  CompOpEqual = 2,//! p1==p2
+  CompOpDiff = 4,//! p1!=p2
+  CompOpSup = 8,//! p1>p2
+  CompOpSupEqual = 16,//! p1>=p2
+  CompOpInf = 32,//! p1<p2
+  CompOpInfEqual = 64,//! p1<=p2
+  CompOp_Max = 64// sync with the max value
 };
 
 //! operator<< for CompOpType
@@ -477,14 +484,14 @@ BASE_API std::istream &operator>>(std::istream &ist, CompOpType &compOpType);
 /*!
  * @brief Arithmetic Operator
  */
-enum class ArithOpType {
+enum class ArithOpType : std::uint8_t {
   ArithOpUndef = 0,//!< Undefined type
-  ArithOpPlus = 1 << 1,//! r=a0+a1
-  ArithOpMinus = 1 << 2,//! r=a0-a1
-  ArithOpMul = 1 << 3,//! r=a0*a1
-  ArithOpDiv = 1 << 4,//! r=a0/a1
-  ArithOpMod = 1 << 5,//! r=a0%a1
-  ArithOp_Max = 1 << 5// sync with the max value
+  ArithOpPlus = 2,//! r=a0+a1
+  ArithOpMinus = 4,//! r=a0-a1
+  ArithOpMul = 8,//! r=a0*a1
+  ArithOpDiv = 16,//! r=a0/a1
+  ArithOpMod = 32,//! r=a0%a1
+  ArithOp_Max = 32// sync with the max value
 };
 
 //! operator<< for ArithOpType
@@ -496,16 +503,16 @@ BASE_API std::istream &operator>>(std::istream &ist, ArithOpType &arithOpType);
 /*!
  * @brief Assignment Operator
  */
-enum class AssignOpType {
+enum class AssignOpType : std::uint8_t {
   AssignOpUndef = 0,//!< Undefined type
-  AssignOp = 1 << 0,//! r=a0
-  AssignOpAdd = 1 << 1,//! r+=a0
-  AssignOpMinus = 1 << 2,//! r-=a0
-  AssignOpMul = 1 << 3,//! r*=a0
-  AssignOpDiv = 1 << 4,//! r/=a0
-  AssignOpMod = 1 << 5,//! r/=a0
-  AssignOpNegate = 1 << 6,//! r/=-a0
-  AssignOpType_Max = 1 << 6// sync with the max value
+  AssignOp = 2,//! r=a0
+  AssignOpAdd = 4,//! r+=a0
+  AssignOpMinus = 8,//! r-=a0
+  AssignOpMul = 16,//! r*=a0
+  AssignOpDiv = 32,//! r/=a0
+  AssignOpMod = 64,//! r%=a0
+  AssignOpNegate = 128,//! r/=-a0
+  AssignOpType_Max =128// sync with the max value
 };
 
 //! operator<< for AssignOpType
@@ -516,11 +523,11 @@ BASE_API std::istream &operator>>(std::istream &ist, AssignOpType &assignOpType)
 // !@} doxygroup: types_group
 
 
-enum class CompoundType {
+enum class CompoundType : std::uint8_t {
   CompoundType_Undef = 0,//!< Undefined
-  CompoundType_Scalar = 1 << 0,//!< scalar
-  CompoundType_3Planes = 1 << 1,//!< 3 channels
-  CompoundType_4Planes = 1 << 2,//!< 4 channels
+  CompoundType_Scalar = 2,//!< scalar
+  CompoundType_3Planes = 4,//!< 3 channels
+  CompoundType_4Planes = 8,//!< 4 channels
   // CompoundType_Container, //!< generic container //LATER
 };
 
@@ -530,16 +537,16 @@ BASE_API std::ostream &operator<<(std::ostream &ost, CompoundType ctype);
 //! operator>> for CompoundType
 BASE_API std::istream &operator>>(std::istream &ist, CompoundType &ctype);
 
-enum class PType {
+enum class PType : std::uint8_t {
   PType_Undef = 0,//!< Undefined type
   // PType_Bin = 1 << 0,    //!< data {0,1} encode in  [0,255]
   // PType_BinPack  =  1 << 1,  //!< data {0,1} binary packed
-  PType_GrayUINT8 = 1 << 2,//!< 8 bits per pixel, unsigned, grayscale data in [0,255]
-  PType_GrayINT32 = 1 << 3,//!< 32 bits per pixel, signed, grayscale data in ]-2^31,+2^31[
-  PType_F32 = 1 << 4,//!< Floating-point pixel, single precision (float)
-  PType_GrayINT64 = 1 << 5,//!< Int64 pixel, think about integrale image
-  PType_D64 = 1 << 6,//!< Floating-point pixel, double precision (long double)
-  _PixelType_Max = 1 << 6// keep sync with the max value
+  PType_GrayUINT8 = 8,//!< 8 bits per pixel, unsigned, grayscale data in [0,255]
+  PType_GrayINT32 = 16,//!< 32 bits per pixel, signed, grayscale data in ]-2^31,+2^31[
+  PType_F32 = 32,//!< Floating-point pixel, single precision (float)
+  PType_GrayINT64 = 64,//!< Int64 pixel, think about integrale image
+  PType_D64 = 128,//!< Floating-point pixel, double precision (long double)
+  PixelType_Max = 128// keep sync with the max value
 };
 
 using ScalarTypeVariant = std::variant< pUINT8, pINT32, pINT64, pFLOAT, pDOUBLE >;
@@ -669,7 +676,7 @@ template class BASE_API compound_type< pDOUBLE, 4 >;
 
 }// namespace poutre
 
-#if defined(POUTRE_IS_MSVC)
+#ifdef POUTRE_IS_MSVC
 #pragma warning(push)
 #pragma warning(disable : 4702)
 #endif

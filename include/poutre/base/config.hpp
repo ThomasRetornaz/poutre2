@@ -22,6 +22,8 @@
  *
  */
 
+ // NOLINTBEGIN
+
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 
 /* clang-format off */
@@ -289,3 +291,5 @@ namespace poutre
   }
 /* clang-format on */
 #endif// DOXYGEN_SHOULD_SKIP_THIS
+// NOLINTEND
+ 

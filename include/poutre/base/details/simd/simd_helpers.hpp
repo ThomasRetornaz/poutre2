@@ -106,7 +106,7 @@ std::pair< ptrdiff_t, ptrdiff_t > POUTRE_ALWAYS_INLINE t_SIMDInputRange(const T 
 {
   POUTRE_ASSERTCHECK(first, "null ptr");
   POUTRE_ASSERTCHECK(last, "null ptr");
-  const ptrdiff_t simd_size = xs::simd_type< T >::size;
+  constexpr ptrdiff_t simd_size = xs::simd_type< T >::size; // NOLINT
   const ptrdiff_t size = last - first;
   // get aligned address from first
   const T *ptr_aligned_first = t_ReachNextAligned(first, SIMD_IDEAL_MAX_ALIGN_BYTES);
@@ -114,7 +114,7 @@ std::pair< ptrdiff_t, ptrdiff_t > POUTRE_ALWAYS_INLINE t_SIMDInputRange(const T 
   // is not bigger than size
   const ptrdiff_t size_prologue_loop = std::min(size, std::distance(first, ptr_aligned_first));
   const ptrdiff_t size_simd_loop =
-    (size >= size_prologue_loop) ? (simd_size * ((size - size_prologue_loop) / simd_size)) : (0u);
+    (size >= size_prologue_loop) ? (simd_size * ((size - size_prologue_loop) / simd_size)) : 0U;
 
   return std::make_pair(size_prologue_loop, size_simd_loop);
 }

@@ -46,7 +46,7 @@ public:
   using timerep = double_milliseconds::rep;// todo use
                                            // decltype(auto)
   //! ctor
-  Timer();
+  Timer() = default;
 
   //! Start the timing action
   void Start() POUTRE_NOEXCEPT;
@@ -77,10 +77,10 @@ public:
 
 private:
   high_resolution_clock::time_point m_start;//! start wall time
-  timerep m_accu;//! accumulate wall time over all iteration
-  std::clock_t m_start_cputime;//! start cpu time
-  std::clock_t m_accu_cputime;//! accumulate cpu time
-  std::size_t m_nbiter;//! nb iteration
+  timerep m_accu{0};//! accumulate wall time over all iteration
+  std::clock_t m_start_cputime{0};//! start cpu time
+  std::clock_t m_accu_cputime{0};//! accumulate cpu time
+  std::size_t m_nbiter{0};//! nb iteration
 };
 
 //! Timer stream serialization

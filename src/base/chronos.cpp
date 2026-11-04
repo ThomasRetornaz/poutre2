@@ -20,8 +20,6 @@
 #include <string>
 
 namespace poutre {
-//! ctor
-Timer::Timer() : m_accu(), m_start_cputime(0), m_accu_cputime(0), m_nbiter(0) {}
 
 //! Start the timing action
 void Timer::Start() POUTRE_NOEXCEPT
@@ -49,10 +47,11 @@ Timer::timerep Timer::GetMeanTime() const POUTRE_NOEXCEPT
   return GetCumulativeTime() / static_cast< timerep >(m_nbiter);
 }
 
+// NOLINTBEGIN
 //! Grab cpu time accumulated in ms
 Timer::timerep Timer::GetCumulativeCPUTime() const POUTRE_NOEXCEPT
 {
-  return static_cast< double >(m_accu_cputime) / CLOCKS_PER_SEC;
+  return static_cast< Timer::timerep >(m_accu_cputime) / static_cast< Timer::timerep >(CLOCKS_PER_SEC);
 }
 
 //! Grab wall mean time of iteration in ms
@@ -63,6 +62,7 @@ Timer::timerep Timer::GetMeanCpuTime() const POUTRE_NOEXCEPT
   }
   return GetCumulativeCPUTime() / static_cast< timerep >(m_nbiter);
 }
+// NOLINTEND
 
 //! Grab number off triggered start
 std::size_t Timer::NbIter() const POUTRE_NOEXCEPT { return m_nbiter; }
@@ -70,11 +70,11 @@ std::size_t Timer::NbIter() const POUTRE_NOEXCEPT { return m_nbiter; }
 //! String serialization
 std::string Timer::to_str() const
 {
-  std::stringstream sstr;
-  sstr << "Cumulative wall time in ms: " << GetCumulativeTime() << "\n Nb iter " << m_nbiter
-       << "\n Mean wall time in ms: " << GetMeanTime();
-  sstr << "Cumulative cpu time in ms: " << GetCumulativeCPUTime() << "\n Nb iter " << m_nbiter
-       << "\n Mean cpu time in ms: " << GetMeanCpuTime();
+  std::stringstream sstr{};
+  sstr << "Cumulative wall time in ms: " << this->GetCumulativeTime() << "\n Nb iter " << m_nbiter
+       << "\n Mean wall time in ms: " << this->GetMeanTime();
+  sstr << "Cumulative cpu time in ms: " << this->GetCumulativeCPUTime() << "\n Nb iter " << m_nbiter
+       << "\n Mean cpu time in ms: " << this->GetMeanCpuTime();
   return sstr.str();
 }
 
@@ -90,6 +90,7 @@ void Timer::Reset() POUTRE_NOEXCEPT
 // std::ostream & poutre::operator<<(std::ostream &os, Timer& timer)
 std::ostream &operator<<(std::ostream &ost, const Timer &timer)
 {
+  // NOLINTNEXTLINE(bugprone-signed-bitwise)
   ost << timer.to_str();
   return ost;
 }
