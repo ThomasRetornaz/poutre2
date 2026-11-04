@@ -38,7 +38,7 @@ namespace poutre::label::details {
  *@{
  */
 
-
+// NOLINTBEGIN
 template< class T > struct not_background
 {
   bool operator()(const T pixel_value) const noexcept { return pixel_value != T(0); }
@@ -256,6 +256,7 @@ struct t_label_helper
     return nb_labels;
   }
 };
+// NOLINTEND
 
 template< poutre::se::Common_NL_SE nl_static,
           typename Tin,
