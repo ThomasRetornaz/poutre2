@@ -90,7 +90,7 @@ macro(poutre2_setup_options)
         option(poutre2_ENABLE_SANITIZER_MEMORY "Enable memory sanitizer" OFF)
         option(poutre2_ENABLE_UNITY_BUILD "Enable unity builds" OFF)
         option(poutre2_ENABLE_CLANG_TIDY "Enable clang-tidy" ON)
-        option(poutre2_ENABLE_CPPCHECK "Enable cpp-check analysis" ON)
+        option(poutre2_ENABLE_CPPCHECK "Enable cpp-check analysis" OFF) # too costly for now, and but useful
         option(poutre2_ENABLE_PCH "Enable precompiled headers" OFF)
         option(poutre2_ENABLE_CACHE "Enable ccache" ON)
     endif ()
