@@ -54,16 +54,19 @@ void CompareImage_sss_Dispatch(const IInterface &i_img,
   try {
     comp_value = std::get< pTypeIn >(i_comp);
   } catch (std::bad_variant_access &) {
+    // NOLINTNEXTLINE
     POUTRE_RUNTIME_ERROR("CompareImage_sss_Dispatch unable to extract suitable type from i_comp");
   }
   try {
     true_value = std::get< pTypeOut >(i_valtrue);
   } catch (std::bad_variant_access &) {
+    // NOLINTNEXTLINE
     POUTRE_RUNTIME_ERROR("CompareImage_sss_Dispatch unable to extract suitable type from i_valtrue");
   }
   try {
     false_value = std::get< pTypeOut >(i_valfalse);
   } catch (std::bad_variant_access &) {
+    // NOLINTNEXTLINE
     POUTRE_RUNTIME_ERROR("CompareImage_sss_Dispatch unable to extract suitable type from i_valfalse");
   }
   details::t_CompareImage_sss(*i_img_t, compOpType, comp_value, true_value, false_value, *o_img_t);
@@ -201,6 +204,7 @@ void CompareImage_sii_Dispatch(const IInterface &i_img,
   try {
     comp_value = std::get< pTypeIn >(i_comp);
   } catch (std::bad_variant_access &) {
+    // NOLINTNEXTLINE
     POUTRE_RUNTIME_ERROR("CompareImage_sii_Dispatch unable to extract suitable type from i_comp");
   }
 
@@ -280,6 +284,7 @@ void CompareImage_sis_Dispatch(const IInterface &i_img,
   try {
     comp_value = std::get< pTypeIn >(i_comp);
   } catch (std::bad_variant_access &) {
+    // NOLINTNEXTLINE
     POUTRE_RUNTIME_ERROR("CompareImage_sis_Dispatch unable to extract suitable type from i_comp");
   }
 
@@ -295,6 +300,7 @@ void CompareImage_sis_Dispatch(const IInterface &i_img,
   try {
     false_value = std::get< pTypeOut >(i_valfalse);
   } catch (std::bad_variant_access &) {
+    // NOLINTNEXTLINE
     POUTRE_RUNTIME_ERROR("CompareImage_sis_Dispatch unable to extract suitable type from i_valfalse");
   }
 
@@ -369,6 +375,7 @@ void CompareImage_isi_Dispatch(const IInterface &i_img,
   try {
     true_value = std::get< pTypeOut >(i_valtrue);
   } catch (std::bad_variant_access &) {
+    // NOLINTNEXTLINE
     POUTRE_RUNTIME_ERROR("CompareImage_isi_Dispatch unable to extract suitable type from i_valtrue");
   }
   const auto *i_imgfalse_t = dynamic_cast< const ImgTypeOut * >(&i_imgfalse);
@@ -446,6 +453,7 @@ void CompareImage_iss_Dispatch(const IInterface &i_img,
   try {
     true_value = std::get< pTypeOut >(i_valtrue);
   } catch (std::bad_variant_access &) {
+    // NOLINTNEXTLINE
     POUTRE_RUNTIME_ERROR("CompareImage_iss_Dispatch unable to extract suitable type from i_valtrue");
   }
 
@@ -453,11 +461,13 @@ void CompareImage_iss_Dispatch(const IInterface &i_img,
   try {
     false_value = std::get< pTypeOut >(i_valfalse);
   } catch (std::bad_variant_access &) {
+    // NOLINTNEXTLINE
     POUTRE_RUNTIME_ERROR("CompareImage_iss_Dispatch unable to extract suitable type from i_valfalse");
   }
 
   auto *o_img_t = dynamic_cast< ImgTypeOut * >(&o_img);
   if (!o_img_t) {
+    // NOLINTNEXTLINE
     POUTRE_RUNTIME_ERROR("CompareImage_iss_Dispatch o_img downcast fail");
   }
 
@@ -519,6 +529,7 @@ void CompareImage_ssi_Dispatch(const IInterface &i_img,
   try {
     comp_value = std::get< pTypeIn >(i_comp);
   } catch (std::bad_variant_access &) {
+    // NOLINTNEXTLINE
     POUTRE_RUNTIME_ERROR("CompareImage_ssi_Dispatch unable to extract suitable type from i_comp");
   }
 
@@ -529,6 +540,7 @@ void CompareImage_ssi_Dispatch(const IInterface &i_img,
   try {
     true_value = std::get< pTypeOut >(i_valtrue);
   } catch (std::bad_variant_access &) {
+    // NOLINTNEXTLINE
     POUTRE_RUNTIME_ERROR("CompareImage_ssi_Dispatch unable to extract suitable type from i_valtrue");
   }
 
@@ -613,6 +625,7 @@ void CompareImage_iis_Dispatch(const IInterface &i_img,
   try {
     false_value = std::get< pTypeOut >(i_valfalse);
   } catch (std::bad_variant_access &) {
+    // NOLINTNEXTLINE
     POUTRE_RUNTIME_ERROR("CompareImage_iis_Dispatch unable to extract suitable type from i_valfalse");
   }
   auto *o_img_t = dynamic_cast< ImgTypeOut * >(&o_img);
