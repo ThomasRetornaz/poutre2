@@ -84,7 +84,7 @@ public:
   {
     auto iter = m_keyfactory_map.find(key);
     if (iter != m_keyfactory_map.end()) { POUTRE_RUNTIME_ERROR("Registrar::Add key already used"); }
-    m_keyfactory_map[key] = ImplFactoryFunction;
+    m_keyfactory_map[key] = std::move(ImplFactoryFunction);
   }
 };
 /**

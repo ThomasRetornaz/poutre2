@@ -31,7 +31,7 @@ public:
   virtual std::string WhoIam() { return "Base"; }
 };
 
-class Derived : Base
+class Derived : public Base
 {
 public:
   Derived() = default;
