@@ -42,6 +42,7 @@ void ArithSaturatedAddConstantDispatch(const IInterface &i_img, const ScalarType
     const pType pix_val = std::get< pType >(vscalar);
     details::t_ArithSaturatedAddConstant(*img1_t, pix_val, *img2_t);
   } catch (std::bad_variant_access &) {
+    // NOLINTNEXTLINE
     POUTRE_RUNTIME_ERROR("ArithSaturatedAddConstantDispatch unable to extract suitable type from pvalue");
   }
 }
@@ -62,7 +63,9 @@ void ArithSaturatedSubConstantDispatch(const IInterface &i_img, const ScalarType
   try {
     const pType pix_val = std::get< pType >(vscalar);
     details::t_ArithSaturatedSubConstant(*img1_t, pix_val, *img2_t);
+    // NOLINT
   } catch (std::bad_variant_access &) {
+    // NOLINTNEXTLINE
     POUTRE_RUNTIME_ERROR("ArithSaturatedAddConstantDispatch unable to extract suitable type from pvalue");
   }
 }

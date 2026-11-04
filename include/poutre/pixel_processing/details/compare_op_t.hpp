@@ -41,7 +41,7 @@ namespace poutre::details {
 template< typename T1, typename T2, typename = void > struct OpCompEqual
 {
   OpCompEqual() = default;
-  POUTRE_ALWAYS_INLINE bool operator()(T1 const &val1, T2 const &val2) const POUTRE_NOEXCEPT
+  POUTRE_ALWAYS_INLINE bool operator()(T1 const &val1, T2 const &val2) const noexcept
   {
     return static_cast< bool >(val1 == val2);
   }
@@ -51,11 +51,11 @@ template< typename T > struct OpCompEqual< T, T, std::enable_if_t< std::is_arith
   using simd_t = TypeTraits< T >::simd_type;
   using simd_mask_t = TypeTraits< T >::simd_mask_type;
   OpCompEqual() = default;
-  POUTRE_ALWAYS_INLINE bool operator()(T val1, T val2) const POUTRE_NOEXCEPT
+  POUTRE_ALWAYS_INLINE bool operator()(T val1, T val2) const noexcept
   {
     return static_cast< bool >(val1 == val2);
   }
-  template< typename U > POUTRE_ALWAYS_INLINE simd_mask_t operator()(const U &lhs, const U &rhs) const POUTRE_NOEXCEPT
+  template< typename U > POUTRE_ALWAYS_INLINE simd_mask_t operator()(const U &lhs, const U &rhs) const noexcept
   {
     return lhs == rhs;
   }
@@ -64,7 +64,7 @@ template< typename T > struct OpCompEqual< T, T, std::enable_if_t< std::is_arith
 template< typename T1, typename T2, typename = void > struct OpCompDiff
 {
   OpCompDiff() = default;
-  POUTRE_ALWAYS_INLINE bool operator()(T1 const &val1, T2 const &val2) const POUTRE_NOEXCEPT
+  POUTRE_ALWAYS_INLINE bool operator()(T1 const &val1, T2 const &val2) const noexcept
   {
     return static_cast< bool >(val1 != val2);
   }
@@ -74,11 +74,11 @@ template< typename T > struct OpCompDiff< T, T, std::enable_if_t< std::is_arithm
   using simd_t = TypeTraits< T >::simd_type;
   using simd_mask_t = TypeTraits< T >::simd_mask_type;
   OpCompDiff() = default;
-  POUTRE_ALWAYS_INLINE bool operator()(T val1, T val2) const POUTRE_NOEXCEPT
+  POUTRE_ALWAYS_INLINE bool operator()(T val1, T val2) const noexcept
   {
     return static_cast< bool >(val1 != val2);
   }
-  template< typename U > POUTRE_ALWAYS_INLINE simd_mask_t operator()(const U &lhs, const U &rhs) const POUTRE_NOEXCEPT
+  template< typename U > POUTRE_ALWAYS_INLINE simd_mask_t operator()(const U &lhs, const U &rhs) const noexcept
   {
     return lhs != rhs;
   }
@@ -87,7 +87,7 @@ template< typename T > struct OpCompDiff< T, T, std::enable_if_t< std::is_arithm
 template< typename T1, typename T2, typename = void > struct OpCompSup
 {
   OpCompSup() = default;
-  POUTRE_ALWAYS_INLINE bool operator()(T1 const &val1, T2 const &val2) const POUTRE_NOEXCEPT
+  POUTRE_ALWAYS_INLINE bool operator()(T1 const &val1, T2 const &val2) const noexcept
   {
     return static_cast< bool >(val1 > val2);
   }
@@ -97,11 +97,11 @@ template< typename T > struct OpCompSup< T, T, std::enable_if_t< std::is_arithme
   using simd_t = TypeTraits< T >::simd_type;
   using simd_mask_t = TypeTraits< T >::simd_mask_type;
   OpCompSup() = default;
-  POUTRE_ALWAYS_INLINE bool operator()(T val1, T val2) const POUTRE_NOEXCEPT
+  POUTRE_ALWAYS_INLINE bool operator()(T val1, T val2) const noexcept
   {
     return static_cast< bool >(val1 > val2);
   }
-  template< typename U > POUTRE_ALWAYS_INLINE simd_mask_t operator()(const U &lhs, const U &rhs) const POUTRE_NOEXCEPT
+  template< typename U > POUTRE_ALWAYS_INLINE simd_mask_t operator()(const U &lhs, const U &rhs) const noexcept
   {
     return lhs > rhs;
   }
@@ -110,7 +110,7 @@ template< typename T > struct OpCompSup< T, T, std::enable_if_t< std::is_arithme
 template< typename T1, typename T2, typename = void > struct OpCompInf
 {
   OpCompInf() = default;
-  POUTRE_ALWAYS_INLINE bool operator()(T1 const &val1, T2 const &val2) const POUTRE_NOEXCEPT
+  POUTRE_ALWAYS_INLINE bool operator()(T1 const &val1, T2 const &val2) const noexcept
   {
     return static_cast< bool >(val1 < val2);
   }
@@ -121,11 +121,11 @@ template< typename T > struct OpCompInf< T, T, std::enable_if_t< std::is_arithme
   using simd_t = TypeTraits< T >::simd_type;
   using simd_mask_t = TypeTraits< T >::simd_mask_type;
   OpCompInf() = default;
-  POUTRE_ALWAYS_INLINE bool operator()(T val1, T val2) const POUTRE_NOEXCEPT
+  POUTRE_ALWAYS_INLINE bool operator()(T val1, T val2) const noexcept
   {
     return static_cast< bool >(val1 < val2);
   }
-  template< typename U > POUTRE_ALWAYS_INLINE simd_mask_t operator()(const U &lhs, const U &rhs) const POUTRE_NOEXCEPT
+  template< typename U > POUTRE_ALWAYS_INLINE simd_mask_t operator()(const U &lhs, const U &rhs) const noexcept
   {
     return lhs < rhs;
   }
@@ -134,7 +134,7 @@ template< typename T > struct OpCompInf< T, T, std::enable_if_t< std::is_arithme
 template< typename T1, typename T2, typename = void > struct OpCompSupEqual
 {
   OpCompSupEqual() = default;
-  POUTRE_ALWAYS_INLINE bool operator()(T1 const &val1, T2 const &val2) const POUTRE_NOEXCEPT
+  POUTRE_ALWAYS_INLINE bool operator()(T1 const &val1, T2 const &val2) const noexcept
   {
     return static_cast< bool >(val1 >= val2);
   }
@@ -145,11 +145,11 @@ template< typename T > struct OpCompSupEqual< T, T, std::enable_if_t< std::is_ar
   using simd_t = TypeTraits< T >::simd_type;
   using simd_mask_t = TypeTraits< T >::simd_mask_type;
   OpCompSupEqual() = default;
-  POUTRE_ALWAYS_INLINE bool operator()(T val1, T val2) const POUTRE_NOEXCEPT
+  POUTRE_ALWAYS_INLINE bool operator()(T val1, T val2) const noexcept
   {
     return static_cast< bool >(val1 >= val2);
   }
-  template< typename U > POUTRE_ALWAYS_INLINE simd_mask_t operator()(const U &lhs, const U &rhs) const POUTRE_NOEXCEPT
+  template< typename U > POUTRE_ALWAYS_INLINE simd_mask_t operator()(const U &lhs, const U &rhs) const noexcept
   {
     return lhs >= rhs;
   }
@@ -158,7 +158,7 @@ template< typename T > struct OpCompSupEqual< T, T, std::enable_if_t< std::is_ar
 template< typename T1, typename T2, typename = void > struct OpCompInfEqual
 {
   OpCompInfEqual() = default;
-  POUTRE_ALWAYS_INLINE bool operator()(T1 const &val1, T2 const &val2) const POUTRE_NOEXCEPT
+  POUTRE_ALWAYS_INLINE bool operator()(T1 const &val1, T2 const &val2) const noexcept
   {
     return static_cast< bool >(val1 <= val2);
   }
@@ -168,11 +168,11 @@ template< typename T > struct OpCompInfEqual< T, T, std::enable_if_t< std::is_ar
   using simd_t = TypeTraits< T >::simd_type;
   using simd_mask_t = TypeTraits< T >::simd_mask_type;
   OpCompInfEqual() = default;
-  POUTRE_ALWAYS_INLINE bool operator()(T val1, T val2) const POUTRE_NOEXCEPT
+  POUTRE_ALWAYS_INLINE bool operator()(T val1, T val2) const noexcept
   {
     return static_cast< bool >(val1 <= val2);
   }
-  template< typename U > POUTRE_ALWAYS_INLINE simd_mask_t operator()(const U &lhs, const U &rhs) const POUTRE_NOEXCEPT
+  template< typename U > POUTRE_ALWAYS_INLINE simd_mask_t operator()(const U &lhs, const U &rhs) const noexcept
   {
     return lhs <= rhs;
   }
@@ -183,7 +183,7 @@ template< typename T1, typename = void > struct OpCompEqualValue
 {
   T1 m_val;
   explicit OpCompEqualValue(T1 const &ival) : m_val(ival) {}
-  POUTRE_ALWAYS_INLINE bool operator()(T1 const &lhs) const POUTRE_NOEXCEPT { return lhs == m_val; }
+  POUTRE_ALWAYS_INLINE bool operator()(T1 const &lhs) const noexcept { return lhs == m_val; }
 };
 
 template< typename T1 > struct OpCompEqualValue< T1, std::enable_if_t< std::is_arithmetic_v< T1 > > >
@@ -193,9 +193,9 @@ template< typename T1 > struct OpCompEqualValue< T1, std::enable_if_t< std::is_a
   using simd_mask_t = TypeTraits< T1 >::simd_mask_type;
   simd_t m_val_pack;
   explicit OpCompEqualValue(T1 const &ival) : m_val(ival), m_val_pack(ival) {}
-  POUTRE_ALWAYS_INLINE bool operator()(T1 lhs) const POUTRE_NOEXCEPT { return lhs == m_val; }
+  POUTRE_ALWAYS_INLINE bool operator()(T1 lhs) const noexcept { return lhs == m_val; }
 
-  template< typename U > POUTRE_ALWAYS_INLINE simd_mask_t operator()(const U &lhs) const POUTRE_NOEXCEPT
+  template< typename U > POUTRE_ALWAYS_INLINE simd_mask_t operator()(const U &lhs) const noexcept
   {
     return lhs == m_val_pack;
   }
@@ -206,7 +206,7 @@ template< typename T1, typename = void > struct OpCompDiffValue
 {
   T1 m_val;
   explicit OpCompDiffValue(T1 ival) : m_val(ival) {}
-  POUTRE_ALWAYS_INLINE bool operator()(T1 lhs) const POUTRE_NOEXCEPT { return lhs != m_val; }
+  POUTRE_ALWAYS_INLINE bool operator()(T1 lhs) const noexcept { return lhs != m_val; }
 };
 
 template< typename T1 > struct OpCompDiffValue< T1, std::enable_if_t< std::is_arithmetic_v< T1 > > >
@@ -216,9 +216,9 @@ template< typename T1 > struct OpCompDiffValue< T1, std::enable_if_t< std::is_ar
   using simd_mask_t = TypeTraits< T1 >::simd_mask_type;
   simd_t m_val_pack;
   explicit OpCompDiffValue(T1 ival) : m_val(ival), m_val_pack(ival) {}
-  POUTRE_ALWAYS_INLINE bool operator()(T1 lhs) const POUTRE_NOEXCEPT { return lhs != m_val; }
+  POUTRE_ALWAYS_INLINE bool operator()(T1 lhs) const noexcept { return lhs != m_val; }
 
-  template< typename U > POUTRE_ALWAYS_INLINE simd_mask_t operator()(const U &lhs) const POUTRE_NOEXCEPT
+  template< typename U > POUTRE_ALWAYS_INLINE simd_mask_t operator()(const U &lhs) const noexcept
   {
     return lhs != m_val_pack;
   }
@@ -229,7 +229,7 @@ template< typename T1, typename = void > struct OpCompSupValue
 {
   T1 m_val;
   explicit OpCompSupValue(T1 ival) : m_val(ival) {}
-  POUTRE_ALWAYS_INLINE bool operator()(T1 lhs) const POUTRE_NOEXCEPT { return lhs > m_val; }
+  POUTRE_ALWAYS_INLINE bool operator()(T1 lhs) const noexcept { return lhs > m_val; }
 };
 
 template< typename T1 > struct OpCompSupValue< T1, std::enable_if_t< std::is_arithmetic_v< T1 > > >
@@ -239,9 +239,9 @@ template< typename T1 > struct OpCompSupValue< T1, std::enable_if_t< std::is_ari
   using simd_mask_t = TypeTraits< T1 >::simd_mask_type;
   simd_t m_val_pack;
   explicit OpCompSupValue(T1 ival) : m_val(ival), m_val_pack(ival) {}
-  POUTRE_ALWAYS_INLINE bool operator()(T1 lhs) const POUTRE_NOEXCEPT { return lhs > m_val; }
+  POUTRE_ALWAYS_INLINE bool operator()(T1 lhs) const noexcept { return lhs > m_val; }
 
-  template< typename U > POUTRE_ALWAYS_INLINE simd_mask_t operator()(const U &lhs) const POUTRE_NOEXCEPT
+  template< typename U > POUTRE_ALWAYS_INLINE simd_mask_t operator()(const U &lhs) const noexcept
   {
     return lhs > m_val_pack;
   }
@@ -252,7 +252,7 @@ template< typename T1, typename = void > struct OpCompSupEqualValue
 {
   T1 m_val;
   explicit OpCompSupEqualValue(T1 ival) : m_val(ival) {}
-  POUTRE_ALWAYS_INLINE bool operator()(T1 lhs) const POUTRE_NOEXCEPT { return lhs >= m_val; }
+  POUTRE_ALWAYS_INLINE bool operator()(T1 lhs) const noexcept { return lhs >= m_val; }
 };
 
 template< typename T1 > struct OpCompSupEqualValue< T1, std::enable_if_t< std::is_arithmetic_v< T1 > > >
@@ -262,9 +262,9 @@ template< typename T1 > struct OpCompSupEqualValue< T1, std::enable_if_t< std::i
   using simd_mask_t = TypeTraits< T1 >::simd_mask_type;
   simd_t m_val_pack;
   explicit OpCompSupEqualValue(T1 ival) : m_val(ival), m_val_pack(ival) {}
-  POUTRE_ALWAYS_INLINE bool operator()(T1 lhs) const POUTRE_NOEXCEPT { return lhs >= m_val; }
+  POUTRE_ALWAYS_INLINE bool operator()(T1 lhs) const noexcept { return lhs >= m_val; }
 
-  template< typename U > POUTRE_ALWAYS_INLINE simd_mask_t operator()(const U &lhs) const POUTRE_NOEXCEPT
+  template< typename U > POUTRE_ALWAYS_INLINE simd_mask_t operator()(const U &lhs) const noexcept
   {
     return lhs >= m_val_pack;
   }
@@ -275,7 +275,7 @@ template< typename T1, typename = void > struct OpCompInfValue
 {
   T1 m_val;
   explicit OpCompInfValue(T1 ival) : m_val(ival) {}
-  POUTRE_ALWAYS_INLINE bool operator()(T1 lhs) const POUTRE_NOEXCEPT { return lhs < m_val; }
+  POUTRE_ALWAYS_INLINE bool operator()(T1 lhs) const noexcept { return lhs < m_val; }
 };
 
 template< typename T1 > struct OpCompInfValue< T1, std::enable_if_t< std::is_arithmetic_v< T1 > > >
@@ -285,8 +285,8 @@ template< typename T1 > struct OpCompInfValue< T1, std::enable_if_t< std::is_ari
   using simd_mask_t = TypeTraits< T1 >::simd_mask_type;
   simd_t m_val_pack;
   explicit OpCompInfValue(T1 ival) : m_val(ival), m_val_pack(ival) {}
-  POUTRE_ALWAYS_INLINE bool operator()(T1 lhs) const POUTRE_NOEXCEPT { return lhs < m_val; }
-  template< typename U > POUTRE_ALWAYS_INLINE simd_mask_t operator()(const U &lhs) const POUTRE_NOEXCEPT
+  POUTRE_ALWAYS_INLINE bool operator()(T1 lhs) const noexcept { return lhs < m_val; }
+  template< typename U > POUTRE_ALWAYS_INLINE simd_mask_t operator()(const U &lhs) const noexcept
   {
     return lhs < m_val_pack;
   }
@@ -297,7 +297,7 @@ template< typename T1, typename = void > struct OpCompInfEqualValue
 {
   T1 m_val;
   explicit OpCompInfEqualValue(T1 ival) : m_val(ival) {}
-  POUTRE_ALWAYS_INLINE bool operator()(T1 lhs) const POUTRE_NOEXCEPT { return lhs <= m_val; }
+  POUTRE_ALWAYS_INLINE bool operator()(T1 lhs) const noexcept { return lhs <= m_val; }
 };
 
 template< typename T1 > struct OpCompInfEqualValue< T1, std::enable_if_t< std::is_arithmetic_v< T1 > > >
@@ -307,9 +307,9 @@ template< typename T1 > struct OpCompInfEqualValue< T1, std::enable_if_t< std::i
   using simd_mask_t = TypeTraits< T1 >::simd_mask_type;
   simd_t m_val_pack;
   explicit OpCompInfEqualValue(T1 ival) : m_val(ival), m_val_pack(ival) {}
-  POUTRE_ALWAYS_INLINE bool operator()(T1 lhs) const POUTRE_NOEXCEPT { return lhs <= m_val; }
+  POUTRE_ALWAYS_INLINE bool operator()(T1 lhs) const noexcept { return lhs <= m_val; }
 
-  template< typename U > POUTRE_ALWAYS_INLINE simd_mask_t operator()(const U &lhs) const POUTRE_NOEXCEPT
+  template< typename U > POUTRE_ALWAYS_INLINE simd_mask_t operator()(const U &lhs) const noexcept
   {
     return lhs <= m_val_pack;
   }
@@ -320,16 +320,16 @@ template< typename T1 > struct OpCompInfEqualValue< T1, std::enable_if_t< std::i
 /*************************************************************************************************************************************/
 template< typename Tin, typename Tout, class CompareOp, typename = void > struct compare_sss
 {
-  compare_sss(const Tout &i_valtrue, const Tout &i_valfalse) : cop(), m_valtrue(i_valtrue), m_valfalse(i_valfalse) {}
-  compare_sss(const CompareOp &oper, const Tout &i_valtrue, const Tout &i_valfalse)
+  compare_sss(const Tout &i_valtrue, const Tout &i_valfalse) : cop(), m_valtrue(i_valtrue), m_valfalse(i_valfalse) {} // NOLINT
+  compare_sss(const CompareOp &oper, const Tout &i_valtrue, const Tout &i_valfalse) // NOLINT
     : cop(oper), m_valtrue(i_valtrue), m_valfalse(i_valfalse)
   {}
-  POUTRE_ALWAYS_INLINE Tout operator()(Tin i_val) const POUTRE_NOEXCEPT
+  POUTRE_ALWAYS_INLINE Tout operator()(Tin i_val) const noexcept
   {
     return (cop(i_val) ? m_valtrue : m_valfalse);
   }
 
-  const CompareOp cop;
+  CompareOp cop;
   Tout m_valtrue;
   Tout m_valfalse;
 };
@@ -341,26 +341,26 @@ struct compare_sss< Tin,
                     std::enable_if_t< std::is_same_v< std::remove_const_t< Tin >, std::remove_const_t< Tout > >
                                       && std::is_arithmetic_v< Tin > > >
 {
-  const CompareOp cop;
+  CompareOp cop;
   Tout m_valtrue, m_valfalse;
 
   using simd_t = TypeTraits< Tin >::simd_type;
   using simd_mask_t = TypeTraits< Tout >::simd_mask_type;
   simd_t m_valtrue_pack, m_valfalse_pack;
 
-  compare_sss(const Tout &i_valtrue, const Tout &i_valfalse)
+  compare_sss(const Tout &i_valtrue, const Tout &i_valfalse) // NOLINT
     : cop(), m_valtrue(i_valtrue), m_valfalse(i_valfalse), m_valtrue_pack(i_valtrue), m_valfalse_pack(i_valfalse)
   {}
-  compare_sss(const CompareOp &oper, const Tout &i_valtrue, const Tout &i_valfalse)
+  compare_sss(const CompareOp &oper, const Tout &i_valtrue, const Tout &i_valfalse) // NOLINT
     : cop(oper), m_valtrue(i_valtrue), m_valfalse(i_valfalse), m_valtrue_pack(i_valtrue), m_valfalse_pack(i_valfalse)
   {}
 
-  POUTRE_ALWAYS_INLINE Tout operator()(Tin i_val) const POUTRE_NOEXCEPT
+  POUTRE_ALWAYS_INLINE Tout operator()(Tin i_val) const noexcept
   {
     return (cop(i_val) ? m_valtrue : m_valfalse);
   }
 
-  template< typename U > U operator()(const U &i_val) const POUTRE_NOEXCEPT// TODO inline ?
+  template< typename U > U operator()(const U &i_val) const noexcept// TODO inline ?
   {
     return xs::select(cop(i_val), m_valtrue_pack, m_valfalse_pack);
   }
@@ -378,9 +378,9 @@ void t_ViewCompare_sss(const ViewIn< const Tin, Rank > &i_vin,
                        Tout i_valfalse,
                        ViewOut< Tout, Rank > &o_vout)
 {
-  using myop = compare_sss< Tin, Tout, Op >;
-  myop oper(i_op, i_valtrue, i_valfalse);
-  t_unary_op(i_vin, oper, o_vout);
+  using op= compare_sss< Tin, Tout, Op >;
+  op myop(i_op, i_valtrue, i_valfalse);
+  t_unary_op(i_vin, myop, o_vout);
 }
 
 template< typename Tin,
@@ -453,7 +453,7 @@ template< typename Tin,
           typename = void >
 struct compare_iii
 {
-  const CompareOp cop;
+  CompareOp cop;
   using param_typein = Tin;
   using param_typecomp = Tcomp;
   using param_typetrue = Ttrue;
@@ -463,7 +463,7 @@ struct compare_iii
   POUTRE_ALWAYS_INLINE Tout operator()(param_typein i_val,
                                        param_typecomp i_comp,
                                        param_typetrue i_true,
-                                       param_typetrue i_false) const POUTRE_NOEXCEPT
+                                       param_typetrue i_false) const noexcept
   {
     return (cop(i_val, i_comp) ? i_true : i_false);
   }
@@ -483,7 +483,7 @@ struct compare_iii< Tin,
                                       && std::is_arithmetic_v< Tin > > >
 
 {
-  const CompareOp cop;
+  CompareOp cop;
   using param_typein = Tin;
   using param_typecomp = Tcomp;
   using param_typetrue = Ttrue;
@@ -493,12 +493,12 @@ struct compare_iii< Tin,
   POUTRE_ALWAYS_INLINE Tout operator()(param_typein i_val,
                                        param_typecomp i_comp,
                                        param_typetrue i_true,
-                                       param_typetrue i_false) const POUTRE_NOEXCEPT
+                                       param_typetrue i_false) const noexcept
   {
     return (cop(i_val, i_comp) ? i_true : i_false);
   }
   template< typename U >
-  U operator()(const U &i_val, const U &i_comp, const U &i_true, const U &i_false) const POUTRE_NOEXCEPT
+  U operator()(const U &i_val, const U &i_comp, const U &i_true, const U &i_false) const noexcept
   {
     return xs::select(cop(i_val, i_comp), i_true, i_false);
   }
@@ -523,9 +523,9 @@ void t_ViewCompare_iii(const ViewIn< const Tin, Rank > &i_vin,
                        const ViewFalse< const Tfalse, Rank > &i_vfalse,
                        ViewOut< Tout, Rank > &o_vout)
 {
-  using myop = compare_iii< Tin, Tcomp, Ttrue, Tfalse, Tout, Op >;
-  myop oper(i_op);
-  t_quaternary_op(i_vin, oper, i_vcomp, i_vtrue, i_vfalse, o_vout);
+  using op= compare_iii< Tin, Tcomp, Ttrue, Tfalse, Tout, Op >;
+  op myop(i_op);
+  t_quaternary_op(i_vin, myop, i_vcomp, i_vtrue, i_vfalse, o_vout);
 }
 
 template< typename Tin,
@@ -606,8 +606,8 @@ void ViewCompare_iii_func_helper(const ViewIn< const Tin, Rank > &i_vin,
 template< typename Tin, typename Ttrue, typename Tfalse, typename Tout, class CompareOp, typename = void >
 struct compare_sii
 {
-  const CompareOp cop;
-  const Tin m_compval;
+  CompareOp cop;
+  Tin m_compval;
 
   using param_typein = Tin;
   using param_typetrue = Ttrue;
@@ -616,7 +616,7 @@ struct compare_sii
   explicit compare_sii(const Tin &i_compval, const CompareOp &oper) : cop(oper), m_compval(i_compval) {}
   POUTRE_ALWAYS_INLINE Tout operator()(param_typein i_val,
                                        param_typetrue i_true,
-                                       param_typefalse i_false) const POUTRE_NOEXCEPT
+                                       param_typefalse i_false) const noexcept
   {
     return (cop(i_val, m_compval) ? i_true : i_false);
   }
@@ -632,15 +632,15 @@ struct compare_sii< Tin,
                                       && std::is_same_v< std::remove_const_t< Tin >, std::remove_const_t< Tfalse > >
                                       && std::is_arithmetic_v< Tin > > >
 {
-  const CompareOp cop;
+  CompareOp cop;
   using simd_t = TypeTraits< Tin >::simd_type;
   using simd_mask_t = TypeTraits< Tout >::simd_mask_type;
 
   using param_typein = Tin;
   using param_typetrue = Ttrue;
   using param_typefalse = Tfalse;
-  const param_typein m_compval;
-  const simd_t m_compval_pack;
+  param_typein m_compval;
+  simd_t m_compval_pack;
 
   explicit compare_sii(const Tin &i_compval) : cop(), m_compval(i_compval), m_compval_pack(i_compval) {}
   explicit compare_sii(const Tin &i_compval, const CompareOp &oper)
@@ -648,11 +648,11 @@ struct compare_sii< Tin,
   {}
   POUTRE_ALWAYS_INLINE Tout operator()(param_typein i_val,
                                        param_typetrue i_true,
-                                       param_typefalse i_false) const POUTRE_NOEXCEPT
+                                       param_typefalse i_false) const noexcept
   {
     return (cop(i_val, m_compval) ? i_true : i_false);
   }
-  template< typename U > U operator()(U i_val, U i_true, U i_false) const POUTRE_NOEXCEPT
+  template< typename U > U operator()(U i_val, U i_true, U i_false) const noexcept
   {
     return xs::select(cop(i_val, m_compval_pack), i_true, i_false);
   }
@@ -675,9 +675,9 @@ void t_ViewCompare_sii(const ViewIn< const Tin, Rank > &i_vin,
                        const ViewFalse< const Tfalse, Rank > &i_vfalse,
                        ViewOut< Tout, Rank > &o_vout)
 {
-  using myop = compare_sii< Tin, Ttrue, Tfalse, Tout, Op >;
-  myop oper(i_compval, i_op);
-  t_ternary_op(i_vin, oper, i_vtrue, i_vfalse, o_vout);
+  using op= compare_sii< Tin, Ttrue, Tfalse, Tout, Op >;
+  op myop(i_compval, i_op);
+  t_ternary_op(i_vin, myop, i_vtrue, i_vfalse, o_vout);
 }
 
 template< typename Tin,
@@ -751,13 +751,13 @@ void ViewCompare_sii_func_helper(const ViewIn< const Tin, Rank > &i_vin,
 /*************************************************************************************************************************************/
 template< typename Tin, typename Ttrue, typename Tout, class CompareOp, typename = void > struct compare_sis
 {
-  const CompareOp cop;
+  CompareOp cop;
   // const Tin m_compval;
-  const Tout m_valfalse;
+  Tout m_valfalse;
 
   explicit compare_sis(const Tout &i_valfalse) : cop(), m_valfalse(i_valfalse) {}
   compare_sis(const Tout &i_valfalse, const CompareOp &oper) : cop(oper), m_valfalse(i_valfalse) {}
-  POUTRE_ALWAYS_INLINE Tout operator()(Tin i_val, Ttrue i_true) const POUTRE_NOEXCEPT
+  POUTRE_ALWAYS_INLINE Tout operator()(Tin i_val, Ttrue i_true) const noexcept
   {
     return (cop(i_val) ? i_true : m_valfalse);
   }
@@ -772,24 +772,24 @@ struct compare_sis< Tin,
                                       && std::is_same_v< std::remove_const_t< Tin >, std::remove_const_t< Ttrue > >
                                       && std::is_arithmetic_v< Tin > > >
 {
-  const CompareOp cop;
+  CompareOp cop;
 
   using simd_t = TypeTraits< Tin >::simd_type;
   using simd_mask_t = TypeTraits< Tout >::simd_mask_type;
 
-  const Tout m_valfalse;
+  Tout m_valfalse;
   simd_t m_valfalse_pack;
 
   explicit compare_sis(const Tout &i_valfalse) : cop(), m_valfalse(i_valfalse), m_valfalse_pack(i_valfalse) {}
   compare_sis(const Tout &i_valfalse, const CompareOp &oper)
     : cop(oper), m_valfalse(i_valfalse), m_valfalse_pack(i_valfalse)
   {}
-  POUTRE_ALWAYS_INLINE Tout operator()(Tin i_val, Ttrue i_true) const POUTRE_NOEXCEPT
+  POUTRE_ALWAYS_INLINE Tout operator()(Tin i_val, Ttrue i_true) const noexcept
   {
     return (cop(i_val) ? i_true : m_valfalse);
   }
 
-  template< typename U > U operator()(const U &i_val, const U &i_true) const POUTRE_NOEXCEPT
+  template< typename U > U operator()(const U &i_val, const U &i_true) const noexcept
   {
     return xs::select(cop(i_val), i_true, m_valfalse_pack);
   }
@@ -809,9 +809,9 @@ void t_ViewCompare_sis(const ViewIn< Tin, Rank > &i_vin,
                        Tout i_valfalse,
                        ViewOut< Tout, Rank > &o_vout)
 {
-  using myop = compare_sis< Tin, Ttrue, Tout, Op >;
-  myop op(i_valfalse, i_op);
-  t_binary_op(i_vin, op, i_vtrue, o_vout);
+  using op = compare_sis< Tin, Ttrue, Tout, Op >;
+  op myop(i_valfalse, i_op);
+  t_binary_op(i_vin, myop, i_vtrue, o_vout);
 }
 
 template< typename Tin,
@@ -886,8 +886,8 @@ void ViewCompare_sis_func_helper(const ViewIn< const Tin, Rank > &i_vin,
 template< typename Tin, typename Tcomp, typename Tfalse, typename Tout, class CompareOp, typename = void >
 struct compare_isi
 {
-  const CompareOp cop;
-  const Tout m_valtrue;
+  CompareOp cop;
+  Tout m_valtrue;
 
   using param_typein = Tin;
   using param_typecomp = Tcomp;
@@ -896,7 +896,7 @@ struct compare_isi
   explicit compare_isi(const Tout &i_valtrue, const CompareOp &oper) : cop(oper), m_valtrue(i_valtrue) {}
   POUTRE_ALWAYS_INLINE Tout operator()(param_typein i_val,
                                        param_typecomp i_comp,
-                                       param_typefalse i_false) const POUTRE_NOEXCEPT
+                                       param_typefalse i_false) const noexcept
   {
     return (cop(i_val, i_comp) ? m_valtrue : i_false);
   }
@@ -913,12 +913,12 @@ struct compare_isi< Tin,
                                       && std::is_same_v< std::remove_const_t< Tin >, std::remove_const_t< Tfalse > >
                                       && std::is_arithmetic_v< Tin > > >
 {
-  const CompareOp cop;
+  CompareOp cop;
 
   using simd_t = TypeTraits< Tin >::simd_type;
   using simd_mask_t = TypeTraits< Tout >::simd_mask_type;
 
-  const Tout m_valtrue;
+  Tout m_valtrue;
   simd_t m_valtrue_pack;
 
   explicit compare_isi(const Tout &i_valtrue) : cop(), m_valtrue(i_valtrue), m_valtrue_pack(i_valtrue) {}
@@ -926,12 +926,12 @@ struct compare_isi< Tin,
     : cop(oper), m_valtrue(i_valtrue), m_valtrue_pack(i_valtrue)
   {}
 
-  POUTRE_ALWAYS_INLINE Tout operator()(Tin i_val, Tcomp i_comp, Tfalse i_false) const POUTRE_NOEXCEPT
+  POUTRE_ALWAYS_INLINE Tout operator()(Tin i_val, Tcomp i_comp, Tfalse i_false) const noexcept
   {
     return (cop(i_val, i_comp) ? m_valtrue : i_false);
   }
 
-  template< typename U > U operator()(const U &i_val, const U &i_comp, const U &i_false) const POUTRE_NOEXCEPT
+  template< typename U > U operator()(const U &i_val, const U &i_comp, const U &i_false) const noexcept
   {
     return xs::select(cop(i_val, i_comp), m_valtrue_pack, i_false);
   }
@@ -954,9 +954,9 @@ void t_ViewCompare_isi(const ViewIn< const Tin, Rank > &i_vin,
                        const ViewFalse< const Tfalse, Rank > &i_vfalse,
                        ViewOut< Tout, Rank > &o_vout)
 {
-  using myop = compare_isi< Tin, Tcomp, Tfalse, Tout, Op >;
-  myop oper(i_valtrue, i_op);
-  t_ternary_op(i_vin, oper, i_vcomp, i_vfalse, o_vout);
+  using op= compare_isi< Tin, Tcomp, Tfalse, Tout, Op >;
+  op myop(i_valtrue, i_op);
+  t_ternary_op(i_vin, myop, i_vcomp, i_vfalse, o_vout);
 }
 
 template< typename Tin,
@@ -1030,8 +1030,8 @@ void ViewCompare_isi_func_helper(const ViewIn< const Tin, Rank > &i_vin,
 template< typename Tin, typename Tcomp, typename Ttrue, typename Tout, class CompareOp, typename = void >
 struct compare_iis
 {
-  const CompareOp cop;
-  const Tout m_valfalse;
+  CompareOp cop;
+  Tout m_valfalse;
 
   using param_typein = Tin;
   using param_typecomp = Tcomp;
@@ -1040,7 +1040,7 @@ struct compare_iis
   explicit compare_iis(const Tout &i_valfalse, const CompareOp &oper) : cop(oper), m_valfalse(i_valfalse) {}
   POUTRE_ALWAYS_INLINE Tout operator()(param_typein i_val,
                                        param_typecomp i_comp,
-                                       param_typetrue i_true) const POUTRE_NOEXCEPT
+                                       param_typetrue i_true) const noexcept
   {
     return (cop(i_val, i_comp) ? i_true : m_valfalse);
   }
@@ -1057,8 +1057,8 @@ struct compare_iis< Tin,
                                       && std::is_same_v< std::remove_const_t< Tin >, std::remove_const_t< Ttrue > >
                                       && std::is_arithmetic_v< Tin > > >
 {
-  const CompareOp cop;
-  const Tout m_valfalse;
+  CompareOp cop;
+  Tout m_valfalse;
 
   using param_typein = Tin;
   using param_typecomp = Tcomp;
@@ -1073,11 +1073,11 @@ struct compare_iis< Tin,
   {}
   POUTRE_ALWAYS_INLINE Tout operator()(param_typein i_val,
                                        param_typecomp i_comp,
-                                       param_typetrue i_true) const POUTRE_NOEXCEPT
+                                       param_typetrue i_true) const noexcept
   {
     return (cop(i_val, i_comp) ? i_true : m_valfalse);
   }
-  template< typename U > U operator()(const U &i_val, const U &i_comp, const U &i_true) const POUTRE_NOEXCEPT
+  template< typename U > U operator()(const U &i_val, const U &i_comp, const U &i_true) const noexcept
   {
     return xs::select(cop(i_val, i_comp), i_true, m_valfalse_pack);
   }
@@ -1100,9 +1100,9 @@ void t_ViewCompare_iis(const ViewIn< const Tin, Rank > &i_vin,
                        Tout i_valfalse,
                        ViewOut< Tout, Rank > &o_vout)
 {
-  using myop = compare_iis< Tin, Tcomp, Ttrue, Tout, Op >;
-  myop op(i_valfalse, i_op);
-  t_ternary_op(i_vin, op, i_vcomp, i_vtrue, o_vout);
+  using op= compare_iis< Tin, Tcomp, Ttrue, Tout, Op >;
+  op myop(i_valfalse, i_op);
+  t_ternary_op(i_vin, myop, i_vcomp, i_vtrue, o_vout);
 }
 
 template< typename Tin,
@@ -1176,15 +1176,15 @@ void ViewCompare_iis_func_helper(const ViewIn< const Tin, Rank > &i_vin,
 /*************************************************************************************************************************************/
 template< typename Tin, typename Tfalse, typename Tout, class CompareOp, typename = void > struct compare_ssi
 {
-  const CompareOp cop;
+  CompareOp cop;
   // const Tin m_compval;
-  const Tout m_valtrue;
+  Tout m_valtrue;
 
   using param_typein = Tin;
   using param_typetrue = Tfalse;
   explicit compare_ssi(const Tout &i_valtrue) : cop(), m_valtrue(i_valtrue) {}
   compare_ssi(const Tout &i_valtrue, const CompareOp &oper) : cop(oper), m_valtrue(i_valtrue) {}
-  POUTRE_ALWAYS_INLINE Tout operator()(param_typein i_val, param_typetrue i_false) const POUTRE_NOEXCEPT
+  POUTRE_ALWAYS_INLINE Tout operator()(param_typein i_val, param_typetrue i_false) const noexcept
   {
     return (cop(i_val) ? m_valtrue : i_false);
   }
@@ -1199,23 +1199,23 @@ struct compare_ssi< Tin,
                                       && std::is_same_v< std::remove_const_t< Tin >, std::remove_const_t< Tout > >
                                       && std::is_arithmetic_v< Tin > > >
 {
-  const CompareOp cop;
+  CompareOp cop;
 
   using simd_t = TypeTraits< Tin >::simd_type;
   using simd_mask_t = TypeTraits< Tout >::simd_mask_type;
 
-  const Tout m_valtrue;
+  Tout m_valtrue;
   simd_t m_valtrue_pack;
 
   explicit compare_ssi(const Tout &i_valtrue) : cop(), m_valtrue(i_valtrue), m_valtrue_pack(i_valtrue) {}
   compare_ssi(const Tout &i_valtrue, const CompareOp &oper) : cop(oper), m_valtrue(i_valtrue), m_valtrue_pack(i_valtrue)
   {}
-  POUTRE_ALWAYS_INLINE Tout operator()(Tin i_val, Tfalse i_false) const POUTRE_NOEXCEPT
+  POUTRE_ALWAYS_INLINE Tout operator()(Tin i_val, Tfalse i_false) const noexcept
   {
     return (cop(i_val) ? m_valtrue : i_false);
   }
 
-  template< typename U > U operator()(U i_val, U i_false) const POUTRE_NOEXCEPT
+  template< typename U > U operator()(U i_val, U i_false) const noexcept
   {
     return xs::select(cop(i_val), m_valtrue_pack, i_false);
   }
@@ -1236,9 +1236,9 @@ void t_ViewCompare_ssi(const ViewIn< const Tin, Rank > &i_vin,
                        const ViewFalse< const Tfalse, Rank > &i_vfalse,
                        ViewOut< Tout, Rank > &o_vout)
 {
-  using myop = compare_ssi< Tin, Tfalse, Tout, Op >;
-  myop oper(i_valtrue, i_op);
-  t_binary_op(i_vin, oper, i_vfalse, o_vout);
+  using op= compare_ssi< Tin, Tfalse, Tout, Op >;
+  op myop(i_valtrue, i_op);
+  t_binary_op(i_vin, myop, i_vfalse, o_vout);
 }
 
 template< typename Tin,
@@ -1310,18 +1310,18 @@ void ViewCompare_ssi_func_helper(const ViewIn< const Tin, Rank > &i_vin,
 /*************************************************************************************************************************************/
 template< typename Tin1, typename Tin2, typename Tout, class CompareOp, typename = void > struct compare_iss
 {
-  compare_iss(const Tout &i_valtrue, const Tout &i_valfalse) : cop(), m_valtrue(i_valtrue), m_valfalse(i_valfalse) {}
-  compare_iss(const Tout &i_valtrue, const Tout &i_valfalse, const CompareOp &op)
+  compare_iss(const Tout &i_valtrue, const Tout &i_valfalse) : cop(), m_valtrue(i_valtrue), m_valfalse(i_valfalse) {} //NOLINT
+  compare_iss(const Tout &i_valtrue, const Tout &i_valfalse, const CompareOp &op) //NOLINT
     : cop(op), m_valtrue(i_valtrue), m_valfalse(i_valfalse)
   {}
-  POUTRE_ALWAYS_INLINE Tout operator()(Tin1 i_val1, Tin2 i_val2) const POUTRE_NOEXCEPT
+  POUTRE_ALWAYS_INLINE Tout operator()(Tin1 i_val1, Tin2 i_val2) const noexcept
   {
     return (cop(i_val1, i_val2) ? m_valtrue : m_valfalse);
   }
 
-  const CompareOp cop;
-  const Tout m_valtrue;
-  const Tout m_valfalse;
+  CompareOp cop;
+  Tout m_valtrue;
+  Tout m_valfalse;
 };
 
 template< typename Tin1, typename Tin2, typename Tout, class CompareOp >
@@ -1333,7 +1333,7 @@ struct compare_iss< Tin1,
                                       && std::is_same_v< std::remove_const_t< Tin1 >, std::remove_const_t< Tout > >
                                       && std::is_arithmetic_v< Tin1 > > >
 {
-  const CompareOp cop;
+  CompareOp cop;
   using param_type1 = Tin1;
   using param_type2 = Tin2;
   Tout m_valtrue;
@@ -1352,12 +1352,12 @@ struct compare_iss< Tin1,
     : cop(op), m_valtrue(i_valtrue), m_valfalse(i_valfalse), m_valtrue_pack(i_valtrue), m_valfalse_pack(i_valfalse)
   {}
   // NOLINTEND
-  POUTRE_ALWAYS_INLINE Tout operator()(param_type1 i_val1, param_type2 i_val2) const POUTRE_NOEXCEPT
+  POUTRE_ALWAYS_INLINE Tout operator()(param_type1 i_val1, param_type2 i_val2) const noexcept
   {
     return (cop(i_val1, i_val2) ? m_valtrue : m_valfalse);
   }
 
-  template< typename U > U operator()(U i_val1, U i_val2) const POUTRE_NOEXCEPT
+  template< typename U > U operator()(U i_val1, U i_val2) const noexcept
   {
     return xs::select(cop(i_val1, i_val2), m_valtrue_pack, m_valfalse_pack);
   }
@@ -1378,9 +1378,9 @@ void t_ViewCompare_iss(const ViewIn1< const Tin1, Rank > &i_vin1,
                        Tout i_valfalse,
                        ViewOut< Tout, Rank > &o_vout)
 {
-  using myop = compare_iss< Tin1, Tin2, Tout, Op >;
-  myop op(i_valtrue, i_valfalse, i_op);
-  t_binary_op(i_vin1, op, i_vin2, o_vout);
+  using op= compare_iss< Tin1, Tin2, Tout, Op >;
+  op myop(i_valtrue, i_valfalse, i_op);
+  t_binary_op(i_vin1, myop, i_vin2, o_vout);
 }
 
 template< typename Tin1,
@@ -1462,9 +1462,9 @@ void t_CompareImage_sss(const image_t< T1, Rank > &i_img1,
 template< typename T1, typename T2, typename T3, ptrdiff_t Rank >
 void t_CompareImage_iii(const image_t< T1, Rank > &i_img1,
                         CompOpType compOpType,
-                        const image_t< T2, Rank > &i_imgcomp,
-                        const image_t< T3, Rank > &i_imgtrue,
-                        const image_t< T3, Rank > &i_imgfalse,
+                        const image_t< T2, Rank > &i_imgcomp, // NOLINT
+                        const image_t< T3, Rank > &i_imgtrue, // NOLINT
+                        const image_t< T3, Rank > &i_imgfalse, // NOLINT
                         image_t< T3, Rank > &o_img)
 {
   auto viewIn1 = view(i_img1);
@@ -1479,8 +1479,8 @@ template< typename T1, typename T2, typename T3, ptrdiff_t Rank >
 void t_CompareImage_sii(const image_t< T1, Rank > &i_img1,
                         CompOpType compOpType,
                         T2 compval,
-                        const image_t< T3, Rank > &i_imgtrue,
-                        const image_t< T3, Rank > &i_imgfalse,
+                        const image_t< T3, Rank > &i_imgtrue, // NOLINT
+                        const image_t< T3, Rank > &i_imgfalse, // NOLINT
                         image_t< T3, Rank > &o_img)
 {
   auto viewIn1 = view(i_img1);

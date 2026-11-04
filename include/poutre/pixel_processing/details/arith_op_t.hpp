@@ -101,7 +101,7 @@ struct op_Saturated_Sub< T1, T2, T3,
                                            && std::is_arithmetic_v< T1 > > >
 {
 private:
-  T1 m_minval;
+  T1 m_minval; // NOLINT
   using accutype = TypeTraits< T1 >::accu_type;
 
 public:
@@ -137,8 +137,8 @@ template< typename T1, typename T2, typename T3, ptrdiff_t Rank >
 void t_ArithSaturatedSub(const image_t< T1, Rank > &i_img1, const image_t< T2, Rank > &i_img2,
                          image_t< T3, Rank > &o_img)
 {
-  auto viewIn1 = view(i_img1);
-  auto viewIn2 = view(i_img2);
+  const auto viewIn1 = view(i_img1);
+  const auto viewIn2 = view(i_img2);
   auto viewOut = view(o_img);
   return t_ArithSaturatedSub(viewIn1, viewIn2, viewOut);
 }
@@ -170,7 +170,7 @@ struct op_Saturated_Add< T1, T2, T3,
                                            && std::is_arithmetic_v< T1 > > >
 {
 private:
-  T1 m_maxval;
+  T1 m_maxval; // NOLINT
   using accutype = TypeTraits< T1 >::accu_type;
 
 public:
@@ -204,8 +204,8 @@ template< typename T1, typename T2, typename T3, ptrdiff_t Rank >
 void t_ArithSaturatedAdd(const image_t< T1, Rank > &i_img1, const image_t< T2, Rank > &i_img2,
                          image_t< T3, Rank > &o_img)
 {
-  auto viewIn1 = view(i_img1);
-  auto viewIn2 = view(i_img2);
+  const auto viewIn1 = view(i_img1);
+  const auto viewIn2 = view(i_img2);
   auto viewOut = view(o_img);
   return t_ArithSaturatedAdd(viewIn1, viewIn2, viewOut);
 }
@@ -239,8 +239,8 @@ struct op_Saturated_Add_Constant<
                     && std::is_arithmetic_v< T1 > > >
 {
 private:
-  const T1 m_val, m_maxval;
-  const TypeTraits< T1 >::simd_type m_simd_val;
+  T1 m_val, m_maxval; // NOLINT
+  TypeTraits< T1 >::simd_type m_simd_val;
   using accutype = TypeTraits< T1 >::accu_type;
 
 public:
@@ -306,8 +306,8 @@ struct op_Saturated_Sub_Constant<
                     && std::is_arithmetic_v< T1 > > >
 {
 private:
-  const T1 m_val, m_minval;
-  const TypeTraits< T1 >::simd_type m_simd_val;
+  T1 m_val, m_minval; // NOLINT
+  TypeTraits< T1 >::simd_type m_simd_val;
   using accutype = TypeTraits< T1 >::accu_type;
 
 public:

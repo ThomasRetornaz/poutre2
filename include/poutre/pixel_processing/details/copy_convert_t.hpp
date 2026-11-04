@@ -67,9 +67,12 @@ template<typename T1, typename T2, ptrdiff_t Rank> struct CopyOpDispatcher<T1, T
 {
   void operator()(const av::array_view<const T1, Rank> &i_vin, const av::array_view<T2, Rank> &o_vout) const
   {
-    auto i_vinbeg = i_vin.data();
-    auto i_vinend = i_vin.data() + i_vin.size();
-    auto i_voutbeg = o_vout.data();
+    auto const *i_vinbeg = i_vin.data();
+    // NOLINTNEXTLINE(cppcoreguidelines-pro-bounds-pointer-arithmetic)
+    auto const *i_vinend = i_vin.data() + i_vin.size();
+
+    auto *i_voutbeg = o_vout.data();
+    // NOLINTNEXTLINE(cppcoreguidelines-pro-bounds-pointer-arithmetic)
     for (; i_vinbeg != i_vinend; ++i_vinbeg, ++i_voutbeg) { *i_voutbeg = static_cast<T2>(*i_vinbeg); }
   }
 };
@@ -79,8 +82,10 @@ template<typename T, ptrdiff_t Rank> struct CopyOpDispatcher<T, T, Rank, av::arr
 {
   void operator()(const av::array_view<const T, Rank> &i_vin, const av::array_view<T, Rank> &o_vout) const
   {
+    // NOLINTBEGIN
     std::memcpy(
       reinterpret_cast<void *>(o_vout.data()), reinterpret_cast<const void *>(i_vin.data()), sizeof(T) * i_vin.size());
+    // NOLINTEND
   }
 };
 

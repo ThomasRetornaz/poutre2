@@ -124,14 +124,16 @@ struct PixelWiseTernaryOpDispatcher<
                   const av::array_view< Tout, Rank > &o_vout) const
   {
     POUTRE_ENTERING("PixelWiseTernaryOpDispatcher both array view");
-    auto i_vinbeg1 = i_vin1.data();
-    auto i_vinend1 = i_vin1.data() + i_vin1.size();
-    auto i_vinbeg2 = i_vin2.data();
-    auto i_vinbeg3 = i_vin3.data();
-    auto i_voutbeg = o_vout.data();
+    const auto* i_vinbeg1 = i_vin1.data();
+    const auto* i_vinend1 = i_vin1.data() + i_vin1.size(); // NOLINT
+    const auto* i_vinbeg2 = i_vin2.data();
+    const auto* i_vinbeg3 = i_vin3.data();
+    auto* i_voutbeg = o_vout.data();
+    // NOLINTBEGIN
     for (; i_vinbeg1 != i_vinend1; ++i_vinbeg1, ++i_vinbeg2, ++i_vinbeg3, ++i_voutbeg) {
       *i_voutbeg = static_cast< Tout >(oper(*i_vinbeg1, *i_vinbeg2, *i_vinbeg3));
     }
+    // NOLINTEND
   }
 };
 
@@ -160,11 +162,11 @@ struct PixelWiseTernaryOpDispatcher<
                   const av::array_view< Tout, Rank > &o_vout) const
   {
     POUTRE_ENTERING("PixelWiseTernaryOpDispatcher both array view arithmetic same type");
-    auto i_vinbeg1 = i_vin1.data();
-    auto i_vinend1 = i_vin1.data() + i_vin1.size();
-    auto i_vinbeg2 = i_vin2.data();
-    auto i_vinbeg3 = i_vin3.data();
-    auto i_voutbeg = o_vout.data();
+    const auto* i_vinbeg1 = i_vin1.data();
+    const auto* i_vinend1 = i_vin1.data() + i_vin1.size(); // NOLINT
+    const auto* i_vinbeg2 = i_vin2.data();
+    const auto* i_vinbeg3 = i_vin3.data();
+    auto* i_voutbeg = o_vout.data();
     simd::transform(i_vinbeg1, i_vinend1, i_vinbeg2, i_vinbeg3, i_voutbeg, oper);
   }
 };

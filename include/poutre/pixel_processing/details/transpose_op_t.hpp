@@ -49,22 +49,25 @@ template< typename T > struct t_transposeDispatcher< T, 2, av::array_view, av::a
     auto ibd = i_vin.bound();
     auto obd = o_vout.bound();
 
+    // NOLINTBEGIN
     scoord oysize = obd[1];
     scoord oxsize = obd[0];
     scoord ysize = ibd[1];
     scoord xsize = ibd[0];
 
+
     POUTRE_CHECK(oysize == xsize, "ibd[0]!=obd[1] bound not compatible");
     POUTRE_CHECK(oxsize == ysize, "ibd[1]!=obd[0] bound not compatible");
 
-    auto i_vinbeg = i_vin.data();
-    auto o_voutbeg = o_vout.data();
+    const auto* i_vinbeg = i_vin.data();
+    auto* o_voutbeg = o_vout.data();
 
     for (scoord y = 0; y < oysize; y++) {
       for (scoord x = 0; x < oxsize; x++) {
-        o_voutbeg[y * oxsize + x] = i_vinbeg[x * oysize + y];
+        o_voutbeg[y * oxsize + x] = i_vinbeg[(x * oysize) + y];
       }
     }
+    // NOLINTEND
   }
 };
 

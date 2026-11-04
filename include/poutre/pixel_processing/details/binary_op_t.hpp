@@ -77,7 +77,7 @@ struct PixelWiseBinaryOpDispatcher
       auto beg1 = begin(vInbound1);
       auto end1 = end(vInbound1);
       for (; beg1 != end1; ++beg1) {
-        o_vout[*beg1] = static_cast< Tout >(oper(i_vin1[*beg1], i_vin2[*beg1]));
+        o_vout[*beg1] = static_cast< Tout >(oper(i_vin1[*beg1], i_vin2[*beg1])); // NOLINT
       }
 
       // TODO stride==1 in least significant dimension
@@ -89,7 +89,7 @@ struct PixelWiseBinaryOpDispatcher
       auto beg3 = begin(vOutbound);
 
       for (; beg1 != end1; ++beg1, ++beg2, ++beg3) {
-        o_vout[*beg3] = static_cast< Tout >(oper(i_vin1[*beg1], i_vin2[*beg2]));
+        o_vout[*beg3] = static_cast< Tout >(oper(i_vin1[*beg1], i_vin2[*beg2])); // NOLINT
       }
     }
   }
@@ -117,10 +117,10 @@ struct PixelWiseBinaryOpDispatcher<
     POUTRE_ENTERING("PixelWiseBinaryOpDispatcher both array view != types");
     POUTRE_ASSERTCHECK(i_vin1.size() == i_vin2.size(), "Incompatible views size");
     POUTRE_ASSERTCHECK(o_vout.size() == i_vin2.size(), "Incompatible views size");
-    auto i_vinbeg1 = i_vin1.data();
-    auto i_vinend1 = i_vin1.data() + i_vin1.size();
-    auto i_vinbeg2 = i_vin2.data();
-    auto o_voutbeg = o_vout.data();
+    const auto *i_vinbeg1 = i_vin1.data();
+    const auto *i_vinend1 = i_vin1.data() + i_vin1.size(); // NOLINT
+    const auto *i_vinbeg2 = i_vin2.data();
+    auto *o_voutbeg = o_vout.data();
 
     std::transform(i_vinbeg1, i_vinend1, i_vinbeg2, o_voutbeg, oper);
   }
@@ -150,9 +150,10 @@ struct PixelWiseBinaryOpDispatcher<
     // specialization same type,fall back ptr + SIMD";
     POUTRE_ASSERTCHECK(i_vin1.size() == i_vin2.size(), "Incompatible views size");
     POUTRE_ASSERTCHECK(o_vout.size() == i_vin2.size(), "Incompatible views size");
-    auto i_vinbeg1 = i_vin1.data();
-    auto i_vinend1 = i_vin1.data() + i_vin1.size();
-    auto i_vinbeg2 = i_vin2.data();
+    const auto *i_vinbeg1 = i_vin1.data();
+    // NOLINTNEXTLINE(cppcoreguidelines-pro-bounds-pointer-arithmetic)
+    const auto *i_vinend1 = i_vin1.data() + i_vin1.size();
+    const auto *i_vinbeg2 = i_vin2.data();
     auto i_voutbeg = o_vout.data();
     simd::transform(i_vinbeg1, i_vinend1, i_vinbeg2, i_voutbeg, oper);
   }

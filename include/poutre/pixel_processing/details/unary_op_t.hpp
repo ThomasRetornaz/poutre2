@@ -66,7 +66,7 @@ struct PixelWiseUnaryOpDispatcher
       auto beg1 = begin(vInbound);
       auto end1 = end(vInbound);
       for (; beg1 != end1; ++beg1) {
-        o_vout[*beg1] = static_cast< TOut >(oper(i_vin[*beg1]));
+        o_vout[*beg1] = static_cast< TOut >(oper(i_vin[*beg1])); // NOLINT
       }
       // TODO stride==1 in least significant dimension
     } else// default two idx
@@ -76,7 +76,7 @@ struct PixelWiseUnaryOpDispatcher
       auto end1 = end(vInbound);
       auto beg2 = begin(vOutbound);
       for (; beg1 != end1; ++beg1, ++beg2) {
-        o_vout[*beg2] = static_cast< TOut >(oper(i_vin[*beg1]));
+        o_vout[*beg2] = static_cast< TOut >(oper(i_vin[*beg1])); // NOLINT
       }
     }
   }
@@ -100,9 +100,9 @@ struct PixelWiseUnaryOpDispatcher<
   void operator()(const av::array_view< TIn, Rank > &i_vin, UnOp oper, const av::array_view< TOut, Rank > &o_vout) const
   {
     POUTRE_ENTERING("PixelWiseUnaryOpDispatcher both array view != types");
-    auto i_vinbeg = i_vin.data();
-    auto i_vinend = i_vin.data() + i_vin.size();
-    auto o_voutbeg = o_vout.data();
+    const auto* i_vinbeg = i_vin.data();
+    const auto* i_vinend = i_vin.data() + i_vin.size(); // NOLINT
+    auto* o_voutbeg = o_vout.data();
     std::transform(i_vinbeg, i_vinend, o_voutbeg, oper);
   }
 };
@@ -124,9 +124,10 @@ struct PixelWiseUnaryOpDispatcher<
     POUTRE_ENTERING("PixelWiseUnaryOpDispatcher both array view same types");
     // specialization same type,fall back ptr + SIMD";
 
-    auto i_vinbeg = i_vin.data();
-    auto i_vinend = i_vin.data() + i_vin.size();
-    auto i_voutbeg = o_vout.data();
+    const auto *i_vinbeg = i_vin.data();
+    // NOLINTNEXTLINE(cppcoreguidelines-pro-bounds-pointer-arithmetic)
+    const auto *i_vinend = i_vin.data() + i_vin.size();
+    auto *i_voutbeg = o_vout.data();
 
     const auto length = i_vin.size();
     if (!length) {
