@@ -60,10 +60,15 @@ function(poutre2_setup_dependencies)
     endif ()
 
     #provided through mamba env
-    find_package(HDF5 QUIET COMPONENTS C CXX)
+    set(HDF5_NO_FIND_PACKAGE_CONFIG_FILE TRUE)
+    find_package(HDF5 2 QUIET COMPONENTS C CXX HL)
     if (HDF5_FOUND)
         message(STATUS "hdf5 ${HDF5_VERSION} found, hdf5 file support enabled")
         set(POUTRE_BUILD_WITH_HDF5 ON PARENT_SCOPE)
+        include_directories(${HDF5_INCLUDE_DIRS})
+        include_directories(${HDF5_CXX_INCLUDE_DIRS}) 
+        include_directories(${HDF5_HL_INCLUDE_DIRS}) 
+
     else ()
         set(POUTRE_BUILD_WITH_HDF5 OFF PARENT_SCOPE)
         message(WARNING "hdf5 not found: so no hdf5 file support")
