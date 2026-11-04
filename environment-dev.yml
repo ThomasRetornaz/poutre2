@@ -1,0 +1,35 @@
+name: poutre
+channels:
+  - conda-forge
+dependencies:
+  # Build dependencies
+  - cmake 
+  - ninja
+  - clang >=20,<23
+  - ccache
+  - curl
+  - pre-commit
+  # - clangd >=20,<23
+  # - clang-tidy >=20,<23
+  - clang-tools >=20,<23
+  - libclang >=20,<23
+  - llvm-openmp >=20,<23
+  - gxx >=16,<20
+  - doxygen
+  - graphviz
+  - cppcheck
+  # Host dependencies
+  - openimageio >=3.1,<4
+  - fmt >=12.2,<13
+  - hdf5 >=2.2.0,<3
+  #python deps
+  - python >=3.12,<4
+  - pip >=23.3,<24
+  - polars >=2.1.0,<3
+  - numpy >=2.5.4,<3
+  - matplotlib >=3.11.2,<4
+  - seaborn >=0.13.2,<1
+  - ruff >=0.17.3, <1
+  - pytest >=8.4.2, <9
+  - ty >=0.0.95, <1
+  
