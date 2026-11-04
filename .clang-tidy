@@ -1,5 +1,7 @@
----
 Checks: "*,
+        -xsimd-*,
+        -hdf5-*,
+        -_deps*,
         -json*,
         -abseil-*,
         -altera-*,
@@ -13,6 +15,7 @@ Checks: "*,
         -readability-static-accessed-through-instance,
         -readability-avoid-const-params-in-decls,
         -cppcoreguidelines-non-private-member-variables-in-classes,
+        -portability-avoid-pragma-once,
         -misc-non-private-member-variables-in-classes,
         -misc-no-recursion,
         -misc-use-anonymous-namespace,
@@ -20,19 +23,27 @@ Checks: "*,
         -misc-include-cleaner, 
         -python*,
         -cppcoreguidelines-cstyle-cast,
-        -cert-err58-cpp"
+        -cert-err58-cpp,
+        -readability-redundant-typename,
+        -misc-const-correctness,
+        -bugprone-reserved-identifier"
+
+
+HeaderFilterRegex: ''
+ExcludeHeaderFilterRegex: '_deps.*|test.*'
 
 WarningsAsErrors: ''
-HeaderFilterRegex: ''
 FormatStyle: none
 
 CheckOptions:
   - key: readability-identifier-length.IgnoredVariableNames
-    value: 'x|y|z'
+    value: 'x|y|z|a0|a1|a2|a3|a4|a5|a6|a7|a8|a9|idx|i|j|k'
   - key: readability-identifier-length.IgnoredParameterNames
-    value: 'x|y|z'
+    value: 'x|y|z|a0|a1|a2|a3|a4|a5|a6|a7|a8|a9|idx|i|j|k'
   - key: readability-function-cognitive-complexity.IgnoreMacros
     value: true
+  - key: readability-function-cognitive-complexity.MaxFunctionComplexity
+    value: null
 
 
 
