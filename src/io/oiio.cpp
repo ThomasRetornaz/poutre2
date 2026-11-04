@@ -362,9 +362,10 @@ std::unique_ptr< IInterface > LoadOIIO(const std::string &image_path)
 
   auto in_oiio(ImageInput::open(image_path));
   if (in_oiio == nullptr) {
-    std::ostringstream error_stream;
+    std::ostringstream error_stream{};
     error_stream << " load_image(): Error reading image '";
     error_stream << image_path;
+    error_stream << "'";
     POUTRE_RUNTIME_ERROR(error_stream.str());
   }
 
@@ -394,11 +395,12 @@ std::unique_ptr< IInterface > LoadOIIO(const std::string &image_path)
     ctype = CompoundType::CompoundType_4Planes;
     break;
   default:
-    std::ostringstream error_stream;
+    std::ostringstream error_stream{};
     error_stream << " load_image(): Error reading image '";
     error_stream << image_path;
     error_stream << " unsupported number of channels ";
-    error_stream << spec.nchannels;
+    // NOLINTNEXTLINE(bugprone-signed-bitwise)
+    error_stream << std::to_string(spec.nchannels);
     error_stream << " see desc \n" << spec.to_xml();
     POUTRE_RUNTIME_ERROR(error_stream.str());
   };
@@ -420,10 +422,12 @@ std::unique_ptr< IInterface > LoadOIIO(const std::string &image_path)
     ptype = PType::PType_D64;
     break;
   default:
-    std::ostringstream error_stream;
+    std::ostringstream error_stream{};
     error_stream << " load_image(): Error reading image '";
+    // NOLINTNEXTLINE(bugprone-signed-bitwise)
     error_stream << image_path;
     error_stream << " unsupported type ";
+    // NOLINTNEXTLINE(bugprone-signed-bitwise)
     error_stream << static_cast< unsigned int >(spec.format.basetype);
     error_stream << " see desc \n" << spec.to_xml();
     POUTRE_RUNTIME_ERROR(error_stream.str());
@@ -456,7 +460,7 @@ void DumpOIIO(const std::string &path, const IInterface &i_img)// NOLINT(misc-un
   const details::StoreWithOIIOOptions options;
   fs::path const localPath(path);
   fs::path const dir = localPath.parent_path();
-  if (!(fs::exists(dir))) {
+  if (!fs::exists(dir)) {
     POUTRE_RUNTIME_ERROR(std::format("StoreFromOIIO: provided path {} doesn't exists", dir.string()));
   }
   if (i_img.GetRank() > 2) {

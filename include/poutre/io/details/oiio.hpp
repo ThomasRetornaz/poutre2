@@ -32,7 +32,9 @@
 #pragma clang load("OpenImageIO")
 #endif
 
+// NOLINTBEGIN
 #include <OpenImageIO/imageio.h>
+// NOLINTEND
 
 #ifdef __CLANG__
 #pragma clang diagnostic pop
@@ -76,7 +78,15 @@ template< typename T > void FillImageFromOIIOScalar(const std::string &path, pou
     POUTRE_RUNTIME_ERROR(
       (std::format("FillImageFromOIIOScalar: provided path {} doesn't exists", local_path.string())));
   }
-  auto in_oiio(OIIO::ImageInput::open(path));
+  auto deleter = [](OIIO::ImageInput *ptr) {
+    if (ptr) {
+      ptr->close();
+    }
+  };
+
+  using UniqueFilePtr = std::unique_ptr<OIIO::ImageInput, decltype(deleter)>;
+  UniqueFilePtr in_oiio(OIIO::ImageInput::open(path));
+
   if (!in_oiio) {
     std::ostringstream error_stream;
     error_stream << " FillImageFromOIIOScalar load_image(): Error reading image '";
@@ -86,19 +96,16 @@ template< typename T > void FillImageFromOIIOScalar(const std::string &path, pou
   }
   const OIIO::ImageSpec &spec = in_oiio->spec();
   if (spec.nchannels != 1) {
-    in_oiio->close();
     POUTRE_RUNTIME_ERROR(
       (std::format("FillImageFromOIIOScalar: wrong number of channels expected 1 found {}", spec.nchannels)));
   }
   if (spec.depth > 1) {
-    in_oiio->close();
     POUTRE_RUNTIME_ERROR(std::format("FillImageFromOIIOScalar: wrong number of dim expected 2 found depth dim"));
   }
   FillImageFromOIIOScalar(*in_oiio, img);
-
-  in_oiio->close();
 }
 
+// NOLINTBEGIN
 /**
  * @brief  Helper function which copy content of input OIIO object in Image 2D assuming RGB
  * like color space
@@ -257,7 +264,7 @@ struct StoreWithOIIOOptions
    * @brief Construct a new options with default compression quality to 100
    *
    */
-  StoreWithOIIOOptions() : spec(0, 0, 0) { spec.attribute("CompressionQuality", 100); }
+  StoreWithOIIOOptions() { spec.attribute("CompressionQuality", 100); } // NOLINT
 
   /**
    * @brief Forward an attribute to an OpenImageIO ImageSpec.
@@ -276,8 +283,8 @@ struct StoreWithOIIOOptions
     return *this;
   }
 
-  OIIO::ImageSpec spec;
-  bool autoconvert{true};
+  OIIO::ImageSpec spec ={0, 0, 0};
+  bool autoconvert = true; //!< If true, automatically convert the image to a format supported by the file format. If false, an error will be thrown if the image is not in a supported format.
 };
 
 /**
@@ -347,6 +354,7 @@ void StoreWithOIIOScalar(const poutre::details::image_t< T, 2 > &img,
   const auto shape = img.shape();
 
   auto out(OIIO::ImageOutput::create(path));
+
   if (!out) {
     std::ostringstream error_stream;
     error_stream << " StoreWithOIIOScalar(): Error opening file '";
@@ -423,8 +431,8 @@ void StoreWithOIIOCompound3(const poutre::details::image_t< compound_type< T, 3 
       std::vector< pDOUBLE > normalized(buffer.size());
       for (size_t i = 0; i < buffer.size(); i += 3) {
         normalized[i] = (1.0 / (max_0 - min_0)) * (static_cast< pDOUBLE >(buffer[i]) - min_0);
-        normalized[i + 1] = (1.0) / (max_1 - min_1) * (static_cast< pDOUBLE >(buffer[i + 1]) - min_1);
-        normalized[i + 2] = (1.0) / (max_2 - min_2) * (static_cast< pDOUBLE >(buffer[i + 2]) - min_2);
+        normalized[i + 1] = 1.0 / (max_1 - min_1) * (static_cast< pDOUBLE >(buffer[i + 1]) - min_1);
+        normalized[i + 2] = 1.0 / (max_2 - min_2) * (static_cast< pDOUBLE >(buffer[i + 2]) - min_2);
       }
       out.write_image(OIIO::BaseTypeFromC< pDOUBLE >::value, normalized.data());
     } else {
@@ -584,7 +592,16 @@ void StoreWithOIIOCompound4(const poutre::details::image_t< compound_type< T, 4 
   }
   const auto shape = img.shape();
 
+  //   auto deleter = [](OIIO::ImageOutput *ptr) {
+  //   if (ptr) {
+  //     ptr->close();
+  //   }
+  // };
+
+  // using UniqueFilePtr = std::unique_ptr<OIIO::ImageOutput, decltype(deleter)>;
+  // UniqueFilePtr 
   auto out(OIIO::ImageOutput::create(path));
+
   if (!out) {
     std::ostringstream error_stream;
     error_stream << " StoreWithOIIOCompound3(): Error opening file '";
@@ -595,14 +612,16 @@ void StoreWithOIIOCompound4(const poutre::details::image_t< compound_type< T, 4 
   }
   OIIO::ImageSpec spec = options.spec;
 
-  spec.width = static_cast< int >(shape[1]);
-  spec.height = static_cast< int >(shape[0]);
-  spec.nchannels = 4;//-V112
+  spec.width = static_cast< int >(shape[1]); //NOLINT
+  spec.height = static_cast< int >(shape[0]); //NOLINT
+  spec.nchannels = 4; //NOLINT
   spec.format = OIIO::BaseTypeFromC< T >::value;
 
   out->open(path, spec);
 
   StoreWithOIIOCompound4(img, *out);
 }
+// NOLINTEND
+
 //! @} doxygroup: poutre_io_group
 }// namespace poutre::io::details

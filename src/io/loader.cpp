@@ -27,8 +27,7 @@ namespace poutre::io {
 namespace fs = std::filesystem;
 
 ImageLoader::ImageLoader()
-  :// m_imgPath(""),
-    m_i_name("poutre_img_1"), m_isready(false)
+    : m_i_name("poutre_img_1")
 {}
 
 ImageLoader &ImageLoader::SetName(const std::string &i_name)

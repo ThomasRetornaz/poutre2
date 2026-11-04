@@ -23,11 +23,11 @@
 #include <string>
 
 namespace poutre::io {
+
 namespace fs = std::filesystem;
 
-ImageWriter::ImageWriter()
-  :// m_imgPath(""),
-    m_i_name("poutre_img_1"), m_isready(false)
+ImageWriter::ImageWriter():
+    m_i_name("poutre_img_1")
 {}
 
 ImageWriter &ImageWriter::SetName(const std::string &i_name)
@@ -52,7 +52,7 @@ void ImageWriter::Write(POUTRE_MAYBE_UNUSED const IInterface &i_img) const
   fs::path const localPath(m_imgPath);
 
   fs::path const dir = localPath.parent_path();
-  if (!(fs::exists(dir))) {
+  if (!fs::exists(dir)) {
     POUTRE_RUNTIME_ERROR((std::format("ImageWriter: provided path {} doesn't exists", dir.string())));
   }
 
@@ -66,10 +66,10 @@ void ImageWriter::Write(POUTRE_MAYBE_UNUSED const IInterface &i_img) const
 
 #ifdef POUTRE_BUILD_WITH_HDF5
   DumpHDF5(localPath.string(), i_img);
+  return;
 #else
   POUTRE_RUNTIME_ERROR("Not supported file type. May you need to build with HDF5");
 #endif
-    return;
   }
 #ifdef POUTRE_BUILD_WITH_OIIO
   DumpOIIO(localPath.string(), i_img);

@@ -48,7 +48,7 @@ class IO_API ImageLoader
   friend class ImageProvider;
   std::string m_imgPath;
   std::string m_i_name;
-  bool m_isready;
+  bool m_isready = false;
 
 public:
   /**

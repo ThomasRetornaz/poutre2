@@ -32,11 +32,11 @@ endif ()
 
 add_definitions(-D_GLIBCXX_USE_CXX11_ABI)
 IF (BUILD_SHARED_LIBS)
-    set_target_properties(poutre_se_tests PROPERTIES COMPILE_FLAGS -DJSON_DLL)
+    set_target_properties(poutre_io_tests PROPERTIES COMPILE_FLAGS -DJSON_DLL)
 ENDIF (BUILD_SHARED_LIBS)
 
 IF (POUTRE_CI)
-    set_target_properties(poutre_se_tests PROPERTIES COMPILE_FLAGS -DPOUTRE_CI)
+    set_target_properties(poutre_io_tests PROPERTIES COMPILE_FLAGS -DPOUTRE_CI)
 ENDIF ()
 
 # set_target_properties(poutre_se_tests PROPERTIES VERSION "0.0.1"

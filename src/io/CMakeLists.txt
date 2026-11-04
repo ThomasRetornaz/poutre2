@@ -63,11 +63,17 @@ if (POUTRE_BUILD_WITH_HDF5)
     endif ()
 
     target_compile_definitions(poutre_io PUBLIC POUTRE_BUILD_WITH_HDF5)
-    target_include_directories(poutre_io PRIVATE ${HDF5_INCLUDE_DIRS})
-
+    # Manually push the exact CXX include directory evaluated by Mamba
+    target_include_directories(poutre_io SYSTEM PRIVATE ${HDF5_CXX_INCLUDE_DIRS})
+    target_include_directories(poutre_io SYSTEM PRIVATE ${HDF5_HL_INCLUDE_DIRS})
+    target_include_directories(poutre_io SYSTEM PRIVATE ${HDF5_INCLUDE_DIRS})
+    # Link using direct variables
+    # target_link_libraries(poutre_io PRIVATE ${HDF5_LIBRARIES} ${HDF5_CXX_LIBRARIES})
+    
     target_link_libraries(poutre_io
             PRIVATE hdf5::hdf5
             PRIVATE hdf5::hdf5_cpp
+            PRIVATE hdf5::hdf5_hl
     )
 endif ()
 

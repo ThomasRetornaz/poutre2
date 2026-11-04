@@ -16,21 +16,19 @@
  *
  */
 
-
-#include <poutre/base/config.hpp>
-#include <poutre/base/details/data_structures/image_t.hpp>
-
 // NOLINTBEGIN
 #include <H5Cpp.h>
 #include <H5pubconf.h>
 #include <H5public.h>
-#include <cstdint>
-#include <hdf5_hl.h>
+//#include <H5hl.h>
 // NOLINTEND
 
+#include <poutre/base/config.hpp>
+#include <poutre/base/details/data_structures/image_t.hpp>
+
+#include <cstdint>
 #include <memory>
 #include <string>
-
 #include <filesystem>
 #include <format>
 
@@ -60,8 +58,8 @@ static constexpr auto PFLOAT = "pF32";
 static constexpr auto PDOUBLE = "pD64";
 
 inline void CreateAttribute(H5::DataSet &dataSet,
-                            const std::string &key,
-                            const std::string &value)// NOLINT(misc-unused-parameters)
+                            const std::string &key, // NOLINT
+                            const std::string &value)// NOLINT
 {
   H5::StrType const strType(H5::PredType::C_S1, value.size());
   H5::Attribute attr{dataSet.createAttribute(key, strType, H5::DataSpace())};
@@ -71,8 +69,8 @@ inline void CreateAttribute(H5::DataSet &dataSet,
 
 inline void CreateAttribute(H5::DataSet &dataSet,
                             const std::string &key,
-                            int value,
-                            const H5::PredType &type)// NOLINT(misc-unused-parameters)
+                            int value, // NOLINT
+                            const H5::PredType &type) // NOLINT
 {
   H5::Attribute attr{dataSet.createAttribute(key, type, H5::DataSpace())};
   attr.write(type, &value);

@@ -278,7 +278,7 @@ std::unique_ptr< IInterface > LoadHDF5(const std::string &path,// NOLINT
 
   // by hand attribute
   // get compound_type
-  H5std_string attrTypeCompound;
+  H5std_string attrTypeCompound{0};
   H5::Attribute resAttr = dataset.openAttribute("IMAGE_COMP_TYPE");
   H5::StrType stype = resAttr.getStrType();
   resAttr.read(stype, attrTypeCompound);
@@ -292,7 +292,7 @@ std::unique_ptr< IInterface > LoadHDF5(const std::string &path,// NOLINT
     POUTRE_RUNTIME_ERROR((std::format("LoadFromHDF5: unsupported compound type {}", attrTypeCompound)));
   }
   // get ptype
-  H5std_string attrpType;
+  H5std_string attrpType{0};
   resAttr = dataset.openAttribute("IMAGE_P_TYPE");
   stype = resAttr.getStrType();
   resAttr.read(stype, attrpType);
