@@ -35,6 +35,8 @@ class SE_API IStructuringElement
 public:
   virtual ~IStructuringElement() = default;
 
+  IStructuringElement() = default;
+
   //! Returns a new structuring element that is a transposed copy
   [[nodiscard]] virtual std::unique_ptr< IStructuringElement > Transpose() const = 0;
 
@@ -51,10 +53,16 @@ public:
   [[nodiscard]] virtual std::unique_ptr< IStructuringElement > Clone() const = 0;
 
   //! Checks the equality this structuring element with the provided one
-  [[nodiscard]] virtual bool is_equal(const IStructuringElement &) const noexcept = 0;
+  [[nodiscard]] virtual bool is_equal(const IStructuringElement &strel) const noexcept = 0;
 
   //! Checks the equality of the structuring element with the argument, but without considering any ordering
-  [[nodiscard]] virtual bool is_equal_unordered(const IStructuringElement &se) const noexcept = 0;
+  [[nodiscard]] virtual bool is_equal_unordered(const IStructuringElement &strel) const noexcept = 0;
+
+  class IStructuringElement &operator=(const class IStructuringElement &) = default;
+  IStructuringElement(const class IStructuringElement &) = default;
+
+  class IStructuringElement &operator=(class IStructuringElement&&) = default;
+  IStructuringElement(class IStructuringElement &&) = default;
 };
 
 // TODO add factory

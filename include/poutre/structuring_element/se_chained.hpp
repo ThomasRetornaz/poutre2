@@ -35,6 +35,7 @@ class SE_API ChainedStructuringElement : public IStructuringElement
 
 public:
   ~ChainedStructuringElement() override = default;
+  
   ChainedStructuringElement() = default;
 
   // see this later
