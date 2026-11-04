@@ -76,6 +76,7 @@ struct OpRecErode
   static bool should_enqueue(Tout val_out, Tmask val_mask) { return val_out > val_mask; }
 };
 
+// NOLINTBEGIN
 template< se::Common_NL_SE nl_static,
           typename Tmarker,
           typename Tmask,
@@ -92,6 +93,7 @@ struct t_ReconstructionViewDispatcher
                   const ViewMask< const Tmask, Rank > &i_vmask,
                   ViewOut< Tout, Rank > &o_vout) const
   {
+
     POUTRE_CHECK(i_vmarker.size() == i_vmask.size(), "Incompatible views size");
     POUTRE_CHECK(i_vmask.size() == o_vout.size(), "Incompatible views size");
 
@@ -203,8 +205,10 @@ struct t_ReconstructionViewDispatcher
         }
       }
     }
+    
   }
 };
+// NOLINTEND
 
 /*
 // specialisation array_view 2D

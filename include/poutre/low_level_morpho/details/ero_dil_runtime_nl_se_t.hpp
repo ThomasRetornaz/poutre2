@@ -42,6 +42,7 @@ template< typename T1, typename T2 > struct BinOpSupRuntime
 };
 
 //-----STRIDED VIEW OR Image_t generic with static SE
+// NOLINTBEGIN
 template< typename T1,
           typename T2,
           ptrdiff_t Rank,
@@ -201,6 +202,7 @@ struct t_ErodeDilateDispatcherRuntime< T1,
     }
   }
 };
+// NOLINTEND
 
 template< typename TIn,
           typename TOut,
@@ -208,7 +210,7 @@ template< typename TIn,
           template< typename, ptrdiff_t > class ViewIn,
           template< typename, ptrdiff_t > class ViewOut >
 void t_Dilate(const ViewIn< const TIn, Rank > &i_vin,
-              const poutre::se::details::neighbor_list_t< Rank > &nl,
+              const poutre::se::details::neighbor_list_t< Rank > &nl, // NOLINT
               ViewOut< TOut, Rank > &o_vout)
 {
   POUTRE_ENTERING("t_Dilate view dispatcher");
@@ -220,7 +222,7 @@ void t_Dilate(const ViewIn< const TIn, Rank > &i_vin,
 
 template< typename TIn, typename TOut, ptrdiff_t Rank >
 void t_Dilate(const poutre::details::image_t< TIn, Rank > &i_img,
-              const poutre::se::details::neighbor_list_t< Rank > &nl,
+              const poutre::se::details::neighbor_list_t< Rank > &nl, // NOLINT
               poutre::details::image_t< TOut, Rank > &o_img)
 {
   AssertSizesCompatible(i_img, o_img, "t_Dilate incompatible size");
@@ -237,7 +239,7 @@ template< typename TIn,
           template< typename, ptrdiff_t > class ViewIn,
           template< typename, ptrdiff_t > class ViewOut >
 void t_Erode(const ViewIn< const TIn, Rank > &i_vin,
-             const poutre::se::details::neighbor_list_t< Rank > &nl,
+             const poutre::se::details::neighbor_list_t< Rank > &nl, // NOLINT
              ViewOut< TOut, Rank > &o_vout)
 {
   POUTRE_ENTERING("t_Erode view dispatcher");
@@ -249,7 +251,7 @@ void t_Erode(const ViewIn< const TIn, Rank > &i_vin,
 
 template< typename TIn, typename TOut, ptrdiff_t Rank >
 void t_Erode(const poutre::details::image_t< TIn, Rank > &i_img,
-             const poutre::se::details::neighbor_list_t< Rank > &nl,
+             const poutre::se::details::neighbor_list_t< Rank > &nl, // NOLINT
              poutre::details::image_t< TOut, Rank > &o_img)
 {
   AssertSizesCompatible(i_img, o_img, "t_Erode incompatible size");

@@ -54,6 +54,7 @@ template< typename T1, typename T2 > struct BinOpSup
   static T2 process(const T1 &val1, const T1 &val2) { return static_cast< T2 >(std::max< T1 >(val1, val2)); }
 };
 
+// NOLINTBEGIN
 template< typename T >
 void t_LineBufferShiftRight(const T *i_viewlinein, scoord lenghtline, scoord nbshift, T paddValue, T *o_viewlineout)
 {
@@ -593,6 +594,7 @@ struct t_ErodeDilateDispatcher< se::Common_NL_SE::SESegmentX2D,
   void operator()(const poutre::details::av::array_view< const TIn, 2 > &i_vin,
                   const poutre::details::av::array_view< TOut, 2 > &o_vout) const
   {
+    // NOLINTBEGIN
     POUTRE_CHECK(i_vin.size() == o_vout.size(), "Incompatible views size");
     auto ibd = i_vin.bound();
     auto obd = o_vout.bound();
@@ -622,6 +624,7 @@ struct t_ErodeDilateDispatcher< se::Common_NL_SE::SESegmentX2D,
       bufOuputCurrentLine = o_vout.data() + y * xsize;
       HelperOp::ShiftRightLeftAndArith(bufInputCurrentLine, xsize, 1, 1, bufTempLine, bufOuputCurrentLine);
     }
+    // NOLINTEND
   }
 };
 
@@ -637,6 +640,7 @@ struct t_ErodeDilateDispatcher< se::Common_NL_SE::SESegmentY2D,
   void operator()(const poutre::details::av::array_view< const TIn, 2 > &i_vin,
                   const poutre::details::av::array_view< TOut, 2 > &o_vout) const
   {
+    // NOLINTBEGIN
     POUTRE_CHECK(i_vin.size() == o_vout.size(), "Incompatible views size");
     auto ibd = i_vin.bound();
     auto obd = o_vout.bound();
@@ -668,7 +672,7 @@ struct t_ErodeDilateDispatcher< se::Common_NL_SE::SESegmentY2D,
     // ? x ?
     bufInputPreviousLine = const_cast< TIn * >(i_vin.data());
     bufInputNextLine = const_cast< TIn * >(i_vin.data()) + xsize;
-    ;
+
     bufOuputCurrentLine = o_vout.data();
     // inf/sup between dilate line 0 and line 1
     HelperOp::ApplyArith(bufInputPreviousLine, bufInputNextLine, xsize, bufOuputCurrentLine);
@@ -682,7 +686,7 @@ struct t_ErodeDilateDispatcher< se::Common_NL_SE::SESegmentY2D,
       // 7   <--- bufInputNextLine     y
       bufOuputCurrentLine = o_vout.data() + (xsize * (y - 1));
 
-      bufInputNextLine = const_cast< TIn * >(i_vin.data()) + (xsize * (y));
+      bufInputNextLine = const_cast< TIn * >(i_vin.data()) + (xsize * y);
       bufInputPreviousLine = const_cast< TIn * >(i_vin.data()) + (xsize * (y - 2));
       bufInputCurrentLine = const_cast< TIn * >(i_vin.data()) + (xsize * (y - 1));
 
@@ -698,8 +702,10 @@ struct t_ErodeDilateDispatcher< se::Common_NL_SE::SESegmentY2D,
     bufInputCurrentLine = const_cast< TIn * >(i_vin.data()) + (xsize * (ysize - 1));
     bufOuputCurrentLine = o_vout.data() + (xsize * (ysize - 1));
     HelperOp::ApplyArith(bufInputPreviousLine, bufInputCurrentLine, xsize, bufOuputCurrentLine);
+    // NOLINTEND
   }
 };
+// NOLINTEND
 
 // Helper structure
 template< typename T,
@@ -783,6 +789,8 @@ struct Erode2DFor3DCross
   }
 };
 
+// Specialisation for 3D
+// NOLINTBEGIN
 template< typename TIn, typename TOut, class HelperOp >
 struct t_ErodeDilateDispatcher< se::Common_NL_SE::SESquare3D,
                                 TIn,
@@ -863,6 +871,7 @@ struct t_ErodeDilateDispatcher< se::Common_NL_SE::SESquare3D,
   }
 };
 
+
 template< typename TIn, typename TOut, class HelperOp >
 struct t_ErodeDilateDispatcher< se::Common_NL_SE::SECross3D,
                                 TIn,
@@ -938,6 +947,7 @@ struct t_ErodeDilateDispatcher< se::Common_NL_SE::SECross3D,
     t_3DCopyOneSliceFrom2D(ptmpL, xsize, ysize, xsize, ysize, zsize - 1, pdest);
   }
 };
+// NOLINTEND
 
 template< typename TIn,
           typename TOut,

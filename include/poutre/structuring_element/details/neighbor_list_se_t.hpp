@@ -57,7 +57,7 @@ public:
   ~neighbor_list_t() override = default;
 
   //! Constructor taking as argument a vector for each point of the structuring element
-  explicit neighbor_list_t(const storage_type &v) : vector_coordinate(v) {}
+  neighbor_list_t(const storage_type &v) : IStructuringElement(), vector_coordinate(v) {}
 
   const_iterator begin() const { return vector_coordinate.begin(); }
 

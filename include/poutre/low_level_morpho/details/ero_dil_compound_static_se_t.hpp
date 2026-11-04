@@ -47,7 +47,7 @@ void t_DilateOctagon(const poutre::details::image_t< TIn, 2 > &i_img,
   const double nb_square_dbl = ((static_cast< double >(size)) / (1 + std::numbers::sqrt2));
   const double nb_square_floor = floor(nb_square_dbl);
   int nb_square = 0;
-  nb_square = static_cast< int >(((nb_square_dbl - nb_square_floor) < 0.5) ? nb_square_floor : (nb_square_floor + 1));
+  nb_square = static_cast< int >(((nb_square_dbl - nb_square_floor) < 0.5) ? nb_square_floor : (nb_square_floor + 1)); // NOLINT
 
   auto tmpImg_t = poutre::details::t_CloneGeometry(i_img);// NOLINT
 
@@ -81,7 +81,7 @@ void t_DilateRhombicuboctahedron(const poutre::details::image_t< TIn, 3 > &i_img
   const double nb_square_dbl = ((static_cast< double >(size)) / (1 + std::numbers::sqrt2));
   const double nb_square_floor = floor(nb_square_dbl);
   int nb_square = 0;
-  nb_square = static_cast< int >(((nb_square_dbl - nb_square_floor) < 0.5) ? nb_square_floor : (nb_square_floor + 1));
+  nb_square = static_cast< int >(((nb_square_dbl - nb_square_floor) < 0.5) ? nb_square_floor : (nb_square_floor + 1)); // NOLINT
 
   auto tmpImg_t = poutre::details::t_CloneGeometry(i_img);// NOLINT
 
@@ -115,7 +115,7 @@ void t_ErodeOctagon(const poutre::details::image_t< TIn, 2 > &i_img,
   const double nb_square_dbl = ((static_cast< double >(size)) / (1 + std::numbers::sqrt2));
   const double nb_square_floor = floor(nb_square_dbl);
   int nb_square = 0;
-  nb_square = static_cast< int >(((nb_square_dbl - nb_square_floor) < 0.5) ? nb_square_floor : (nb_square_floor + 1));
+  nb_square = static_cast< int >(((nb_square_dbl - nb_square_floor) < 0.5) ? nb_square_floor : (nb_square_floor + 1)); // NOLINT
 
   auto tmpImg_t = poutre::details::t_CloneGeometry(i_img);// NOLINT
 
@@ -149,7 +149,7 @@ void t_ErodeRhombicuboctahedron(const poutre::details::image_t< TIn, 3 > &i_img,
   const double nb_square_dbl = ((static_cast< double >(size)) / (1 + std::numbers::sqrt2));
   const double nb_square_floor = floor(nb_square_dbl);
   int nb_square = 0;
-  nb_square = static_cast< int >(((nb_square_dbl - nb_square_floor) < 0.5) ? nb_square_floor : (nb_square_floor + 1));
+  nb_square = static_cast< int >(((nb_square_dbl - nb_square_floor) < 0.5) ? nb_square_floor : (nb_square_floor + 1)); // NOLINT
 
   auto tmpImg_t = poutre::details::t_CloneGeometry(i_img);// NOLINT
 

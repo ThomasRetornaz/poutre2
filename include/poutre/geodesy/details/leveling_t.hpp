@@ -31,6 +31,7 @@ namespace poutre::geo::details {
  *@{
  */
 
+// NOLINTBEGIN
 template< poutre::se::Common_NL_SE nl_static,
           typename Tref,
           typename Tmarker,
@@ -46,6 +47,7 @@ struct t_low_levelingHelper
                   const ViewMarker< const Tmarker, Rank > &i_vmarker,
                   ViewOut< Tout, Rank > &o_vout) const
   {
+    // NOLINTBEGIN
     POUTRE_CHECK(i_vref.size() == i_vmarker.size(), "Incompatible views size");
     POUTRE_CHECK(i_vmarker.size() == o_vout.size(), "Incompatible views size");
 
@@ -112,6 +114,7 @@ struct t_low_levelingHelper
 
     // Post-processing
     poutre::details::t_ArithInf(o_vout, i_vref, o_vout);
+    // NOLINTEND
   }
 };
 
@@ -130,6 +133,7 @@ struct t_high_levelingHelper
                   const ViewMarker< const Tmarker, Rank > &i_vmarker,
                   ViewOut< Tout, Rank > &o_vout) const
   {
+
     POUTRE_CHECK(i_vref.size() == i_vmarker.size(), "Incompatible views size");
     POUTRE_CHECK(i_vmarker.size() == o_vout.size(), "Incompatible views size");
 
@@ -198,6 +202,7 @@ struct t_high_levelingHelper
     poutre::details::t_ArithSup(o_vout, i_vref, o_vout);
   }
 };
+// NOLINTEND
 
 template< typename Tref,
           typename Tmarker,

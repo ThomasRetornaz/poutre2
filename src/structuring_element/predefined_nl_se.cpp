@@ -14,6 +14,7 @@
 #include <poutre/structuring_element/predefined_nl_se.hpp>
 // #include <poutre/base/details/data_structures/array_view.hpp>
 
+// NOLINTBEGIN
 namespace poutre::se {
 
 const details::neighbor_list_t< 1 > SESegmentX1D({
@@ -121,3 +122,4 @@ const details::neighbor_list_t< 3 > SESegmentZ3D({
   {+1, 0, 0},
 });
 }// namespace poutre::se
+// NOLINTEND

@@ -28,6 +28,7 @@ namespace poutre::se::details {
  *@{
  */
 
+// NOLINTBEGIN 
 template< Common_NL_SE > struct static_se_traits
 {
   static_assert(false, "Traits must be defined for each Common_NL_SE element");
@@ -484,5 +485,6 @@ template<> struct static_se_traits< Common_NL_SE::SESquare3D >
     return std::make_pair(coordinates_upper, coordinates_lower);
   }
 };
+// NOLINTEND
 //! @} doxygroup: poutre_se_nl_static_group
 }// namespace poutre::se::details

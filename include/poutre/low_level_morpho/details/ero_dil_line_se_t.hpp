@@ -31,6 +31,7 @@ namespace poutre::llm::details {
  *@{
  */
 
+// NOLINTBEGIN
 template<typename T> struct BinOpInfLine
 {
   static constexpr T neutral = std::numeric_limits<T>::max();
@@ -43,14 +44,15 @@ template<typename T> struct BinOpSupLine
   static T operator()(const T &A0, const T &A1) { return std::max<T>(A0, A1); }
 };
 
+
 // todo bench against Lemonier algorithm
 template<class T, class BinOp>
 void van_herck_1d(T *__restrict f,
-  T *__restrict g,
+  T *__restrict g, 
   T *__restrict h,
   ptrdiff_t size_line,
   ptrdiff_t size_line_segment,
-  BinOp op)
+  BinOp myop)
 {
   if (size_line == 0) return;
 
@@ -64,7 +66,7 @@ void van_herck_1d(T *__restrict f,
 
     for (; rem > 0; chunk_start += alpha, rem -= alpha) {
       ptrdiff_t chunk_size = std::min(rem, alpha);
-      std::partial_sum(f + chunk_start, f + chunk_start + chunk_size, g + chunk_start, op);
+      std::partial_sum(f + chunk_start, f + chunk_start + chunk_size, g + chunk_start, myop);
     }
   }
 
@@ -78,12 +80,13 @@ void van_herck_1d(T *__restrict f,
       std::partial_sum(std::make_reverse_iterator(f + chunk_start + chunk_size),
         std::make_reverse_iterator(f + chunk_start),
         std::make_reverse_iterator(h + chunk_start + chunk_size),
-        op);
+        myop);
     }
   }
   {
-    for (ptrdiff_t i = 0; i < size_line; ++i) f[i] = op(h[i - size_line_segment], g[i + size_line_segment]);
+    for (ptrdiff_t i = 0; i < size_line; ++i) f[i] = myop(h[i - size_line_segment], g[i + size_line_segment]);
   }
+  // NOLINTEND
 }
 
 template<typename T1,
@@ -98,6 +101,7 @@ struct t_ErodeDilateXOpLineDispatcher
   static_assert(false, "To be implemented for generic views");
 };
 
+// NOLINTBEGIN
 template<typename T, class BinOp>
 struct t_ErodeDilateXOpLineDispatcher<T, T, 1, poutre::details::av::array_view, poutre::details::av::array_view, BinOp>
 {
@@ -105,23 +109,30 @@ struct t_ErodeDilateXOpLineDispatcher<T, T, 1, poutre::details::av::array_view, 
     ptrdiff_t size_line_segment,
     const poutre::details::av::array_view<T, 1> &o_vout) const
   {
-    BinOp op;
+    BinOp myop;
     POUTRE_CHECK(i_vin.size() == o_vout.size(), "Incompatible views size");
     auto ibd = i_vin.bound();
     auto obd = o_vout.bound();
     POUTRE_CHECK(ibd == obd, "bound not compatible");
-    scoord size_line = ibd[0];
-    if (size_line == 0) return;
+    scoord size_line = ibd[0]; // NOLINT
+    if (size_line == 0) 
+    {
+      return;
+    }
     if (size_line_segment <= 0) {
+      // NOLINTBEGIN
+
       std::memcpy(reinterpret_cast<void *>(o_vout.data()),
         reinterpret_cast<const void *>(i_vin.data()),
         sizeof(T) * i_vin.size());
       return;
+      // NOLINTEND
     }
     const T *rawLineIn = i_vin.data();
     T *rawLineOut = o_vout.data();
 
     // need auxiliary buffer
+    // NOLINTBEGIN
     using tmpBuffer = std::vector<T>;
     const size_t padded_size = static_cast<size_t>(size_line + 2 * size_line_segment);
     tmpBuffer f(padded_size), g(padded_size), h(padded_size);
@@ -132,8 +143,9 @@ struct t_ErodeDilateXOpLineDispatcher<T, T, 1, poutre::details::av::array_view, 
       h.data() + size_line_segment,
       size_line,
       size_line_segment,
-      op);
+      myop);
     std::memcpy(rawLineOut, f.data() + size_line_segment, static_cast<size_t>(size_line) * sizeof(T));
+    // NOLINTEND
   }
 };
 
@@ -144,17 +156,18 @@ struct t_ErodeDilateXOpLineDispatcher<T, T, 2, poutre::details::av::array_view, 
     ptrdiff_t size_line_segment,
     poutre::details::av::array_view<T, 2> &o_vout) const
   {
-    BinOp op;
+        // NOLINTBEGIN
+    BinOp myop;
     POUTRE_CHECK(i_vin.size() == o_vout.size(), "Incompatible views size");
     auto ibd = i_vin.bound();
     auto obd = o_vout.bound();
     auto istride = i_vin.stride();
     auto ostride = o_vout.stride();
-    scoord ysize = ibd[0];
-    scoord xsize = ibd[1];
+    scoord ysize = ibd[0]; // NOLINT
+    scoord xsize = ibd[1]; // NOLINT
     POUTRE_CHECK(ibd == obd, "bound not compatible");
     POUTRE_CHECK(istride == ostride, "stride not compatible");
-    if (xsize == 0 || ysize == 0) return;
+    if ((xsize == 0) || (ysize == 0)) return;
 
     if (size_line_segment <= 0) {
       poutre::details::t_Copy(i_vin, o_vout);
@@ -165,11 +178,11 @@ struct t_ErodeDilateXOpLineDispatcher<T, T, 2, poutre::details::av::array_view, 
     ptrdiff_t size_line = xsize;
     // need auxiliary buffer
     using tmpBuffer = std::vector<T>;
-    const auto padded_size = static_cast<size_t>(size_line + 2 * size_line_segment);
+    const auto padded_size = static_cast<size_t>(size_line + (2 * size_line_segment));
     tmpBuffer f(padded_size);
     tmpBuffer g(padded_size);
     tmpBuffer h(padded_size);
-    // NOLINTBEGIN
+
     for (scoord y = 0; y < ysize; y++) {
       const_lineView bufInputCurrentLine = i_vin.data() + y * xsize;
       lineView bufOutputCurrentLine = o_vout.data() + y * xsize;
@@ -180,12 +193,13 @@ struct t_ErodeDilateXOpLineDispatcher<T, T, 2, poutre::details::av::array_view, 
         h.data() + size_line_segment,
         size_line,
         size_line_segment,
-        op);
+        myop);
       std::memcpy(bufOutputCurrentLine, f.data() + size_line_segment, static_cast<size_t>(size_line) * sizeof(T));
     }
     // NOLINTEND
   }
 };
+// NOLINTEND
 
 template<typename TIn,
   typename TOut,
@@ -253,8 +267,8 @@ void t_DilateY(const poutre::details::image_t<TIn, 2> &i_img,
   AssertAsTypesCompatible(i_img, o_img, "t_DilateY incompatible types");
   AssertImagesAreDifferent(i_img, o_img, "t_DilateY output must be != than input images");
   const auto shape = i_img.shape();
-  poutre::details::image_t<TOut, 2> tmp{ static_cast<std::size_t>(shape[0]), static_cast<std::size_t>(shape[1]) };
-  poutre::details::image_t<TOut, 2> tmp2{ static_cast<std::size_t>(shape[0]), static_cast<std::size_t>(shape[1]) };
+  poutre::details::image_t<TOut, 2> tmp{ static_cast<std::size_t>(shape[0]), static_cast<std::size_t>(shape[1]) }; // NOLINT
+  poutre::details::image_t<TOut, 2> tmp2{ static_cast<std::size_t>(shape[0]), static_cast<std::size_t>(shape[1]) }; // NOLINT
   poutre::details::t_transpose(i_img, tmp);
   t_DilateX(tmp, size_segment, tmp2);
   poutre::details::t_transpose(tmp2, o_img);
@@ -270,8 +284,8 @@ void t_ErodeY(const poutre::details::image_t<TIn, 2> &i_img,
   AssertAsTypesCompatible(i_img, o_img, "t_DilateY incompatible types");
   AssertImagesAreDifferent(i_img, o_img, "t_DilateY output must be != than input images");
   const auto shape = i_img.shape();
-  poutre::details::image_t<TOut, 2> tmp{ static_cast<std::size_t>(shape[0]), static_cast<std::size_t>(shape[1]) };
-  poutre::details::image_t<TOut, 2> tmp2{ static_cast<std::size_t>(shape[0]), static_cast<std::size_t>(shape[1]) };
+  poutre::details::image_t<TOut, 2> tmp{ static_cast<std::size_t>(shape[0]), static_cast<std::size_t>(shape[1]) }; // NOLINT
+  poutre::details::image_t<TOut, 2> tmp2{ static_cast<std::size_t>(shape[0]), static_cast<std::size_t>(shape[1]) }; // NOLINT
   poutre::details::t_transpose(i_img, tmp);
   t_ErodeX(tmp, size_segment, tmp2);
   poutre::details::t_transpose(tmp2, o_img);

@@ -165,11 +165,9 @@ void DilateY(const poutre::IInterface &i_img, const ptrdiff_t size_half_segment,
   AssertImagesAreDifferent(i_img, o_img, "DilateY images input output images must be different");
 
   switch (i_img.GetRank()) {
-  case 0: {
-    POUTRE_RUNTIME_ERROR("DilateY Unsupported number of dims:0");
-  }
+  case 0:
   case 1: {
-    POUTRE_RUNTIME_ERROR("DilateY Unsupported number of dims:1");
+    POUTRE_RUNTIME_ERROR("DilateY Unsupported number of dims:0 or 1");
   }
   case 2: {
     switch (i_img.GetPType()) {
@@ -273,11 +271,9 @@ void ErodeY(const poutre::IInterface &i_img, const ptrdiff_t size_half_segment, 
   AssertImagesAreDifferent(i_img, o_img, "ErodeY images input output images must be different");
 
   switch (i_img.GetRank()) {
-  case 0: {
-    POUTRE_RUNTIME_ERROR("ErodeY Unsupported number of dims:0");
-  }
+  case 0:
   case 1: {
-    POUTRE_RUNTIME_ERROR("ErodeY Unsupported number of dims:1");
+    POUTRE_RUNTIME_ERROR("ErodeY Unsupported number of dims:0 or 1");
   }
   case 2: {
     switch (i_img.GetPType()) {
