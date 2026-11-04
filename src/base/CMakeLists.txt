@@ -7,6 +7,9 @@ set(PoutreBaseSRC_DETAILS
         ${subdirheader}/details/data_structures/array_view.hpp
         ${subdirheader}/details/data_structures/pq.hpp
         ${subdirheader}/details/data_structures/image_t.hpp
+        ${subdirheader}/details/data_structures/tufa.hpp
+        ${subdirheader}/details/data_structures/max_tree.hpp
+
 )
 
 set(PoutreBaseSRC_PUBLICHEADERS
