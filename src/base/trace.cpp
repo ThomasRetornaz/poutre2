@@ -29,9 +29,14 @@ namespace poutre {
 
 //! Private ctor
 GlobalLogger::GlobalLogger() {
-        try {
-            std::vector<spdlog::sink_ptr> sinks;
 
+            const std::string logger_name = "poutre_global_logger";
+            try {
+            m_logger = spdlog::get(logger_name);
+            
+            if(!m_logger) // TODO ? ADD mutex ?
+            {
+            std::vector<spdlog::sink_ptr> sinks;
             // 1. Thread-safe Thread-colored Console Sink
             auto console_sink = std::make_shared<spdlog::sinks::stdout_color_sink_mt>();
             console_sink->set_level(spdlog::level::trace);
@@ -49,7 +54,7 @@ GlobalLogger::GlobalLogger() {
             sinks.push_back(file_sink);
 
             // Create the combined master logger
-            m_logger = std::make_shared<spdlog::logger>("poutre_global_logger", sinks.begin(), sinks.end());
+            m_logger = std::make_shared<spdlog::logger>(logger_name, sinks.begin(), sinks.end());
             
             // Set global tracking properties
             m_logger->set_level(spdlog::level::warn); // Minimum level to log
@@ -59,8 +64,8 @@ GlobalLogger::GlobalLogger() {
 
             // Optional: Register globally within spdlog's internal registry
             spdlog::register_logger(m_logger);
-            
-        } catch (const spdlog::spdlog_ex& ex) {
+          }
+          } catch (const spdlog::spdlog_ex& ex) {
             // Fallback strategy if initialization crashes (e.g., directory creation permission errors)
             std::fprintf(stderr, "Log initialization failed: %s\n", ex.what()); // NOLINT
             std::abort();
