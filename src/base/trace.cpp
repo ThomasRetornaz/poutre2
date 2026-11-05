@@ -27,11 +27,8 @@
 
 namespace poutre {
 
-std::once_flag GlobalLogger::m_initFlag={};
-
 //! Private ctor
-// NOLINTNEXTLINE(modernize-use-equals-default)
- GlobalLogger::GlobalLogger() {
+GlobalLogger::GlobalLogger() {
         try {
             std::vector<spdlog::sink_ptr> sinks;
 
@@ -52,7 +49,7 @@ std::once_flag GlobalLogger::m_initFlag={};
             sinks.push_back(file_sink);
 
             // Create the combined master logger
-            m_logger = std::make_shared<spdlog::logger>("global_logger", sinks.begin(), sinks.end());
+            m_logger = std::make_shared<spdlog::logger>("poutre_global_logger", sinks.begin(), sinks.end());
             
             // Set global tracking properties
             m_logger->set_level(spdlog::level::warn); // Minimum level to log
