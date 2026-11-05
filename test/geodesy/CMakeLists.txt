@@ -33,9 +33,9 @@ IF(POUTRE_CI)
     set_target_properties(poutre_geodesy_tests PROPERTIES COMPILE_FLAGS -DPOUTRE_CI)
 ENDIF()
 
-# set_target_properties(poutre_se_tests PROPERTIES VERSION "0.0.1"
-# CXX_VISIBILITY_PRESET hidden
-# VISIBILITY_INLINES_HIDDEN YES)
+set_target_properties(poutre_geodesy_tests PROPERTIES VERSION "0.0.1"
+CXX_VISIBILITY_PRESET hidden
+VISIBILITY_INLINES_HIDDEN YES)
 
 if(WIN32 AND BUILD_SHARED_LIBS)
     add_custom_command(
