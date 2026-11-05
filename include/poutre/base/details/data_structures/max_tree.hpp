@@ -76,10 +76,10 @@ private:
   {
     // Initialize parent and sorted_indices
     m_parent.resize(image.size());
-    std::ranges::iota(m_parent, 0);// Each pixel is its own parent initially
+    std::iota(m_parent.begin(), m_parent.end(), 0); // Each pixel is its own parent initially
 
     m_sorted_indices.resize(image.size());
-    std::ranges::iota(m_sorted_indices, 0);
+    std::iota(m_sorted_indices.begin(), m_sorted_indices.end(), 0);
 
     // Sort indices based on pixel values in descending order
     // FIXME provide counting sort for integer types for better performance

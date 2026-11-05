@@ -6,7 +6,8 @@
 //                     http://www.boost.org/LICENSE_1_0.txt                   //
 //==============================================================================
 
-#pragma once
+#ifndef POUTRE_BASE_DETAILS_DATA_STRUCTURES_TUFA_HPP
+#define POUTRE_BASE_DETAILS_DATA_STRUCTURES_TUFA_HPP
 
 /**
  * @file tufa.hpp
@@ -40,7 +41,7 @@ public:
   explicit UnionFind(std::size_t size) : parent(size), rank(size, 0)
   {
     // Initialize each element as its own parent (iota fills with 0, 1, ..., size-1)
-    std::ranges::iota(parent, 0);
+    std::iota(parent.begin(), parent.end(), 0); // NOLINT
   }
 
   // Iterative Find with Path Compression
@@ -97,3 +98,5 @@ private:
 // NOLINTEND
 //! @} doxygroup: union_find_group
 }// namespace poutre
+
+#endif// POUTRE_BASE_DETAILS_DATA_STRUCTURES_TUFA_HPP
