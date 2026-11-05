@@ -6,7 +6,8 @@
 //                     http://www.boost.org/LICENSE_1_0.txt                   //
 //==============================================================================
 
-#pragma once
+#ifndef POUTRE_BASE_TYPES_TRAITS_HPP
+#define POUTRE_BASE_TYPES_TRAITS_HPP
 
 /**
  * @file   types_traits.hpp
@@ -364,3 +365,5 @@ template<class value_type> struct TypeTraits<compound_type<value_type, 4>>
   POUTRE_ALWAYS_INLINE POUTRE_STATIC_CONSTEXPR storage_type sup() { return max(); }
 };
 }// namespace poutre
+
+#endif // POUTRE_BASE_TYPES_TRAITS_HPP

@@ -7,7 +7,8 @@
 //                     http://www.boost.org/LICENSE_1_0.txt                   //
 //==============================================================================
 
-#pragma once
+#ifndef POUTRE_BASE_CHRONOS_HPP
+#define POUTRE_BASE_CHRONOS_HPP
 
 /**
  * @file   chronos.hpp
@@ -112,3 +113,4 @@ public:
 }// namespace poutre
 
 // EXPIMP_TEMPLATE template class BASE_API std::chrono::high_resolution_clock::time_point;
+#endif // POUTRE_BASE_CHRONOS_HPP

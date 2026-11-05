@@ -6,7 +6,8 @@
 //                     http://www.boost.org/LICENSE_1_0.txt                   //
 //==============================================================================
 
-#pragma once
+#ifndef POUTRE_BASE_DETAILS_DATA_STRUCTURES_MAX_TREE_HPP
+#define POUTRE_BASE_DETAILS_DATA_STRUCTURES_MAX_TREE_HPP
 
 /**
  * @file max_tree.hpp
@@ -44,11 +45,6 @@ public:
   virtual ~MaxTreeVisitor() = default;
 };
 
-
-template< typename Tmarker, typename Tmask, typename Tout, ptrdiff_t Rank >
-void t_geodesic_distance(const poutre::details::image_t< Tmarker, Rank > &i_marker,
-                         const poutre::details::image_t< Tmask, Rank > &i_mask,
-                         poutre::se::Common_NL_SE nl_static,
 
 template <class valuetype = std::uint8_t, ptrdiff_t Rank >
 class MaxTree
@@ -103,3 +99,5 @@ private:
 
 //! @} doxygroup: max_tree_group
 }// namespace poutre::details
+
+#endif // POUTRE_BASE_DETAILS_DATA_STRUCTURES_MAX_TREE_HPP

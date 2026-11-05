@@ -7,7 +7,8 @@
 //                     http://www.boost.org/LICENSE_1_0.txt                   //
 //==============================================================================
 
-#pragma once
+#ifndef POUTRE_BASE_TRACE_HPP
+#define POUTRE_BASE_TRACE_HPP
 
 /**
  * @file   registrar.hpp
@@ -91,3 +92,5 @@ public:
 //! @} doxygroup: register_group
 */
 }// namespace poutre
+
+#endif // POUTRE_BASE_TRACE_HPP

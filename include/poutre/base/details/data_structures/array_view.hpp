@@ -26,7 +26,8 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#pragma once
+ #ifndef POUTRE_BASE_DETAILS_DATA_STRUCTURES_ARRAY_VIEW_HPP
+ #define POUTRE_BASE_DETAILS_DATA_STRUCTURES_ARRAY_VIEW_HPP
 
 // NOLINTBEGIN
 #include <algorithm>// for std::fill on clang macOS
@@ -1358,3 +1359,5 @@ template< ptrdiff_t Rank > struct hash< poutre::details::av::index< Rank > >
 }// namespace std
 
 // NOLINTEND
+
+#endif // POUTRE_BASE_DETAILS_DATA_STRUCTURES_ARRAY_VIEW_HPP

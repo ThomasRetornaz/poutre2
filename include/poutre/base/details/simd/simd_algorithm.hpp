@@ -7,7 +7,8 @@
 //                     http://www.boost.org/LICENSE_1_0.txt                   //
 //==============================================================================
 
-#pragma once
+#ifndef POUTRE_BASE_DETAILS_SIMD_SIMD_ALGORITHM_HPP
+#define POUTRE_BASE_DETAILS_SIMD_SIMD_ALGORITHM_HPP
 
 /**
  * @file   simd_algorithm.hpp
@@ -323,3 +324,5 @@ U *transform(T1 const *__restrict first1,
 }// namespace poutre::simd
  // NOLINTEND(cppcoreguidelines-pro-bounds-pointer-arithmetic)
 //! @} doxygroup: simd_group
+
+#endif // POUTRE_BASE_DETAILS_SIMD_SIMD_ALGORITHM_HPP

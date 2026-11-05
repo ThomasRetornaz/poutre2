@@ -6,7 +6,8 @@
 //                     http://www.boost.org/LICENSE_1_0.txt                   //
 //==============================================================================
 
-#pragma once
+#ifndef POUTRE_BASE_DETAILS_DATA_STRUCTURES_IMAGE_T_HPP
+#define POUTRE_BASE_DETAILS_DATA_STRUCTURES_IMAGE_T_HPP  
 
 /**
  * @file image_t.hpp
@@ -384,3 +385,5 @@ template class BASE_API image_t<pDOUBLE, 4>;
 
 //! @} doxygroup: image_processing_container_group
 }// namespace poutre::details
+
+#endif // POUTRE_BASE_DETAILS_DATA_STRUCTURES_IMAGE_T_HPP

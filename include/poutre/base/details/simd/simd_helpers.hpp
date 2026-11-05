@@ -7,7 +7,8 @@
 //                     http://www.boost.org/LICENSE_1_0.txt                   //
 //==============================================================================
 
-#pragma once
+#ifndef POUTRE_BASE_DETAILS_SIMD_SIMD_HELPERS_HPP
+#define POUTRE_BASE_DETAILS_SIMD_SIMD_HELPERS_HPP
 
 /**
  * @file   simd_helpers.hpp
@@ -126,3 +127,5 @@ template< typename T > decltype(auto) t_ExpandAligned(scoord ySize, scoord xSize
 }
 //! @} doxygroup: simd_group
 }// namespace poutre::simd
+
+#endif // POUTRE_BASE_DETAILS_SIMD_SIMD_HELPERS_HPP 

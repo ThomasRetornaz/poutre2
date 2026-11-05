@@ -7,7 +7,8 @@
 //                     http://www.boost.org/LICENSE_1_0.txt                   //
 //==============================================================================
 
-#pragma once
+#ifndef POUTRE_BASE_TRACE_HPP
+#define POUTRE_BASE_TRACE_HPP
 
 /**
  * @file   trace.hpp
@@ -36,7 +37,6 @@ namespace poutre {
  */
 class BASE_API GlobalLogger
 {
-  static std::once_flag m_initFlag;
 
 public:
   enum class LoggerLevel : std::uint8_t {
@@ -140,3 +140,5 @@ BASE_API std::ostream& operator<<(std::ostream &ost, GlobalLogger::LoggerLevel l
 // !@} doxygroup: trace_group
 
 }// namespace poutre
+
+#endif // POUTRE_BASE_TRACE_HPP

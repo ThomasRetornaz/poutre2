@@ -7,7 +7,8 @@
 //                     http://www.boost.org/LICENSE_1_0.txt                   //
 //==============================================================================
 
-#pragma once
+#ifndef POUTRE_BASE_CONFIG_HPP
+#define POUTRE_BASE_CONFIG_HPP
 
 #ifndef FMT_HEADER_ONLY
 #define FMT_HEADER_ONLY
@@ -293,3 +294,4 @@ namespace poutre
 #endif// DOXYGEN_SHOULD_SKIP_THIS
 // NOLINTEND
  
+#endif // POUTRE_BASE_CONFIG_HPP

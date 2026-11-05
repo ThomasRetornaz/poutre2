@@ -6,7 +6,8 @@
 //                     http://www.boost.org/LICENSE_1_0.txt                   //
 //==============================================================================
 
-#pragma once
+#ifndef POUTRE_BASE_IMAGE_INTERFACE_HPP
+#define POUTRE_BASE_IMAGE_INTERFACE_HPP
 
 /**
  * @file   image_interface.hpp
@@ -133,3 +134,5 @@ BASE_API std::unique_ptr< IInterface > ImageFromString(const std::string &i_str)
 //! @} doxygroup: image_processing_interface_group
 
 }// namespace poutre
+
+#endif //POUTRE_BASE_IMAGE_INTERFACE_HPP

@@ -7,7 +7,8 @@
 //                     http://www.boost.org/LICENSE_1_0.txt                   //
 //==============================================================================
 
-#pragma once
+#ifndef POUTRE_BASE_DETAILS_DATA_STRUCTURES_PQ_HPP
+#define POUTRE_BASE_DETAILS_DATA_STRUCTURES_PQ_HPP
 
 /**
  * @file pq.hpp
@@ -174,3 +175,5 @@ using poutre_rpq_stable = PriorityQueueStable<key,
 
 //! @} doxygroup: image_processing_pqueue_group
 }// namespace poutre::details
+
+#endif // POUTRE_BASE_DETAILS_DATA_STRUCTURES_PQ_HPP

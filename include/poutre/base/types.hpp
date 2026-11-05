@@ -6,7 +6,8 @@
 //                     http://www.boost.org/LICENSE_1_0.txt                   //
 //==============================================================================
 
-#pragma once
+#ifndef POUTRE_BASE_TYPES_HPP
+#define POUTRE_BASE_TYPES_HPP
 
 /**
  * @file   types.hpp
@@ -752,3 +753,4 @@ template<> struct formatter< poutre::PType > : std::formatter< const char * >
 #ifdef POUTRE_IS_MSVC
 #pragma warning(pop)
 #endif
+#endif //POUTRE_BASE_TYPES_HPP
