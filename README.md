@@ -47,8 +47,6 @@ The followings compilers are currently supported and tested:
 | g++                     | 14 and above |
 | clang                   | 19 and above |
 
-(Note the CI is broken for macOS, but it seems a libc++ mismatch)
-
 ## Dependencies ##
 
 All the libraries dependencies are downloaded and build at configure time
