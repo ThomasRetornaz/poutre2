@@ -39,9 +39,13 @@ IF (POUTRE_CI)
     set_target_properties(poutre_io_tests PROPERTIES COMPILE_FLAGS -DPOUTRE_CI)
 ENDIF ()
 
+if (CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
+    target_compile_definitions(poutre_io_tests PUBLIC H5_BUILT_AS_DYNAMIC_LIB) # https://support.hdfgroup.org/documentation/hdf5/latest/_l_b_compiling.html
+endif ()
+
 set_target_properties(poutre_io_tests PROPERTIES VERSION "0.0.1"
-CXX_VISIBILITY_PRESET hidden
-VISIBILITY_INLINES_HIDDEN YES)
+        CXX_VISIBILITY_PRESET hidden
+        VISIBILITY_INLINES_HIDDEN YES)
 
 if (WIN32 AND BUILD_SHARED_LIBS)
     add_custom_command(

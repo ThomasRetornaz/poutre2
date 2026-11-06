@@ -57,11 +57,8 @@ if (POUTRE_BUILD_WITH_OIIO)
 endif ()
 
 if (POUTRE_BUILD_WITH_HDF5)
-
     if (CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
         target_compile_definitions(poutre_io PUBLIC H5_BUILT_AS_DYNAMIC_LIB) # https://support.hdfgroup.org/documentation/hdf5/latest/_l_b_compiling.html
-        target_compile_options(poutre_io PRIVATE $<$<CONFIG:Debug>:/MD> # Forces Release runtime even in Debug builds
-        )
     endif ()
 
     target_compile_definitions(poutre_io PUBLIC POUTRE_BUILD_WITH_HDF5)
@@ -76,6 +73,11 @@ if (POUTRE_BUILD_WITH_HDF5)
             PRIVATE hdf5::hdf5
             PRIVATE hdf5::hdf5_cpp
             PRIVATE hdf5::hdf5_hl
+    )
+endif ()
+
+if (CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
+    target_compile_options(poutre_io PRIVATE $<$<CONFIG:Debug>:/MD> # Forces Release runtime even in Debug builds
     )
 endif ()
 
