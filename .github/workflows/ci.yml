@@ -175,7 +175,7 @@ jobs:
           python -m pip install -e .
 
       - name: Set conda environment
-        uses: mamba-org/setup-micromamba@v3
+        uses: mamba-org/setup-micromamba@v3.2.1
         with:
           environment-name: build_env
           environment-file: environment.yml
