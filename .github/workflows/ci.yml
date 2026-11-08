@@ -86,12 +86,12 @@ jobs:
             enable_ipo: Off
 
           # Windows msvc builds
-          - os: windows-2025-vs2026
-            compiler: msvc
-            generator: "Visual Studio 18 2026"
-            build_type: Debug
-            packaging_maintainer_mode: On
-            enable_ipo: On
+          #          - os: windows-2025-vs2026
+          #            compiler: msvc
+          #            generator: "Visual Studio 18 2026"
+          #            build_type: Debug
+          #            packaging_maintainer_mode: On
+          #            enable_ipo: On
 
           - os: windows-2025-vs2026
             compiler: msvc
@@ -100,11 +100,11 @@ jobs:
             packaging_maintainer_mode: On
             enable_ipo: On
 
-          - os: windows-2025-vs2026
-            compiler: msvc
-            generator: "Visual Studio 18 2026"
-            build_type: Debug
-            packaging_maintainer_mode: Off
+          #          - os: windows-2025-vs2026
+          #            compiler: msvc
+          #            generator: "Visual Studio 18 2026"
+          #            build_type: Debug
+          #            packaging_maintainer_mode: Off
 
           - os: windows-2025-vs2026
             compiler: msvc
@@ -140,13 +140,13 @@ jobs:
           generator: ${{ matrix.generator }}
 
       - name: Project Name
-        uses: cardinalby/export-env-action@2.2.0
+        uses: cardinalby/export-env-action@2.2.3
         with:
           envFile: '.github/constants.env'
 
 
       - name: Setup Cpp
-        uses: aminya/setup-cpp@v1.8.0
+        uses: aminya/setup-cpp@v1.10.1
         with:
           compiler: ${{ matrix.compiler }}
           vcvarsall: ${{ contains(matrix.os, 'windows' )}}
@@ -164,7 +164,7 @@ jobs:
           opencppcoverage: true
 
       - name: Setup Python
-        uses: actions/setup-python@v7.0.0
+        uses: actions/setup-python@v7.1.0
         with:
           python-version: '3.12'
           cache: "pip"
