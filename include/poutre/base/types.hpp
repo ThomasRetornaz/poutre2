@@ -1,21 +1,13 @@
-//==============================================================================
-//                  Copyright (c) 2015 - Thomas Retornaz                      //
-//                     thomas.retornaz@mines-paris.org                        //
-//          Distributed under the Boost Software License, Version 1.0.        //
-//                 See accompanying file LICENSE.txt or copy at               //
-//                     http://www.boost.org/LICENSE_1_0.txt                   //
-//==============================================================================
-
-#ifndef POUTRE_BASE_TYPES_HPP
-#define POUTRE_BASE_TYPES_HPP
-
-/**
- * @file   types.hpp
- * @author Thomas Retornaz
- * @brief  Common type alias and helpers
- *
- *
- */
+/****************************************************************************
+ * Copyright (c) Thomas Retornaz                                            *
+ *                                                                          *
+ * Distributed under the terms of the BSD 3-Clause License.                 *
+ *                                                                          *
+ * The full license is in the file LICENSE, distributed with this software. *
+ ****************************************************************************/
+ 
+#ifndef INCLUDE_POUTRE_BASE_TYPES
+#define INCLUDE_POUTRE_BASE_TYPES
 
 #include "config.hpp"
 #include <poutre/base/base.hpp>
@@ -753,4 +745,6 @@ template<> struct formatter< poutre::PType > : std::formatter< const char * >
 #ifdef POUTRE_IS_MSVC
 #pragma warning(pop)
 #endif
-#endif //POUTRE_BASE_TYPES_HPP
+
+
+#endif /* INCLUDE_POUTRE_BASE_TYPES */

@@ -1,22 +1,13 @@
+/****************************************************************************
+ * Copyright (c) Thomas Retornaz                                            *
+ *                                                                          *
+ * Distributed under the terms of the BSD 3-Clause License.                 *
+ *                                                                          *
+ * The full license is in the file LICENSE, distributed with this software. *
+ ****************************************************************************/
 
-//==============================================================================
-//                  Copyright (c) 2015 - Thomas Retornaz                      //
-//                     thomas.retornaz@mines-paris.org                        //
-//          Distributed under the Boost Software License, Version 1.0.        //
-//                 See accompanying file LICENSE.txt or copy at               //
-//                     http://www.boost.org/LICENSE_1_0.txt                   //
-//==============================================================================
-
-#ifndef POUTRE_BASE_TRACE_HPP
-#define POUTRE_BASE_TRACE_HPP
-
-/**
- * @file   trace.hpp
- * @author Thomas Retornaz
- * @brief  Trace capabilities
- *
- *
- */
+#ifndef INCLUDE_POUTRE_BASE_TRACE
+#define INCLUDE_POUTRE_BASE_TRACE
 
 #include <memory>
 #include <poutre/base/base.hpp>
@@ -141,4 +132,5 @@ BASE_API std::ostream& operator<<(std::ostream &ost, GlobalLogger::LoggerLevel l
 
 }// namespace poutre
 
-#endif // POUTRE_BASE_TRACE_HPP
+
+#endif /* INCLUDE_POUTRE_BASE_TRACE */

@@ -1,23 +1,13 @@
-
-//==============================================================================
-//                  Copyright (c) 2015 - Thomas Retornaz                      //
-//                     thomas.retornaz@mines-paris.org                        //
-//          Distributed under the Boost Software License, Version 1.0.        //
-//                 See accompanying file LICENSE.txt or copy at               //
-//                     http://www.boost.org/LICENSE_1_0.txt                   //
-//==============================================================================
-
-#ifndef POUTRE_BASE_CHRONOS_HPP
-#define POUTRE_BASE_CHRONOS_HPP
-
-/**
- * @file   chronos.hpp
- * @author Thomas Retornaz
- * @brief  Define helper objects around std::chrono facilities
- *
- *
- */
-
+/****************************************************************************
+ * Copyright (c) Thomas Retornaz                                            *
+ *                                                                          *
+ * Distributed under the terms of the BSD 3-Clause License.                 *
+ *                                                                          *
+ * The full license is in the file LICENSE, distributed with this software. *
+ ****************************************************************************/
+ 
+#ifndef INCLUDE_POUTRE_BASE_CHRONOS
+#define INCLUDE_POUTRE_BASE_CHRONOS
 
 #include <poutre/base/base.hpp>
 
@@ -32,6 +22,8 @@ namespace poutre {
  * @ingroup poutre_base_group
  *@{
  */
+
+
 
 /**
  * @brief Simple Timer class (wrapping std::chronos) with classical
@@ -113,4 +105,4 @@ public:
 }// namespace poutre
 
 // EXPIMP_TEMPLATE template class BASE_API std::chrono::high_resolution_clock::time_point;
-#endif // POUTRE_BASE_CHRONOS_HPP
+#endif /* INCLUDE_POUTRE_BASE_CHRONOS */

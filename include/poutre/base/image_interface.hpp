@@ -1,21 +1,13 @@
-//==============================================================================
-//                  Copyright (c) 2015 - Thomas Retornaz                      //
-//                     thomas.retornaz@mines-paris.org                        //
-//          Distributed under the Boost Software License, Version 1.0.        //
-//                 See accompanying file LICENSE.txt or copy at               //
-//                     http://www.boost.org/LICENSE_1_0.txt                   //
-//==============================================================================
-
-#ifndef POUTRE_BASE_IMAGE_INTERFACE_HPP
-#define POUTRE_BASE_IMAGE_INTERFACE_HPP
-
-/**
- * @file   image_interface.hpp
- * @author Thomas Retornaz
- * @brief  Define main pure interface for "Image"
- *
- *
- */
+/****************************************************************************
+ * Copyright (c) Thomas Retornaz                                            *
+ *                                                                          *
+ * Distributed under the terms of the BSD 3-Clause License.                 *
+ *                                                                          *
+ * The full license is in the file LICENSE, distributed with this software. *
+ ****************************************************************************/
+ 
+#ifndef INCLUDE_POUTRE_BASE_IMAGE_INTERFACE
+#define INCLUDE_POUTRE_BASE_IMAGE_INTERFACE
 
 #include <poutre/base/base.hpp>
 #include <poutre/base/config.hpp>
@@ -135,4 +127,5 @@ BASE_API std::unique_ptr< IInterface > ImageFromString(const std::string &i_str)
 
 }// namespace poutre
 
-#endif //POUTRE_BASE_IMAGE_INTERFACE_HPP
+
+#endif /* INCLUDE_POUTRE_BASE_IMAGE_INTERFACE */
