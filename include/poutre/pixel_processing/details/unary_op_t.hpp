@@ -1,23 +1,14 @@
-//==============================================================================
-//                  Copyright (c) 2015 - Thomas Retornaz                      //
-//                     thomas.retornaz@mines-paris.org                        //
-//          Distributed under the Boost Software License, Version 1.0.        //
-//                 See accompanying file LICENSE.txt or copy at               //
-//                     http://www.boost.org/LICENSE_1_0.txt                   //
-//==============================================================================
+/****************************************************************************
+ * Copyright (c) Thomas Retornaz                                            *
+ *                                                                          *
+ * Distributed under the terms of the BSD 3-Clause License.                 *
+ *                                                                          *
+ * The full license is in the file LICENSE, distributed with this software. *
+ ****************************************************************************/
 
-#pragma once
+#ifndef INCLUDE_POUTRE_PIXEL_PROCESSING_DETAILS_UNARY_OP_T
+#define INCLUDE_POUTRE_PIXEL_PROCESSING_DETAILS_UNARY_OP_T
 
-/**
- * @file unary_op_t.hpp
- * @author thomas.retornaz@mines-paris.org
- * @brief Generic unary operations over images or views
- * @version 0.1
- * @date 2020-05-08
- *
- * @copyright Copyright (c) 2020
- *
- */
 #include <algorithm>//transform
 #include <poutre/base/config.hpp>
 #include <poutre/base/details/data_structures/array_view.hpp>
@@ -188,3 +179,6 @@ void t_unary_op(const ViewIn< TIn, Rank > &i_vin,
 //! @} doxygroup: image_processing_linear_group
 
 }// namespace poutre::details
+
+
+#endif /* INCLUDE_POUTRE_PIXEL_PROCESSING_DETAILS_UNARY_OP_T */

@@ -1,23 +1,13 @@
-//==============================================================================
-//                  Copyright (c) 2015 - Thomas Retornaz                      //
-//                     thomas.retornaz@mines-paris.org                        //
-//          Distributed under the Boost Software License, Version 1.0.        //
-//                 See accompanying file LICENSE.txt or copy at               //
-//                     http://www.boost.org/LICENSE_1_0.txt                   //
-//==============================================================================
+/****************************************************************************
+ * Copyright (c) Thomas Retornaz                                            *
+ *                                                                          *
+ * Distributed under the terms of the BSD 3-Clause License.                 *
+ *                                                                          *
+ * The full license is in the file LICENSE, distributed with this software. *
+ ****************************************************************************/
 
-#pragma once
-
-/**
- * @file arith_op_t.hpp
- * @author thomas.retornaz@mines-paris.org
- * @brief arithmetics operator over views and images
- * @version 0.1
- * @date 2020-05-08
- *
- * @copyright Copyright (c) 2020
- *
- */
+#ifndef INCLUDE_POUTRE_PIXEL_PROCESSING_DETAILS_ARITH_OP_T
+#define INCLUDE_POUTRE_PIXEL_PROCESSING_DETAILS_ARITH_OP_T
 
 #include <poutre/base/config.hpp>
 #include <poutre/base/details/data_structures/image_t.hpp>
@@ -448,3 +438,6 @@ void t_ArithInf(const image_t< T1, Rank > &i_img1, const image_t< T2, Rank > &i_
 
 //! @} doxygroup: image_processing_arith_group
 }// namespace poutre::details
+
+
+#endif /* INCLUDE_POUTRE_PIXEL_PROCESSING_DETAILS_ARITH_OP_T */

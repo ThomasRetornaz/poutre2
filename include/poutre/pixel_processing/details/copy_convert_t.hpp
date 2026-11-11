@@ -1,24 +1,14 @@
+/****************************************************************************
+ * Copyright (c) Thomas Retornaz                                            *
+ *                                                                          *
+ * Distributed under the terms of the BSD 3-Clause License.                 *
+ *                                                                          *
+ * The full license is in the file LICENSE, distributed with this software. *
+ ****************************************************************************/
 
-//==============================================================================
-//                  Copyright (c) 2015 - Thomas Retornaz                      //
-//                     thomas.retornaz@mines-paris.org                        //
-//          Distributed under the Boost Software License, Version 1.0.        //
-//                 See accompanying file LICENSE.txt or copy at               //
-//                     http://www.boost.org/LICENSE_1_0.txt                   //
-//==============================================================================
+#ifndef INCLUDE_POUTRE_PIXEL_PROCESSING_DETAILS_COPY_CONVERT_T
+#define INCLUDE_POUTRE_PIXEL_PROCESSING_DETAILS_COPY_CONVERT_T
 
-#pragma once
-
-/**
- * @file copy_convert_t.hpp
- * @author thomas.retornaz@mines-paris.org
- * @brief
- * @version 0.1
- * @date 2020-05-08
- *
- * @copyright Copyright (c) 2020
- *
- */
 #include <poutre/base/config.hpp>
 #include <poutre/base/details/data_structures/image_t.hpp>
 
@@ -121,3 +111,6 @@ template<typename T, ptrdiff_t Rank> std::unique_ptr<image_t<T, Rank>> t_Clone(c
 }
 //! @} doxygroup: image_processing_copy_group
 }// namespace poutre::details
+
+
+#endif /* INCLUDE_POUTRE_PIXEL_PROCESSING_DETAILS_COPY_CONVERT_T */
