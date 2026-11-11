@@ -1,22 +1,13 @@
+/****************************************************************************
+ * Copyright (c) Thomas Retornaz                                            *
+ *                                                                          *
+ * Distributed under the terms of the BSD 3-Clause License.                 *
+ *                                                                          *
+ * The full license is in the file LICENSE, distributed with this software. *
+ ****************************************************************************/
 
-//==============================================================================
-//                  Copyright (c) 2015 - Thomas Retornaz                      //
-//                     thomas.retornaz@mines-paris.org                        //
-//          Distributed under the Boost Software License, Version 1.0.        //
-//                 See accompanying file LICENSE.txt or copy at               //
-//                     http://www.boost.org/LICENSE_1_0.txt                   //
-//==============================================================================
-
-#ifndef POUTRE_BASE_DETAILS_SIMD_SIMD_HELPERS_HPP
-#define POUTRE_BASE_DETAILS_SIMD_SIMD_HELPERS_HPP
-
-/**
- * @file   simd_helpers.hpp
- * @author Thomas Retornaz
- * @brief  Add STL like algorithm on top of xsimd
- *
- *
- */
+#ifndef INCLUDE_POUTRE_BASE_DETAILS_SIMD_SIMD_HELPERS
+#define INCLUDE_POUTRE_BASE_DETAILS_SIMD_SIMD_HELPERS
 
 #include <cstddef>
 #include <poutre/base/config.hpp>
@@ -128,4 +119,4 @@ template< typename T > decltype(auto) t_ExpandAligned(scoord ySize, scoord xSize
 //! @} doxygroup: simd_group
 }// namespace poutre::simd
 
-#endif // POUTRE_BASE_DETAILS_SIMD_SIMD_HELPERS_HPP 
+#endif /* INCLUDE_POUTRE_BASE_DETAILS_SIMD_SIMD_HELPERS */

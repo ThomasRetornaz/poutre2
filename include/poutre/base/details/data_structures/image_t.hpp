@@ -1,22 +1,20 @@
-//==============================================================================
-//                  Copyright (c) 2015 - Thomas Retornaz                      //
-//                     thomas.retornaz@mines-paris.org                        //
-//          Distributed under the Boost Software License, Version 1.0.        //
-//                 See accompanying file LICENSE.txt or copy at               //
-//                     http://www.boost.org/LICENSE_1_0.txt                   //
-//==============================================================================
-
-#ifndef POUTRE_BASE_DETAILS_DATA_STRUCTURES_IMAGE_T_HPP
-#define POUTRE_BASE_DETAILS_DATA_STRUCTURES_IMAGE_T_HPP  
+/****************************************************************************
+ * Copyright (c) Thomas Retornaz                                            *
+ *                                                                          *
+ * Distributed under the terms of the BSD 3-Clause License.                 *
+ *                                                                          *
+ * The full license is in the file LICENSE, distributed with this software. *
+ ****************************************************************************/
 
 /**
  * @file image_t.hpp
  * @author thomas.retornaz@mines-paris.org
  * @brief Define template image class
  *
- * @copyright Copyright (c) 2020
- *
  */
+
+#ifndef INCLUDE_POUTRE_BASE_DETAILS_DATA_STRUCTURES_IMAGE_T
+#define INCLUDE_POUTRE_BASE_DETAILS_DATA_STRUCTURES_IMAGE_T
 
 #include <cstddef>
 #include <initializer_list>
@@ -386,4 +384,5 @@ template class BASE_API image_t<pDOUBLE, 4>;
 //! @} doxygroup: image_processing_container_group
 }// namespace poutre::details
 
-#endif // POUTRE_BASE_DETAILS_DATA_STRUCTURES_IMAGE_T_HPP
+
+#endif /* INCLUDE_POUTRE_BASE_DETAILS_DATA_STRUCTURES_IMAGE_T */

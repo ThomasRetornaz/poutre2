@@ -1,22 +1,13 @@
+/****************************************************************************
+ * Copyright (c) Thomas Retornaz                                            *
+ *                                                                          *
+ * Distributed under the terms of the BSD 3-Clause License.                 *
+ *                                                                          *
+ * The full license is in the file LICENSE, distributed with this software. *
+ ****************************************************************************/
 
-//==============================================================================
-//                  Copyright (c) 2015 - Thomas Retornaz                      //
-//                     thomas.retornaz@mines-paris.org                        //
-//          Distributed under the Boost Software License, Version 1.0.        //
-//                 See accompanying file LICENSE.txt or copy at               //
-//                     http://www.boost.org/LICENSE_1_0.txt                   //
-//==============================================================================
-
-#ifndef POUTRE_BASE_DETAILS_SIMD_SIMD_ALGORITHM_HPP
-#define POUTRE_BASE_DETAILS_SIMD_SIMD_ALGORITHM_HPP
-
-/**
- * @file   simd_algorithm.hpp
- * @author Thomas Retornaz
- * @brief  Add STL like algorithm on top of xsimd
- *
- *
- */
+#ifndef INCLUDE_POUTRE_BASE_DETAILS_SIMD_SIMD_ALGORITHM
+#define INCLUDE_POUTRE_BASE_DETAILS_SIMD_SIMD_ALGORITHM
 
 #include <poutre/base/config.hpp>
 #include <poutre/base/details/simd/simd_helpers.hpp>
@@ -325,4 +316,5 @@ U *transform(T1 const *__restrict first1,
  // NOLINTEND(cppcoreguidelines-pro-bounds-pointer-arithmetic)
 //! @} doxygroup: simd_group
 
-#endif // POUTRE_BASE_DETAILS_SIMD_SIMD_ALGORITHM_HPP
+
+#endif /* INCLUDE_POUTRE_BASE_DETAILS_SIMD_SIMD_ALGORITHM */

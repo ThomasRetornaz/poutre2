@@ -1,24 +1,13 @@
-//==============================================================================
-//                  Copyright (c) 2015 - Thomas Retornaz                      //
-//                     thomas.retornaz@mines-paris.org                        //
-//          Distributed under the Boost Software License, Version 1.0.        //
-//                 See accompanying file LICENSE.txt or copy at               //
-//                     http://www.boost.org/LICENSE_1_0.txt                   //
-//==============================================================================
-
-#ifndef POUTRE_BASE_DETAILS_DATA_STRUCTURES_TUFA_HPP
-#define POUTRE_BASE_DETAILS_DATA_STRUCTURES_TUFA_HPP
-
-/**
- * @file tufa.hpp
- * @author thomas.retornaz@mines-paris.org
- * @brief Define common tarjan union find data structure
- * @version 0.1
- * @date 2020-05-08
- *
- * @copyright Copyright (c) 2020
- *
- */
+/****************************************************************************
+ * Copyright (c) Thomas Retornaz                                            *
+ *                                                                          *
+ * Distributed under the terms of the BSD 3-Clause License.                 *
+ *                                                                          *
+ * The full license is in the file LICENSE, distributed with this software. *
+ ****************************************************************************/
+ 
+#ifndef INCLUDE_POUTRE_BASE_DETAILS_DATA_STRUCTURES_TUFA
+#define INCLUDE_POUTRE_BASE_DETAILS_DATA_STRUCTURES_TUFA
 
 #include <cstddef>
 #include <numeric>
@@ -99,4 +88,4 @@ private:
 //! @} doxygroup: union_find_group
 }// namespace poutre
 
-#endif// POUTRE_BASE_DETAILS_DATA_STRUCTURES_TUFA_HPP
+#endif /* INCLUDE_POUTRE_BASE_DETAILS_DATA_STRUCTURES_TUFA */

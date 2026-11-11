@@ -1,23 +1,13 @@
-//==============================================================================
-//                  Copyright (c) 2015 - Thomas Retornaz                      //
-//                     thomas.retornaz@mines-paris.org                        //
-//          Distributed under the Boost Software License, Version 1.0.        //
-//                 See accompanying file LICENSE.txt or copy at               //
-//                     http://www.boost.org/LICENSE_1_0.txt                   //
-//==============================================================================
-
-#ifndef POUTRE_BASE_DETAILS_DATA_STRUCTURES_MAX_TREE_HPP
-#define POUTRE_BASE_DETAILS_DATA_STRUCTURES_MAX_TREE_HPP
-
-/**
- * @file max_tree.hpp
- * @author thomas.retornaz@mines-paris.org
- * @brief Define common max_tree data structure
- * @version 0.1
- *
- * @copyright Copyright (c) 2020
- *
- */
+/****************************************************************************
+ * Copyright (c) Thomas Retornaz                                            *
+ *                                                                          *
+ * Distributed under the terms of the BSD 3-Clause License.                 *
+ *                                                                          *
+ * The full license is in the file LICENSE, distributed with this software. *
+ ****************************************************************************/
+ 
+#ifndef INCLUDE_POUTRE_BASE_DETAILS_DATA_STRUCTURES_MAX_TREE
+#define INCLUDE_POUTRE_BASE_DETAILS_DATA_STRUCTURES_MAX_TREE
 
 #include "image_t.hpp"
 #include <cstddef>
@@ -100,4 +90,5 @@ private:
 //! @} doxygroup: max_tree_group
 }// namespace poutre::details
 
-#endif // POUTRE_BASE_DETAILS_DATA_STRUCTURES_MAX_TREE_HPP
+
+#endif /* INCLUDE_POUTRE_BASE_DETAILS_DATA_STRUCTURES_MAX_TREE */
