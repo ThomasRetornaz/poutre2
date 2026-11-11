@@ -1,20 +1,13 @@
-//==============================================================================
-//                  Copyright (c) 2015 - Thomas Retornaz                      //
-//                     thomas.retornaz@mines-paris.org                        //
-//          Distributed under the Boost Software License, Version 1.0.        //
-//                 See accompanying file LICENSE.txt or copy at               //
-//                     http://www.boost.org/LICENSE_1_0.txt                   //
-//==============================================================================
-
-#pragma once
-
-/**
- * @file   neighbor_list_se_t.hpp
- * @author Thomas Retornaz
- * @brief  Neighbor list SE
- *
- *
- */
+/****************************************************************************
+ * Copyright (c) Thomas Retornaz                                            *
+ *                                                                          *
+ * Distributed under the terms of the BSD 3-Clause License.                 *
+ *                                                                          *
+ * The full license is in the file LICENSE, distributed with this software. *
+ ****************************************************************************/
+ 
+#ifndef INCLUDE_POUTRE_STRUCTURING_ELEMENT_DETAILS_NEIGHBOR_LIST_SE_T
+#define INCLUDE_POUTRE_STRUCTURING_ELEMENT_DETAILS_NEIGHBOR_LIST_SE_T
 
 #include <algorithm>
 #include <memory>
@@ -244,3 +237,6 @@ protected:
 
 //! @} doxygroup: poutre_se_group
 }// namespace poutre::se::details
+
+
+#endif /* INCLUDE_POUTRE_STRUCTURING_ELEMENT_DETAILS_NEIGHBOR_LIST_SE_T */

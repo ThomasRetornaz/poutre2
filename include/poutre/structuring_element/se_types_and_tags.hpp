@@ -1,21 +1,13 @@
+/****************************************************************************
+ * Copyright (c) Thomas Retornaz                                            *
+ *                                                                          *
+ * Distributed under the terms of the BSD 3-Clause License.                 *
+ *                                                                          *
+ * The full license is in the file LICENSE, distributed with this software. *
+ ****************************************************************************/
 
-//==============================================================================
-//                  Copyright (c) 2015 - Thomas Retornaz                      //
-//                     thomas.retornaz@mines-paris.org                        //
-//          Distributed under the Boost Software License, Version 1.0.        //
-//                 See accompanying file LICENSE.txt or copy at               //
-//                     http://www.boost.org/LICENSE_1_0.txt                   //
-//==============================================================================
-
-#pragma once
-
-/**
- * @file   se_types_and_tags.hpp
- * @author Thomas Retornaz
- * @brief  Definition of SE enum and tags
- *
- *
- */
+#ifndef INCLUDE_POUTRE_STRUCTURING_ELEMENT_SE_TYPES_AND_TAGS
+#define INCLUDE_POUTRE_STRUCTURING_ELEMENT_SE_TYPES_AND_TAGS
 
 namespace poutre::se {
 /**
@@ -64,3 +56,6 @@ enum class Compound_NL_SE : std::uint8_t {
 
 //! @} doxygroup: poutre_se_interface_group
 }// namespace poutre::se
+
+
+#endif /* INCLUDE_POUTRE_STRUCTURING_ELEMENT_SE_TYPES_AND_TAGS */

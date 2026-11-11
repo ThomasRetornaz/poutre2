@@ -1,21 +1,13 @@
-
-//==============================================================================
-//                  Copyright (c) 2015 - Thomas Retornaz                      //
-//                     thomas.retornaz@mines-paris.org                        //
-//          Distributed under the Boost Software License, Version 1.0.        //
-//                 See accompanying file LICENSE.txt or copy at               //
-//                     http://www.boost.org/LICENSE_1_0.txt                   //
-//==============================================================================
-
-#pragma once
-
-/**
- * @file   structuring_element.hpp
- * @author Thomas Retornaz
- * @brief  Define import/export for shared libraries
- *
- *
- */
+/****************************************************************************
+ * Copyright (c) Thomas Retornaz                                            *
+ *                                                                          *
+ * Distributed under the terms of the BSD 3-Clause License.                 *
+ *                                                                          *
+ * The full license is in the file LICENSE, distributed with this software. *
+ ****************************************************************************/
+ 
+#ifndef INCLUDE_POUTRE_STRUCTURING_ELEMENT_STRUCTURING_ELEMENT
+#define INCLUDE_POUTRE_STRUCTURING_ELEMENT_STRUCTURING_ELEMENT
 
 #include <poutre/base/config.hpp>
 
@@ -38,3 +30,6 @@ namespace poutre {
  */
 //! @} doxygroup: poutre_se_group
 }// namespace poutre
+
+
+#endif /* INCLUDE_POUTRE_STRUCTURING_ELEMENT_STRUCTURING_ELEMENT */

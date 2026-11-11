@@ -1,21 +1,13 @@
+/****************************************************************************
+ * Copyright (c) Thomas Retornaz                                            *
+ *                                                                          *
+ * Distributed under the terms of the BSD 3-Clause License.                 *
+ *                                                                          *
+ * The full license is in the file LICENSE, distributed with this software. *
+ ****************************************************************************/
 
-//==============================================================================
-//                  Copyright (c) 2015 - Thomas Retornaz                      //
-//                     thomas.retornaz@mines-paris.org                        //
-//          Distributed under the Boost Software License, Version 1.0.        //
-//                 See accompanying file LICENSE.txt or copy at               //
-//                     http://www.boost.org/LICENSE_1_0.txt                   //
-//==============================================================================
-
-#pragma once
-
-/**
- * @file   predefined_nl_se.hpp
- * @author Thomas Retornaz
- * @brief  Some predefined useful neighbor list se
- *
- *
- */
+#ifndef INCLUDE_POUTRE_STRUCTURING_ELEMENT_PREDEFINED_NL_SE
+#define INCLUDE_POUTRE_STRUCTURING_ELEMENT_PREDEFINED_NL_SE
 
 #include <poutre/base/config.hpp>
 #include <poutre/structuring_element/details/neighbor_list_se_t.hpp>
@@ -100,3 +92,6 @@ SE_API extern const details::neighbor_list_t< 3 > SECross3D;
 
 //! @} doxygroup: poutre_se_nl_predefine_group
 }// namespace poutre::se
+
+
+#endif /* INCLUDE_POUTRE_STRUCTURING_ELEMENT_PREDEFINED_NL_SE */

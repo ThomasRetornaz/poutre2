@@ -1,21 +1,15 @@
 
-//==============================================================================
-//                  Copyright (c) 2015 - Thomas Retornaz                      //
-//                     thomas.retornaz@mines-paris.org                        //
-//          Distributed under the Boost Software License, Version 1.0.        //
-//                 See accompanying file LICENSE.txt or copy at               //
-//                     http://www.boost.org/LICENSE_1_0.txt                   //
-//==============================================================================
+/****************************************************************************
+ * Copyright (c) Thomas Retornaz                                            *
+ *                                                                          *
+ * Distributed under the terms of the BSD 3-Clause License.                 *
+ *                                                                          *
+ * The full license is in the file LICENSE, distributed with this software. *
+ ****************************************************************************/
 
-#pragma once
+#ifndef INCLUDE_POUTRE_STRUCTURING_ELEMENT_DETAILS_NEIGHBOR_LIST_STATIC_SE_T
+#define INCLUDE_POUTRE_STRUCTURING_ELEMENT_DETAILS_NEIGHBOR_LIST_STATIC_SE_T
 
-/**
- * @file   neighbor_list_static_se_t.hpp
- * @author Thomas Retornaz
- * @brief  Neighbor list STATIC SE
- *
- *
- */
 #include <array>
 #include <poutre/base/config.hpp>
 #include <poutre/base/details/data_structures/array_view.hpp>
@@ -488,3 +482,6 @@ template<> struct static_se_traits< Common_NL_SE::SESquare3D >
 // NOLINTEND
 //! @} doxygroup: poutre_se_nl_static_group
 }// namespace poutre::se::details
+
+
+#endif /* INCLUDE_POUTRE_STRUCTURING_ELEMENT_DETAILS_NEIGHBOR_LIST_STATIC_SE_T */
