@@ -1,21 +1,13 @@
+/****************************************************************************
+ * Copyright (c) Thomas Retornaz                                            *
+ *                                                                          *
+ * Distributed under the terms of the BSD 3-Clause License.                 *
+ *                                                                          *
+ * The full license is in the file LICENSE, distributed with this software. *
+ ****************************************************************************/
 
-//==============================================================================
-//                  Copyright (c) 2015 - Thomas Retornaz                      //
-//                     thomas.retornaz@mines-paris.org                        //
-//          Distributed under the Boost Software License, Version 1.0.        //
-//                 See accompanying file LICENSE.txt or copy at               //
-//                     http://www.boost.org/LICENSE_1_0.txt                   //
-//==============================================================================
-
-#pragma once
-
-/**
- * @file   label_binary.hpp
- * @author Thomas Retornaz
- * @brief  Label foreground set
- *
- *
- */
+#ifndef INCLUDE_POUTRE_LABEL_LABEL_BINARY
+#define INCLUDE_POUTRE_LABEL_LABEL_BINARY
 
 #include <poutre/base/config.hpp>
 #include <poutre/base/image_interface.hpp>
@@ -36,3 +28,6 @@ LAB_API std::size_t label_binary(const IInterface &i_img, se::Common_NL_SE nl_st
 
 //! @} doxygroup: poutre_label_group
 }// namespace poutre::label
+
+
+#endif /* INCLUDE_POUTRE_LABEL_LABEL_BINARY */
