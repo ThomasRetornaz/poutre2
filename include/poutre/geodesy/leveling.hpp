@@ -1,21 +1,14 @@
+/****************************************************************************
+ * Copyright (c) Thomas Retornaz                                            *
+ *                                                                          *
+ * Distributed under the terms of the BSD 3-Clause License.                 *
+ *                                                                          *
+ * The full license is in the file LICENSE, distributed with this software. *
+ ****************************************************************************/
 
-//==============================================================================
-//                  Copyright (c) 2015 - Thomas Retornaz                      //
-//                     thomas.retornaz@mines-paris.org                        //
-//          Distributed under the Boost Software License, Version 1.0.        //
-//                 See accompanying file LICENSE.txt or copy at               //
-//                     http://www.boost.org/LICENSE_1_0.txt                   //
-//==============================================================================
 
-#pragma once
-
-/**
- * @file   leveling.hpp
- * @author Thomas Retornaz
- * @brief  Upper, Lower Leveling
- *
- *
- */
+#ifndef INCLUDE_POUTRE_GEODESY_LEVELING
+#define INCLUDE_POUTRE_GEODESY_LEVELING
 
 #include <poutre/base/config.hpp>
 #include <poutre/base/image_interface.hpp>
@@ -56,3 +49,6 @@ GEO_API void leveling(const IInterface &i_ref, const IInterface &i_marker, se::C
 
 //! @} doxygroup: poutre_geodesy_group
 }// namespace poutre::geo
+
+
+#endif /* INCLUDE_POUTRE_GEODESY_LEVELING */

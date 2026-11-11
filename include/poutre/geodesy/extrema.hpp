@@ -1,21 +1,14 @@
+/****************************************************************************
+ * Copyright (c) Thomas Retornaz                                            *
+ *                                                                          *
+ * Distributed under the terms of the BSD 3-Clause License.                 *
+ *                                                                          *
+ * The full license is in the file LICENSE, distributed with this software. *
+ ****************************************************************************/
 
-//==============================================================================
-//                  Copyright (c) 2015 - Thomas Retornaz                      //
-//                     thomas.retornaz@mines-paris.org                        //
-//          Distributed under the Boost Software License, Version 1.0.        //
-//                 See accompanying file LICENSE.txt or copy at               //
-//                     http://www.boost.org/LICENSE_1_0.txt                   //
-//==============================================================================
 
-#pragma once
-
-/**
- * @file   mreconstruct.hpp
- * @author Thomas Retornaz
- * @brief  Geodesic reconstructions
- *
- *
- */
+#ifndef INCLUDE_POUTRE_GEODESY_EXTREMA
+#define INCLUDE_POUTRE_GEODESY_EXTREMA
 
 #include <poutre/base/config.hpp>
 #include <poutre/base/image_interface.hpp>
@@ -71,3 +64,6 @@ GEO_API void dynamic_pseudo_closing(const IInterface &i_img, const ScalarTypeVar
 
 //! @} doxygroup: poutre_geodesy_group
 }// namespace poutre::geo
+
+
+#endif /* INCLUDE_POUTRE_GEODESY_EXTREMA */
