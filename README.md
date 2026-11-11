@@ -32,9 +32,12 @@ Python bindings is provided
             * attributes filters, grain filters
         * segmentation algorithms (watersheds and co)
 
-## Licence ##
+## License
 
-It is released under the very permissive **Boost license**.
+Poutre2 use a shared copyright model that enables all contributors to maintain the
+copyright on their contributions.
+
+This software is licensed under the BSD-3-Clause license. See the [LICENSE](LICENSE) file for details.
 
 ## Prerequisites
 
@@ -43,14 +46,15 @@ The followings compilers are currently supported and tested:
 
 | Compiler                | Version      |
 |-------------------------|--------------|
-| Microsoft Visual Studio | MSVC 2022    |
+| Microsoft Visual Studio | MSVC 2026    |
 | g++                     | 14 and above |
 | clang                   | 19 and above |
 
 ## Dependencies ##
 
 All the libraries dependencies are downloaded and build at configure time
-Except optional OpenImageIO used to load store 2D images in various format.
+Except optional OpenImageIO and hdf5 to load store 2D images in various format which rely on mamba.
+Look at [environment.yml](environment.yml) files.
 
 ## More Details
 

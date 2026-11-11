@@ -1,26 +1,25 @@
 ## Docker Instructions
 
 If you have [Docker](https://www.docker.com/) installed, you can run this
-in your terminal, when the Dockerfile is inside the `.devcontainer` directory:
 
 ```bash
-docker build -f ./.devcontainer/Dockerfile --tag=my_project:latest .
+docker build -f ./Dockerfile --tag=my_project:latest .
 docker run -it my_project:latest
 ```
 
-This command will put you in a `bash` session in a Ubuntu 24.04 Docker container,
+This command will put you in a `bash` session in a Ubuntu 26.04 Docker container,
 with all the tools listed in the [Dependencies](README_dependencies.md) section already installed.
-Additionally, you will have `g++-11` and `clang++-13` installed as the default
+Additionally, you will have `g++-16` and `clang++-22` installed as the default
 versions of `g++` and `clang++`.
 
 If you want to build this container using some other versions of gcc and clang,
 you may do so with the `GCC_VER` and `LLVM_VER` arguments:
 
 ```bash
-docker build --tag=poutre:latest --build-arg GCC_VER=10 --build-arg LLVM_VER=11 .
+docker build --tag=poutre:latest --build-arg GCC_VER=14 --build-arg LLVM_VER=20 .
 ```
 
-The CC and CXX environment variables are set to GCC version 11 by default.
+The CC and CXX environment variables are set to GCC version 16 by default.
 If you wish to use clang as your default CC and CXX environment variables, you
 may do so like this:
 
@@ -29,7 +28,7 @@ docker build --tag=my_project:latest --build-arg USE_CLANG=1 .
 ```
 
 You will be logged in as root, so you will see the `#` symbol as your prompt.
-You will be in a directory that contains a copy of the `cpp_starter_project`;
+You will be in a directory that contains a copy of the `poutre2`;
 any changes you make to your local copy will not be updated in the Docker image
 until you rebuild it.
 If you need to mount your local copy directly in the Docker image, see
@@ -50,7 +49,7 @@ You can configure and build [as directed above](README_building.md) using these 
 /starter_project# cmake --build ./build
 ```
 
-You can configure and build using `clang-13`, without rebuilding the container,
+You can configure and build using `clang`, without rebuilding the container,
 with these commands:
 
 ```bash
@@ -65,7 +64,4 @@ All the tools this project supports are installed in the Docker image;
 enabling them is as simple as flipping a switch using the `ccmake` interface.
 Be aware that some of the sanitizers conflict with each other, so be sure to
 run them separately.
-
-A script called `build_examples.sh` is provided to help you to build the example
-GUI projects in this container.
 

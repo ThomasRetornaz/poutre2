@@ -139,7 +139,7 @@ Choose MinGW Makefiles as the generator:
 
 You should have already set `C` and `CXX` to `cl.exe`.
 
-Choose "Visual Studio 16 2019" as the generator:
+Choose "Visual Studio 16 2026" as the generator:
 
 <img src="https://user-images.githubusercontent.com/16418197/82524696-32502680-9af5-11ea-9697-a42000e900a6.jpg" alt="default_vs">
 
