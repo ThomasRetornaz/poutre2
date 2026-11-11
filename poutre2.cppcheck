@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="1">
+    <builddir>poutre2-cppcheck-build-dir</builddir>
+    <platform>native</platform>
+    <analyze-all-vs-configs>false</analyze-all-vs-configs>
+    <check-headers>true</check-headers>
+    <check-unused-templates>true</check-unused-templates>
+    <inline-suppression>true</inline-suppression>
+    <max-ctu-depth>2</max-ctu-depth>
+    <max-template-recursion>100</max-template-recursion>
+    <includedir>
+        <dir name="include/"/>
+    </includedir>
+    <paths>
+        <dir name="include"/>
+        <dir name="src"/>
+        <dir name="test"/>
+    </paths>
+    <tools>
+        <tool>clang-tidy</tool>
+    </tools>
+    <check-level-normal/>
+    <project-name>poutre2</project-name>
+</project>
