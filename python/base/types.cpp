@@ -1,6 +1,11 @@
-//
-// Created by thomas on 09/12/2025.
-//
+/****************************************************************************
+ * Copyright (c) Thomas Retornaz                                            *
+ *                                                                          *
+ * Distributed under the terms of the BSD 3-Clause License.                 *
+ *                                                                          *
+ * The full license is in the file LICENSE, distributed with this software. *
+ ****************************************************************************/
+ 
 #include <nanobind/nanobind.h>
 #include <poutre/base/types.hpp>
 
