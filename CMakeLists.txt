@@ -1,3 +1,11 @@
+############################################################################
+# Copyright (c) Thomas Retornaz                                            #
+#                                                                          #
+# Distributed under the terms of the BSD 3-Clause License.                 #
+#                                                                          #
+# The full license is in the file LICENSE, distributed with this software. #
+############################################################################
+
 cmake_minimum_required(VERSION 3.21...4.1)
 
 # This template attempts to be "fetch_content"-able
