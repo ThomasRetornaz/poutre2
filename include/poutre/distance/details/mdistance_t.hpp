@@ -1,17 +1,13 @@
-//
-// Created by thomas on 27/12/2025.
-//
-
-#pragma once
-
-/**
- * @file  mdistance_t.hpp
- * @author Thomas Retornaz
- * @brief  Morphological distance operator
- *
- *
- */
-
+/****************************************************************************
+ * Copyright (c) Thomas Retornaz                                            *
+ *                                                                          *
+ * Distributed under the terms of the BSD 3-Clause License.                 *
+ *                                                                          *
+ * The full license is in the file LICENSE, distributed with this software. *
+ ****************************************************************************/
+ 
+#ifndef INCLUDE_POUTRE_DISTANCE_DETAILS_MDISTANCE_T
+#define INCLUDE_POUTRE_DISTANCE_DETAILS_MDISTANCE_T
 
 #include "poutre/pixel_processing/details/compare_op_t.hpp"
 
@@ -230,3 +226,6 @@ void t_mdistance(const poutre::details::image_t< Tin, Rank > &i_img,
 
 //! @} doxygroup: poutre_distance_group
 }// namespace poutre::dist::details
+
+
+#endif /* INCLUDE_POUTRE_DISTANCE_DETAILS_MDISTANCE_T */

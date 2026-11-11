@@ -1,17 +1,13 @@
-//
-// Created by thomas on 27/12/2025.
-//
+/****************************************************************************
+ * Copyright (c) Thomas Retornaz                                            *
+ *                                                                          *
+ * Distributed under the terms of the BSD 3-Clause License.                 *
+ *                                                                          *
+ * The full license is in the file LICENSE, distributed with this software. *
+ ****************************************************************************/
 
-#pragma once
-
-/**
- * @file  geodesic_distance_t.hpp
- * @author Thomas Retornaz
- * @brief  Morphological geodesic distance operator
- *
- *
- */
-
+#ifndef INCLUDE_POUTRE_DISTANCE_DETAILS_GEODESIC_DISTANCE_T
+#define INCLUDE_POUTRE_DISTANCE_DETAILS_GEODESIC_DISTANCE_T
 
 #include "poutre/pixel_processing/details/compare_op_t.hpp"
 #include <deque>
@@ -317,3 +313,6 @@ void t_geodesic_distance(const poutre::details::image_t< Tmarker, Rank > &i_mark
 
 //! @} doxygroup: poutre_distance_group
 }// namespace poutre::dist::details
+
+
+#endif /* INCLUDE_POUTRE_DISTANCE_DETAILS_GEODESIC_DISTANCE_T */

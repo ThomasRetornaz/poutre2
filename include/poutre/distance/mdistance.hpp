@@ -1,21 +1,13 @@
+/****************************************************************************
+ * Copyright (c) Thomas Retornaz                                            *
+ *                                                                          *
+ * Distributed under the terms of the BSD 3-Clause License.                 *
+ *                                                                          *
+ * The full license is in the file LICENSE, distributed with this software. *
+ ****************************************************************************/
 
-//==============================================================================
-//                  Copyright (c) 2015 - Thomas Retornaz                      //
-//                     thomas.retornaz@mines-paris.org                        //
-//          Distributed under the Boost Software License, Version 1.0.        //
-//                 See accompanying file LICENSE.txt or copy at               //
-//                     http://www.boost.org/LICENSE_1_0.txt                   //
-//==============================================================================
-
-#pragma once
-
-/**
- * @file   mdistance.hpp
- * @author Thomas Retornaz
- * @brief  Morphological distance transform
- *
- *
- */
+#ifndef INCLUDE_POUTRE_DISTANCE_MDISTANCE
+#define INCLUDE_POUTRE_DISTANCE_MDISTANCE
 
 #include <poutre/base/config.hpp>
 #include <poutre/base/image_interface.hpp>
@@ -36,3 +28,6 @@ DIST_API void mdistance(const IInterface &i_img, se::Common_NL_SE nl_static, IIn
 //! @} doxygroup: poutre_distance_group
 
 }// namespace poutre::dist
+
+
+#endif /* INCLUDE_POUTRE_DISTANCE_MDISTANCE */
