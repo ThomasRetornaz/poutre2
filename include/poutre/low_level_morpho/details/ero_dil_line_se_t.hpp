@@ -1,20 +1,13 @@
-//==============================================================================
-//                  Copyright (c) 2015 - Thomas Retornaz                      //
-//                     thomas.retornaz@mines-paris.org                        //
-//          Distributed under the Boost Software License, Version 1.0.        //
-//                 See accompanying file LICENSE.txt or copy at               //
-//                     http://www.boost.org/LICENSE_1_0.txt                   //
-//==============================================================================
-
-#pragma once
-
-/**
- * @file   ero_dil_line_se_t.hpp
- * @author Thomas Retornaz
- * @brief  Erode dilate with line shaped structuring element
- *
- *
- */
+/****************************************************************************
+ * Copyright (c) Thomas Retornaz                                            *
+ *                                                                          *
+ * Distributed under the terms of the BSD 3-Clause License.                 *
+ *                                                                          *
+ * The full license is in the file LICENSE, distributed with this software. *
+ ****************************************************************************/
+ 
+#ifndef INCLUDE_POUTRE_LOW_LEVEL_MORPHO_DETAILS_ERO_DIL_LINE_SE_T
+#define INCLUDE_POUTRE_LOW_LEVEL_MORPHO_DETAILS_ERO_DIL_LINE_SE_T
 
 #include <algorithm>
 #include <numeric>
@@ -293,3 +286,6 @@ void t_ErodeY(const poutre::details::image_t<TIn, 2> &i_img,
 
 //! @} doxygroup: poutre_llm_group
 }// namespace poutre::llm::details
+
+
+#endif /* INCLUDE_POUTRE_LOW_LEVEL_MORPHO_DETAILS_ERO_DIL_LINE_SE_T */

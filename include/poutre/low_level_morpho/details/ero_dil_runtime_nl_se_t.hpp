@@ -1,20 +1,13 @@
-//==============================================================================
-//                  Copyright (c) 2015 - Thomas Retornaz                      //
-//                     thomas.retornaz@mines-paris.org                        //
-//          Distributed under the Boost Software License, Version 1.0.        //
-//                 See accompanying file LICENSE.txt or copy at               //
-//                     http://www.boost.org/LICENSE_1_0.txt                   //
-//==============================================================================
+/****************************************************************************
+ * Copyright (c) Thomas Retornaz                                            *
+ *                                                                          *
+ * Distributed under the terms of the BSD 3-Clause License.                 *
+ *                                                                          *
+ * The full license is in the file LICENSE, distributed with this software. *
+ ****************************************************************************/
 
-#pragma once
-
-/**
- * @file   ero_dil_runtime_nl_se_t.hpp
- * @author Thomas Retornaz
- * @brief  Erode dilate with runtime neighbor list SE
- *
- *
- */
+#ifndef INCLUDE_POUTRE_LOW_LEVEL_MORPHO_DETAILS_ERO_DIL_RUNTIME_NL_SE_T
+#define INCLUDE_POUTRE_LOW_LEVEL_MORPHO_DETAILS_ERO_DIL_RUNTIME_NL_SE_T
 
 #include <algorithm>
 #include <poutre/base/config.hpp>
@@ -264,3 +257,6 @@ void t_Erode(const poutre::details::image_t< TIn, Rank > &i_img,
 
 //! @} doxygroup: poutre_llm_group
 }// namespace poutre::llm::details
+
+
+#endif /* INCLUDE_POUTRE_LOW_LEVEL_MORPHO_DETAILS_ERO_DIL_RUNTIME_NL_SE_T */

@@ -1,20 +1,13 @@
-//==============================================================================
-//                  Copyright (c) 2015 - Thomas Retornaz                      //
-//                     thomas.retornaz@mines-paris.org                        //
-//          Distributed under the Boost Software License, Version 1.0.        //
-//                 See accompanying file LICENSE.txt or copy at               //
-//                     http://www.boost.org/LICENSE_1_0.txt                   //
-//==============================================================================
+/****************************************************************************
+ * Copyright (c) Thomas Retornaz                                            *
+ *                                                                          *
+ * Distributed under the terms of the BSD 3-Clause License.                 *
+ *                                                                          *
+ * The full license is in the file LICENSE, distributed with this software. *
+ ****************************************************************************/
 
-#pragma once
-
-/**
- * @file   ero_dil.hpp
- * @author Thomas Retornaz
- * @brief  Erosion/Dilatation over images
- *
- *
- */
+#ifndef INCLUDE_POUTRE_LOW_LEVEL_MORPHO_ERO_DIL
+#define INCLUDE_POUTRE_LOW_LEVEL_MORPHO_ERO_DIL
 
 #include <poutre/base/image_interface.hpp>
 #include <poutre/low_level_morpho/low_level_morpho.hpp>
@@ -48,3 +41,6 @@ LLM_API void Dilate(const IInterface &i_img, const se::IStructuringElement& str_
 
 //! @} doxygroup: image_processing_llm_group
 }// namespace poutre
+
+
+#endif /* INCLUDE_POUTRE_LOW_LEVEL_MORPHO_ERO_DIL */
