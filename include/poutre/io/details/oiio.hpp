@@ -1,20 +1,13 @@
-//==============================================================================
-//                  Copyright (c) 2015 - Thomas Retornaz                      //
-//                     thomas.retornaz@mines-paris.org                        //
-//          Distributed under the Boost Software License, Version 1.0.        //
-//                 See accompanying file LICENSE.txt or copy at               //
-//                     http://www.boost.org/LICENSE_1_0.txt                   //
-//==============================================================================
+/****************************************************************************
+ * Copyright (c) Thomas Retornaz                                            *
+ *                                                                          *
+ * Distributed under the terms of the BSD 3-Clause License.                 *
+ *                                                                          *
+ * The full license is in the file LICENSE, distributed with this software. *
+ ****************************************************************************/
 
-#pragma once
-
-/**
- * @file   oiio.hpp
- * @author Thomas Retornaz
- * @brief  openimageio load/save integrations
- *
- *
- */
+#ifndef INCLUDE_POUTRE_IO_DETAILS_OIIO
+#define INCLUDE_POUTRE_IO_DETAILS_OIIO
 
 
 #include <poutre/base/config.hpp>
@@ -625,3 +618,6 @@ void StoreWithOIIOCompound4(const poutre::details::image_t< compound_type< T, 4 
 
 //! @} doxygroup: poutre_io_group
 }// namespace poutre::io::details
+
+
+#endif /* INCLUDE_POUTRE_IO_DETAILS_OIIO */

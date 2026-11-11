@@ -1,21 +1,14 @@
+/****************************************************************************
+ * Copyright (c) Thomas Retornaz                                            *
+ *                                                                          *
+ * Distributed under the terms of the BSD 3-Clause License.                 *
+ *                                                                          *
+ * The full license is in the file LICENSE, distributed with this software. *
+ ****************************************************************************/
 
-//==============================================================================
-//                  Copyright (c) 2015 - Thomas Retornaz                      //
-//                     thomas.retornaz@mines-paris.org                        //
-//          Distributed under the Boost Software License, Version 1.0.        //
-//                 See accompanying file LICENSE.txt or copy at               //
-//                     http://www.boost.org/LICENSE_1_0.txt                   //
-//==============================================================================
 
-#pragma once
-
-/**
- * @file   io.hpp
- * @author Thomas Retornaz
- * @brief  Define import/export for shared libraries
- *
- *
- */
+#ifndef INCLUDE_POUTRE_IO_IO
+#define INCLUDE_POUTRE_IO_IO
 
 #include <poutre/base/config.hpp>
 
@@ -86,3 +79,6 @@ IO_API void DumpHDF5(const std::string &path, const IInterface &iimage, const st
 
 //! @} doxygroup: poutre_io_group
 }// namespace poutre::io
+
+
+#endif /* INCLUDE_POUTRE_IO_IO */
